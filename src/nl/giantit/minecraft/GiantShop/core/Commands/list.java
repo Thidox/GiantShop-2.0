@@ -140,11 +140,11 @@ public class list {
 		int pages = ((int)Math.ceil((double)data.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)data.size() / (double)perPage);
 		int start = (curPag * perPage) - perPage;
 		if(data.size() <= 0) {
-			Heraut.say(sender, msgs.getMsg(Messages.msgType.ERROR, "noItems"));
+			Heraut.say(sender, msgs.getConsoleMsg(Messages.msgType.ERROR, "noItems"));
 		}else if(curPag > pages) {
-			Heraut.say(sender, "&e[&3" + name + "&e]&c My Item list only has &e" + pages + " &cpages!!");
+			Heraut.say(sender, "[" + name + "] My Item list only has " + pages + " pages!!");
 		}else{
-			Heraut.say(sender, "&e[&3" + name + "&e]&f Item list. Page: &e" + curPag + "&f/&e" + pages);
+			Heraut.say(sender, "[" + name + "] Item list. Page: " + curPag + "/" + pages);
 			
 			for(int i = start; i < (((start + perPage) > data.size()) ? data.size() : (start + perPage)); i++) {
 				HashMap<String, String> entry = data.get(i);
@@ -161,7 +161,7 @@ public class list {
 					params.put("stock", (!entry.get("stock").equals("-1") ? entry.get("stock") : "unlimited"));
 				
 					
-				Heraut.say(sender, msgs.getMsg(Messages.msgType.MAIN, "itemListEntry", params));
+				Heraut.say(sender, msgs.getConsoleMsg(Messages.msgType.MAIN, "itemListEntry", params));
 			}
 		}	
 	}
