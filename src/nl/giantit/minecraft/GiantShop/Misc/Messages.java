@@ -6,6 +6,7 @@ import nl.giantit.minecraft.GiantShop.GiantShop;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -161,15 +162,10 @@ public class Messages {
 		
 		if(Template != null) {
 			Template = Template.replace("&n", plugin.getPubName());
-			Template = Template.replace("&i", (data.containsKey("item") ? data.get("item") : "unkown"));
-			Template = Template.replace("&a", (data.containsKey("amount") ? data.get("amount") : "unknown"));
-			Template = Template.replace("&giftReceiver", (data.containsKey("giftReceiver") ? data.get("giftReceiver") : "unknown"));
-			Template = Template.replace("&giftSender", (data.containsKey("giftSender") ? data.get("giftSender") : "unknown"));
-			Template = Template.replace("&stock", (data.containsKey("stock") ? data.get("stock") : "unknown"));
-			Template = Template.replace("&s", (data.containsKey("soldFor") ? data.get("soldFor") : "unknown"));
-			Template = Template.replace("&b", (data.containsKey("boughtFor") ? data.get("boughtFor") : "unknown"));
-			Template = Template.replace("&c", (data.containsKey("command") ? data.get("command") : "unkown"));
-			Template = Template.replace("&d", (data.containsKey("description") ? data.get("description") : "unkown"));
+			
+			for(Map.Entry<String, String> entry : data.entrySet()) {
+				Template = Template.replace("&" + entry.getKey(), entry.getValue());
+			}
 			
 			Template = this.colourfy(Template);
 			return Template;
@@ -204,14 +200,11 @@ public class Messages {
 		}
 		
 		if(Template != null) {
-			Template = Template.replace("&i", (data.containsKey("item") ? data.get("item") : "unkown"));
-			Template = Template.replace("&a", (data.containsKey("amount") ? data.get("amount") : "unknown"));
-			Template = Template.replace("&giftReceiver", (data.containsKey("giftReceiver") ? data.get("giftReceiver") : "unknown"));
-			Template = Template.replace("&giftSender", (data.containsKey("giftSender") ? data.get("giftSender") : "unknown"));
-			Template = Template.replace("&stock", (data.containsKey("stock") ? data.get("stock") : "unknown"));
-			Template = Template.replace("&s", (data.containsKey("soldFor") ? data.get("soldFor") : "unknown"));
-			Template = Template.replace("&b", (data.containsKey("boughtFor") ? data.get("boughtFor") : "unknown"));
-			Template = Template.replace("&c", (data.containsKey("command") ? data.get("command") : "unkown"));
+			Template = Template.replace("&n", plugin.getPubName());
+			
+			for(Map.Entry<String, String> entry : data.entrySet()) {
+				Template = Template.replace("&" + entry.getKey(), entry.getValue());
+			}
 			
 			Template = this.deColourfy(Template);
 			return Template;
