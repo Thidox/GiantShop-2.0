@@ -33,7 +33,7 @@ public class list {
 			if(args.length >= 2) {
 				try{
 					curPag = Integer.parseInt(args[1]);
-				}catch(Exception e) {
+				}catch(NumberFormatException e) {
 					curPag = 1;
 				}
 			}else
@@ -115,7 +115,7 @@ public class list {
 		if(args.length >= 2) {
 			try{
 				curPag = Integer.parseInt(args[1]);
-			}catch(Exception e) {
+			}catch(NumberFormatException e) {
 				curPag = 1;
 			}
 		}else
