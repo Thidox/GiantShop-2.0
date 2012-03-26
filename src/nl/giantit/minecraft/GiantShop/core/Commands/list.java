@@ -51,6 +51,7 @@ public class list {
 			fields.add("sellFor");
 			fields.add("buyFor");
 			fields.add("stock");
+			fields.add("shops");
 			ArrayList<HashMap<String, String>> data = DB.select(fields).execQuery();
 			
 			int pages = ((int)Math.ceil((double)data.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)data.size() / (double)perPage);
@@ -60,7 +61,34 @@ public class list {
 			}else if(curPag > pages) {
 				Heraut.say("&e[&3" + name + "&e]&c My Item list only has &e" + pages + " &cpages!!");
 			}else{
-				
+				for(int i = start; i < (((start + perPage) > data.size()) ? data.size() : (start + perPage)); i++) {
+					HashMap<String, String> entry = data.get(i);
+					
+					HashMap<String, String> params = new HashMap<String, String>();
+					params.put("id", entry.get("itemID"));
+					params.put("type", entry.get("type"));
+					params.put("name", iH.getItemNameByID(Integer.parseInt(entry.get("itemID")), Integer.parseInt(entry.get("type"))));
+					params.put("perStack", entry.get("perStack"));
+					params.put("sellFor", entry.get("sellFor"));
+					params.put("buyFor", entry.get("buyFor"));
+					
+					if(conf.getBoolean("GiantShop.global.useStock") == true)
+						params.put("stock", entry.get("stock"));
+					
+					// Future stuff
+					/* if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
+					 *		ArrayList<Indaface> shops = GiantShop.getPlugin().getLocationHandler().parseShops(entry.get("shops"));
+					 *		for(Indaface shop : shops) {
+					 *			if(shop.inShop(player.getLocation())) {
+					 *				Heraut.say(player, msgs.getMsg(Messages.msgType.MAIN, "itemListEntry", params));
+					 *				break;
+					 *			}
+					 *		}
+					 * }else
+					 */
+					
+					Heraut.say(player, msgs.getMsg(Messages.msgType.MAIN, "itemListEntry", params));
+				}
 			}
 			
 		}else{
