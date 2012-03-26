@@ -1,4 +1,4 @@
-version: 0.1
+version: 0.2
 main:
     buy: You have just bought C_YELLOW&a C_WHITEof item C_YELLOW&i for C_YELLOW&s!
     giftSender: You have just gifted C_YELLOW&a C_WHITEof item C_YELLOW&i C_WHITEto user C_YELLOW&giftReceiver for C_YELLOW&s!
