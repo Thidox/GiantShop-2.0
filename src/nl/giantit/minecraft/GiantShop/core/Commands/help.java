@@ -71,7 +71,7 @@ public class help {
 			}
 		}
 		
-		String name = conf.getString("GiantShop.global.name");
+		String name = GiantShop.getPlugin().getPubName();
 		int perPage = conf.getInt("GiantShop.global.perPage");
 		int curPag = 0;
 		
