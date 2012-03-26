@@ -159,7 +159,6 @@ public class list {
 				
 				if(conf.getBoolean("GiantShop.global.useStock") == true)
 					params.put("stock", (!entry.get("stock").equals("-1") ? entry.get("stock") : "unlimited"));
-				
 					
 				Heraut.say(sender, msgs.getConsoleMsg(Messages.msgType.MAIN, "itemListEntry", params));
 			}
