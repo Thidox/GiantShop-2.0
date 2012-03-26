@@ -106,7 +106,6 @@ public class list {
 	public static void listConsole(CommandSender sender, String[] args) {
 		Messages msgs = GiantShop.getPlugin().getMsgHandler();
 		Items iH = GiantShop.getPlugin().getItemHandler();
-		perm perms = perm.Obtain();
 		config conf = config.Obtain();
 		
 		String name = GiantShop.getPlugin().getPubName();
