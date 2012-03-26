@@ -58,7 +58,7 @@ public class list {
 			if(data.size() <= 0) {
 				Heraut.say(player, msgs.getMsg(Messages.msgType.ERROR, "noItems"));
 			}else if(curPag > pages) {
-				Heraut.say("&e[&3" + name + "&e]&c My help list only has &e" + pages + " &cpages!!");
+				Heraut.say("&e[&3" + name + "&e]&c My Item list only has &e" + pages + " &cpages!!");
 			}else{
 				
 			}
