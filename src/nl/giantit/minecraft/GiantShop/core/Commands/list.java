@@ -52,7 +52,7 @@ public class list {
 			fields.add("buyFor");
 			fields.add("stock");
 			fields.add("shops");
-			ArrayList<HashMap<String, String>> data = DB.select(fields).execQuery();
+			ArrayList<HashMap<String, String>> data = DB.select(fields).from("#__items").execQuery();
 			
 			int pages = ((int)Math.ceil((double)data.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)data.size() / (double)perPage);
 			int start = (curPag * perPage) - perPage;
