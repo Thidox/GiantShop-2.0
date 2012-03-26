@@ -12,12 +12,12 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.logging.Level;
 
-import com.iConomy.*;
+/*import com.iConomy.*;
 import com.nijikokun.bukkit.Permissions.*;
 import com.nijiko.permissions.*;
 
 import ru.tehkode.permissions.bukkit.*;
-import ru.tehkode.permissions.*;
+import ru.tehkode.permissions.*;*/
 
 /**
  *
@@ -51,7 +51,7 @@ public class hooks implements Listener {
 
 	@EventHandler
 	public void onPluginEnable(PluginEnableEvent event) {
-		if(conf.getBoolean("GiantShop.permissions.usePermissions") == true) {
+		/*if(conf.getBoolean("GiantShop.permissions.usePermissions") == true) {
 			if(conf.getString("GiantShop.permissions.permissionEngine").equals("Permissions")) {
 				if (plugin.getPermMan() == null) {
 					Plugin Permission = plugin.getServer().getPluginManager().getPlugin("Permissions");
@@ -77,6 +77,6 @@ public class hooks implements Listener {
 					}
 				}
 			}
-		}
+		}*/
 	}
 }
