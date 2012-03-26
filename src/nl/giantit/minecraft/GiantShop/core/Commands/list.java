@@ -79,7 +79,7 @@ public class list {
 					params.put("buyFor", entry.get("buyFor"));
 					
 					if(conf.getBoolean("GiantShop.global.useStock") == true)
-						params.put("stock", (!entry.get("stock").equals("-1") ? entry.get("stock") : "0"));
+						params.put("stock", (!entry.get("stock").equals("-1") ? entry.get("stock") : "unlimited"));
 					
 					// Future stuff
 					/* if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
