@@ -18,7 +18,7 @@ public class Messages {
 	
 	private GiantShop plugin;
 	private YamlConfiguration config;
-	private double yamlVersion = 0.2;
+	private double yamlVersion = 0.3;
 	private HashMap<String, String> mainMsgs, adminMsgs, errorMsgs;
 	
 	public enum msgType {
@@ -161,11 +161,14 @@ public class Messages {
 		}
 		
 		if(Template != null) {
-			Template = Template.replace("&n", plugin.getPubName());
-			
 			for(Map.Entry<String, String> entry : data.entrySet()) {
-				Template = Template.replace("&" + entry.getKey(), entry.getValue());
+				if(entry.getKey() != null && entry.getValue() != null) {
+					Template = Template.replace("&" + entry.getKey(), entry.getValue());
+				}else{
+					this.plugin.getLogger().log(Level.SEVERE, "[" + plugin.getName() + "] Message template engine received invalid parameter! (null)");
+				}
 			}
+			Template = Template.replace("&n", plugin.getPubName());
 			
 			Template = this.colourfy(Template);
 			return Template;
@@ -200,11 +203,14 @@ public class Messages {
 		}
 		
 		if(Template != null) {
-			Template = Template.replace("&n", plugin.getPubName());
-			
 			for(Map.Entry<String, String> entry : data.entrySet()) {
-				Template = Template.replace("&" + entry.getKey(), entry.getValue());
+				if(entry.getKey() != null && entry.getValue() != null) {
+					Template = Template.replace("&" + entry.getKey(), entry.getValue());
+				}else{
+					this.plugin.getLogger().log(Level.SEVERE, "[" + plugin.getName() + "] Message template engine received invalid parameter! (null)");
+				}
 			}
+			Template = Template.replace("&n", plugin.getPubName());
 			
 			Template = this.deColourfy(Template);
 			return Template;
