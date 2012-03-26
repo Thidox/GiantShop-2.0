@@ -40,14 +40,14 @@ public class chat {
 			}else
 				help.sendHelp(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "list", "l")) {
-			//in dev
+			//done
 			if(plugin.useLoc && plugin.cmds.contains("list")) {
 				if(plugin.loc.canUse(player))
 					list.list(player, args);
 			}else
 				list.list(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "check", "c")) {
-			//up next
+			//in dev
 			if(plugin.useLoc && plugin.cmds.contains("check")) {
 				if(plugin.loc.canUse(player))
 					help.showHelp(player, args);

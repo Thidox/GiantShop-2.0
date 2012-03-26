@@ -27,10 +27,11 @@ public class console {
 			//done
 			help.sendConsoleHelp(sender, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "list", "l")) {
-			//in dev
+			//done
+			//needs testing
 			list.listConsole(sender, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "check", "c")) {
-			//up next
+			//in dev
 		}else if(Misc.isEitherIgnoreCase(args[0], "add", "a")) {
 			//done
 			add.addConsole(sender, args);
