@@ -51,14 +51,14 @@ public class list {
 			fields.add("buyFor");
 			fields.add("stock");
 			ArrayList<HashMap<String, String>> data = DB.select(fields).execQuery();
-			if(data.size() > 0) {
-
+			if(data.size() == 0) {
+				Heraut.say(player, msgs.getMsg(Messages.msgType.ERROR, "noItems"));
+			}else{
 				int pages = ((int)Math.ceil((double)data.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)data.size() / (double)perPage);
 				int start = (curPag * perPage) - perPage;
 				
-			}else{
-				Heraut.say(player, msgs.getMsg(Messages.msgType.ERROR, "noItems"));
 			}
+			
 		}else{
 			HashMap<String, String> data = new HashMap<String, String>();
 			data.put("command", "list");
