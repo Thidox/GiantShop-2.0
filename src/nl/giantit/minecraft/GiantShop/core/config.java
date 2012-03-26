@@ -1,10 +1,13 @@
 package nl.giantit.minecraft.GiantShop.core;
 
+import nl.giantit.minecraft.GiantShop.GiantShop;
+
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-import java.io.File;
+import java.util.logging.Level;
 
 /**
  *
@@ -17,6 +20,7 @@ public class config {
 	
 	private YamlConfiguration configuration;
 	private File file;
+	private double yamlVersion = 0.1;
 	
 	private config() {
 	}
@@ -24,6 +28,15 @@ public class config {
 	public void loadConfig(File file) {
 		this.file = file;
 		this.configuration = YamlConfiguration.loadConfiguration(this.file);
+		
+		double v = this.getDouble("GiantShop.global.version");
+		if(v < this.yamlVersion) {
+			GiantShop.getPlugin().getLogger().log(Level.INFO, "[" + GiantShop.getPlugin().getPubName() + "] Your conf.yml has ran out of date. Updating now!");
+			File oconfigFile = new File(GiantShop.getPlugin().getDir(), "conf.yml." + v + ".bak");
+			this.file.renameTo(oconfigFile);
+			GiantShop.getPlugin().extract("conf.yml");
+			this.configuration = YamlConfiguration.loadConfiguration(this.file);
+		}
 	}
 	
 	public String getString(String setting) {
@@ -43,6 +56,10 @@ public class config {
 	
 	public Integer getInt(String setting) {
 		return this.configuration.getInt(setting, 0);
+	}
+	
+	public Double getDouble(String setting) {
+		return this.configuration.getDouble(setting, 0);
 	}
 	
 	public static config Obtain() {
