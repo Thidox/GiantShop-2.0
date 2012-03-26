@@ -1,9 +1,11 @@
 GiantShop:
     global:
+        version: 0.1
         name: GiantShop
         debug: true
         opHasPerms: true
         perPage: 5
+        useStock: true
     db:
         driver: SQLite
         database: GiantShop
