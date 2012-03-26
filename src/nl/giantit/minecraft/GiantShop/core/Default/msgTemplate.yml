@@ -1,19 +1,19 @@
-version: 0.2
+version: 0.3
 main:
-    buy: You have just bought C_YELLOW&a C_WHITEof item C_YELLOW&i for C_YELLOW&s!
-    giftSender: You have just gifted C_YELLOW&a C_WHITEof item C_YELLOW&i C_WHITEto user C_YELLOW&giftReceiver for C_YELLOW&s!
-    giftReceiver: C_YELLOW&giftSender C_WHITEjust gifted you C_YELLOW&a C_WHITEof item C_YELLOW&i!
-    sell: You have just sold C_YELLOW&a C_WHITEof item C_YELLOW&i for C_YELLOW&b!
-    helpCommand: C_RED/&c C_YELLOW-C_WHITE &d
+    buy: You have just bought C_YELLOW&amount C_WHITEof item C_YELLOW&item for C_YELLOW&cash!
+    giftSender: You have just gifted C_YELLOW&amount C_WHITEof item C_YELLOW&item C_WHITEto user C_YELLOW&giftReceiver for C_YELLOW&cash!
+    giftReceiver: C_YELLOW&giftSender C_WHITEjust gifted you C_YELLOW&amount C_WHITEof item C_YELLOW&item!
+    sell: You have just sold C_YELLOW&amount C_WHITEof item C_YELLOW&item for C_YELLOW&cash!
+    helpCommand: C_RED/&command C_YELLOW-C_WHITE &description
     itemListEntry: ID C_YELLOW&id C_WHITEType C_YELLOW&type C_WHITEName C_YELLOW&name C_WHITEAmount C_YELLOW&perStack C_WHITESell for C_YELLOW&sellFor C_WHITEBuy for C_YELLOW&buyFor C_WHITEStock C_YELLOW&stock
 admin:
-    add: You just added item C_YELLOW&i C_WHITEwith quantity C_YELLOW&a sold for &e&s bought for C_YELLOW&b with stock C_YELLOW&stock!
-    addStock: You have successfully added C_YELLOW&a C_WHITEto the stock of item C_YELLOW&i!
-    updated: You have successfully updated item C_YELLOW&i!
-    removed: Item C_YELLOW&i C_WHITEhas been successfully removed from the shop!
+    add: You just added item C_YELLOW&item C_WHITEwith quantity C_YELLOW&amount sold for &e&sellFor bought for C_YELLOW&buyFor with stock C_YELLOW&stock!
+    addStock: You have successfully added C_YELLOW&amount C_WHITEto the stock of item C_YELLOW&item!
+    updated: You have successfully updated item C_YELLOW&item!
+    removed: Item C_YELLOW&item C_WHITEhas been successfully removed from the shop!
 errors:
-    noPermissions: C_REDWe are sorry but you do not have access to that command (C_YELLOW&cC_RED)!
-    syntaxError: C_REDPlease use the appropriate syntax for the C_YELLOW&c C_REDcommand!
+    noPermissions: C_REDWe are sorry but you do not have access to that command (C_YELLOW&commandC_RED)!
+    syntaxError: C_REDPlease use the appropriate syntax for the C_YELLOW&command C_REDcommand!
     itemAlreadyFound: C_REDWe are sorry but the requested item seems to already exist in our database!
     itemNotFound: C_REDWe are sorry but the requested item does not seem to exist!
     noItems: C_REDWe are sorry but it seems like our shop does not hold any items yet!
