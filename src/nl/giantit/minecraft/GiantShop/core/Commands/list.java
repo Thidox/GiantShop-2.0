@@ -59,8 +59,10 @@ public class list {
 			if(data.size() <= 0) {
 				Heraut.say(player, msgs.getMsg(Messages.msgType.ERROR, "noItems"));
 			}else if(curPag > pages) {
-				Heraut.say("&e[&3" + name + "&e]&c My Item list only has &e" + pages + " &cpages!!");
+				Heraut.say(player, "&e[&3" + name + "&e]&c My Item list only has &e" + pages + " &cpages!!");
 			}else{
+				Heraut.say(player, "&e[&3" + name + "&e]&f Item list. Page: &e" + curPag + "&f/&e" + pages);
+				
 				for(int i = start; i < (((start + perPage) > data.size()) ? data.size() : (start + perPage)); i++) {
 					HashMap<String, String> entry = data.get(i);
 					
