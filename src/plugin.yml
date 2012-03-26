@@ -1,0 +1,110 @@
+name: GiantShop
+main: nl.giantit.minecraft.GiantShop.GiantShop
+version: 0.0.dev
+commands:
+    shop:
+        description: Shopping goes through here!
+        usage: /shop [params]
+    loc:
+        description: This will enable you to make shop locations!
+        usage: /loc [params]
+permissions:
+    giantshop.*:
+        description: Gives access to all GiantShop permissions
+        children:
+            giantshop.shop.buy: true
+            giantshop.shop.sell: true
+            giantshop.shop.gift: true
+            giantshop.admin.send: true
+            giantshop.admin.add: true
+            giantshop.admin.update: true
+            giantshop.admin.remove: true
+            giantshop.admin.truncate: true
+            giantshop.admin.save: true
+            giantshop.location.access: true
+            giantshop.location.set: true
+            giantshop.location.reset: true
+            giantshop.location.create: true
+            giantshop.location.remove: true
+            giantshop.location.list: true
+    giantshop.shop.*:
+        description: Gives access to the GiantShop payout
+        children:
+            giantshop.shop.access: true
+            giantshop.shop.buy: true
+            giantshop.shop.sell: true
+            giantshop.shop.gift: true
+            giantshop.shop.list: true
+            giantshop.shop.check: true
+            giantshop.shop.search: true
+    giantshop.admin.*:
+        description: Gives access to all GiantShop admin commands
+        children:
+            giantshop.admin.sendhelp: true
+            giantshop.admin.add: true
+            giantshop.admin.update: true
+            giantshop.admin.remove: true
+            giantshop.admin.truncate: true
+            giantshop.admin.save: true
+    giantshop.location.*:
+        description: Gives access to all GiantShopLocation commands
+        children:
+            giantshop.location.set: true
+            giantshop.location.reset: true
+            giantshop.location.create: true
+            giantshop.location.remove: true
+            giantshop.location.list: true
+    giantshop.shop.buy:
+        description: Gives access to the buying feature
+        default: true
+    giantshop.shop.sell:
+        description: Gives access to the selling feature
+        default: true
+    giantshop.shop.gift:
+        description: Gives access to the gifting feature
+        default: true
+    giantshop.shop.list:
+        description: Gives access to the item list feature
+        default: true
+    giantshop.shop.check:
+        description: Gives access to the item checking feature
+        default: true
+    giantshop.admin.send:
+        description: Enables admin to send GiantShop help to user
+        default: false
+    giantshop.admin.add:
+        description: Enables admin to add items to GiantShop
+        default: op
+    giantshop.admin.update:
+        description: Enables admin to update items in GiantShop
+        default: op
+    giantshop.admin.remove:
+        description: Enables admin to remove items from GiantShop
+        default: op
+    giantshop.admin.truncate:
+        description: Enables admin to remove all items from GiantShop
+        default: op
+    giantshop.admin.save:
+        description: Enables admin to save the current GiantShop config
+        default: op
+    giantshop.location.overide:
+        description: Enables admin to override location
+        default: op
+    giantshop.location.access:
+        description: Enables admin to use location plugin
+        default: op
+    giantshop.location.set:
+        description: Enables admin to set coordinates
+        default: op
+    giantshop.location.reset:
+        description: Enables admin to reset his coordinate settings
+        default: op
+    giantshop.location.create:
+        description: Enables admin to create shop
+        default: op
+    giantshop.location.remove:
+        description: Enables admin to remove shop
+        default: op
+    giantshop.location.list:
+        description: Enables admin to list available shops
+        default: op

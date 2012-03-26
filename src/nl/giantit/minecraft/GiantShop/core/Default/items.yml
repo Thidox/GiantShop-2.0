@@ -1,0 +1,1216 @@
+version: 0.3
+names:
+    item0: Air
+    item1: Stone
+    item2: Grass Block
+    item3: Dirt
+    item4: Cobblestone
+    item5: Wooden Planks
+    item6: Sapling
+    item7: Bedrock
+    item8: Flowing Water
+    item9: Stationary Water
+    item10: Flowing Lava
+    item11: Stationary Lava
+    item12: Sand
+    item13: Gravel
+    item14: Gold Ore
+    item15: Iron Ore
+    item16: Coal Ore
+    item17: Log
+    item18: Leaves
+    item19: Sponge
+    item20: Glass
+    item21: Lapis Lazuli Ore
+    item22: Lapis Lazuli Block
+    item23: Dispenser
+    item24: Sandstone
+    item25: Note Block
+    item26: Bed
+    item27: Powered Rail
+    item28: Detector Rail
+    item29: Sticky Piston
+    item30: Cobweb
+    item31: Tall Grass
+    item32: Dead Bush
+    item33: Piston
+    item35: Wool
+    item37: Dandelion
+    item38: Rose
+    item39: Mushroom
+    item40: Toadstool
+    item41: Gold Block
+    item42: Iron Block
+    item43: Slab
+    item44: Slab
+    item45: Brick Block
+    item46: TNT
+    item47: Bookshelf
+    item48: Moss Stone
+    item49: Obsidian
+    item50: Torch
+    item52: Spawner
+    item53: Wooden Stairs
+    item54: Chest
+    item55: Redstone Wire
+    item56: Diamond Ore
+    item57: Diamond Block
+    item58: Crafting Table
+    item59: Crops
+    item60: Farmland
+    item61: Furnace
+    item62: Burning Furnace
+    item63: Sign Post
+    item64: Wooden Door
+    item65: Ladder
+    item66: Rails
+    item67: Cobblestone Stairs
+    item68: Wall Sign
+    item69: Lever
+    item70: Stone Pressure Plate
+    item71: Iron Door
+    item72: Wooden Pressure Plate
+    item73: Redstone Ore
+    item74: Glowing Redstone Ore
+    item75: Unlit Redstone Torch
+    item76: Redstone Torch
+    item77: Button
+    item78: Snow
+    item79: Ice
+    item80: Snow Block
+    item81: Cactus
+    item82: Clay Block
+    item83: Sugar Cane Block
+    item84: Jukebox
+    item85: Fence
+    item86: Pumpkin
+    item87: Netherrack
+    item88: Soul Sand
+    item89: Glowstone
+    item90: Portal
+    item91: Jack-o-lantern
+    item92: Cake Block
+    item93: Unlit Redstone Repeater Block
+    item94: Redstone Repeater Block
+    item95: Locked Chest
+    item96: Trapdoor
+    item98: Stone Bricks
+    item99: Huge Mushroom
+    item100: Huge Toadstool
+    item101: Iron Bars
+    item102: Glass Pane
+    item103: Melon
+    item106: Vines
+    item107: Fence Gate
+    item108: Brick Stairs
+    item109: Stone Brick Stairs
+    item111: Lily Pad
+    item112: Nether Brick
+    item113: Nether Brick Fence
+    item114: Nether Brick Stairs
+    item115: Nether Wart
+    item116: Echantment Table
+    item117: Brewing Stand
+    item118: Cauldron
+    item119: End Portal
+    item120: End Portal Frame
+    item121: End Stone
+    item122: Dragon Egg
+    item123: Inactive Redstone Lamp
+    item123: Redstone Lamp
+    item256: Iron Shovel
+    item257: Iron Pickaxe
+    item258: Iron Axe
+    item259: Flint and Steel
+    item260: Apple
+    item261: Bow
+    item262: Arrow
+    item263: Coal
+    item264: Diamond
+    item265: Iron Ingot
+    item266: Gold Ingot
+    item267: Iron Sword
+    item268: Wooden Sword
+    item269: Wooden Shovel
+    item270: Wooden Pickaxe
+    item271: Wooden Axe
+    item272: Stone Sword
+    item273: Stone Shovel
+    item274: Stone Pickaxe
+    item275: Stone Axe
+    item276: Diamond Sword
+    item277: Diamond Shovel
+    item278: Diamond Pickaxe
+    item279: Diamond Axe
+    item280: Stick
+    item281: Bowl
+    item282: Mushroom Stew
+    item283: Golden Sword
+    item284: Golden Shovel
+    item285: Golden Pickaxe
+    item286: Golden Axe
+    item287: String
+    item288: Feather
+    item289: Gunpowder
+    item290: Wooden Hoe
+    item291: Stone Hoe
+    item292: Iron Hoe
+    item293: Diamond Hoe
+    item294: Golden Hoe
+    item295: Seeds
+    item296: Wheat
+    item297: Bread
+    item298: Leather Cap
+    item299: Leather Tunic
+    item300: Leather Pants
+    item301: Leather Boots
+    item302: Chainmail Helmet
+    item303: Chainmail Chestplate
+    item304: Chainmail Leggings
+    item305: Chainmail Boots
+    item306: Iron Helmet
+    item307: Iron Chestplate
+    item308: Iron Leggings
+    item309: Iron Boots
+    item310: Diamond Helmet
+    item311: Diamond Chestplate
+    item312: Diamond Leggings
+    item313: Diamond Boots
+    item314: Gold Helmet
+    item315: Gold Chestplate
+    item316: Gold Leggings
+    item317: Gold Boots
+    item318: Flint
+    item319: Raw Porkchop
+    item320: Cooked Porkchop
+    item321: Painting
+    item322: Golden Apple
+    item323: Sign
+    item324: Wooden Door
+    item325: Bucket
+    item326: Water Bucket
+    item327: Lava Bucket
+    item328: Minecart
+    item329: Saddle
+    item330: Iron door
+    item331: Redstone
+    item332: Snowball
+    item333: Boat
+    item334: Leather
+    item335: Milk
+    item336: Brick
+    item337: Clay
+    item338: Sugar Canes
+    item339: Paper
+    item340: Book
+    item341: Slimeball
+    item342: Minecart with Chest
+    item343: Minecart with Furnace
+    item344: Egg
+    item345: Compass
+    item346: Fishing Rod
+    item347: Clock
+    item348: Glowstone Dust
+    item349: Raw Fish
+    item350: Cooked Fish
+    item351: Dye
+    item352: Bone
+    item353: Sugar
+    item354: Cake
+    item355: Bed
+    item356: Redstone Repeater
+    item357: Cookie
+    item358: Map
+    item359: Shears
+    item360: Melon (Slice)
+    item361: Pumpkin Seeds
+    item362: Melon Seeds
+    item363: Raw Beef
+    item364: Steak
+    item365: Raw Chicken
+    item366: Cooked Chicken
+    item367: Rotten Flesh
+    item368: Ender Pearl
+    item369: Blaze Rod
+    item370: Ghast Tear
+    item371: Gold Nugget
+    item372: Nether Wart
+    item373: Potion
+    item374: Glass Bottle
+    item375: Spider Eye
+    item376: Fermented Spider eye
+    item377: Blaze Powder
+    item378: Magma Cream
+    item379: Brewing Stand
+    item380: Cauldron
+    item381: Eye of Ender
+    item382: Glistering Melon
+    item383: Spawn Egg
+    item384: Bottle o' Enchanting
+    item385: Fire Charge
+    item2256: 13 Disc
+    item2257: Cat Disc
+    item2258: blocks Disc
+    item2259: chirp Disc
+    item2260: far Disc
+    item2261: mall Disc
+    item2262: mellohi Disc
+    item2263: stal Disc
+    item2264: strad Disc
+    item2265: ward Disc
+    item2266: 11 Disc
+types:
+    item17:
+        type0:
+        - Oak Log
+        type1:
+        - Pine Log
+        - red
+        - Redwood
+        type2:
+        - Birch Log
+        - white
+        type3:
+        - Special oak log
+    item18:
+        type0:
+        - Oak Leaves
+        type1:
+        - Pine Leaves
+        type2:
+        - Birch Leaves
+        type3:
+        - Jungle Leaves
+    item35:
+        type0:
+        - White Wool
+        type1:
+        - Orange Wool
+        type2:
+        - Magenta Wool
+        - Light Purple Wool
+        type3:
+        - Light Blue Wool
+        - Blue Wool
+        type4:
+        - Yellow Wool
+        - Dandelion Wool
+        type5:
+        - Lime Wool
+        - Light Green Wool
+        type6:
+        - Pink Wool
+        - Lightred Wool
+        type7:
+        - Gray Wool
+        - Grey Wool
+        - Dark Grey Wool
+        - Dark Gray Wool
+        type8:
+        - Silver Wool
+        - Light Gray Wool
+        - Light Grey Wool
+        type9:
+        - Cyan Wool
+        type10:
+        - Purple Wool
+        - Dark Purple Wool
+        type11:
+        - Navy Wool
+        - Dark Blue Wool
+        - Lapis Wool
+        - Lazuli Wool
+        - Lapis Lazuli Wool
+        type12:
+        - Brown Wool
+        - Cocoa Wool
+        - Chocolate Wool
+        type13:
+        - Green Wool
+        - Dark Green Wool
+        - Cactus Wool
+        type14:
+        - Red Wool
+        - Dark Red Wool
+        - Rose Wool
+        type15:
+        - Black Wool
+    item43:
+        type0:
+        - Stone Double Slabs
+        type1:
+        - Sandstone Double Slabs
+        type2:
+        - Wood Double Slabs
+        - Wooden Double Slabs
+        type3:
+        - Cobble Double Slabs
+        - Cobblestone Double Slabs
+        type4:
+        - Brick Double Slabs
+        type5:
+        - Stone Brick Double Slabs
+    item44:
+        type0:
+        - Stone Slabs
+        type1:
+        - Sandstone Slabs
+        type2:
+        - Wood Slabs
+        - Wooden Slabs
+        type3:
+        - Cobble Slabs
+        - Cobblestone Slabs
+        type4:
+        - Brick Slabs
+        type5:
+        - Stone Brick Slabs
+    item52:
+        type0:
+        - Pig Mob Spawner
+        type1:
+        - Chicken Mob Spawner
+        - Duck Mob Spawner
+        type2:
+        - Cow Mob Spawner
+        type3:
+        - Sheep Mob Spawner
+        type4:
+        - Squid Mob Spawner
+        type5:
+        - Creeper Mob Spawner
+        type6:
+        - Ghast Mob Spawner
+        - Nether Squid Mob Spawner
+        type7:
+        - Pig Zombie Mob Spawner
+        - Zombie Pigman Mob Spawner
+        type8:
+        - Skeleton Mob Spawner
+        type9:
+        - Spider Mob Spawner
+        type10:
+        - Zombie Mob Spawner
+        type11:
+        - Slime Mob Spawner
+        type12:
+        - Giant Mob Spawner
+        - Giant Zombie Mob Spawner
+        - Zombie Giant Mob Spawner
+        - Big Zombie Mob Spawner
+        type13:
+        - Human Mob Spawner
+        - Monster Mob Spawner
+        type14:
+        - Enderman Mob Spawner
+    item351:
+        type0:
+        - Ink Sac
+        - Black Dye
+        type1:
+        - Rose Red
+        - Red Dye
+        - Dark Red Dye
+        type2:
+        - Cactus Green
+        - Green Dye
+        - Darkgreen Dye
+        type3:
+        - Cocoa Beans
+        - Brown Dye
+        type4:
+        - Lapis Lazuli
+        - Darkblue Blye
+        type5:
+        - Purple Dye
+        - Darkpurple Dye
+        type6:
+        - Cyan Dye
+        type7:
+        - Light Gray Dye
+        - Light Grey Dye
+        type8:
+        - Gray Dye
+        - Grey Dye
+        - Dark Grey Dye
+        - Dark Gray Dye
+        type9:
+        - Pink Dye
+        - Light Red Dye
+        type10:
+        - Lime Dye
+        - Light Green Dye
+        type11:
+        - Dandelion Yellow
+        - Yellow Dye
+        type12:
+        - Light Blue Dye
+        - Blue Dye
+        type13:
+        - Magenta Dye
+        - Light Purple Dye
+        type14:
+        - Orange Dye
+        type15:
+        - Bone Meal
+        - White Dye
+    item374:
+        type0:
+        - Water Bottle
+        - Mundane Potion
+        type1:
+        - Potion of Regeneration
+        type2:
+        - Potion of Swiftness
+        type3:
+        - Potion of Fire Resistance
+        type4:
+        - Potion of Posion
+        type5:
+        - Potion of Healing
+        type6:
+        - Clear Potion
+        type7:
+        - Clear Potion
+        type8:
+        - Potion of Weakness
+        type9:
+        - Potion of Strength
+        type10:
+        - Potion of Slowness
+        type11:
+        - Diffuse Potion
+        type12:
+        - Potion of Harming
+        type13:
+        - Artless Potion
+        type14:
+        - Thin Potion
+        type15:
+        - Thin Potion
+        type16:
+        - Awkward Potion
+        type17:
+        - Potion of Regeneration
+        type18:
+        - Potion of Swiftness
+        type19:
+        - Potion of Fire Resistance
+        type20:
+        - Potion of Posion
+        type21:
+        - Potion of Healing
+        type22:
+        - Bundling Potion
+        type23:
+        - Bundling Potion
+        type24:
+        - Potion of Weakness
+        type25:
+        - Potion of Strength
+        type26:
+        - Potion of Slowness
+        type27:
+        - Smooth Potion
+        type28:
+        - Potion of Harming
+        type29:
+        - Suave Potion
+        type30:
+        - Debonair Potion
+        type31:
+        - Debonair Potion
+        type32:
+        - Thick Potion
+        type33:
+        - Potion of Regeneration II
+        type34:
+        - Potion of Swiftness II 
+        type35:
+        - Potion of Fire Resistance
+        type36:
+        - Potion of Poison II 
+        type37:
+        - Potion of Healing II 
+        type38:
+        - Charming Potion
+        type39:
+        - Charming Potion
+        type40:
+        - Potion of Weakness
+        type41:
+        - Potion of Strength ||
+        type42:
+        - Potion of Slowness
+        type43:
+        - Refined Potion
+        type44:
+        - Potion of Harming II 
+        type45:
+        - Cordial Potion
+        type46:
+        - Sparkling Potion
+        type47:
+        - Sparkling Potion
+        type48:
+        - Potent Potion
+        type49:
+        - Potion of Regeneration II
+        type50:
+        - Potion of Swiftness II 
+        type51:
+        - Potion of Fire Resistance
+        type52:
+        - Potion of Poison II 
+        type53:
+        - Potion of Healing II 
+        type54:
+        - Rank Potion
+        type55:
+        - Rank Potion
+        type56:
+        - Potion of Weakness
+        type57:
+        - Potion of Strength II
+        type58:
+        - Potion of Slowness
+        type59:
+        - Acrid Potion
+        type60:
+        - Potion of Harming II
+        type61:
+        - Gross Potion
+        type62:
+        - Stinky Potion
+        type63:
+        - Stinky Potion
+    item383:
+        type50:
+        - Creeper Egg
+        type51:
+        - Skeleton Egg
+        type52:
+        - Spider Egg
+        type54:
+        - Zombie Egg
+        type55:
+        - Slime Egg
+        type56:
+        - Ghast Egg
+        type57:
+        - Zombie Pigman Egg
+        type58:
+        - Enderman Egg
+        type59:
+        - Cave Spider Egg
+        type60:
+        - Silverfish Egg
+        type61:
+        - Blaze Egg
+        type62:
+        - Magma Cube Egg
+        type90:
+        - Pig Egg
+        type91:
+        - Sheep Egg
+        type92:
+        - Cow Egg
+        type93:
+        - Chicken Egg
+        type94:
+        - Squid Egg
+        type95:
+        - Wolf Egg
+        type96:
+        - Mooshroom Egg
+        type98:
+        - Ocelot Egg
+        type99:
+        - Villager Egg
+aliases:
+    None: '0'
+    'Null': '0'
+    Nil: '0'
+    Nothing: '0'
+    Empty: '0'
+    SmoothStone: '1'
+    SmeltedStone: '1'
+    Cobble: '4'
+    Plank: '5'
+    WoodPlank: '5'
+    WoodenPlank: '5'
+    WPlank: '5'
+    Tree: '6'
+    Adminium: '7'
+    Admincrete: '7'
+    Unobtainium: '7'
+    Neutronium: '7'
+    FWater: '8'
+    FlowWater: '8'
+    FlowingWater: '8'
+    MovingWater: '8'
+    StillWater: '9'
+    SWater: '9'
+    Spring: '9'
+    FLava: '10'
+    FlowLava: '10'
+    FlowingLava: '10'
+    MovingLava: '10'
+    StillLava: '22'
+    SLava: '11'
+    LavaSpring: '11'
+    Oak: 17/0
+    Pine: 17/1
+    Redwood: 17/1
+    Birch: 17/2
+    Leaf: '18'
+    LapisLazuliOre: '21'
+    LazuliOre: '21'
+    LapisLazuliBlock: '22'
+    LazuliBlock: '22'
+    Trap: '23'
+    Sandstone: '24'
+    MidiBlock: '25'
+    Bed: '26'
+    PoweredRail: '27'
+    DetectorRail: '28'
+    StickyPiston: '29'
+    Cobweb: '30'
+    TallGrass: '31'
+    DeadBush: '32'
+    Piston: '33'
+    Cloth: '35'
+    Fabric: '35'
+    Dandelion: '37'
+    YellowDandelion: '37'
+    Rose: '38'
+    RedFlower: '38'
+    Mushroom: '39'
+    Toadstool: '40'
+    BlockOfGold: '41'
+    BlockOfIron: '42'
+    DoubleSlab: '43'
+    DStep: '43'
+    DSlab: '43'
+    Slab: '44'
+    Half: '44'
+    HalfBlock: '44'
+    BrickBlock: '45'
+    BrickWall: '45'
+    Bricks: '45'
+    Dynamite: '46'
+    Bomb: '46'
+    Boom: '46'
+    Bookcase: '47'
+    Moss: '48'
+    MossStone: '48'
+    MossRock: '48'
+    MossCobble: '48'
+    MossCobblestone: '48'
+    MossyStone: '48'
+    MossyRock: '48'
+    MossyCobble: '48'
+    Flame: '51'
+    Flames: '51'
+    Conflagration: '51'
+    MonsterSpawner: '52'
+    MonsterSpawn: '52'
+    MobSpawn: '52'
+    Spawn: '52'
+    Spawner: '52'
+    Mob: '52'
+    Monster: '52'
+    WoodenStairs: '53'
+    WStairs: '53'
+    Box: '54'
+    BlockOfDiamond: '57'
+    CraftingTable: '58'
+    Toolbench: '58'
+    Farmland: '60'
+    Oven: '61'
+    Kiln: '61'
+    LitFurnace: '62'
+    Rail: '66'
+    Track: '66'
+    Tracks: '66'
+    TrainTrack: '66'
+    TrainRail: '66'
+    TrainTracks: '66'
+    TrainRails: '66'
+    MinecartTrack: '66'
+    MinecartRail: '66'
+    MinecartTracks: '66'
+    MinecartRails: '66'
+    CartTrack: '66'
+    CartTracks: '66'
+    CartRails: '66'
+    CartRail: '66'
+    MineTrack: '66'
+    MineTracks: '66'
+    MineRail: '66'
+    MineRails: '66'
+    StoneStairs: '67'
+    Stairs: '67'
+    CobbleStairs: '67'
+    CStairs: '67'
+    RockStairs: '67'
+    SStairs: '67'
+    StonePressurePlate: '70'
+    RockPlate: '70'
+    PressurePlate: '70'
+    SPressurePlate: '70'
+    SPlate: '70'
+    WoodenPressurePlate: '72'
+    WoodPressurePlate: '72'
+    WPressurePlate: '72'
+    WoodenPlate: '72'
+    WPlate: '72'
+    RedstoneTorch: '76'
+    RedTorch: '76'
+    Button: '77'
+    Snowfall: '78'
+    SurfaceSnow: '78'
+    BlockOfSnow: '80'
+    Cacti: '81'
+    ClayBlock: '82'
+    Radio: '84'
+    Juke: '84'
+    Musicbox: '84'
+    RecordPlayer: '84'
+    Turntable: '84'
+    Pole: '85'
+    PumpkinOff: '91'
+    Netherwrack: '87'
+    Netherstone: '87'
+    RedMossyCobblestone: '87'
+    Nether: '87'
+    Netherrock: '87'
+    Bloodstone: '87'
+    SoulMud: '88'
+    SoulDirt: '88'
+    SlowSand: '88'
+    SlowMud: '88'
+    SlowDirt: '88'
+    QuickSand: '88'
+    QuickMud: '88'
+    QuickDirt: '88'
+    BrittleGold: '89'
+    Lightstone: '89'
+    GlowRock: '89'
+    GlowingRock: '89'
+    GlowstoneBlock: '89'
+    GlowstoneOre: '89'
+    Jack'o'lantern: '91'
+    LitPumpkin: '91'
+    Jack: '91'
+    PumpkinLit: '91'
+    PumpkinLight: '91'
+    WaterLantern: '91'
+    Cake: '92'
+    Trapdoor: '96'
+    StoneBricks: '98'
+    IronBars: '101'
+    GlassPane: '102'
+    Melon: '103'
+    Vines: '106'
+    FenceGate: '107'
+    BrickStair: '108'
+    StoneBrickStair: '109'
+    LilyPad: '111'
+    NetherBrick: '112'
+    NetherBrickFence: '113'
+    NetherBrickStairs: '114'
+    NetherWart: '115'
+    WoodenShovel: '269'
+    WoodenSpade: '269'
+    WoodShovel: '269'
+    WShovel: '269'
+    WSpade: '269'
+    StoneShovel: '273'
+    SShovel: '273'
+    SSword: '272'
+    IronShovel: '256'
+    IShovel: '256'
+    ISpade: '256'
+    DiamondShovel: '277'
+    DShovel: '277'
+    DSpade: '277'
+    GoldenShovel: '284'
+    GoldenSpade: '284'
+    GoldShovel: '284'
+    GShovel: '284'
+    GSpade: '284'
+    WoodenPickaxe: '270'
+    WoodenPick: '270'
+    WoodPick: '270'
+    WPickaxe: '270'
+    WPick: '270'
+    StonePick: '274'
+    SPickaxe: '274'
+    SPick: '274'
+    IronPick: '257'
+    IPickaxe: '257'
+    IPick: '257'
+    DiamondPick: '278'
+    DPickaxe: '278'
+    DPick: '278'
+    GoldenPickaxe: '285'
+    GoldenPick: '285'
+    GoldPick: '285'
+    GPickaxe: '285'
+    GPick: '285'
+    WoodenAxe: '271'
+    WoodenHatchet: '271'
+    WoodHatchet: '271'
+    WAxe: '271'
+    WHatchet: '271'
+    StoneHatchet: '275'
+    SAxe: '275'
+    SHatchet: '275'
+    IronHatchet: '258'
+    IAxe: '258'
+    IHatchet: '258'
+    DiamondHatchet: '279'
+    DAxe: '279'
+    DHatchet: '279'
+    GoldenAxe: '286'
+    GoldenHatchet: '286'
+    GoldHatchet: '286'
+    GAxe: '286'
+    GHatchet: '286'
+    WoodenSword: '268'
+    WSword: '268'
+    ISword: '267'
+    DSword: '276'
+    GoldenSword: '283'
+    GSword: '283'
+    WoodenHoe: '290'
+    WHoe: '290'
+    SHoe: '291'
+    IHoe: '292'
+    DHoe: '293'
+    GoldenHoe: '294'
+    GHoe: '294'
+    WaterBucket: '326'
+    BucketOfWater: '326'
+    WBucket: '326'
+    LavaBucket: '327'
+    BucketOfLava: '327'
+    LBucket: '327'
+    Milk: '335'
+    BucketOfMilk: '335'
+    MBucket: '335'
+    Lighter: '259'
+    SteelAndFlint: '259'
+    Arrows: '262'
+    FishingPole: '346'
+    Rod: '346'
+    Fishing: '346'
+    Tackle: '346'
+    Clock: '347'
+    Time: '347'
+    Fruit: '260'
+    MushroomStew: '282'
+    Stew: '282'
+    Soup: '282'
+    BowlWithSoup: '282'
+    BowlWithStew: '282'
+    Loaf: '297'
+    BreadLoaf: '297'
+    LoafOfBread: '297'
+    RawPorkchop: '319'
+    RawPork: '319'
+    Meat: '319'
+    CookedPorkchop: '320'
+    GrilledPorkchop: '320'
+    RoastedPorkchop: '320'
+    CookedPork: '320'
+    RoastedPork: '320'
+    CookedMeat: '320'
+    RoastedMeat: '320'
+    GrilledMeat: '320'
+    Restore: '322'
+    GoldApple: '322'
+    GApple: '322'
+    GoldenFruit: '322'
+    GoldFruit: '322'
+    GFruit: '322'
+    Fish: '349'
+    RoastedFish: '350'
+    GrilledFish: '350'
+    Coal: 263/0
+    Charcoal: 263/1
+    DiamondCrystal: '264'
+    DiamondIngot: '264'
+    DiamondBar: '264'
+    IronBar: '265'
+    GoldBar: '266'
+    SoupBowl: '281'
+    WoodBowl: '281'
+    WBowl: '281'
+    Yarn: '287'
+    Web: '287'
+    Rope: '287'
+    Silk: '287'
+    Twine: '287'
+    Feathers: '288'
+    Quill: '288'
+    Quills: '288'
+    Sulfur: '289'
+    Gunpowder: '289'
+    Seed: '295'
+    Grain: '296'
+    RedstoneDust: '331'
+    RDust: '331'
+    Skin: '334'
+    Pelt: '334'
+    Brick: '336'
+    ClayBrick: '336'
+    ClayBalls: '337'
+    SugarCanes: '338'
+    Reed: '338'
+    Reeds: '338'
+    Papyrus: '339'
+    SlimeOrb: '341'
+    LightstoneDust: '348'
+    GlowDust: '348'
+    LightDust: '348'
+    BrittleGoldDust: '348'
+    LeatherCap: '298'
+    LeatherHelm: '298'
+    LeatherHat: '298'
+    LHelmet: '298'
+    LHelm: '298'
+    LCap: '298'
+    LHat: '298'
+    ChainHelmet: '302'
+    ChainHelm: '302'
+    ChainCap: '302'
+    ChainHat: '302'
+    MailHelmet: '302'
+    MailHelm: '302'
+    MailCap: '302'
+    MailHat: '302'
+    ChainmailHelm: '302'
+    ChainmailCap: '302'
+    ChainmailHat: '302'
+    CHelmet: '302'
+    CHelm: '302'
+    CCap: '302'
+    CHat: '302'
+    IronHelm: '306'
+    IronCap: '306'
+    IronHat: '306'
+    IHelmet: '306'
+    IHelm: '306'
+    ICap: '306'
+    IHat: '306'
+    DiamondHelm: '310'
+    DiamondCap: '310'
+    DiamondHat: '310'
+    DHelmet: '310'
+    DHelm: '310'
+    DCap: '310'
+    DHat: '310'
+    GoldenHelmet: '314'
+    GoldenHelm: '314'
+    GoldenCap: '314'
+    GoldenHat: '314'
+    GoldHelm: '314'
+    GoldCap: '314'
+    GoldHat: '314'
+    GHelmet: '314'
+    GHelm: '314'
+    GCap: '314'
+    GHat: '314'
+    LeatherTunic: '299'
+    LeatherPlate: '299'
+    LeatherBody: '299'
+    LChestplate: '299'
+    LPlate: '299'
+    LTunic: '299'
+    LBody: '299'
+    ChainChestplate: '303'
+    ChainPlate: '303'
+    ChainTunic: '303'
+    ChainBody: '303'
+    MailChestplate: '303'
+    MailPlate: '303'
+    MailTunic: '303'
+    MailBody: '303'
+    ChainmailPlate: '303'
+    ChainmailTunic: '303'
+    ChainmailBody: '303'
+    CChestplate: '303'
+    CPlate: '303'
+    CTunic: '303'
+    CBody: '303'
+    IronPlate: '307'
+    IronTunic: '307'
+    IronBody: '307'
+    IChestplate: '307'
+    IPlate: '307'
+    ITunic: '307'
+    IBody: '307'
+    DiamondPlate: '311'
+    DiamondTunic: '311'
+    DiamondBody: '311'
+    DChestplate: '311'
+    DPlate: '311'
+    DTunic: '311'
+    DBody: '311'
+    GoldenChestplate: '315'
+    GoldenPlate: '315'
+    GoldenTunic: '315'
+    GoldenBody: '315'
+    GoldPlate: '315'
+    GoldTunic: '315'
+    GoldBody: '315'
+    GChestplate: '315'
+    GPlate: '315'
+    GTunic: '315'
+    GBody: '315'
+    LeatherPants: '300'
+    LeatherLegs: '300'
+    LLeggings: '300'
+    LLegs: '300'
+    LPants: '300'
+    ChainLeggings: '304'
+    ChainLegs: '304'
+    ChainPants: '304'
+    MailLeggings: '304'
+    MailLegs: '304'
+    MailPants: '304'
+    ChainmailLegs: '304'
+    ChainmailPants: '304'
+    CLeggins: '304'
+    CLegs: '304'
+    CPants: '304'
+    IronLegs: '308'
+    IronPants: '308'
+    ILeggings: '308'
+    ILegs: '308'
+    IPants: '308'
+    DiamondLegs: '312'
+    DiamondPants: '312'
+    DLeggings: '312'
+    DLegs: '312'
+    DPants: '312'
+    GoldenLeggings: '316'
+    GoldenLegs: '316'
+    GoldenPants: '316'
+    GoldLegs: '316'
+    GoldPants: '316'
+    GLeggins: '316'
+    GLegs: '316'
+    GPants: '316'
+    LeatherShoes: '301'
+    LBoots: '301'
+    LShoes: '301'
+    ChainBoots: '305'
+    ChainShoes: '305'
+    MailBoots: '305'
+    MailShoes: '305'
+    ChainmailShoes: '305'
+    CBoots: '305'
+    CShoes: '305'
+    IronShoes: '309'
+    IBoots: '309'
+    IShoes: '309'
+    DiamondShoes: '313'
+    DBoots: '313'
+    DShoes: '313'
+    GoldenBoots: '317'
+    GoldenShoes: '317'
+    GoldShoes: '317'
+    GBoots: '317'
+    GShoes: '317'
+    Paintings: '321'
+    Picture: '321'
+    Door: '324'
+    WoodenDoor: '324'
+    WDoor: '324'
+    IDoor: '330'
+    MetalDoor: '330'
+    RedstoneRepeater: '356'
+    RedstoneDelay: '356'
+    RedstoneDiode: '356'
+    Repeater: '356'
+    Delay: '356'
+    GoldMusicDisc: '2256'
+    GoldDisc: '2256'
+    GoldenMusicDisc: '2256'
+    GoldenRecord: '2256'
+    GoldenDisc: '2256'
+    GoldCD: '2256'
+    GoldenCD: '2256'
+    GreenMusicDisc: '2257'
+    GreenDisc: '2257'
+    GreenCD: '2257'
+    Cart: '328'
+    Barge: '333'
+    MinecartWithChest: '342'
+    FreightMinecart: '342'
+    ChestMinecart: '342'
+    CartWithChest: '342'
+    FreightCart: '342'
+    StorageCart: '342'
+    ChestCart: '342'
+    Freight: '342'
+    MinecartWithFurnace: '343'
+    EngineMinecart: '343'
+    FurnaceMinecart: '343'
+    AutoMinecart: '343'
+    CartWithFurnace: '343'
+    PoweredCart: '343'
+    EngineCart: '343'
+    FurnaceCart: '343'
+    AutoCart: '343'
+    Engine: '343'
+    Dye: '351'
+    InkSac: 351/0
+    InkSack: 351/0
+    RoseRed: 351/1
+    CactusGreen: 351/2
+    CocoaBeans: 351/3
+    CocoBeans: 351/3
+    LapisLazuli: 351/4
+    Lapis: 351/4
+    Lazuli: 351/4
+    DandelionYellow: 351/11
+    BoneMeal: 351/15
+    Bleach: 351/15
+    Fertilizer: 351/15
+    SignBlock: '63'
+    WoodenDoorBlock: '64'
+    WoodDoorBlock: '64'
+    WDoorBlock: '64'
+    WallSign: '68'
+    WallSignBlock: '68'
+    IDoorBlock: '71'
+    MetalDoorBlock: '71'
+    RedstoneOreGlow: '74'
+    RedstoneOreAlt: '74'
+    UnlitRedstoneTorch: '75'
+    UnlitRedTorch: '75'
+    RedTorchOff: '75'
+    ReedBlock: '83'
+    Bone: '352'
+    Sugar: '353'
+    Cake: '354'
+    Cookie: '357'
+    Map: '358'
+    Shears: '359'
+    MelonSlice: '360'
+    PumpkinSeeds: '361'
+    MelonSeeds: '362'
+    RawBeef: '363'
+    Steak: '364'
+    RawChicken: '365'
+    CookedChicken: '366'
+    RottenFlesh: '367'
+    EnderPEarl: '368'
+    BlazeRod: '369'
+    GhastTear: '370'
+    GoldNugget: '371'
+    NetherWart: '372'

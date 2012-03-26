@@ -1,0 +1,33 @@
+GiantShop:
+    global:
+        name: GiantShop
+        debug: true
+        opHasPerms: true
+        perPage: 5
+    db:
+        driver: SQLite
+        database: GiantShop
+        prefix: shop_
+        host: localhost
+        user: root
+        password: 
+    permissions:
+        usePermissions: true
+        permissionEngine: sperm
+    Location:
+        perPage: 5
+        useGiantShopLocation: true
+        showPlayerEnteredShop: true
+        protect:
+            Worlds:
+                disableOffList: true
+                protected:
+                - world1
+                allowed:
+                - world1
+            Commands:
+            - buy
+            - gift
+            - sell
+            - list
+            - check
