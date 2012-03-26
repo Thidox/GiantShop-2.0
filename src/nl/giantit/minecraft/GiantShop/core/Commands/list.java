@@ -28,6 +28,7 @@ public class list {
 		perm perms = perm.Obtain();
 		config conf = config.Obtain();
 		if(perms.has(player, "giantshop.shop.list")) {
+			String name = GiantShop.getPlugin().getPubName();
 			int perPage = conf.getInt("GiantShop.global.perPage");
 			int curPag = 0;
 			
@@ -51,11 +52,14 @@ public class list {
 			fields.add("buyFor");
 			fields.add("stock");
 			ArrayList<HashMap<String, String>> data = DB.select(fields).execQuery();
+			
+			int pages = ((int)Math.ceil((double)data.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)data.size() / (double)perPage);
+			int start = (curPag * perPage) - perPage;
 			if(data.size() <= 0) {
 				Heraut.say(player, msgs.getMsg(Messages.msgType.ERROR, "noItems"));
+			}else if(curPag > pages) {
+				Heraut.say("&e[&3" + name + "&e]&c My help list only has &e" + pages + " &cpages!!");
 			}else{
-				int pages = ((int)Math.ceil((double)data.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)data.size() / (double)perPage);
-				int start = (curPag * perPage) - perPage;
 				
 			}
 			
