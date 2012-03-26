@@ -52,7 +52,11 @@ public class list {
 			fields.add("buyFor");
 			fields.add("stock");
 			fields.add("shops");
-			ArrayList<HashMap<String, String>> data = DB.select(fields).from("#__items").execQuery();
+			
+			HashMap<String, String> order = new HashMap<String, String>();
+			order.put("itemID", "ASC");
+			order.put("type", "ASC");
+			ArrayList<HashMap<String, String>> data = DB.select(fields).from("#__items").orderBy(order).execQuery();
 			
 			int pages = ((int)Math.ceil((double)data.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)data.size() / (double)perPage);
 			int start = (curPag * perPage) - perPage;
@@ -68,14 +72,14 @@ public class list {
 					
 					HashMap<String, String> params = new HashMap<String, String>();
 					params.put("id", entry.get("itemID"));
-					params.put("type", entry.get("type"));
-					params.put("name", iH.getItemNameByID(Integer.parseInt(entry.get("itemID")), Integer.parseInt(entry.get("type"))));
+					params.put("type", (!entry.get("type").equals("-1") ? entry.get("type") : "0"));
+					params.put("name", iH.getItemNameByID(Integer.parseInt(entry.get("itemID")), Integer.parseInt(params.get("type"))));
 					params.put("perStack", entry.get("perStack"));
 					params.put("sellFor", entry.get("sellFor"));
 					params.put("buyFor", entry.get("buyFor"));
 					
 					if(conf.getBoolean("GiantShop.global.useStock") == true)
-						params.put("stock", entry.get("stock"));
+						params.put("stock", (!entry.get("stock").equals("-1") ? entry.get("stock") : "0"));
 					
 					// Future stuff
 					/* if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
