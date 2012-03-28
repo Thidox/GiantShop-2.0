@@ -80,6 +80,7 @@ public class list {
 						params.put("stock", (!entry.get("stock").equals("-1") ? entry.get("stock") : "unlimited"));
 					
 					// Future stuff
+					// Probably am going to want to do this VERY different though :D
 					/* if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
 					 *		ArrayList<Indaface> shops = GiantShop.getPlugin().getLocationHandler().parseShops(entry.get("shops"));
 					 *		for(Indaface shop : shops) {
