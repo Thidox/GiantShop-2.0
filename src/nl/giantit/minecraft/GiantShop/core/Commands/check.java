@@ -28,13 +28,14 @@ public class check {
 		perm perms = perm.Obtain();
 		config conf = config.Obtain();
 		if(perms.has(player, "giantshop.shop.check")) {
+			db DB = db.Obtain();
 			int itemID;
-			Integer itemType = null;
+			Integer itemType = -1;
 			
 			if(!args[1].matches("[0-9]+:[0-9]+")) {
 				try {
 					itemID = Integer.parseInt(args[1]);
-					itemType = null;
+					itemType = -1;
 				}catch(NumberFormatException e) {
 					ItemID key = iH.getItemIDByName(args[1]);
 					if(key != null) {
@@ -74,8 +75,8 @@ public class check {
 					return;
 				}
 			}
+			itemType = itemType == 0 ? -1 : itemType;
 			
-			db DB = db.Obtain();
 			ArrayList<String> fields = new ArrayList<String>();
 			fields.add("perStack");
 			fields.add("sellFor");
@@ -83,7 +84,15 @@ public class check {
 			fields.add("stock");
 			fields.add("shops");
 			
-			DB.select(fields).where(null, true);
+			HashMap<String, HashMap<String, String>> where = new HashMap<String, HashMap<String, String>>();
+			HashMap<String, String> d = new HashMap<String, String>();
+			d.put("type", "INT");
+			d.put("value", String.valueOf(itemID));
+			where.put("itemID", d);
+			d.put("value", String.valueOf(itemType));
+			where.put("type", d);
+			
+			DB.select(fields).where(where, true);
 		}else{
 			HashMap<String, String> data = new HashMap<String, String>();
 			data.put("command", "check");
