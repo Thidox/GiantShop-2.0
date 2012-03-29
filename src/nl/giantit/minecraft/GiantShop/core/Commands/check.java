@@ -92,7 +92,12 @@ public class check {
 			d.put("value", String.valueOf(itemType));
 			where.put("type", d);
 			
-			DB.select(fields).where(where, true);
+			ArrayList<HashMap<String, String>> resSet = DB.select(fields).where(where, true).execQuery();
+			if(resSet.size() == 1) {
+				
+			}else{
+				Heraut.say(player, msgs.getMsg(Messages.msgType.ERROR, "noneOrMoreResults"));
+			}
 		}else{
 			HashMap<String, String> data = new HashMap<String, String>();
 			data.put("command", "check");
