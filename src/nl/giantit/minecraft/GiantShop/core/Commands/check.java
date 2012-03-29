@@ -101,7 +101,7 @@ public class check {
 				Heraut.say(player, "Type: " + itemType);
 				Heraut.say(player, "Quantity per amount: " + res.get("perStack"));
 				Heraut.say(player, "Leaves shop for: " + res.get("sellFor"));
-				Heraut.say(player, "Retursns to shop for: " + res.get("buyFor"));
+				Heraut.say(player, "Returns to shop for: " + res.get("buyFor"));
 				Heraut.say(player, "Amount of items in he shop: " + (!res.get("stock").equals("-1") ? res.get("stock") : "unlimited"));
 				//More future stuff
 				/*if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
@@ -203,7 +203,7 @@ public class check {
 			Heraut.say(sender, "Type: " + itemType);
 			Heraut.say(sender, "Quantity per amount: " + res.get("perStack"));
 			Heraut.say(sender, "Leaves shop for: " + res.get("sellFor"));
-			Heraut.say(sender, "Retursns to shop for: " + res.get("buyFor"));
+			Heraut.say(sender, "Returns to shop for: " + res.get("buyFor"));
 			Heraut.say(sender, "Amount of items in he shop: " + (!res.get("stock").equals("-1") ? res.get("stock") : "unlimited"));
 			//More future stuff
 			/*if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
