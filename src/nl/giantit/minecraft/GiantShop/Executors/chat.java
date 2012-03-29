@@ -105,7 +105,7 @@ public class chat {
 			}else
 				help.showHelp(player, args);
 		}else{
-			Heraut.say("Ok, we have no friggin clue what you are on about, so what about we just send you our help page?");
+			Heraut.say(player, "Ok, we have no friggin clue what you are on about, so what about we just send you our help page?");
 			help.showHelp(player, args);
 		}
 
