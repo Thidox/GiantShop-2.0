@@ -17,4 +17,5 @@ errors:
     itemAlreadyFound: C_REDWe are sorry but the requested item seems to already exist in our database!
     itemNotFound: C_REDWe are sorry but the requested item does not seem to exist!
     noItems: C_REDWe are sorry but it seems like our shop does not hold any items yet!
+    noneOrMoreResults: C_REDWe are sorry but we have no frigging clue what item you want as we found either none or more then 1 result!
     unkown: C_REDWe are sorry but an unknown error occured!
