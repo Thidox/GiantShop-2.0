@@ -48,14 +48,14 @@ public class chat {
 			}else
 				list.list(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "check", "c")) {
-			//in dev
+			//done for now
 			if(plugin.useLoc && plugin.cmds.contains("check")) {
 				if(plugin.loc.canUse(player))
 					check.check(player, args);
 			}else
 				check.check(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "buy", "b")) {
-			//stalled
+			//in dev
 			if(plugin.useLoc && plugin.cmds.contains("buy")) {
 				if(plugin.loc.canUse(player))
 					buy.buy(player, args);
@@ -76,7 +76,6 @@ public class chat {
 			}else
 				buy.gift(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "add", "a")) {
-			//in dev
 			//finished for now
 			if(plugin.useLoc && plugin.cmds.contains("add")) {
 				if(plugin.loc.canUse(player))
