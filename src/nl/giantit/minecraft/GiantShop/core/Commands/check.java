@@ -90,6 +90,10 @@ public class check {
 			
 			ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where).execQuery();
 			if(resSet.size() == 1) {
+				//Wait didn't we just do this the other way round?!
+				//Yea we did! Why? Because we can!
+				itemType = (itemType == -1) ? 0 : itemType;
+				
 				String name = iH.getItemNameByID(itemID, itemType);
 				HashMap<String, String> res = resSet.get(0);
 				Heraut.say(player, "Here's the result for " + name + "!");
