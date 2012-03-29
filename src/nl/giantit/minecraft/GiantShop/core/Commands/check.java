@@ -75,7 +75,7 @@ public class check {
 					return;
 				}
 			}
-			itemType = itemType == 0 ? -1 : itemType;
+			itemType = (itemType == null || itemType == 0) ? -1 : itemType;
 			
 			ArrayList<String> fields = new ArrayList<String>();
 			fields.add("perStack");
