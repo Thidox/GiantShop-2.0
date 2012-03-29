@@ -15,6 +15,9 @@ permissions:
             giantshop.shop.buy: true
             giantshop.shop.sell: true
             giantshop.shop.gift: true
+            giantshop.shop.list: true
+            giantshop.shop.check: true
+            giantshop.shop.search: true
             giantshop.admin.send: true
             giantshop.admin.add: true
             giantshop.admin.update: true
@@ -68,6 +71,9 @@ permissions:
         default: true
     giantshop.shop.check:
         description: Gives access to the item checking feature
+        default: true
+    giantshop.shop.search:
+        description: Gives access to the item searching feature
         default: true
     giantshop.admin.send:
         description: Enables admin to send GiantShop help to user
