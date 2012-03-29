@@ -94,7 +94,26 @@ public class check {
 			
 			ArrayList<HashMap<String, String>> resSet = DB.select(fields).where(where, true).execQuery();
 			if(resSet.size() == 1) {
-				
+				String name = iH.getItemNameByID(itemID, itemType);
+				HashMap<String, String> res = resSet.get(0);
+				Heraut.say(player, "Here's the result for " + name + "!");
+				Heraut.say(player, "ID: " + itemID);
+				Heraut.say(player, "Type: " + itemType);
+				Heraut.say(player, "Quantity per amount: " + res.get("perStack"));
+				Heraut.say(player, "Leaves shop for: " + res.get("sellFor"));
+				Heraut.say(player, "Retursns to shop for: " + res.get("buyFor"));
+				Heraut.say(player, "Amount of items in he shop: " + (!res.get("stock").equals("-1") ? res.get("stock") : "unlimited"));
+				//More future stuff
+				/*if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
+				 *		ArrayList<Indaface> shops = GiantShop.getPlugin().getLocationHandler().parseShops(res.get("shops"));
+				 *		for(Indaface shop : shops) {
+				 *			if(shop.inShop(player.getLocation())) {
+				 *				Heraut.say(player, "Something about what shops these items are in or something like that!");
+				 *				break;
+				 *			}
+				 *		}
+				 * } 
+				 */
 			}else{
 				Heraut.say(player, msgs.getMsg(Messages.msgType.ERROR, "noneOrMoreResults"));
 			}
