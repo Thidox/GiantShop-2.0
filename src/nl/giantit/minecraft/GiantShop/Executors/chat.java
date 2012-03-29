@@ -1,6 +1,7 @@
 package nl.giantit.minecraft.GiantShop.Executors;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.Commands.*;
@@ -103,6 +104,9 @@ public class chat {
 					help.showHelp(player, args);
 			}else
 				help.showHelp(player, args);
+		}else{
+			Heraut.say("Ok, we have no friggin clue what you are on about, so what about we just send you our help page?");
+			help.showHelp(player, args);
 		}
 
 		return true;
