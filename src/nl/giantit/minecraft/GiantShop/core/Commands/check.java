@@ -84,15 +84,11 @@ public class check {
 			fields.add("stock");
 			fields.add("shops");
 			
-			HashMap<String, HashMap<String, String>> where = new HashMap<String, HashMap<String, String>>();
-			HashMap<String, String> d = new HashMap<String, String>();
-			d.put("type", "INT");
-			d.put("value", String.valueOf(itemID));
-			where.put("itemID", d);
-			d.put("value", String.valueOf(itemType));
-			where.put("type", d);
+			HashMap<String, String> where = new HashMap<String, String>();
+			where.put("itemID", String.valueOf(itemID));
+			where.put("type", String.valueOf(itemType));
 			
-			ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where, true).execQuery();
+			ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where).execQuery();
 			if(resSet.size() == 1) {
 				String name = iH.getItemNameByID(itemID, itemType);
 				HashMap<String, String> res = resSet.get(0);
