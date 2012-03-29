@@ -50,9 +50,9 @@ public class chat {
 			//in dev
 			if(plugin.useLoc && plugin.cmds.contains("check")) {
 				if(plugin.loc.canUse(player))
-					help.showHelp(player, args);
+					check.check(player, args);
 			}else
-				help.showHelp(player, args);
+				check.check(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "buy", "b")) {
 			//stalled
 			if(plugin.useLoc && plugin.cmds.contains("buy")) {
