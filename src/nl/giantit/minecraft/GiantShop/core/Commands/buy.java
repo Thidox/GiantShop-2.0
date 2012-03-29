@@ -16,6 +16,7 @@ import java.util.HashMap;
  * @author Giant
  */
 public class buy {
+	
 	static config conf = config.Obtain();
 	static db database = db.Obtain();
 	static perm perms = perm.Obtain();
