@@ -54,6 +54,8 @@ public class chat {
 					check.check(player, args);
 			}else
 				check.check(player, args);
+		}else if(args[0].equalsIgnoreCase("search")) {
+			//futuristic ideas! :D
 		}else if(Misc.isEitherIgnoreCase(args[0], "buy", "b")) {
 			//in dev
 			if(plugin.useLoc && plugin.cmds.contains("buy")) {
