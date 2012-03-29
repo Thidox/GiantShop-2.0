@@ -20,6 +20,7 @@ public class console {
 	}
 
 	public boolean exec(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		//on hold till after buy/sell command
 		if(args.length == 0 || args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") || args[0].equalsIgnoreCase("?")) {
 			//done
 			help.showConsoleHelp(sender, args);
@@ -31,7 +32,9 @@ public class console {
 			//needs testing
 			list.listConsole(sender, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "check", "c")) {
-			//in dev
+			//done
+			//needs testing
+			check.check(sender, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "add", "a")) {
 			//done
 			add.addConsole(sender, args);
