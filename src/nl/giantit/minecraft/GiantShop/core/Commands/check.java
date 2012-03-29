@@ -92,7 +92,7 @@ public class check {
 			d.put("value", String.valueOf(itemType));
 			where.put("type", d);
 			
-			ArrayList<HashMap<String, String>> resSet = DB.select(fields).where(where, true).execQuery();
+			ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where, true).execQuery();
 			if(resSet.size() == 1) {
 				String name = iH.getItemNameByID(itemID, itemType);
 				HashMap<String, String> res = resSet.get(0);
