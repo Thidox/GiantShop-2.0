@@ -1,6 +1,7 @@
 package nl.giantit.minecraft.GiantShop.core.Eco.Engines;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.GiantShop.core.Eco.iEco;
 
 import java.lang.reflect.Method;
 
@@ -22,7 +23,7 @@ import org.neocraft.AEco.AEco;
 public class AEco_Engine implements iEco {
 	
 	private GiantShop plugin;
-	private org.neocraft.AEco.part.Economy.Economy eco;
+	private org.neocraft.AEco.part.Economy.Economy eco = null;
 	private Method createWallet = null;
 	
 	public AEco_Engine(GiantShop plugin) {
@@ -34,13 +35,20 @@ public class AEco_Engine implements iEco {
 
 			if(ecoEn != null && ecoEn.isEnabled()) {
 				eco = AEco.ECONOMY;
+				
 				try{
 					createWallet = eco.getClass().getMethod("createWallet", String.class);
 					createWallet.setAccessible(true);
 				}catch(SecurityException e) {
 				}catch(NoSuchMethodException e) {
+				}catch(NullPointerException e) {
 				}
-				plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into AEco!");
+				
+				if(eco == null) {
+					plugin.getLogger().log(Level.WARNING, "[" + plugin.getPubName() + "] Failed to hook into AEco!");
+				}else{
+					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into AEco!");
+				}
 			}
 		}
 	}
@@ -57,7 +65,7 @@ public class AEco_Engine implements iEco {
 	
 	@Override
 	public double getBalance(String player) {
-		return 0.0;
+		return eco.cash(player);
 	}
 	
 	@Override
@@ -67,6 +75,15 @@ public class AEco_Engine implements iEco {
 	
 	@Override
 	public boolean withdraw(String player, double amount) {
+		if(amount > 0) {
+			int balance = eco.cash(player);
+			amount = Math.ceil(amount);
+			if((balance - amount) >= 0) {
+				eco.set(player, ((int) (balance - amount)));
+				return true;
+			}
+		}
+		
 		return false;
 	}
 	
@@ -77,6 +94,11 @@ public class AEco_Engine implements iEco {
 	
 	@Override
 	public boolean deposit(String player, double amount) {
+		if(amount > 0) {
+			int balance = eco.cash(player);
+			eco.set(player, ((int) (balance + Math.ceil(amount))));
+			return true;
+		}
 		return false;
 	}
 	
@@ -95,10 +117,11 @@ public class AEco_Engine implements iEco {
 				if(ecoEn != null && ecoEn.isEnabled()) {
 					eco.eco = AEco.ECONOMY;
 					try{
-						createWallet = eco.getClass().getMethod("createWallet", String.class);
+						createWallet = eco.eco.getClass().getMethod("createWallet", String.class);
 						createWallet.setAccessible(true);
 					}catch(SecurityException e) {
 					}catch(NoSuchMethodException e) {
+					}catch(NullPointerException e) {
 					}
 					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into AEco!");
 				}
