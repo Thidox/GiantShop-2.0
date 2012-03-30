@@ -1,11 +1,13 @@
 GiantShop:
     global:
-        version: 0.1
+        version: 0.2
         name: GiantShop
         debug: true
         opHasPerms: true
         perPage: 5
         useStock: true
+        broadcastBuy: true
+        broadcastSell: false
     db:
         driver: SQLite
         database: GiantShop
