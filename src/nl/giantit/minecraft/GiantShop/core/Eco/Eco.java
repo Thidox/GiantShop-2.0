@@ -95,4 +95,8 @@ public class Eco {
 	public boolean isLoaded() {
 		return (this.Engine != null && this.Engine.isLoaded());
 	}
+	
+	public iEco getEngine() {
+		return this.Engine;
+	}
 }
