@@ -1,4 +1,4 @@
-version: 0.4
+version: 0.5
 main:
     buy: You have just bought C_YELLOW&amount C_WHITEof item C_YELLOW&item for C_YELLOW&cash!
     giftSender: You have just gifted C_YELLOW&amount C_WHITEof item C_YELLOW&item C_WHITEto user C_YELLOW&giftReceiver for C_YELLOW&cash!
@@ -16,6 +16,8 @@ errors:
     syntaxError: C_REDPlease use the appropriate syntax for the C_YELLOW&command C_REDcommand!
     itemAlreadyFound: C_REDWe are sorry but the requested item seems to already exist in our database!
     itemNotFound: C_REDWe are sorry but the requested item does not seem to exist!
+    insufFunds: C_REDWe are sorry but you do not have enough money for that puchase! You need &needed while you have only &have
+    infFull: C_REDWe are sorry buy your inventory is full! We will drop the remaining items for you!
     noItems: C_REDWe are sorry but it seems like our shop does not hold any items yet!
     noneOrMoreResults: C_REDWe are sorry but we have no frigging clue what item you want as we found either none or more then 1 result!
     unkown: C_REDWe are sorry but an unknown error occured!
