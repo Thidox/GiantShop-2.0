@@ -65,7 +65,7 @@ public class AEco_Engine implements iEco {
 	
 	@Override
 	public double getBalance(String player) {
-		return eco.cash(player);
+		return (double) eco.cash(player);
 	}
 	
 	@Override
