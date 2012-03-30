@@ -2,6 +2,9 @@ name: GiantShop
 main: nl.giantit.minecraft.GiantShop.GiantShop
 version: 0.0.dev
 commands:
+    s:
+        description: Shopping goes through here!
+        usage: /s [params]
     shop:
         description: Shopping goes through here!
         usage: /shop [params]

@@ -21,6 +21,7 @@ import java.util.List;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 
 /**
@@ -119,7 +120,7 @@ public class GiantShop extends JavaPlugin {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if (cmd.getName().equalsIgnoreCase("shop")) {
+		if (Misc.isEitherIgnoreCase(cmd.getName(), "shop", "s")) {
 			if(!(sender instanceof Player)){
 				return console.exec(sender, cmd, commandLabel, args);
 			}
