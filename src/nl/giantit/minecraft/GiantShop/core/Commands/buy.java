@@ -109,63 +109,67 @@ public class buy {
 
 					ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where).execQuery();
 					if(resSet.size() == 1) {
-						String name = iH.getItemNameByID(itemID, itemType);
 						HashMap<String, String> res = resSet.get(0);
+						if(!res.get("sellFor").equals("-1")) {
+							String name = iH.getItemNameByID(itemID, itemType);
 
-						int perStack = Integer.parseInt(res.get("perStack"));
-						double sellFor = Double.parseDouble(res.get("sellFor"));
-						double balance = eH.getBalance(player);
+							int perStack = Integer.parseInt(res.get("perStack"));
+							double sellFor = Double.parseDouble(res.get("sellFor"));
+							double balance = eH.getBalance(player);
 
-						double cost = sellFor * (double) quantity;
-						int amount = perStack * quantity;
+							double cost = sellFor * (double) quantity;
+							int amount = perStack * quantity;
 
-						if((balance - cost) < 0) {
-							HashMap<String, String> data = new HashMap<String, String>();
-							data.put("needed", String.valueOf(cost));
-							data.put("have", String.valueOf(balance));
+							if((balance - cost) < 0) {
+								HashMap<String, String> data = new HashMap<String, String>();
+								data.put("needed", String.valueOf(cost));
+								data.put("have", String.valueOf(balance));
 
-							Heraut.say(mH.getMsg(Messages.msgType.ERROR, "insufFunds", data));
-						}else{
-							if(eH.withdraw(player, cost)) {
-								ItemStack iStack;
-								Inventory inv = player.getInventory();
-								
-								if(itemType != null && itemType != -1) {
-									iStack = new MaterialData(itemID, (byte) ((int) itemType)).toItemStack(amount);
-								}else{
-									iStack = new ItemStack(itemID, amount);
-								}
-								
-								if(conf.getBoolean("GiantShop.global.broadcastBuy"))
-									Heraut.broadcast(player.getName() + " bought some " + name);
-								
-								Heraut.say("You have just bought " + amount + " of " + name + " for " + cost);
-								Heraut.say("Your new balance is: " + eH.getBalance(player));
-								
-								HashMap<Integer, ItemStack> left;
-								left = inv.addItem(iStack);
-								
-								if(!left.isEmpty()) {
-									Heraut.say(mH.getMsg(Messages.msgType.ERROR, "infFull"));
-									for(Map.Entry<Integer, ItemStack> stack : left.entrySet()) {
-										player.getWorld().dropItem(player.getLocation(), stack.getValue());
+								Heraut.say(mH.getMsg(Messages.msgType.ERROR, "insufFunds", data));
+							}else{
+								if(eH.withdraw(player, cost)) {
+									ItemStack iStack;
+									Inventory inv = player.getInventory();
+
+									if(itemType != null && itemType != -1) {
+										iStack = new MaterialData(itemID, (byte) ((int) itemType)).toItemStack(amount);
+									}else{
+										iStack = new ItemStack(itemID, amount);
+									}
+
+									if(conf.getBoolean("GiantShop.global.broadcastBuy"))
+										Heraut.broadcast(player.getName() + " bought some " + name);
+
+									Heraut.say("You have just bought " + amount + " of " + name + " for " + cost);
+									Heraut.say("Your new balance is: " + eH.getBalance(player));
+
+									HashMap<Integer, ItemStack> left;
+									left = inv.addItem(iStack);
+
+									if(!left.isEmpty()) {
+										Heraut.say(mH.getMsg(Messages.msgType.ERROR, "infFull"));
+										for(Map.Entry<Integer, ItemStack> stack : left.entrySet()) {
+											player.getWorld().dropItem(player.getLocation(), stack.getValue());
+										}
 									}
 								}
 							}
-						}
 
-						//More future stuff
-						/*if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
-						 *		ArrayList<Indaface> shops = GiantShop.getPlugin().getLocationHandler().parseShops(res.get("shops"));
-						 *		for(Indaface shop : shops) {
-						 *			if(shop.inShop(player.getLocation())) {
-						 *				//Player can get the item he wants! :D
-						 *			}
-						 *		}
-						 * }else{
-						 *		//Just a global store then :)
-						 * }
-						 */
+							//More future stuff
+							/*if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
+							 *		ArrayList<Indaface> shops = GiantShop.getPlugin().getLocationHandler().parseShops(res.get("shops"));
+							 *		for(Indaface shop : shops) {
+							 *			if(shop.inShop(player.getLocation())) {
+							 *				//Player can get the item he wants! :D
+							 *			}
+							 *		}
+							 * }else{
+							 *		//Just a global store then :)
+							 * }
+							 */
+						}else{
+							Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "notForSale"));
+						}
 					}else{
 						Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noneOrMoreResults"));
 					}
