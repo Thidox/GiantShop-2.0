@@ -96,7 +96,7 @@ public class buy {
 				}else
 					quantity = 1;
 				
-				if(iH.isValidItem(itemID, itemType)) {
+				if(iH.isValidItem(itemID, ((itemType == -1 || itemType == 0) ? null : itemType))) {
 					ArrayList<String> fields = new ArrayList<String>();
 					fields.add("perStack");
 					fields.add("sellFor");
@@ -105,13 +105,13 @@ public class buy {
 
 					HashMap<String, String> where = new HashMap<String, String>();
 					where.put("itemID", String.valueOf(itemID));
-					where.put("type", String.valueOf((itemType == null || itemType == 0) ? -1 : itemType));
+					where.put("type", String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType));
 
 					ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where).execQuery();
 					if(resSet.size() == 1) {
 						HashMap<String, String> res = resSet.get(0);
 						if(!res.get("sellFor").equals("-1.0")) {
-							String name = iH.getItemNameByID(itemID, itemType);
+							String name = iH.getItemNameByID(itemID, ((itemType == -1 || itemType == 0) ? null : itemType));
 
 							int perStack = Integer.parseInt(res.get("perStack"));
 							double sellFor = Double.parseDouble(res.get("sellFor"));
