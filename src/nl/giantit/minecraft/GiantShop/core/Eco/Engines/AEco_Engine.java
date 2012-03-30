@@ -2,6 +2,9 @@ package nl.giantit.minecraft.GiantShop.core.Eco.Engines;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
 
+import java.lang.reflect.Method;
+
+import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,6 +13,8 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import org.neocraft.AEco.AEco;
+
 /**
  *
  * @author Giant
@@ -17,12 +22,27 @@ import org.bukkit.plugin.Plugin;
 public class AEco_Engine implements iEco {
 	
 	private GiantShop plugin;
-	private Integer eco;
+	private org.neocraft.AEco.part.Economy.Economy eco;
+	private Method createWallet = null;
 	
 	public AEco_Engine(GiantShop plugin) {
 		this.plugin = plugin;
 		Bukkit.getServer().getPluginManager().registerEvents(new EcoListener(this), plugin);
 		
+		if(eco == null) {
+			Plugin ecoEn = plugin.getServer().getPluginManager().getPlugin("AEco");
+
+			if(ecoEn != null && ecoEn.isEnabled()) {
+				eco = AEco.ECONOMY;
+				try{
+					createWallet = eco.getClass().getMethod("createWallet", String.class);
+					createWallet.setAccessible(true);
+				}catch(SecurityException e) {
+				}catch(NoSuchMethodException e) {
+				}
+				plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into AEco!");
+			}
+		}
 	}
 	
 	@Override
@@ -73,14 +93,26 @@ public class AEco_Engine implements iEco {
 				Plugin ecoEn = plugin.getServer().getPluginManager().getPlugin("AEco");
 				
 				if(ecoEn != null && ecoEn.isEnabled()) {
-					eco.eco = 0;
+					eco.eco = AEco.ECONOMY;
+					try{
+						createWallet = eco.getClass().getMethod("createWallet", String.class);
+						createWallet.setAccessible(true);
+					}catch(SecurityException e) {
+					}catch(NoSuchMethodException e) {
+					}
+					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into AEco!");
 				}
 			}
 		}
 		
 		@EventHandler()
 		public void onPluginDisable(PluginDisableEvent event) {
-			
+			if(eco.eco != null) {
+				if(event.getPlugin().getDescription().getName().equals("AEco")) {
+					eco.eco = null;
+					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully unhooked into AEco!");
+				}
+			}
 		}
 	}
 }
