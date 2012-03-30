@@ -20,11 +20,11 @@ import java.util.logging.Level;
  */
 public class buy {
 	
-	static config conf = config.Obtain();
-	static db DB = db.Obtain();
-	static perm perms = perm.Obtain();
-	static Messages mH = GiantShop.getPlugin().getMsgHandler();
-	static Items iH = GiantShop.getPlugin().getItemHandler();
+	private static config conf = config.Obtain();
+	private static db DB = db.Obtain();
+	private static perm perms = perm.Obtain();
+	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
+	private static Items iH = GiantShop.getPlugin().getItemHandler();
 	
 	public static void buy(Player player, String[] args) {
 		Heraut.savePlayer(player);
