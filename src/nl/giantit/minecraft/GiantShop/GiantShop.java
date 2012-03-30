@@ -1,8 +1,9 @@
 package nl.giantit.minecraft.GiantShop;
 
-import nl.giantit.minecraft.GiantShop.core.Database.db;
 import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.core.config;
+import nl.giantit.minecraft.GiantShop.core.Database.db;
+import nl.giantit.minecraft.GiantShop.core.Eco.Eco;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.Executors.*;
 import nl.giantit.minecraft.GiantShop.Listeners.*;
@@ -37,6 +38,7 @@ public class GiantShop extends JavaPlugin {
 	private locchat locchat;
 	private locconsole locconsole;
 	private Items itemHandler;
+	private Eco econHandler;
 	private Messages msgHandler;
 	private String name, dir, pubName;
 	
@@ -92,9 +94,16 @@ public class GiantShop extends JavaPlugin {
 			chat = new chat(this);
 			console = new console(this);
 			itemHandler = new Items(this);
+			econHandler = new Eco(this);
 			msgHandler = new Messages(this);
 			
-			log.log(Level.INFO, "[" + this.name + "] Was successfully enabled!");
+			if(econHandler.isLoaded()) {
+				log.log(Level.INFO, "[" + this.name + "] Was successfully enabled!");
+			}else{
+				log.log(Level.SEVERE, "[" + this.name + "] Could not load economy engine!");
+				log.log(Level.SEVERE, "[" + this.name + "] Failed to load!");
+				Server.getPluginManager().disablePlugin(this);
+			}
 		}catch(Exception e) {
 			log.log(Level.SEVERE, "[" + this.name + "] Failed to load!");
 			if(conf.getBoolean("GiantShop.global.debug"))
@@ -157,6 +166,10 @@ public class GiantShop extends JavaPlugin {
 	
 	public Items getItemHandler() {
 		return this.itemHandler;
+	}
+	
+	public Eco getEcoHandler() {
+		return this.econHandler;
 	}
 	
 	public Messages getMsgHandler() {
