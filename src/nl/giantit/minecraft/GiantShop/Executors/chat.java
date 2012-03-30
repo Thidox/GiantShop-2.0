@@ -58,6 +58,7 @@ public class chat {
 			//futuristic ideas! :D
 		}else if(Misc.isEitherIgnoreCase(args[0], "buy", "b")) {
 			//in dev
+			//And on hold till I get that econ engine...
 			if(plugin.useLoc && plugin.cmds.contains("buy")) {
 				if(plugin.loc.canUse(player))
 					buy.buy(player, args);
