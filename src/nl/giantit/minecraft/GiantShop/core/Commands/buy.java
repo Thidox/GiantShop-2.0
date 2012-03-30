@@ -5,12 +5,17 @@ import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.core.Database.db;
 import nl.giantit.minecraft.GiantShop.core.Items.*;
+import nl.giantit.minecraft.GiantShop.core.Eco.iEco;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.logging.Level;
 
@@ -25,6 +30,7 @@ public class buy {
 	private static perm perms = perm.Obtain();
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	private static Items iH = GiantShop.getPlugin().getItemHandler();
+	private static iEco eH = GiantShop.getPlugin().getEcoHandler().getEngine();
 	
 	public static void buy(Player player, String[] args) {
 		Heraut.savePlayer(player);
@@ -32,6 +38,7 @@ public class buy {
 			if(args.length > 2) {
 				int itemID;
 				Integer itemType = -1;
+				int quantity;
 
 				if(!args[1].matches("[0-9]+:[0-9]+")) {
 					try {
@@ -76,40 +83,97 @@ public class buy {
 						return;
 					}
 				}
-			
-			ArrayList<String> fields = new ArrayList<String>();
-			fields.add("perStack");
-			fields.add("sellFor");
-			fields.add("buyFor");
-			fields.add("stock");
-			fields.add("shops");
-			
-			HashMap<String, String> where = new HashMap<String, String>();
-			where.put("itemID", String.valueOf(itemID));
-			where.put("type", String.valueOf((itemType == null || itemType == 0) ? -1 : itemType));
-			
-			ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where).execQuery();
-			if(resSet.size() == 1) {
-				String name = iH.getItemNameByID(itemID, itemType);
-				HashMap<String, String> res = resSet.get(0);
 				
-				//Ok have to get eco engine up first! :)
+				if(args.length > 3) {
+					try {
+						quantity = Integer.parseInt(args[2]);
+						quantity = (quantity > 0) ? quantity : 1;
+					}catch(NumberFormatException e) {
+						HashMap<String, String> data = new HashMap<String, String>();
+						data.put("command", "buy");
+
+						Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "syntaxError", data));
+						return;
+					}
+				}else
+					quantity = 1;
 				
-				//More future stuff
-				/*if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
-				 *		ArrayList<Indaface> shops = GiantShop.getPlugin().getLocationHandler().parseShops(res.get("shops"));
-				 *		for(Indaface shop : shops) {
-				 *			if(shop.inShop(player.getLocation())) {
-				 *				//Player can get the item he wants! :D
-				 *			}
-				 *		}
-				 * }else{
-				 *		//Just a global store then :)
-				 * }
-				 */
-			}else{
-				Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noneOrMoreResults"));
-			}
+				if(iH.isValidItem(itemID, itemType)) {
+					ArrayList<String> fields = new ArrayList<String>();
+					fields.add("perStack");
+					fields.add("sellFor");
+					fields.add("stock");
+					fields.add("shops");
+
+					HashMap<String, String> where = new HashMap<String, String>();
+					where.put("itemID", String.valueOf(itemID));
+					where.put("type", String.valueOf((itemType == null || itemType == 0) ? -1 : itemType));
+
+					ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where).execQuery();
+					if(resSet.size() == 1) {
+						String name = iH.getItemNameByID(itemID, itemType);
+						HashMap<String, String> res = resSet.get(0);
+
+						int perStack = Integer.parseInt(res.get("perStack"));
+						double sellFor = Double.parseDouble(res.get("sellFor"));
+						double balance = eH.getBalance(player);
+
+						double cost = sellFor * (double) quantity;
+						int amount = perStack * quantity;
+
+						if((balance - cost) < 0) {
+							HashMap<String, String> data = new HashMap<String, String>();
+							data.put("needed", String.valueOf(cost));
+							data.put("have", String.valueOf(balance));
+
+							Heraut.say(mH.getMsg(Messages.msgType.ERROR, "insufFunds", data));
+						}else{
+							if(eH.withdraw(player, cost)) {
+								ItemStack iStack;
+								Inventory inv = player.getInventory();
+								
+								if(itemType != -1) {
+									iStack = new MaterialData(itemID, (byte) ((int) itemType)).toItemStack(amount);
+								}else{
+									iStack = new ItemStack(itemID, amount);
+								}
+								
+								if(conf.getBoolean("GiantShop.global.broadcastBuy"))
+									Heraut.broadcast(player.getName() + " bought some " + name);
+								
+								Heraut.say("You have just bought " + amount + " of " + name + " for " + cost);
+								Heraut.say("Your new balance is: " + eH.getBalance(player));
+								
+								HashMap<Integer, ItemStack> left;
+								left = inv.addItem(iStack);
+								
+								if(!left.isEmpty()) {
+									Heraut.say(mH.getMsg(Messages.msgType.ERROR, "infFull"));
+									for(Map.Entry<Integer, ItemStack> stack : left.entrySet()) {
+										player.getWorld().dropItem(player.getLocation(), stack.getValue());
+									}
+								}
+							}
+						}
+
+						//More future stuff
+						/*if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
+						 *		ArrayList<Indaface> shops = GiantShop.getPlugin().getLocationHandler().parseShops(res.get("shops"));
+						 *		for(Indaface shop : shops) {
+						 *			if(shop.inShop(player.getLocation())) {
+						 *				//Player can get the item he wants! :D
+						 *			}
+						 *		}
+						 * }else{
+						 *		//Just a global store then :)
+						 * }
+						 */
+					}else{
+						Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noneOrMoreResults"));
+					}
+				}else{
+					Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "itemNotFound"));
+				}
 			}else{
 				HashMap<String, String> data = new HashMap<String, String>();
 				data.put("command", "buy");
