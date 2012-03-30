@@ -110,7 +110,7 @@ public class buy {
 					ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where).execQuery();
 					if(resSet.size() == 1) {
 						HashMap<String, String> res = resSet.get(0);
-						if(!res.get("sellFor").equals("-1")) {
+						if(!res.get("sellFor").equals("-1.0")) {
 							String name = iH.getItemNameByID(itemID, itemType);
 
 							int perStack = Integer.parseInt(res.get("perStack"));
