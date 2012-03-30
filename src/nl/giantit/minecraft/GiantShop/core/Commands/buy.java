@@ -35,7 +35,7 @@ public class buy {
 	public static void buy(Player player, String[] args) {
 		Heraut.savePlayer(player);
 		if(perms.has(player, "giantshop.shop.buy")) {
-			if(args.length > 2) {
+			if(args.length >= 2) {
 				int itemID;
 				Integer itemType = -1;
 				int quantity;
@@ -84,16 +84,14 @@ public class buy {
 					}
 				}
 				
-				if(args.length > 3) {
+				if(args.length >= 3) {
 					try {
 						quantity = Integer.parseInt(args[2]);
 						quantity = (quantity > 0) ? quantity : 1;
 					}catch(NumberFormatException e) {
-						HashMap<String, String> data = new HashMap<String, String>();
-						data.put("command", "buy");
-
-						Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "syntaxError", data));
-						return;
+						//Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "invQuantity"));
+						Heraut.say("As you did not specify a normal quantity, we'll just use 1 ok? :)");
+						quantity = 1;
 					}
 				}else
 					quantity = 1;
@@ -132,7 +130,7 @@ public class buy {
 								ItemStack iStack;
 								Inventory inv = player.getInventory();
 								
-								if(itemType != -1) {
+								if(itemType != null && itemType != -1) {
 									iStack = new MaterialData(itemID, (byte) ((int) itemType)).toItemStack(amount);
 								}else{
 									iStack = new ItemStack(itemID, amount);
