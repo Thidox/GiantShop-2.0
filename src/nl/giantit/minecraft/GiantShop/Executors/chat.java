@@ -93,12 +93,12 @@ public class chat {
 			}else
 				help.showHelp(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "remove", "r")) {
-			//stalled
+			//in dev
 			if(plugin.useLoc && plugin.cmds.contains("remove")) {
 				if(plugin.loc.canUse(player))
-					help.showHelp(player, args);
+					remove.remove(player, args);
 			}else
-				help.showHelp(player, args);
+				remove.remove(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "addstock", "as")) {
 			//stalled
 			if(plugin.useLoc && plugin.cmds.contains("addstock")) {
