@@ -1,6 +1,6 @@
-name: GiantShop 2.0
+name: GiantShop
 main: nl.giantit.minecraft.GiantShop.GiantShop
-version: 0.1.ALPHA
+version: 0.1.1.ALPHA
 commands:
     s:
         description: Shopping goes through here!
