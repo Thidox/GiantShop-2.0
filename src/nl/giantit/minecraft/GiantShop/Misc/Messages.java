@@ -18,7 +18,7 @@ public class Messages {
 	
 	private GiantShop plugin;
 	private YamlConfiguration config;
-	private double yamlVersion = 0.6;
+	private double yamlVersion = 0.7;
 	private HashMap<String, String> mainMsgs, adminMsgs, errorMsgs;
 	
 	public enum msgType {
@@ -163,7 +163,7 @@ public class Messages {
 		if(Template != null) {
 			for(Map.Entry<String, String> entry : data.entrySet()) {
 				if(entry.getKey() != null && entry.getValue() != null) {
-					Template = Template.replace("&" + entry.getKey(), entry.getValue());
+					Template = Template.replace("%" + entry.getKey(), entry.getValue());
 				}else{
 					this.plugin.getLogger().log(Level.SEVERE, "[" + plugin.getName() + "] Message template engine received invalid parameter! (null)");
 				}

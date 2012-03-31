@@ -1,22 +1,23 @@
-version: 0.6
+version: 0.7
 main:
-    buy: You have just bought C_YELLOW&amount C_WHITEof item C_YELLOW&item for C_YELLOW&cash!
-    giftSender: You have just gifted C_YELLOW&amount C_WHITEof item C_YELLOW&item C_WHITEto user C_YELLOW&giftReceiver for C_YELLOW&cash!
-    giftReceiver: C_YELLOW&giftSender C_WHITEjust gifted you C_YELLOW&amount C_WHITEof item C_YELLOW&item!
-    sell: You have just sold C_YELLOW&amount C_WHITEof item C_YELLOW&item for C_YELLOW&cash!
-    helpCommand: C_RED/&command C_YELLOW-C_WHITE &description
-    itemListEntry: ID C_YELLOW&id C_WHITEType C_YELLOW&type C_WHITEName C_YELLOW&name C_WHITEAmount C_YELLOW&perStack C_WHITESell for C_YELLOW&sellFor C_WHITEBuy for C_YELLOW&buyFor C_WHITEStock C_YELLOW&stock
+    buy: You have just bought C_YELLOW%amount C_WHITEof item C_YELLOW%item for C_YELLOW%cash!
+    giftSender: You have just gifted C_YELLOW%amount C_WHITEof item C_YELLOW%item C_WHITEto user C_YELLOW%giftReceiver for C_YELLOW%cash!
+    giftReceiver: C_YELLOW%giftSender C_WHITEjust gifted you C_YELLOW%amount C_WHITEof item C_YELLOW%item!
+    sell: You have just sold C_YELLOW%amount C_WHITEof item C_YELLOW%item for C_YELLOW%cash!
+    helpCommand: C_RED/%command C_YELLOW-C_WHITE %description
+    itemListEntry: ID C_YELLOW%id C_WHITEType C_YELLOW%type C_WHITEName C_YELLOW%name C_WHITEAmount C_YELLOW%perStack C_WHITESell for C_YELLOW%sellFor C_WHITEBuy for C_YELLOW%buyFor C_WHITEStock C_YELLOW%stock
 admin:
-    add: You just added item C_YELLOW&item C_WHITEwith quantity C_YELLOW&amount sold for &e&sellFor bought for C_YELLOW&buyFor with stock C_YELLOW&stock!
-    addStock: You have successfully added C_YELLOW&amount C_WHITEto the stock of item C_YELLOW&item!
-    updated: You have successfully updated item C_YELLOW&item!
-    removed: Item C_YELLOW&item C_WHITEhas been successfully removed from the shop!
+    add: You just added item C_YELLOW%item C_WHITEwith quantity C_YELLOW%amount sold for %e%sellFor bought for C_YELLOW%buyFor with stock C_YELLOW%stock!
+    addStock: You have successfully added C_YELLOW%amount C_WHITEto the stock of item C_YELLOW%item!
+    updated: You have successfully updated item C_YELLOW%item!
+    removed: Item C_YELLOW%item C_WHITEhas been successfully removed from the shop!
 errors:
-    noPermissions: C_REDWe are sorry but you do not have access to that command (C_YELLOW&commandC_RED)!
-    syntaxError: C_REDPlease use the appropriate syntax for the C_YELLOW&command C_REDcommand!
+    noPermissions: C_REDWe are sorry but you do not have access to that command (C_YELLOW%commandC_RED)!
+    syntaxError: C_REDPlease use the appropriate syntax for the C_YELLOW%command C_REDcommand!
     itemAlreadyFound: C_REDWe are sorry but the requested item seems to already exist in our database!
     itemNotFound: C_REDWe are sorry but the requested item does not seem to exist!
-    insufFunds: C_REDWe are sorry but you do not have enough money for that puchase! You need &needed while you have only &have
+    insufFunds: C_REDWe are sorry but you do not have enough money for that puchase! You need %needed while you have only %have
+    insufItems: C_REDWe are sorry but you do not have enough items to sell! You need %needed while you have only %have
     infFull: C_REDWe are sorry buy your inventory is full! We will drop the remaining items for you!
     notForSale: C_REDWe are sorry but the item you are trying to purchase is not for sale!
     noReturns: C_REDWe are sorry but we are not currently buying the item you are trying to sell...
