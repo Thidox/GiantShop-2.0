@@ -82,13 +82,13 @@ public class Eco {
 			
 		}else if(packageExists("com.nijiko.coelho.iConomy.iConomy", "com.nijiko.coelho.iConomy.system.Account")) {
 			//ic4
-			
+			Engine = new ic4_Engine(this.plugin);
 		}else if(packageExists("com.iConomy.iConomy", "com.iConomy.system.Account", "com.iConomy.system.Holdings")) {
 			//ic5
-			
+			Engine = new ic5_Engine(this.plugin);
 		}else if(packageExists("com.iCo6.iConomy")) {
 			//ic6
-			
+			Engine = new ic6_Engine(this.plugin);
 		}
 	}
 	
