@@ -58,7 +58,7 @@ public class Eco {
 			
 		}else if(packageExists("com.earth2me.essentials.api.Economy", "com.earth2me.essentials.api.NoLoanPermittedException", "com.earth2me.essentials.api.UserDoesNotExistException")) {
 			//Essentials
-			
+			Engine = new Essentials_Engine(this.plugin);
 		}else if(packageExists("boardinggamer.mcmoney.McMoneyAPI")) {
 			//McMoney
 			
@@ -70,10 +70,10 @@ public class Eco {
 			
 		}else if(packageExists("cosine.boseconomy.BOSEconomy", "cosine.boseconomy.CommandManager")) {
 			//BOSE6
-			
+			Engine = new bose6_Engine(this.plugin);
 		}else if(packageExists("cosine.boseconomy.BOSEconomy", "cosine.boseconomy.CommandHandler")) {
 			//BOSE7
-			
+			Engine = new bose7_Engine(this.plugin);
 		}else if(packageExists("me.ethan.eWallet.ECO")) {
 			//eWallet
 			
