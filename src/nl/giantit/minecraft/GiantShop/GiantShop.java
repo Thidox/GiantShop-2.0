@@ -42,6 +42,7 @@ public class GiantShop extends JavaPlugin {
 	private Eco econHandler;
 	private Messages msgHandler;
 	private String name, dir, pubName;
+	private String bName = "Tipsy spider";
 	
 	public static final Logger log = Logger.getLogger("Minecraft");
 	public Locationer loc;
@@ -99,14 +100,14 @@ public class GiantShop extends JavaPlugin {
 			msgHandler = new Messages(this);
 			
 			if(econHandler.isLoaded()) {
-				log.log(Level.INFO, "[" + this.name + "] Was successfully enabled!");
+				log.log(Level.INFO, "[" + this.name + "](" + this.bName + ") Was successfully enabled!");
 			}else{
 				log.log(Level.SEVERE, "[" + this.name + "] Could not load economy engine!");
 				log.log(Level.SEVERE, "[" + this.name + "] Failed to load!");
 				Server.getPluginManager().disablePlugin(this);
 			}
 		}catch(Exception e) {
-			log.log(Level.SEVERE, "[" + this.name + "] Failed to load!");
+			log.log(Level.SEVERE, "[" + this.name + "](" + this.bName + ") Failed to load!");
 			if(conf.getBoolean("GiantShop.global.debug"))
 				log.log(Level.INFO, "" + e);
 			Server.getPluginManager().disablePlugin(this);
