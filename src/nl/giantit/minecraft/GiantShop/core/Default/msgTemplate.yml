@@ -7,7 +7,7 @@ main:
     helpCommand: C_RED/%command C_YELLOW-C_WHITE %description
     itemListEntry: ID C_YELLOW%id C_WHITEType C_YELLOW%type C_WHITEName C_YELLOW%name C_WHITEAmount C_YELLOW%perStack C_WHITESell for C_YELLOW%sellFor C_WHITEBuy for C_YELLOW%buyFor C_WHITEStock C_YELLOW%stock
 admin:
-    add: You just added item C_YELLOW%item C_WHITEwith quantity C_YELLOW%amount sold for %e%sellFor bought for C_YELLOW%buyFor with stock C_YELLOW%stock!
+    add: You just added item C_YELLOW%item C_WHITEwith quantity C_YELLOW%amount sold for C_YELLOW%sellFor bought for C_YELLOW%buyFor with stock C_YELLOW%stock!
     addStock: You have successfully added C_YELLOW%amount C_WHITEto the stock of item C_YELLOW%item!
     updated: You have successfully updated item C_YELLOW%item!
     removed: Item C_YELLOW%item C_WHITEhas been successfully removed from the shop!
