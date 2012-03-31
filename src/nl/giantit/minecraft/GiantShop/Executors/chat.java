@@ -86,14 +86,15 @@ public class chat {
 			}else
 				add.add(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "update", "u")) {
-			//stalled
+			//in dev
 			if(plugin.useLoc && plugin.cmds.contains("update")) {
 				if(plugin.loc.canUse(player))
-					help.showHelp(player, args);
+					update.update(player, args);
 			}else
-				help.showHelp(player, args);
+				update.update(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "remove", "r")) {
-			//in dev
+			//done
+			//needs testing!
 			if(plugin.useLoc && plugin.cmds.contains("remove")) {
 				if(plugin.loc.canUse(player))
 					remove.remove(player, args);
