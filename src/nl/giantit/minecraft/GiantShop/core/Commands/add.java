@@ -304,7 +304,7 @@ public class add {
 
 					DB.insert("#__items", fields, values).updateQuery();
 
-					Heraut.say(sender, "The requested item (&e" + name + "&f) has been added to the shop!");
+					Heraut.say(sender, "The requested item (" + name + ") has been added to the shop!");
 				}else{
 					Heraut.say(sender, msgs.getConsoleMsg(Messages.msgType.ERROR, "itemAlreadyFound"));
 				}
