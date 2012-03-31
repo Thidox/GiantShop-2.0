@@ -41,7 +41,8 @@ public class console {
 		}else if(Misc.isEitherIgnoreCase(args[0], "update", "u")) {
 			//stalled
 		}else if(Misc.isEitherIgnoreCase(args[0], "remove", "r")) {
-			//stalled
+			//in dev
+			remove.remove(sender, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "addStock", "as")) {
 			//stalled
 		}else if(Misc.isEitherIgnoreCase(args[0], "import", "i")) {
