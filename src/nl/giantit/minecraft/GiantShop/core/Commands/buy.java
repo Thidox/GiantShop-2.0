@@ -96,7 +96,8 @@ public class buy {
 				}else
 					quantity = 1;
 				
-				if(iH.isValidItem(itemID, ((itemType == -1 || itemType == 0) ? null : itemType))) {
+				Integer iT = ((itemType == null || itemType == -1 || itemType == 0) ? null : itemType);
+				if(iH.isValidItem(itemID, iT)) {
 					ArrayList<String> fields = new ArrayList<String>();
 					fields.add("perStack");
 					fields.add("sellFor");
@@ -111,7 +112,7 @@ public class buy {
 					if(resSet.size() == 1) {
 						HashMap<String, String> res = resSet.get(0);
 						if(!res.get("sellFor").equals("-1.0")) {
-							String name = iH.getItemNameByID(itemID, ((itemType == -1 || itemType == 0) ? null : itemType));
+							String name = iH.getItemNameByID(itemID, iT);
 
 							int perStack = Integer.parseInt(res.get("perStack"));
 							double sellFor = Double.parseDouble(res.get("sellFor"));
