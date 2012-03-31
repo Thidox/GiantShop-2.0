@@ -3,9 +3,6 @@ package nl.giantit.minecraft.GiantShop.core.Eco.Engines;
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.core.Eco.iEco;
 
-import java.lang.reflect.Method;
-
-import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +10,9 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+
+import java.lang.reflect.Method;
+import java.util.logging.Level;
 
 import org.neocraft.AEco.AEco;
 
