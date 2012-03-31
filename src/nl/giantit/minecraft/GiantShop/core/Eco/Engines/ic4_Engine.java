@@ -31,7 +31,7 @@ public class ic4_Engine implements iEco {
 		if(eco == null) {
 			Plugin ecoEn = plugin.getServer().getPluginManager().getPlugin("iConomy");
 
-			if(ecoEn != null && ecoEn.isEnabled()) {
+			if(ecoEn != null && ecoEn.isEnabled() && ecoEn.getClass().getName().equals("com.nijiko.coelho.iConomy.iConomy.class")) {
 				eco = (iConomy) ecoEn;
 				plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into iConomy 4!");
 			}
@@ -115,7 +115,7 @@ public class ic4_Engine implements iEco {
 			if(eco.eco == null) {
 				Plugin ecoEn = plugin.getServer().getPluginManager().getPlugin("iConomy");
 				
-				if(ecoEn != null && ecoEn.isEnabled()) {
+				if(ecoEn != null && ecoEn.isEnabled() && ecoEn.getClass().getName().equals("com.nijiko.coelho.iConomy.iConomy.class")) {
 					eco.eco = (iConomy) ecoEn;
 					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into iConomy 4!");
 				}
