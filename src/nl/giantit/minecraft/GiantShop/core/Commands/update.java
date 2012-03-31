@@ -7,7 +7,6 @@ import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.core.Database.db;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
-import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -22,7 +21,20 @@ import java.util.logging.Level;
  */
 public class update {
 	
-	public void update(Player player, String[] args) {
-		
+	private static config conf = config.Obtain();
+	private static db DB = db.Obtain();
+	private static perm perms = perm.Obtain();
+	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
+	private static Items iH = GiantShop.getPlugin().getItemHandler();
+	
+	public static void update(Player player, String[] args) {
+		if(perms.has(player, "giantshop.admin.update")) {
+			
+		}else{
+			HashMap<String, String> data = new HashMap<String, String>();
+			data.put("command", "update");
+
+			Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noPermissions", data));
+		}
 	}
 }
