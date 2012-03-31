@@ -61,7 +61,6 @@ public class ic5_Engine implements iEco {
 	public boolean withdraw(String player, double amount) {
 		if(amount > 0) {
 			double balance = eco.getAccount(player).getHoldings().balance();
-			amount = Math.ceil(amount);
 			if((balance - amount) >= 0) {
 				eco.getAccount(player).getHoldings().subtract(amount);
 				return true;

@@ -74,7 +74,6 @@ public class ic4_Engine implements iEco {
 			}
 			
 			double balance = account.getBalance();
-			amount = Math.ceil(amount);
 			if((balance - amount) >= 0) {
 				account.subtract(amount);
 				return true;
