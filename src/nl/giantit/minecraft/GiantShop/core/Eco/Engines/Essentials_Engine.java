@@ -82,15 +82,17 @@ public class Essentials_Engine implements iEco {
 	
 	@Override
 	public boolean withdraw(String player, double amount) {
-		try {
-			if(!Economy.playerExists(player)) {
-				createAcc(player);
+		if(amount > 0) {
+			try {
+				if(!Economy.playerExists(player)) {
+					createAcc(player);
+				}
+
+				Economy.subtract(player, amount);
+				return true;
+			}catch(NoLoanPermittedException e) {
+			}catch(UserDoesNotExistException e) {
 			}
-			
-			Economy.subtract(player, amount);
-			return true;
-		}catch(NoLoanPermittedException e) {
-		}catch(UserDoesNotExistException e) {
 		}
 		return false;
 	}
@@ -102,15 +104,17 @@ public class Essentials_Engine implements iEco {
 	
 	@Override
 	public boolean deposit(String player, double amount) {
-		try {
-			if(!Economy.playerExists(player)) {
-				createAcc(player);
+		if(amount > 0) {
+			try {
+				if(!Economy.playerExists(player)) {
+					createAcc(player);
+				}
+
+				Economy.add(player, amount);
+				return true;
+			}catch(NoLoanPermittedException e) {
+			}catch(UserDoesNotExistException e) {
 			}
-			
-			Economy.add(player, amount);
-			return true;
-		}catch(NoLoanPermittedException e) {
-		}catch(UserDoesNotExistException e) {
 		}
 		
 		return false;
