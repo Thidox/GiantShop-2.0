@@ -28,6 +28,7 @@ public class ic4_Engine implements iEco {
 	public ic4_Engine(GiantShop plugin) {
 		this.plugin = plugin;
 		Bukkit.getServer().getPluginManager().registerEvents(new EcoListener(this), plugin);
+		plugin.getLogger().log(Level.WARNING, "[" + plugin.getPubName() + "] iConomy 4 is HEAVILY outdated please upgrade!");
 		if(eco == null) {
 			Plugin ecoEn = plugin.getServer().getPluginManager().getPlugin("iConomy");
 
