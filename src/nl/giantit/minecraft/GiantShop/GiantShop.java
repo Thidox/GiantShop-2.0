@@ -4,7 +4,9 @@ import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.Database.db;
 import nl.giantit.minecraft.GiantShop.core.Eco.Eco;
+import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
+import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.Executors.*;
 import nl.giantit.minecraft.GiantShop.Listeners.*;
 import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
@@ -21,8 +23,6 @@ import java.util.List;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.core.Items.Items;
 
 /**
  *
