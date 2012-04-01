@@ -1,4 +1,4 @@
-version: 0.8
+version: 0.9
 main:
     buy: You have just bought C_YELLOW%amount C_WHITEof item C_YELLOW%item for C_YELLOW%cash!
     giftSender: You have just gifted C_YELLOW%amount C_WHITEof item C_YELLOW%item C_WHITEto user C_YELLOW%giftReceiver for C_YELLOW%cash!
@@ -23,6 +23,6 @@ errors:
     noReturns: C_REDWe are sorry but we are not currently buying the item you are trying to sell...
     noItems: C_REDWe are sorry but it seems like our shop does not hold any items yet!
     noneOrMoreResults: C_REDWe are sorry but we have no frigging clue what item you want as we found either none or more then 1 result!
-    itemNotInShop: C_REDWe are sorry but &item has not been added the shop yet!
-    itemNotUnique: C_REDWe are sorry but &item resulted in more then 1 result from our database, we do not really know which one to use now!
+    itemNotInShop: C_REDWe are sorry but %item has not been added the shop yet!
+    itemNotUnique: C_REDWe are sorry but %item resulted in more then 1 result from our database, we do not really know which one to use now!
     unkown: C_REDWe are sorry but an unknown error occured!
