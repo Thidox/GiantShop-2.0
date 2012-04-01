@@ -25,8 +25,8 @@ public class Eco {
 		MCMONEY,
 		MINECONOMY,
 		MULTICURRENCY,
-		BOSE5,
 		BOSE6,
+		BOSE7,
 		EWALLET,
 		IC3O,
 		ICONOMY4,
@@ -62,10 +62,10 @@ public class Eco {
 			return Engines.MINECONOMY;
 		}else if(engine.equalsIgnoreCase("MULTICURRENCY")) {
 			return Engines.MULTICURRENCY;
-		}else if(engine.equalsIgnoreCase("BOSE5")) {
-			return Engines.BOSE5;
 		}else if(engine.equalsIgnoreCase("BOSE6")) {
 			return Engines.BOSE6;
+		}else if(engine.equalsIgnoreCase("BOSE7")) {
+			return Engines.BOSE7;
 		}else if(engine.equalsIgnoreCase("EWALLET")) {
 			return Engines.EWALLET;
 		}else if(engine.equalsIgnoreCase("IC3O")) {
@@ -134,13 +134,13 @@ public class Eco {
 					plugin.getLogger().log(Level.WARNING, "[" + plugin.getName() + "] MultiCurrency is currently not yet supported!");
 				}
 				break;
-			case BOSE5:
+			case BOSE6:
 				if(packageExists("cosine.boseconomy.BOSEconomy", "cosine.boseconomy.CommandManager")) {
 					//BOSE6
 					Engine = new bose6_Engine(this.plugin);
 				}
 				break;
-			case BOSE6:
+			case BOSE7:
 				if(packageExists("cosine.boseconomy.BOSEconomy", "cosine.boseconomy.CommandHandler")) {
 					//BOSE7
 					Engine = new bose7_Engine(this.plugin);
