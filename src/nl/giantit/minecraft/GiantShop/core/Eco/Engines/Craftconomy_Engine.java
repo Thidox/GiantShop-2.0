@@ -67,12 +67,14 @@ public class Craftconomy_Engine implements iEco {
 	
 	@Override
 	public boolean withdraw(String player, double amount) {
-		Account acc = AccountHandler.getAccount(player);
-		if(acc.hasEnough(amount)) {
-			acc.substractMoney(amount);
-			
-			return true;
+		if(amount > 0) {
+			Account acc = AccountHandler.getAccount(player);
+			if(acc.hasEnough(amount)) {
+				acc.substractMoney(amount);
+				return true;
+			}
 		}
+		
 		return false;
 	}
 	
@@ -83,10 +85,13 @@ public class Craftconomy_Engine implements iEco {
 	
 	@Override
 	public boolean deposit(String player, double amount) {
-		Account acc = AccountHandler.getAccount(player);
-		acc.addMoney(amount);
+		if(amount > 0) {
+			Account acc = AccountHandler.getAccount(player);
+			acc.addMoney(amount);
+			return true;
+		}
 		
-		return true;
+		return false;
 	}
 	
 	public class EcoListener implements Listener {

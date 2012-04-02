@@ -69,11 +69,13 @@ public class CurrencyCore_Engine implements iEco {
 	
 	@Override
 	public boolean withdraw(String player, double amount) {
-		AccountContext acc = eco.getAccountManager().getAccount(player);
-		if(acc != null) {
-			if(acc.hasBalance(amount)) {
-				acc.subtractBalance(amount);
-				return true;
+		if(amount > 0) {
+			AccountContext acc = eco.getAccountManager().getAccount(player);
+			if(acc != null) {
+				if(acc.hasBalance(amount)) {
+					acc.subtractBalance(amount);
+					return true;
+				}
 			}
 		}
 		
@@ -87,10 +89,12 @@ public class CurrencyCore_Engine implements iEco {
 	
 	@Override
 	public boolean deposit(String player, double amount) {
-		AccountContext acc = eco.getAccountManager().getAccount(player);
-		if(acc != null) {
-			acc.addBalance(amount);
-			return true;
+		if(amount > 0) {
+			AccountContext acc = eco.getAccountManager().getAccount(player);
+			if(acc != null) {
+				acc.addBalance(amount);
+				return true;
+			}
 		}
 		
 		return false;
