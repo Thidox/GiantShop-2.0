@@ -39,9 +39,12 @@ public class console {
 			//done
 			add.addConsole(sender, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "update", "u")) {
-			//stalled
+			//done
+			//needs testing
+			update.update(sender, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "remove", "r")) {
-			//in dev
+			//done
+			//needs testing
 			remove.remove(sender, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "addStock", "as")) {
 			//stalled
