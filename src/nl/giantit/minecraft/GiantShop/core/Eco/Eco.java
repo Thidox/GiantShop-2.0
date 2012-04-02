@@ -28,7 +28,6 @@ public class Eco {
 		BOSE6,
 		BOSE7,
 		EWALLET,
-		IC3O,
 		ICONOMY4,
 		ICONOMY5,
 		ICONOMY6
@@ -66,8 +65,6 @@ public class Eco {
 			return Engines.BOSE7;
 		}else if(engine.equalsIgnoreCase("EWALLET")) {
 			return Engines.EWALLET;
-		}else if(engine.equalsIgnoreCase("IC3O")) {
-			return Engines.IC3O;
 		}else if(engine.equalsIgnoreCase("ICONOMY4")) {
 			return Engines.ICONOMY4;
 		}else if(engine.equalsIgnoreCase("ICONOMY5")) {
@@ -142,12 +139,6 @@ public class Eco {
 				if(packageExists("me.ethan.eWallet.ECO")) {
 					//eWallet
 					plugin.getLogger().log(Level.WARNING, "[" + plugin.getName() + "] eWallet is currently not yet supported!");
-				}
-				break;
-			case IC3O:
-				if(packageExists("me.ic3d.eco.ECO")) {
-					//ic3o
-					plugin.getLogger().log(Level.WARNING, "[" + plugin.getName() + "] 3co is currently not yet supported!");
 				}
 				break;
 			case ICONOMY4:
