@@ -111,7 +111,7 @@ public class Eco {
 			case MCMONEY:
 				if(packageExists("boardinggamer.mcmoney.McMoneyAPI")) {
 					//McMoney
-					plugin.getLogger().log(Level.WARNING, "[" + plugin.getName() + "] McMoney is currently not yet supported!");
+					Engine = new McMoney_Engine(this.plugin);
 				}
 				break;
 			case MINECONOMY:

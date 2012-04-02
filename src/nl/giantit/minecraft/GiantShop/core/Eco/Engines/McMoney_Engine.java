@@ -1,12 +1,46 @@
 package nl.giantit.minecraft.GiantShop.core.Eco.Engines;
 
+import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.GiantShop.core.Eco.iEco;
+
+import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.server.PluginEnableEvent;
+import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+
+import java.util.logging.Level;
+
+import boardinggamer.mcmoney.McMoneyAPI;
 
 /**
  *
  * @author Giant
  */
 public class McMoney_Engine implements iEco {
+	
+	private GiantShop plugin;
+	private McMoneyAPI eco = null;
+	
+	public McMoney_Engine(GiantShop plugin) {
+		this.plugin = plugin;
+		Bukkit.getServer().getPluginManager().registerEvents(new EcoListener(this), plugin);
+		
+		if(eco == null) {
+			Plugin ecoEn = plugin.getServer().getPluginManager().getPlugin("McMoney");
+
+			if(ecoEn != null && ecoEn.isEnabled()) {
+				eco = McMoneyAPI.getInstance();
+				if(eco == null) {
+					plugin.getLogger().log(Level.WARNING, "Failed to hook into McMoney!");
+				}else{
+					plugin.getLogger().log(Level.INFO, "Succesfully hooked into McMoney!");
+				}
+			}
+		}
+	}
 	
 	@Override
 	public boolean isLoaded() {
@@ -20,7 +54,7 @@ public class McMoney_Engine implements iEco {
 	
 	@Override
 	public double getBalance(String player) {
-		return 0.0;
+		return eco.getMoney(player);
 	}
 	
 	@Override
@@ -30,6 +64,13 @@ public class McMoney_Engine implements iEco {
 	
 	@Override
 	public boolean withdraw(String player, double amount) {
+		if(amount > 0) {
+			if((eco.getMoney(player) - amount) > 0) {
+				eco.removeMoney(player, amount);
+				return true;
+			}
+		}
+					
 		return false;
 	}
 	
@@ -40,6 +81,41 @@ public class McMoney_Engine implements iEco {
 	
 	@Override
 	public boolean deposit(String player, double amount) {
+		if(amount > 0) {
+			eco.addMoney(player, amount);
+			return true;
+		}
+		
 		return false;
+	}
+	
+	public class EcoListener implements Listener {
+		private McMoney_Engine eco;
+		
+		public EcoListener(McMoney_Engine eco) {
+			this.eco = eco;
+		}
+		
+		@EventHandler()
+		public void onPluginEnable(PluginEnableEvent event) {
+			if(eco.eco == null) {
+				Plugin ecoEn = plugin.getServer().getPluginManager().getPlugin("McMoney");
+				
+				if(ecoEn != null && ecoEn.isEnabled()) {
+					eco.eco = McMoneyAPI.getInstance();
+					plugin.getLogger().log(Level.INFO, "Succesfully hooked into McMoney!");
+				}
+			}
+		}
+		
+		@EventHandler()
+		public void onPluginDisable(PluginDisableEvent event) {
+			if(eco.eco != null) {
+				if(event.getPlugin().getDescription().getName().equals("McMoney")) {
+					eco.eco = null;
+					plugin.getLogger().log(Level.INFO, "Succesfully unhooked into McMoney!");
+				}
+			}
+		}
 	}
 }
