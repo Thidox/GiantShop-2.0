@@ -32,7 +32,7 @@ public class bose7_Engine implements iEco {
 
 			if(ecoEn != null && ecoEn.isEnabled() && ecoEn.getDescription().getVersion().startsWith("0.7")) {
 				eco = (BOSEconomy) ecoEn;
-				plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into BOSEconomy 7!");
+				plugin.getLogger().log(Level.INFO, "Succesfully hooked into BOSEconomy 7!");
 			}
 		}
 	}
@@ -95,7 +95,7 @@ public class bose7_Engine implements iEco {
 				
 				if(ecoEn != null && ecoEn.isEnabled() && ecoEn.getDescription().getVersion().startsWith("0.7")) {
 					eco.eco = (BOSEconomy) ecoEn;
-					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into BOSEconomy 7!");
+					plugin.getLogger().log(Level.INFO, "Succesfully hooked into BOSEconomy 7!");
 				}
 			}
 		}
@@ -105,7 +105,7 @@ public class bose7_Engine implements iEco {
 			if(eco.eco != null) {
 				if(event.getPlugin().getDescription().getName().equals("BOSEconomy")) {
 					eco.eco = null;
-					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully unhooked into BOSEconomy 7!");
+					plugin.getLogger().log(Level.INFO, "Succesfully unhooked into BOSEconomy 7!");
 				}
 			}
 		}

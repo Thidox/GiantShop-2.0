@@ -43,7 +43,7 @@ public class Essentials_Engine implements iEco {
 
 			if(ecoEn != null && ecoEn.isEnabled()) {
 				eco = (Essentials) ecoEn;
-				plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into Essentials economy!");
+				plugin.getLogger().log(Level.INFO, "Succesfully hooked into Essentials economy!");
 			}
 		}
 	}
@@ -134,7 +134,7 @@ public class Essentials_Engine implements iEco {
 				
 				if(ecoEn != null && ecoEn.isEnabled()) {
 					eco.eco = (Essentials) ecoEn;
-					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into Essentials economy!");
+					plugin.getLogger().log(Level.INFO, "Succesfully hooked into Essentials economy!");
 				}
 			}
 		}
@@ -144,7 +144,7 @@ public class Essentials_Engine implements iEco {
 			if(eco.eco != null) {
 				if(event.getPlugin().getDescription().getName().equals("Essentials")) {
 					eco.eco = null;
-					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully unhooked into Essentials economy!");
+					plugin.getLogger().log(Level.INFO, "Succesfully unhooked into Essentials economy!");
 				}
 			}
 		}

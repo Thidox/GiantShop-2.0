@@ -28,13 +28,13 @@ public class ic4_Engine implements iEco {
 	public ic4_Engine(GiantShop plugin) {
 		this.plugin = plugin;
 		Bukkit.getServer().getPluginManager().registerEvents(new EcoListener(this), plugin);
-		plugin.getLogger().log(Level.WARNING, "[" + plugin.getPubName() + "] iConomy 4 is HEAVILY outdated please upgrade!");
+		plugin.getLogger().log(Level.WARNING, "iConomy 4 is HEAVILY outdated please upgrade!");
 		if(eco == null) {
 			Plugin ecoEn = plugin.getServer().getPluginManager().getPlugin("iConomy");
 
 			if(ecoEn != null && ecoEn.isEnabled() && ecoEn.getClass().getName().equals("com.nijiko.coelho.iConomy.iConomy.class")) {
 				eco = (iConomy) ecoEn;
-				plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into iConomy 4!");
+				plugin.getLogger().log(Level.INFO, "Succesfully hooked into iConomy 4!");
 			}
 		}
 	}
@@ -118,7 +118,7 @@ public class ic4_Engine implements iEco {
 				
 				if(ecoEn != null && ecoEn.isEnabled() && ecoEn.getClass().getName().equals("com.nijiko.coelho.iConomy.iConomy.class")) {
 					eco.eco = (iConomy) ecoEn;
-					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into iConomy 4!");
+					plugin.getLogger().log(Level.INFO, "Succesfully hooked into iConomy 4!");
 				}
 			}
 		}
@@ -128,7 +128,7 @@ public class ic4_Engine implements iEco {
 			if(eco.eco != null) {
 				if(event.getPlugin().getDescription().getName().equals("iConomy")) {
 					eco.eco = null;
-					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully unhooked into iConomy 4!");
+					plugin.getLogger().log(Level.INFO, "Succesfully unhooked into iConomy 4!");
 				}
 			}
 		}

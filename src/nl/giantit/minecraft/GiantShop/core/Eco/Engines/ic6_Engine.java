@@ -36,7 +36,7 @@ public class ic6_Engine implements iEco {
 			if(ecoEn != null && ecoEn.isEnabled() && ecoEn.getClass().getName().equals("com.iCo6.iConomy")) {
 				eco = (iConomy) ecoEn;
 				accs = new Accounts();
-				plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into iConomy 6!");
+				plugin.getLogger().log(Level.INFO, "Succesfully hooked into iConomy 6!");
 			}
 		}
 	}
@@ -106,7 +106,7 @@ public class ic6_Engine implements iEco {
 				if(ecoEn != null && ecoEn.isEnabled() && ecoEn.getClass().getName().equals("com.iCo6.iConomy")) {
 					eco.eco = (iConomy) ecoEn;
 					eco.accs = new Accounts();
-					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into iConomy 6!");
+					plugin.getLogger().log(Level.INFO, "Succesfully hooked into iConomy 6!");
 				}
 			}
 		}
@@ -117,7 +117,7 @@ public class ic6_Engine implements iEco {
 				if(event.getPlugin().getDescription().getName().equals("iConomy")) {
 					eco.eco = null;
 					eco.accs = null;
-					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully unhooked into iConomy 6!");
+					plugin.getLogger().log(Level.INFO, "Succesfully unhooked into iConomy 6!");
 				}
 			}
 		}

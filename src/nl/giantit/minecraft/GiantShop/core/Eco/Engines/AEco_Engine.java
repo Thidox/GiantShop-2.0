@@ -45,9 +45,9 @@ public class AEco_Engine implements iEco {
 				}
 				
 				if(eco == null) {
-					plugin.getLogger().log(Level.WARNING, "[" + plugin.getPubName() + "] Failed to hook into AEco!");
+					plugin.getLogger().log(Level.WARNING, "Failed to hook into AEco!");
 				}else{
-					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into AEco!");
+					plugin.getLogger().log(Level.INFO, "Succesfully hooked into AEco!");
 				}
 			}
 		}
@@ -123,7 +123,7 @@ public class AEco_Engine implements iEco {
 					}catch(NoSuchMethodException e) {
 					}catch(NullPointerException e) {
 					}
-					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into AEco!");
+					plugin.getLogger().log(Level.INFO, "Succesfully hooked into AEco!");
 				}
 			}
 		}
@@ -133,7 +133,7 @@ public class AEco_Engine implements iEco {
 			if(eco.eco != null) {
 				if(event.getPlugin().getDescription().getName().equals("AEco")) {
 					eco.eco = null;
-					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully unhooked into AEco!");
+					plugin.getLogger().log(Level.INFO, "Succesfully unhooked into AEco!");
 				}
 			}
 		}

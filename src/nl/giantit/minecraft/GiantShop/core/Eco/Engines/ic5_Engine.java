@@ -32,7 +32,7 @@ public class ic5_Engine implements iEco {
 
 			if(ecoEn != null && ecoEn.isEnabled() && ecoEn.getClass().getName().equals("com.iConomy.iConomy")) {
 				eco = (iConomy) ecoEn;
-				plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into iConomy 5!");
+				plugin.getLogger().log(Level.INFO, "Succesfully hooked into iConomy 5!");
 			}
 		}
 	}
@@ -98,7 +98,7 @@ public class ic5_Engine implements iEco {
 				
 				if(ecoEn != null && ecoEn.isEnabled() && ecoEn.getClass().getName().equals("com.iConomy.iConomy")) {
 					eco.eco = (iConomy) ecoEn;
-					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully hooked into iConomy 5!");
+					plugin.getLogger().log(Level.INFO, "Succesfully hooked into iConomy 5!");
 				}
 			}
 		}
@@ -108,7 +108,7 @@ public class ic5_Engine implements iEco {
 			if(eco.eco != null) {
 				if(event.getPlugin().getDescription().getName().equals("iConomy")) {
 					eco.eco = null;
-					plugin.getLogger().log(Level.INFO, "[" + plugin.getPubName() + "] Succesfully unhooked into iConomy 5!");
+					plugin.getLogger().log(Level.INFO, "Succesfully unhooked into iConomy 5!");
 				}
 			}
 		}
