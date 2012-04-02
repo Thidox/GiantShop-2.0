@@ -52,8 +52,6 @@ public class Eco {
 			return Engines.CRAFTCONOMY;
 		}else if(engine.equalsIgnoreCase("CURRENCYCORE")) {
 			return Engines.CURRENCYCORE;
-		}else if(engine.equalsIgnoreCase("ECONXP")) {
-			return Engines.ECONXP;
 		}else if(engine.equalsIgnoreCase("ESSENTIALS")) {
 			return Engines.ESSENTIALS;
 		}else if(engine.equalsIgnoreCase("MCMONEY")) {
@@ -95,19 +93,13 @@ public class Eco {
 			case CRAFTCONOMY:
 				if(packageExists("me.greatman.Craftconomy.Craftconomy")) {
 					//CraftConomy
-					plugin.getLogger().log(Level.WARNING, "[" + plugin.getName() + "] CraftConomy is currently not yet supported!");
+					Engine = new Craftconomy_Engine(this.plugin);
 				}
 				break;
 			case CURRENCYCORE:
 				if(packageExists("is.currency.Currency")) {
 					//CurrencyCore
-					plugin.getLogger().log(Level.WARNING, "[" + plugin.getName() + "] CurrencyCore is currently not yet supported!");
-				}
-				break;
-			case ECONXP:
-				if(packageExists("ca.agnate.EconXP.EconXP")) {
-					//EconXP
-					plugin.getLogger().log(Level.WARNING, "[" + plugin.getName() + "] EconXP is currently not yet supported!");
+					Engine = new CurrencyCore_Engine(this.plugin);
 				}
 				break;
 			case ESSENTIALS:
