@@ -27,7 +27,6 @@ public class Eco {
 		MULTICURRENCY,
 		BOSE6,
 		BOSE7,
-		EWALLET,
 		ICONOMY4,
 		ICONOMY5,
 		ICONOMY6
@@ -63,8 +62,6 @@ public class Eco {
 			return Engines.BOSE6;
 		}else if(engine.equalsIgnoreCase("BOSE7")) {
 			return Engines.BOSE7;
-		}else if(engine.equalsIgnoreCase("EWALLET")) {
-			return Engines.EWALLET;
 		}else if(engine.equalsIgnoreCase("ICONOMY4")) {
 			return Engines.ICONOMY4;
 		}else if(engine.equalsIgnoreCase("ICONOMY5")) {
@@ -133,12 +130,6 @@ public class Eco {
 				if(packageExists("cosine.boseconomy.BOSEconomy", "cosine.boseconomy.CommandHandler")) {
 					//BOSE7
 					Engine = new bose7_Engine(this.plugin);
-				}
-				break;
-			case EWALLET:
-				if(packageExists("me.ethan.eWallet.ECO")) {
-					//eWallet
-					plugin.getLogger().log(Level.WARNING, "[" + plugin.getName() + "] eWallet is currently not yet supported!");
 				}
 				break;
 			case ICONOMY4:
