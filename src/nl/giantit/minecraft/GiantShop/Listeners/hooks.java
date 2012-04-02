@@ -35,12 +35,6 @@ public class hooks implements Listener {
 	@EventHandler
 	public void onPluginDisable(PluginDisableEvent event) {
 		if (plugin.getPermMan() != null) {
-			if (event.getPlugin().getDescription().getName().equals("Permissions")) {
-				plugin.setPermMan(null);
-				plugin.log.log(Level.INFO, "[" + plugin.getName() + "] un-hooked from Permissions.");
-				plugin.getPluginLoader().disablePlugin(plugin);
-			}
-			
 			if (event.getPlugin().getDescription().getName().equals("PermissionsEx")) {
 				plugin.setPermMan(null);
 				plugin.log.log(Level.INFO, "[" + plugin.getName() + "] un-hooked from PermissionsEX.");
@@ -52,19 +46,7 @@ public class hooks implements Listener {
 	@EventHandler
 	public void onPluginEnable(PluginEnableEvent event) {
 		if(conf.getBoolean("GiantShop.permissions.usePermissions") == true) {
-			/*if(conf.getString("GiantShop.permissions.permissionEngine").equals("Permissions")) {
-				if (plugin.getPermMan() == null) {
-					Plugin Permission = plugin.getServer().getPluginManager().getPlugin("Permissions");
-
-					if (Permission != null) {
-						if (Permission.isEnabled() && Permission.getClass().getName().equals("com.nijikokun.bukkit.Permissions.Permissions")) {
-							Permissions per = (Permissions)Permission;
-							plugin.setPermMan(new perm((PermissionHandler)per.getHandler()));
-							plugin.log.log(Level.INFO, "[" + plugin.getName() + "] hooked into Permissions.");
-						}
-					}
-				}
-			}else*/ if(conf.getString("GiantShop.permissions.permissionEngine").equals("PEX")) {
+			if(conf.getString("GiantShop.permissions.permissionEngine").equals("PEX")) {
 				if (plugin.getPermMan() == null) {
 					Plugin PermissionsEx = plugin.getServer().getPluginManager().getPlugin("PermissionsEx");
 
