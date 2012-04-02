@@ -100,9 +100,9 @@ public class check {
 				Heraut.say(player, "ID: " + itemID);
 				Heraut.say(player, "Type: " + itemType);
 				Heraut.say(player, "Quantity per amount: " + res.get("perStack"));
-				Heraut.say(player, "Leaves shop for: " + (!res.get("sellFor").equals("-1") ? res.get("sellFor") : "Doesn't leave the shop!"));
-				Heraut.say(player, "Returns to shop for: " + (!res.get("buyFor").equals("-1") ? res.get("buyFor") : "No returns!"));
-				Heraut.say(player, "Amount of items in he shop: " + (!res.get("stock").equals("-1") ? res.get("stock") : "unlimited"));
+				Heraut.say(player, "Leaves shop for: " + (!res.get("sellFor").equals("-1.0") ? res.get("sellFor") : "Doesn't leave the shop!"));
+				Heraut.say(player, "Returns to shop for: " + (!res.get("buyFor").equals("-1.0") ? res.get("buyFor") : "No returns!"));
+				Heraut.say(player, "Amount of items in the shop: " + (!res.get("stock").equals("-1") ? res.get("stock") : "unlimited"));
 				//More future stuff
 				/*if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
 				 *		ArrayList<Indaface> shops = GiantShop.getPlugin().getLocationHandler().parseShops(res.get("shops"));
@@ -202,9 +202,9 @@ public class check {
 			Heraut.say(sender, "ID: " + itemID);
 			Heraut.say(sender, "Type: " + itemType);
 			Heraut.say(sender, "Quantity per amount: " + res.get("perStack"));
-			Heraut.say(sender, "Leaves shop for: " + (!res.get("sellFor").equals("-1") ? res.get("sellFor") : "Doesn't leave the shop!"));
-			Heraut.say(sender, "Returns to shop for: " + (!res.get("buyFor").equals("-1") ? res.get("buyFor") : "No returns!"));
-			Heraut.say(sender, "Amount of items in he shop: " + (!res.get("stock").equals("-1") ? res.get("stock") : "unlimited"));
+			Heraut.say(sender, "Leaves shop for: " + (!res.get("sellFor").equals("-1.0") ? res.get("sellFor") : "Doesn't leave the shop!"));
+			Heraut.say(sender, "Returns to shop for: " + (!res.get("buyFor").equals("-1.0") ? res.get("buyFor") : "No returns!"));
+			Heraut.say(sender, "Amount of items in the shop: " + (!res.get("stock").equals("-1") ? res.get("stock") : "unlimited"));
 			//More future stuff
 			/*if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
 			 *		ArrayList<Indaface> shops = GiantShop.getPlugin().getLocationHandler().parseShops(res.get("shops"));
