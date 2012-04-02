@@ -102,9 +102,8 @@ public class GiantShop extends JavaPlugin {
 			if(econHandler.isLoaded()) {
 				log.log(Level.INFO, "[" + this.name + "](" + this.bName + ") Was successfully enabled!");
 			}else{
-				log.log(Level.SEVERE, "[" + this.name + "] Could not load economy engine!");
-				log.log(Level.SEVERE, "[" + this.name + "] Failed to load!");
-				Server.getPluginManager().disablePlugin(this);
+				log.log(Level.WARNING, "[" + this.name + "] Could not load economy engine yet!");
+				log.log(Level.WARNING, "[" + this.name + "] Errors might occur if you do not see '[GiantShop]Successfully hooked into (whichever) Engine!' after this message!");
 			}
 		}catch(Exception e) {
 			log.log(Level.SEVERE, "[" + this.name + "](" + this.bName + ") Failed to load!");
