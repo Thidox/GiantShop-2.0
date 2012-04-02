@@ -123,7 +123,7 @@ public class Eco {
 			case MULTICURRENCY:
 				if(packageExists("me.ashtheking.currency.Currency", "me.ashtheking.currency.CurrencyList")) {
 					//MultiCurrency
-					plugin.getLogger().log(Level.WARNING, "[" + plugin.getName() + "] MultiCurrency is currently not yet supported!");
+					Engine = new MultiCurrency_Engine(this.plugin);
 				}
 				break;
 			case BOSE6:
