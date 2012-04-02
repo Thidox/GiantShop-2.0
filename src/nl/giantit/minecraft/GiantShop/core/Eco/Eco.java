@@ -117,7 +117,7 @@ public class Eco {
 			case MINECONOMY:
 				if(packageExists("me.mjolnir.mineconomy.MineConomy")) {
 					//MineConomy
-					plugin.getLogger().log(Level.WARNING, "[" + plugin.getName() + "] MineConomy is currently not yet supported!");
+					Engine = new MineConomy_Engine(this.plugin);
 				} 
 				break;
 			case MULTICURRENCY:
