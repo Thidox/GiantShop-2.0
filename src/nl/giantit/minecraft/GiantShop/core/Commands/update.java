@@ -270,6 +270,24 @@ public class update {
 	private static void save(Player player) {
 		HashMap<String, String> tmp = stored.get(player);
 		
+		int itemID = Integer.parseInt(tmp.get("itemID"));
+		Integer itemType;
+		try{
+			itemType = Integer.parseInt(tmp.get("itemType"));
+		}catch(NumberFormatException e) {
+			itemType = null;
+		}
+		String name = iH.getItemNameByID(itemID, itemType);
+		
+		tmp.remove("itemID");
+		tmp.remove("itemType");
+		
+		HashMap<String, String> data = new HashMap<String, String>();
+		data.put("itemID", "" + itemID);
+		data.put("type", "" + ((itemType == null) ? -1 : itemType));
+		
+		DB.update("#__items").set(tmp).where(data).updateQuery();
+		Heraut.say(player, "You have successfully updated " + name + "!");
 	}
 	
 	public static void update(Player player, String[] args) {
@@ -316,7 +334,7 @@ public class update {
 					}
 				}else if(args[1].equalsIgnoreCase("save")) {
 					if(stored.containsKey(player)) {
-						
+						update.save(player);
 					}else{
 						Heraut.say(player, "You have not selected an item yet!");
 					}
