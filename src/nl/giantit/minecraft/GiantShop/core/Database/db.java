@@ -297,6 +297,18 @@ public class db {
 		return this.dbDriver.insert(table, fields, values);
 	}
 	
+	public iDriver update(String table) {
+		return this.dbDriver.update(table);
+	}
+	
+	public iDriver set(HashMap<String, String> fields) {
+		return this.dbDriver.set(fields);
+	}
+	
+	public iDriver set(HashMap<String, HashMap<String, String>> fields, Boolean shite) {
+		return this.dbDriver.set(fields, shite);
+	}
+	
 	public iDriver delete(String table) {
 		return this.dbDriver.delete(table);
 	}
