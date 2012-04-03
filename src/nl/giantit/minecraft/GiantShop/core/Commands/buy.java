@@ -193,6 +193,167 @@ public class buy {
 	
 	public static void gift(Player player, String[] args) {
 		Heraut.savePlayer(player);
-		Heraut.say("test");
+		if(perms.has(player, "giantshop.shop.gift")) {
+			if(args.length >= 3) {
+				Player giftReceiver = GiantShop.getPlugin().getServer().getPlayer(args[1]);
+				if(giftReceiver == null) {
+					Heraut.say("Receiver does not exist!");
+				}else if(!giftReceiver.isOnline()) {
+					Heraut.say("Gift receiver is not online!");
+				}else{
+					int itemID;
+					Integer itemType = -1;
+					int quantity;
+
+					if(!args[2].matches("[0-9]+:[0-9]+")) {
+						try {
+							itemID = Integer.parseInt(args[2]);
+							itemType = -1;
+						}catch(NumberFormatException e) {
+							ItemID key = iH.getItemIDByName(args[2]);
+							if(key != null) {
+								itemID = key.getId();
+								itemType = key.getType();
+							}else{
+								Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "itemNotFound"));
+								return;
+							}
+						}catch(Exception e) {
+							if(conf.getBoolean("GiantShop.global.debug") == true) {
+								GiantShop.log.log(Level.SEVERE, "GiantShop Error: " + e.getMessage());
+								GiantShop.log.log(Level.INFO, "Stacktrace: " + e.getStackTrace());
+							}
+
+							Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "unknown"));
+							return;
+						}
+					}else{
+						try {
+							String[] data = args[2].split(":");
+							itemID = Integer.parseInt(data[0]);
+							itemType = Integer.parseInt(data[1]);
+						}catch(NumberFormatException e) {
+							HashMap<String, String> data = new HashMap<String, String>();
+							data.put("command", "gift");
+
+							Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "syntaxError", data));
+							return;
+						}catch(Exception e) {
+							if(conf.getBoolean("GiantShop.global.debug") == true) {
+								GiantShop.log.log(Level.SEVERE, "GiantShop Error: " + e.getMessage());
+								GiantShop.log.log(Level.INFO, "Stacktrace: " + e.getStackTrace());
+							}
+
+							Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "unknown"));
+							return;
+						}
+					}
+
+					if(args.length >= 4) {
+						try {
+							quantity = Integer.parseInt(args[3]);
+							quantity = (quantity > 0) ? quantity : 1;
+						}catch(NumberFormatException e) {
+							//Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "invQuantity"));
+							Heraut.say("As you did not specify a normal quantity, we'll just use 1 ok? :)");
+							quantity = 1;
+						}
+					}else
+						quantity = 1;
+
+					Integer iT = ((itemType == null || itemType == -1 || itemType == 0) ? null : itemType);
+					if(iH.isValidItem(itemID, iT)) {
+						ArrayList<String> fields = new ArrayList<String>();
+						fields.add("perStack");
+						fields.add("sellFor");
+						fields.add("stock");
+						fields.add("shops");
+
+						HashMap<String, String> where = new HashMap<String, String>();
+						where.put("itemID", String.valueOf(itemID));
+						where.put("type", String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType));
+
+						ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where).execQuery();
+						if(resSet.size() == 1) {
+							HashMap<String, String> res = resSet.get(0);
+							if(!res.get("sellFor").equals("-1.0")) {
+								String name = iH.getItemNameByID(itemID, iT);
+
+								int perStack = Integer.parseInt(res.get("perStack"));
+								double sellFor = Double.parseDouble(res.get("sellFor"));
+								double balance = eH.getBalance(player);
+
+								double cost = sellFor * (double) quantity;
+								int amount = perStack * quantity;
+
+								if((balance - cost) < 0) {
+									HashMap<String, String> data = new HashMap<String, String>();
+									data.put("needed", String.valueOf(cost));
+									data.put("have", String.valueOf(balance));
+
+									Heraut.say(mH.getMsg(Messages.msgType.ERROR, "insufFunds", data));
+								}else{
+									if(eH.withdraw(player, cost)) {
+										ItemStack iStack;
+										Inventory inv = giftReceiver.getInventory();
+
+										if(itemType != null && itemType != -1) {
+											iStack = new MaterialData(itemID, (byte) ((int) itemType)).toItemStack(amount);
+										}else{
+											iStack = new ItemStack(itemID, amount);
+										}
+
+										if(conf.getBoolean("GiantShop.global.broadcastBuy"))
+											Heraut.broadcast(player.getName() + " gifted some " + name + " to ");
+
+										HashMap<String, String> data = new HashMap<String, String>();
+										data.put("amount", String.valueOf(amount));
+										data.put("item", name);
+										data.put("giftReceiver", giftReceiver.getDisplayName());
+										data.put("cash", String.valueOf(cost));
+
+										Heraut.say(mH.getMsg(Messages.msgType.MAIN, "giftSender", data));
+										Heraut.say("Your new balance is: " + eH.getBalance(player));
+										
+										data = new HashMap<String, String>();
+										data.put("amount", String.valueOf(amount));
+										data.put("item", name);
+										data.put("giftSender", player.getDisplayName());
+										
+										Heraut.say(giftReceiver, mH.getMsg(Messages.msgType.MAIN, "giftReceiver", data));
+
+										HashMap<Integer, ItemStack> left;
+										left = inv.addItem(iStack);
+
+										if(!left.isEmpty()) {
+											Heraut.say(giftReceiver, mH.getMsg(Messages.msgType.ERROR, "infFull"));
+											for(Map.Entry<Integer, ItemStack> stack : left.entrySet()) {
+												giftReceiver.getWorld().dropItem(giftReceiver.getLocation(), stack.getValue());
+											}
+										}
+									}
+								}
+							}else{
+								Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "notForSale"));
+							}
+						}else{
+							Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noneOrMoreResults"));
+						}
+					}else{
+						Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "itemNotFound"));
+					}
+				}
+			}else{
+				HashMap<String, String> data = new HashMap<String, String>();
+				data.put("command", "gift");
+
+				Heraut.say(mH.getMsg(Messages.msgType.ERROR, "syntaxError", data));
+			}
+		}else{
+			HashMap<String, String> data = new HashMap<String, String>();
+			data.put("command", "gift");
+
+			Heraut.say(mH.getMsg(Messages.msgType.ERROR, "noPermissions", data));
+		}
 	}
 }
