@@ -28,6 +28,10 @@ public class impexp {
 		
 	}
 	
+	public static void impLegacy(CommandSender sender, String[] args) {
+		
+	}
+	
 	public static void exp(CommandSender sender, String[] args) {
 		File dir = new File(GiantShop.getPlugin().getDir() + File.separator + "csvs");
 		if(!dir.exists()) {
