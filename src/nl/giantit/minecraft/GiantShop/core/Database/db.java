@@ -313,6 +313,10 @@ public class db {
 		return this.dbDriver.delete(table);
 	}
 	
+	public iDriver Truncate(String table) {
+		return this.dbDriver.Truncate(table);
+	}
+	
 	public static db Obtain() {
 		if(db.instance != null)
 			return db.instance;

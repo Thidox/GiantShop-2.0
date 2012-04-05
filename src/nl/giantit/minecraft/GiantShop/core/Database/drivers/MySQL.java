@@ -777,6 +777,14 @@ public class MySQL implements iDriver {
 	}
 	
 	@Override
+	public iDriver Truncate(String table) {
+		table = table.replace("#__", prefix);
+		this.buildQuery("TRUNCATE TABLE " + table + ";");
+		
+		return this;
+	}
+	
+	@Override
 	public iDriver debug(Boolean dbg) {
 		this.buildQuery("", true, false, dbg);
 		return this;

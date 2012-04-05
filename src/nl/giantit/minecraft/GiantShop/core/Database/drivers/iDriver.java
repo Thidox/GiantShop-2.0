@@ -58,6 +58,8 @@ public interface iDriver {
 	
 	public iDriver delete(String table);
 	
+	public iDriver Truncate(String table);
+	
 	public iDriver debug(Boolean dbg);
 	public iDriver Finalize();
 	public iDriver debugFinalize(Boolean dbg);
