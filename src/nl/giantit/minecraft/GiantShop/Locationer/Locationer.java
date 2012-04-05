@@ -54,6 +54,7 @@ public class Locationer {
 		return false;
 	}
 	
+	@Deprecated
 	public void print(String[] args) {
 		int perPag = (conf.getInt("GiantShop.Location.perPage") > 0) ? conf.getInt("GiantShop.Location.perPage") : 5;
 		int pag;
@@ -102,7 +103,8 @@ public class Locationer {
 					+ (shop.getLocation()).get(1).getBlockY() + " MaxZ: " + (shop.getLocation()).get(1).getBlockZ());
 		}*/
 	}
-
+	
+	@Deprecated
 	public boolean addShop(Player player, ArrayList<Location> loc, String name) {
 		Indaface shop = slHandle.newShop(loc, name, player.getWorld().getName());
 		if(shop != null) {
@@ -114,6 +116,7 @@ public class Locationer {
 		//shops.add(new Indaface(plugin, locs));
 	}
 
+	@Deprecated
 	public boolean removeShop(int id) {
 		int i = 0;
 		for(Indaface shop : shops) {
@@ -128,6 +131,7 @@ public class Locationer {
 		return false;
 	}
 
+	@Deprecated
 	public boolean removeShop(String name, String World) {
 		int i = 0;
 		for(Indaface shop : shops) {
