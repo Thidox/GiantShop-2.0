@@ -29,6 +29,15 @@ public class impexp {
 	}
 	
 	public static void exp(CommandSender sender, String[] args) {
+		File dir = new File(GiantShop.getPlugin().getDir() + File.separator + "csvs");
+		if(!dir.exists()) {
+			dir.mkdir();
+		}else{		
+			if(!dir.isDirectory()) {
+				Heraut.say(sender, "Output directory is not a directory!");
+			}
+		}
+		
 		if(args.length > 1) {
 			ArrayList<String> fields = new ArrayList<String>();
 			fields.add("*");
@@ -41,7 +50,7 @@ public class impexp {
 					Heraut.say(sender, "Starting item export...");
 
 					try{
-						BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "items.csv"));
+						BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "csvs" + File.separator + "items.csv"));
 						f.write("itemID, itemType, sellFor, buyFor, perStack, stock, shops");
 						f.newLine();
 						for(int i = 0; i < iResSet.size(); i++) {
@@ -75,7 +84,7 @@ public class impexp {
 					Heraut.say(sender, "Starting shops export...");
 
 					try{
-						BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "shops.csv"));
+						BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "csvs" + File.separator + "shops.csv"));
 						f.write("name, perms, world, locMinX, locMinY, locMinZ, locMaxX, locMaxY, locMaxZ");
 						f.newLine();
 						for(int i = 0; i < sResSet.size(); i++) {
@@ -111,7 +120,7 @@ public class impexp {
 					Heraut.say(sender, "Starting discounts export...");
 
 					try{
-						BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "shops.csv"));
+						BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "csvs" + File.separator + "shops.csv"));
 						f.write("itemID, dicount, user, group");
 						f.newLine();
 						for(int i = 0; i < dResSet.size(); i++) {
@@ -160,7 +169,7 @@ public class impexp {
 				Heraut.say(sender, "Starting item export...");
 
 				try{
-					BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "items.csv"));
+					BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "csvs" + File.separator + "items.csv"));
 					f.write("itemID, itemType, sellFor, buyFor, perStack, stock, shops");
 					f.newLine();
 					for(int i = 0; i < iResSet.size(); i++) {
@@ -190,7 +199,7 @@ public class impexp {
 				Heraut.say(sender, "Starting shops export...");
 
 				try{
-					BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "shops.csv"));
+					BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "csvs" + File.separator + "shops.csv"));
 					f.write("name, perms, world, locMinX, locMinY, locMinZ, locMaxX, locMaxY, locMaxZ");
 					f.newLine();
 					for(int i = 0; i < sResSet.size(); i++) {
@@ -222,7 +231,7 @@ public class impexp {
 				Heraut.say(sender, "Starting discounts export...");
 
 				try{
-					BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "shops.csv"));
+					BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "csvs" + File.separator + "shops.csv"));
 					f.write("itemID, dicount, user, group");
 					f.newLine();
 					for(int i = 0; i < dResSet.size(); i++) {
