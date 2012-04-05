@@ -1,7 +1,6 @@
 package nl.giantit.minecraft.GiantShop.Executors;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.core.Commands.*;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
@@ -17,7 +16,6 @@ import org.bukkit.entity.Player;
 public class chat {
 	
 	private GiantShop plugin;
-	private perm perm;
 	
 	public chat(GiantShop plugin) {
 		this.plugin = plugin;
@@ -25,7 +23,7 @@ public class chat {
 
 	public boolean exec(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player player = (Player) sender;
-		perm = plugin.getPermMan();
+		
 		if(args.length == 0 || args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") || args[0].equalsIgnoreCase("?")) {
 			//done
 			if(plugin.useLoc && plugin.cmds.contains("help")) {
