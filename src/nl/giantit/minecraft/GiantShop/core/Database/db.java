@@ -58,10 +58,11 @@ public class db {
 			this.dbDriver.updateQuery();
 			
 			this.dbDriver.buildQuery("CREATE TABLE #__items \n");
-			this.dbDriver.buildQuery("(id INT(3) PRIMARY KEY, itemID INT(3) NOT NULL, type INT(3) default '-1', ", true);
+			this.dbDriver.buildQuery("(id INT(3) NOT NULL AUTO_INCREMENT, itemID INT(3) NOT NULL, type INT(3) default '-1', ", true);
 			this.dbDriver.buildQuery("sellFor DOUBLE DEFAULT '-1', buyFor DOUBLE DEFAULT '-1', ", true);
 			this.dbDriver.buildQuery("stock INT(3) DEFAULT '-1', perStack int(3) DEFAULT '1', ", true);
-			this.dbDriver.buildQuery("shops VARCHAR(100) DEFAULT NULL);", true, true, false);
+			this.dbDriver.buildQuery("shops VARCHAR(100) DEFAULT NULL, ", true, false, false);
+			this.dbDriver.buildQuery("PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARSET=latin1;", true, true, false);
 			this.dbDriver.updateQuery();
 			
 			plugin.log.log(Level.INFO, "Items table successfully created!");
