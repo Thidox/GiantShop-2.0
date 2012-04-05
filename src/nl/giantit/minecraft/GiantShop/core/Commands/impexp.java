@@ -413,7 +413,149 @@ public class impexp {
 	}
 	
 	public static void impLegacy(CommandSender sender, String[] args) {
+		ArrayList<String> fields;
+		ArrayList<HashMap<Integer, HashMap<String, String>>> values;
+		String path = GiantShop.getPlugin().getDir() + File.separator + "csvs";
+		String file = "data.csv";
+		Boolean commence = true;
+		Boolean err = false;
+		if(args.length > 1) {
+			for(int i = 0; i < args.length; i++) {
+				if(args[i].startsWith("-p:")) {
+					path = args[i].replaceFirst("-p:", "");
+					continue;
+				}else if(args[i].startsWith("-c:")) {
+					commence = Boolean.parseBoolean(args[i].replaceFirst("-c:", ""));
+					continue;
+				}else if(args[i].startsWith("-f:")) {
+					file = args[i].replaceFirst("-f:", "");
+					continue;
+				}
+			}
+		}
 		
+		Heraut.say(sender, "Beginning legacy import...");
+		File f = new File(path + File.separator + file);
+		if(f.exists()) {
+			ArrayList<String[]> items = new ArrayList<String[]>();
+			String line;
+			try {
+				BufferedReader br = new BufferedReader(new FileReader(path + File.separator + file));
+				if(br.ready()) {
+					int	lineNumber = 0;
+
+					while((line = br.readLine()) != null) {
+						lineNumber++;
+
+						if(lineNumber <= 1) {
+							if(!line.equals("id, dataType, sellFor, buyFor, amount")) {
+								Heraut.say(sender, "The given file is not a proper items file!");
+								br.close();
+								return;
+							}
+							continue;	
+						}
+
+						//break comma separated line using ", "
+						String[] st = line.split(", ");
+						if(st.length == 5) {
+							items.add(st);
+						}else{
+							err = true;
+							Heraut.say(sender, "Invalid entry detected! (" + lineNumber + ":" + line + ")");
+							continue;
+						}
+					}
+				}
+				br.close();
+			}catch(IOException e) {
+				Heraut.say(sender, "Legacy import failed!");
+				GiantShop.getPlugin().getLogger().log(Level.SEVERE, "" + e);
+				return;
+			}
+			
+			fields = new ArrayList<String>();
+			fields.add("itemID");
+			fields.add("type");
+			fields.add("sellFor");
+			fields.add("buyFor");
+			fields.add("perStack");
+
+			values = new ArrayList<HashMap<Integer, HashMap<String, String>>>();
+			int lineNumber = 0;
+			for(String[] item : items) {
+				lineNumber++;
+
+				int itemID, perStack;
+				Integer itemType;
+				Double sellFor, buyFor;
+				try {
+					itemID = Integer.parseInt(item[0]);
+					if(!item[1].equals("-1") && !item[1].equals("0")) {
+						itemType = Integer.parseInt(item[1]);
+					}else{
+						itemType = null;
+					}
+
+					sellFor = Double.parseDouble(item[2]);
+					buyFor = Double.parseDouble(item[3]);
+					perStack = Integer.parseInt(item[4]);
+				}catch(NumberFormatException e) {
+					err = true;
+					Heraut.say(sender, "Invalid entry detected! (" + lineNumber + ":" + item.toString() + ")");
+					continue;
+				}
+
+				if(iH.isValidItem(itemID, itemType)) {
+					HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
+					for(String field : fields) {
+						HashMap<String, String> temp = new HashMap<String, String>();
+						if(field.equalsIgnoreCase("itemID")) {
+							temp.put("kind", "INT");
+							temp.put("data", "" + itemID);
+							tmp.put(0, temp);
+						}else if(field.equalsIgnoreCase("type")) {
+							temp.put("kind", "INT");
+							temp.put("data", "" + ((itemType == null) ? -1 : itemType));
+							tmp.put(1, temp);
+						}else if(field.equalsIgnoreCase("sellFor")) {
+							temp.put("data", "" + sellFor);
+							tmp.put(2, temp);
+						}else if(field.equalsIgnoreCase("buyFor")) {
+							temp.put("data", "" + buyFor);
+							tmp.put(3, temp);
+						}else if(field.equalsIgnoreCase("perStack")) {
+							temp.put("kind", "INT");
+							temp.put("data", "" + perStack);
+							tmp.put(5, temp);
+						}
+					}
+					values.add(tmp);
+				}else{
+					err = true;
+					Heraut.say(sender, "Invalid entry detected! (" + lineNumber + ":" + item.toString() + ")");
+					continue;
+				}
+			}
+
+			if(!commence) {
+				Heraut.say(sender, "Found " + values.size() + " items to import!");
+			}else{
+				Heraut.say(sender, "Truncating items table!");
+				DB.Truncate("#__items").updateQuery();
+
+				Heraut.say(sender, "Importing " + values.size() + " items...");
+				DB.insert("#__items", fields, values).updateQuery();
+			}
+
+			if(err) {
+				Heraut.say(sender, "Finished legacy import, though some errors occured!");
+			}else{
+				Heraut.say(sender, "Finished legacy import!");
+			}
+		}else{
+			Heraut.say(sender, "Legacy import failed! File (" + path + File.separator + file + ") not found!");
+		}
 	}
 	
 	public static void exp(CommandSender sender, String[] args) {
