@@ -41,13 +41,13 @@ public class MySQL implements iDriver {
 		this.host = conf.getString("GiantShop.db.host");
 		this.port = conf.getString("GiantShop.db.port");
 		this.user = conf.getString("GiantShop.db.user");
-		this.pass = conf.getString("GiantShop.db.pass");
+		this.pass = conf.getString("GiantShop.db.password");
 		this.prefix = conf.getString("GiantShop.db.prefix");
 		
-		String dbPath = "jbdc:mysql://" + this.host + ":" + this.port + "/" + this.db;
+		String dbPath = "jdbc:mysql://" + this.host + ":" + this.port + "/" + this.db + "?user=" + this.user + "&password=" + this.pass;
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
-			this.con = DriverManager.getConnection(dbPath, this.user, this.pass);
+			this.con = DriverManager.getConnection(dbPath);
 		}catch(SQLException e) {
 			this.plugin.log.log(Level.SEVERE, "[" + this.plugin.getName() + "] Failed to connect to database: SQL error!");
 			if(conf.getBoolean("GiantShop.global.debug")) {
