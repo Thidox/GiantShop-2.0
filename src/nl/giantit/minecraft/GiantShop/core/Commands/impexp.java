@@ -1,8 +1,7 @@
 package nl.giantit.minecraft.GiantShop.core.Commands;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.Misc.Heraut;
-import nl.giantit.minecraft.GiantShop.Misc.Messages;
+import nl.giantit.minecraft.GiantShop.Misc.*;
 import nl.giantit.minecraft.GiantShop.core.Database.db;
 
 import org.bukkit.command.CommandSender;
@@ -13,7 +12,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import nl.giantit.minecraft.GiantShop.Misc.Misc;
 
 /**
  *
@@ -25,7 +23,51 @@ public class impexp {
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	
 	public static void imp(CommandSender sender, String[] args) {
-		
+		if(args.length > 1) {
+			String type = "items";
+			String path = GiantShop.getPlugin().getDir() + File.separator + "csvs";
+			String file = null;
+			Boolean commence = true;
+			for(int i = 0; i < args.length; i++) {
+				if(args[i].startsWith("-t:")) {
+					type = args[i].replaceFirst("-t:", "");
+					continue;
+				}else if(args[i].startsWith("-p:")) {
+					path = args[i].replaceFirst("-p:", "");
+					continue;
+				}else if(args[i].startsWith("-c:")) {
+					commence = Boolean.parseBoolean(args[i].replaceFirst("-c:", ""));
+					continue;
+				}else if(args[i].startsWith("-f:")) {
+					file = args[i].replaceFirst("-f:", "");
+					continue;
+				}
+			}
+			
+			if(Misc.isEitherIgnoreCase(type, "items", "i")) {
+				file = (file == null) ? "items.csv" : file;
+				
+				
+			}else if(Misc.isEitherIgnoreCase(type, "shops", "s")) {
+				file = (file == null) ? "shops.csv" : file;
+				
+				
+			}else if(Misc.isEitherIgnoreCase(type, "discounts", "d")) {
+				file = (file == null) ? "discounts.csv" : file;
+				
+				
+			}else{
+				HashMap<String, String> data = new HashMap<String, String>();
+				data.put("command", "import");
+
+				Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "syntaxError", data));
+			}
+		}else{
+			HashMap<String, String> data = new HashMap<String, String>();
+			data.put("command", "import");
+
+			Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "syntaxError", data));
+		}
 	}
 	
 	public static void impLegacy(CommandSender sender, String[] args) {
