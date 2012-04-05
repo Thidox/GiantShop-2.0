@@ -166,7 +166,7 @@ public class impexp {
 					Heraut.say(sender, "Starting discounts export...");
 
 					try{
-						BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "csvs" + File.separator + "shops.csv"));
+						BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "csvs" + File.separator + "discounts.csv"));
 						f.write("itemID, dicount, user, group");
 						f.newLine();
 						for(int i = 0; i < dResSet.size(); i++) {
@@ -277,7 +277,7 @@ public class impexp {
 				Heraut.say(sender, "Starting discounts export...");
 
 				try{
-					BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "csvs" + File.separator + "shops.csv"));
+					BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "csvs" + File.separator + "discounts.csv"));
 					f.write("itemID, dicount, user, group");
 					f.newLine();
 					for(int i = 0; i < dResSet.size(); i++) {
