@@ -49,9 +49,14 @@ public class console {
 		}else if(Misc.isEitherIgnoreCase(args[0], "addStock", "as")) {
 			//stalled
 		}else if(Misc.isEitherIgnoreCase(args[0], "import", "i")) {
-			//stalled
-		}else if(Misc.isEitherIgnoreCase(args[0], "export", "e")) {
 			//in dev
+			impexp.imp(sender, args);
+		}else if(Misc.isEitherIgnoreCase(args[0], "importLegacy", "iL")) {
+			//stalled
+			impexp.impLegacy(sender, args);
+		}else if(Misc.isEitherIgnoreCase(args[0], "export", "e")) {
+			//done
+			//needs testing
 			impexp.exp(sender, args);
 		}else{
 			sender.sendMessage("[" + plugin.getName() + "] Command not found! See help for more information.");
