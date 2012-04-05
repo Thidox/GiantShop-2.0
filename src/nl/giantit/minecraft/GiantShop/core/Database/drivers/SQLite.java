@@ -690,11 +690,13 @@ public class SQLite implements iDriver {
 			this.buildQuery(insFields, true, false, false);
 		}
 		
-		this.buildQuery(" VALUES \n", true, false, false);
+		this.buildQuery(" SELECT ", true, false, false);
 		String insValues = "";
 		int i = 0;
 		for(HashMap<Integer, HashMap<String, String>> value : values) {
-			insValues += "(";
+			if(i > 0)
+				insValues += "UNION SELECT ";
+			
 			int a = 0;
 			for(Map.Entry<Integer, HashMap<String, String>> val : value.entrySet()) {
 				if(a > 0)
@@ -708,7 +710,7 @@ public class SQLite implements iDriver {
 			}
 			
 			i++;
-			insValues += (i < values.size()) ? "), \n" : ");";
+			insValues += (i < values.size()) ? "\n" : "";
 		}
 		this.buildQuery(insValues, true, false, false);
 		
