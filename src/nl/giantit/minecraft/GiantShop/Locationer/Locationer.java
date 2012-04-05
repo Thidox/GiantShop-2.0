@@ -5,12 +5,16 @@ import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Locationer.AreaReaders.*;
+import nl.giantit.minecraft.GiantShop.Locationer.Executors.*;
 
 import org.bukkit.Location;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *
  * @author Giant
@@ -22,6 +26,8 @@ public class Locationer {
 	private config conf;
 	private ArrayList<Indaface> shops;
 	private List<String> worlds, allow;
+	private chat chat;
+	private console console;
 
 	public Locationer(GiantShop plugin) {
 		this.plugin = plugin;
@@ -34,6 +40,18 @@ public class Locationer {
 		shops = slHandle.getShops();
 		worlds = conf.getStringList("GiantShop.Location.protect.Worlds.protected");
 		allow = conf.getStringList("GiantShop.Location.protect.Worlds.allowed");
+	}
+	
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("loc")) {
+			if(!(sender instanceof Player)){
+				return console.exec(sender, cmd, commandLabel, args);
+			}
+			
+			return chat.exec(sender, cmd, commandLabel, args);
+		}
+		
+		return false;
 	}
 	
 	public void print(String[] args) {

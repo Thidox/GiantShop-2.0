@@ -10,6 +10,7 @@ import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.Executors.*;
 import nl.giantit.minecraft.GiantShop.Listeners.*;
 import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
+import nl.giantit.minecraft.GiantShop.Locationer.Listeners.*;
 
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -36,8 +37,6 @@ public class GiantShop extends JavaPlugin {
 	private perm perms;
 	private chat chat;
 	private console console;
-	private locchat locchat;
-	private locconsole locconsole;
 	private Items itemHandler;
 	private Eco econHandler;
 	private Messages msgHandler;
@@ -85,11 +84,12 @@ public class GiantShop extends JavaPlugin {
 			}
 			
 			if(conf.getBoolean("GiantShop.Location.useGiantShopLocation")) {
-				/*if(conf.getBoolean("GiantShop.Location.showPlayerEnteredShop"))
-					getServer().getPluginManager().registerEvents(new playerListener(this), this);*/
-				
 				useLoc = true;
+				loc = new Locationer(this);
 				cmds = conf.getStringList("GiantShop.Location.protected.Commands");
+				
+				if(conf.getBoolean("GiantShop.Location.showPlayerEnteredShop"))
+					getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 				
 			}
 			pubName = conf.getString("GiantShop.global.name");
@@ -127,11 +127,7 @@ public class GiantShop extends JavaPlugin {
 			
 			return chat.exec(sender, cmd, commandLabel, args);
 		}else if (cmd.getName().equalsIgnoreCase("loc")) {
-			if(!(sender instanceof Player)){
-				return locconsole.exec(sender, cmd, commandLabel, args);
-			}
-			
-			return locchat.exec(sender, cmd, commandLabel, args);
+			return loc.onCommand(sender, cmd, commandLabel, args);
 		}
 		
 		return false;
