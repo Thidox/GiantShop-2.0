@@ -51,7 +51,8 @@ public class console {
 		}else if(Misc.isEitherIgnoreCase(args[0], "import", "i")) {
 			//stalled
 		}else if(Misc.isEitherIgnoreCase(args[0], "export", "e")) {
-			//stalled
+			//in dev
+			impexp.exp(sender, args);
 		}else{
 			sender.sendMessage("[" + plugin.getName() + "] Command not found! See help for more information.");
 		}
