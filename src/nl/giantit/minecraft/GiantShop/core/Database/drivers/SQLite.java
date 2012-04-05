@@ -775,7 +775,7 @@ public class SQLite implements iDriver {
 	@Override
 	public iDriver Truncate(String table) {
 		table = table.replace("#__", prefix);
-		this.buildQuery("DELETE FROM " + table + ";");
+		this.buildQuery("DELETE FROM " + table + ";", false, false, false);
 		
 		return this;
 	}
