@@ -4,7 +4,6 @@ import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.*;
 import nl.giantit.minecraft.GiantShop.core.Database.db;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
-import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
 
 import org.bukkit.command.CommandSender;
 
@@ -198,11 +197,111 @@ public class impexp {
 				
 				File f = new File(path + File.separator + file);
 				if(f.exists()) {
+					Heraut.say(sender, "Starting importing shops...");
 					
+					ArrayList<String[]> items = new ArrayList<String[]>();
+					String line;
+					try {
+						BufferedReader br = new BufferedReader(new FileReader(path + File.separator + file));
+						if(br.ready()) {
+							int	lineNumber = 0;
+
+							while((line = br.readLine()) != null) {
+								lineNumber++;
+								
+								if(lineNumber <= 1) {
+									if(!line.equals("name, perms, world, locMinX, locMinY, locMinZ, locMaxX, locMaxY, locMaxZ")) {
+										Heraut.say(sender, "The given file is not a proper shops file!");
+										br.close();
+										return;
+									}
+									continue;	
+								}
+
+								//break comma separated line using ", "
+								String[] st = line.split(", ");
+								if(st.length == 9) {
+									items.add(st);
+								}else{
+									err = true;
+									Heraut.say(sender, "Invalid entry detected! (" + lineNumber + ":" + line + ")");
+									continue;
+								}
+							}
+						}
+						br.close();
+					}catch(IOException e) {
+						Heraut.say(sender, "Failed shops import!");
+						GiantShop.getPlugin().getLogger().log(Level.SEVERE, "" + e);
+						return;
+					}
 					
 					fields = new ArrayList<String>();
+					fields.add("name");
+					fields.add("perms");
+					fields.add("world");
+					fields.add("locMinX");
+					fields.add("locMinY");
+					fields.add("locMinZ");
+					fields.add("locMaxX");
+					fields.add("locMaxY");
+					fields.add("locMaxZ");
 					
 					values = new ArrayList<HashMap<Integer, HashMap<String, String>>>();
+					int lineNumber = 0;
+					for(String[] item : items) {
+						lineNumber++;
+						
+						HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
+						for(String field : fields) {
+							HashMap<String, String> temp = new HashMap<String, String>();
+							if(field.equalsIgnoreCase("name")) {
+								temp.put("data", "" + item[0]);
+								tmp.put(0, temp);
+							}else if(field.equalsIgnoreCase("perms")) {
+								temp.put("data", "" + item[1]);
+								tmp.put(1, temp);
+							}else if(field.equalsIgnoreCase("world")) {
+								temp.put("data", "" + item[2]);
+								tmp.put(2, temp);
+							}else if(field.equalsIgnoreCase("locMinX")) {
+								temp.put("data", item[3]);
+								tmp.put(3, temp);
+							}else if(field.equalsIgnoreCase("locMinY")) {
+								temp.put("data", item[3]);
+								tmp.put(3, temp);
+							}else if(field.equalsIgnoreCase("locMinZ")) {
+								temp.put("data", item[3]);
+								tmp.put(3, temp);
+							}else if(field.equalsIgnoreCase("locMaxX")) {
+								temp.put("data", item[3]);
+								tmp.put(3, temp);
+							}else if(field.equalsIgnoreCase("locMaxY")) {
+								temp.put("data", item[3]);
+								tmp.put(3, temp);
+							}else if(field.equalsIgnoreCase("locMaxZ")) {
+								temp.put("data", item[3]);
+								tmp.put(3, temp);
+							}
+						}
+						values.add(tmp);
+					}
+					
+					if(!commence) {
+						Heraut.say(sender, "Found " + values.size() + " shops to import!");
+					}else{
+						Heraut.say(sender, "Truncating items shops!");
+						DB.Truncate("#__shops").updateQuery();
+						
+						Heraut.say(sender, "Importing " + values.size() + " shops...");
+						DB.insert("#__shops", fields, values).updateQuery();
+					}
+					
+					if(err) {
+						Heraut.say(sender, "Finished importing shops, though some errors occured!");
+					}else{
+						Heraut.say(sender, "Finished importing shops!");
+					}
 				}else{
 					Heraut.say(sender, "Requested file does not exist!");
 				}
@@ -211,11 +310,91 @@ public class impexp {
 				
 				File f = new File(path + File.separator + file);
 				if(f.exists()) {
+					Heraut.say(sender, "Starting importing discounts...");
 					
+					ArrayList<String[]> items = new ArrayList<String[]>();
+					String line;
+					try {
+						BufferedReader br = new BufferedReader(new FileReader(path + File.separator + file));
+						if(br.ready()) {
+							int	lineNumber = 0;
+
+							while((line = br.readLine()) != null) {
+								lineNumber++;
+								
+								if(lineNumber <= 1) {
+									if(!line.equals("itemID, dicount, user, group")) {
+										Heraut.say(sender, "The given file is not a proper discounts file!");
+										br.close();
+										return;
+									}
+									continue;	
+								}
+
+								//break comma separated line using ", "
+								String[] st = line.split(", ");
+								if(st.length == 4) {
+									items.add(st);
+								}else{
+									err = true;
+									Heraut.say(sender, "Invalid entry detected! (" + lineNumber + ":" + line + ")");
+									continue;
+								}
+							}
+						}
+						br.close();
+					}catch(IOException e) {
+						Heraut.say(sender, "Failed discounts import!");
+						GiantShop.getPlugin().getLogger().log(Level.SEVERE, "" + e);
+						return;
+					}
 					
 					fields = new ArrayList<String>();
+					fields.add("itemID");
+					fields.add("discount");
+					fields.add("user");
+					fields.add("group");
 					
 					values = new ArrayList<HashMap<Integer, HashMap<String, String>>>();
+					int lineNumber = 0;
+					for(String[] item : items) {
+						lineNumber++;
+						
+						HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
+						for(String field : fields) {
+							HashMap<String, String> temp = new HashMap<String, String>();
+							if(field.equalsIgnoreCase("itemID")) {
+								temp.put("data", "" + item[0]);
+								tmp.put(0, temp);
+							}else if(field.equalsIgnoreCase("discount")) {
+								temp.put("data", "" + item[1]);
+								tmp.put(1, temp);
+							}else if(field.equalsIgnoreCase("user")) {
+								temp.put("data", "" + item[2]);
+								tmp.put(2, temp);
+							}else if(field.equalsIgnoreCase("group")) {
+								temp.put("data", item[3]);
+								tmp.put(3, temp);
+							}
+						}
+						values.add(tmp);
+					}
+					
+					if(!commence) {
+						Heraut.say(sender, "Found " + values.size() + " discounts to import!");
+					}else{
+						Heraut.say(sender, "Truncating items __discounts!");
+						DB.Truncate("#__discounts").updateQuery();
+						
+						Heraut.say(sender, "Importing " + values.size() + " __discounts...");
+						DB.insert("#__discounts", fields, values).updateQuery();
+					}
+					
+					if(err) {
+						Heraut.say(sender, "Finished importing discounts, though some errors occured!");
+					}else{
+						Heraut.say(sender, "Finished importing discounts!");
+					}
 				}else{
 					Heraut.say(sender, "Requested file does not exist!");
 				}
@@ -257,30 +436,9 @@ public class impexp {
 				
 				if(iResSet.size() > 0) {
 					Heraut.say(sender, "Starting item export...");
-
-					try{
-						BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "csvs" + File.separator + "items.csv"));
-						f.write("itemID, itemType, sellFor, buyFor, perStack, stock, shops");
-						f.newLine();
-						for(int i = 0; i < iResSet.size(); i++) {
-							HashMap<String, String> data = iResSet.get(i);
-
-							String itemId = data.get("itemID");
-							String dataType = data.get("itemType");
-							String sellFor = data.get("sellFor");
-							String buyFor = data.get("buyFor");
-							String amount = data.get("perStack");
-							String stock = data.get("stock");
-							String shops = (!data.get("shops").isEmpty()) ? data.get("shops") : "null";
-
-							f.write(itemId + ", " + dataType + ", " + sellFor + ", " + buyFor + ", " + amount + ", " + stock + ", " + shops);
-							f.newLine();
-						}
-						f.flush();
-						f.close();
-					}catch(IOException e) {
+					if(!impexp.expItem(iResSet, GiantShop.getPlugin().getDir() + File.separator + "csvs", "items.csv")){
 						Heraut.say(sender, "Failed item export!");
-					}finally{
+					}else{
 						Heraut.say(sender, "Finished item export!");
 					}
 				}
@@ -291,32 +449,9 @@ public class impexp {
 
 				if(sResSet.size() > 0) {
 					Heraut.say(sender, "Starting shops export...");
-
-					try{
-						BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "csvs" + File.separator + "shops.csv"));
-						f.write("name, perms, world, locMinX, locMinY, locMinZ, locMaxX, locMaxY, locMaxZ");
-						f.newLine();
-						for(int i = 0; i < sResSet.size(); i++) {
-							HashMap<String, String> data = sResSet.get(i);
-
-							String name = data.get("name");
-							String perms = data.get("perms");
-							String world = data.get("world");
-							String locMinX = data.get("locMinX");
-							String locMinY = data.get("locMinY");
-							String locMinZ = data.get("locMinZ");
-							String locMaxX = data.get("locMaxX");
-							String locMaxY = data.get("locMaxY");
-							String locMaxZ = data.get("locMaxZ");
-
-							f.write(name + ", " + perms + ", " + world + ", " + locMinX + ", " + locMinY + ", " + locMinZ + ", " + locMaxX + ", " + locMaxY + ", " + locMaxZ);
-							f.newLine();
-						}
-						f.flush();
-						f.close();
-					}catch(IOException e) {
+					if(!impexp.expShop(sResSet, GiantShop.getPlugin().getDir() + File.separator + "csvs", "shops.csv")){
 						Heraut.say(sender, "Failed shops export!");
-					}finally{
+					}else{
 						Heraut.say(sender, "Finished shops export!");
 					}
 				}
@@ -327,27 +462,9 @@ public class impexp {
 
 				if(dResSet.size() > 0) {
 					Heraut.say(sender, "Starting discounts export...");
-
-					try{
-						BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "csvs" + File.separator + "discounts.csv"));
-						f.write("itemID, dicount, user, group");
-						f.newLine();
-						for(int i = 0; i < dResSet.size(); i++) {
-							HashMap<String, String> data = dResSet.get(i);
-
-							String itemID = data.get("itemID");
-							String dicount = data.get("dicount");
-							String user = data.get("user");
-							String group = data.get("world");
-
-							f.write(itemID + ", " + dicount + ", " + user + ", " + group);
-							f.newLine();
-						}
-						f.flush();
-						f.close();
-					}catch(IOException e) {
+					if(!impexp.expDiscount(dResSet, GiantShop.getPlugin().getDir() + File.separator + "csvs", "discounts.csv")){
 						Heraut.say(sender, "Failed discounts export!");
-					}finally{
+					}else{
 						Heraut.say(sender, "Finished discounts export!");
 					}
 				}
@@ -376,94 +493,115 @@ public class impexp {
 
 			if(iResSet.size() > 0) {
 				Heraut.say(sender, "Starting item export...");
-
-				try{
-					BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "csvs" + File.separator + "items.csv"));
-					f.write("itemID, itemType, sellFor, buyFor, perStack, stock, shops");
-					f.newLine();
-					for(int i = 0; i < iResSet.size(); i++) {
-						HashMap<String, String> data = iResSet.get(i);
-
-						String itemId = data.get("itemID");
-						String dataType = data.get("itemType");
-						String sellFor = data.get("sellFor");
-						String buyFor = data.get("buyFor");
-						String amount = data.get("perStack");
-						String stock = data.get("stock");
-						String shops = data.get("shops");
-
-						f.write(itemId + ", " + dataType + ", " + sellFor + ", " + buyFor + ", " + amount + ", " + stock + ", " + shops);
-						f.newLine();
-					}
-					f.flush();
-					f.close();
-				}catch(IOException e) {
+				if(!impexp.expItem(iResSet, GiantShop.getPlugin().getDir() + File.separator + "csvs", "items.csv")){
 					Heraut.say(sender, "Failed item export!");
-				}finally{
+				}else{
 					Heraut.say(sender, "Finished item export!");
 				}
 			}
 
 			if(sResSet.size() > 0) {
 				Heraut.say(sender, "Starting shops export...");
-
-				try{
-					BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "csvs" + File.separator + "shops.csv"));
-					f.write("name, perms, world, locMinX, locMinY, locMinZ, locMaxX, locMaxY, locMaxZ");
-					f.newLine();
-					for(int i = 0; i < sResSet.size(); i++) {
-						HashMap<String, String> data = sResSet.get(i);
-
-						String name = data.get("name");
-						String perms = data.get("perms");
-						String world = data.get("world");
-						String locMinX = data.get("locMinX");
-						String locMinY = data.get("locMinY");
-						String locMinZ = data.get("locMinZ");
-						String locMaxX = data.get("locMaxX");
-						String locMaxY = data.get("locMaxY");
-						String locMaxZ = data.get("locMaxZ");
-
-						f.write(name + ", " + perms + ", " + world + ", " + locMinX + ", " + locMinY + ", " + locMinZ + ", " + locMaxX + ", " + locMaxY + ", " + locMaxZ);
-						f.newLine();
-					}
-					f.flush();
-					f.close();
-				}catch(IOException e) {
+				if(!impexp.expShop(sResSet, GiantShop.getPlugin().getDir() + File.separator + "csvs", "shops.csv")){
 					Heraut.say(sender, "Failed shops export!");
-				}finally{
+				}else{
 					Heraut.say(sender, "Finished shops export!");
 				}
 			}
 
 			if(dResSet.size() > 0) {
 				Heraut.say(sender, "Starting discounts export...");
-
-				try{
-					BufferedWriter f = new BufferedWriter(new FileWriter(GiantShop.getPlugin().getDir() + File.separator + "csvs" + File.separator + "discounts.csv"));
-					f.write("itemID, dicount, user, group");
-					f.newLine();
-					for(int i = 0; i < dResSet.size(); i++) {
-						HashMap<String, String> data = dResSet.get(i);
-
-						String itemID = data.get("itemID");
-						String dicount = data.get("dicount");
-						String user = data.get("user");
-						String group = data.get("world");
-
-						f.write(itemID + ", " + dicount + ", " + user + ", " + group);
-						f.newLine();
-					}
-					f.flush();
-					f.close();
-				}catch(IOException e) {
+				if(!impexp.expDiscount(dResSet, GiantShop.getPlugin().getDir() + File.separator + "csvs", "discounts.csv")){
 					Heraut.say(sender, "Failed discounts export!");
-				}finally{
+				}else{
 					Heraut.say(sender, "Finished discounts export!");
 				}
 			}
 
 			Heraut.say(sender, "[GiantShop] Finished export!");
+		}
+	}
+	
+	private static boolean expItem(ArrayList<HashMap<String, String>> iResSet, String dir, String file) {
+		try{
+			BufferedWriter f = new BufferedWriter(new FileWriter(dir + File.separator + file));
+			f.write("itemID, itemType, sellFor, buyFor, perStack, stock, shops");
+			f.newLine();
+			for(int i = 0; i < iResSet.size(); i++) {
+				HashMap<String, String> data = iResSet.get(i);
+
+				String itemId = data.get("itemID");
+				String dataType = data.get("itemType");
+				String sellFor = data.get("sellFor");
+				String buyFor = data.get("buyFor");
+				String amount = data.get("perStack");
+				String stock = data.get("stock");
+				String shops = (!data.get("shops").isEmpty()) ? data.get("shops") : "null";
+
+				f.write(itemId + ", " + dataType + ", " + sellFor + ", " + buyFor + ", " + amount + ", " + stock + ", " + shops);
+				f.newLine();
+			}
+			f.flush();
+			f.close();
+		}catch(IOException e) {
+			return false;
+		}finally{
+			return true;
+		}
+	}
+	
+	private static boolean expShop(ArrayList<HashMap<String, String>> sResSet, String dir, String file) {
+		try{
+			BufferedWriter f = new BufferedWriter(new FileWriter(dir + File.separator + file));
+			f.write("name, perms, world, locMinX, locMinY, locMinZ, locMaxX, locMaxY, locMaxZ");
+			f.newLine();
+			for(int i = 0; i < sResSet.size(); i++) {
+				HashMap<String, String> data = sResSet.get(i);
+
+				String name = data.get("name");
+				String perms = data.get("perms");
+				String world = data.get("world");
+				String locMinX = data.get("locMinX");
+				String locMinY = data.get("locMinY");
+				String locMinZ = data.get("locMinZ");
+				String locMaxX = data.get("locMaxX");
+				String locMaxY = data.get("locMaxY");
+				String locMaxZ = data.get("locMaxZ");
+
+				f.write(name + ", " + perms + ", " + world + ", " + locMinX + ", " + locMinY + ", " + locMinZ + ", " + locMaxX + ", " + locMaxY + ", " + locMaxZ);
+				f.newLine();
+			}
+			f.flush();
+			f.close();
+		}catch(IOException e) {
+			return false;
+		}finally{
+			return true;
+		}
+	}
+	
+	private static boolean expDiscount(ArrayList<HashMap<String, String>> dResSet, String dir, String file) {
+		try{
+			BufferedWriter f = new BufferedWriter(new FileWriter(dir + File.separator + file));
+			f.write("itemID, dicount, user, group");
+			f.newLine();
+			for(int i = 0; i < dResSet.size(); i++) {
+				HashMap<String, String> data = dResSet.get(i);
+
+				String itemID = data.get("itemID");
+				String dicount = data.get("dicount");
+				String user = data.get("user");
+				String group = data.get("world");
+
+				f.write(itemID + ", " + dicount + ", " + user + ", " + group);
+				f.newLine();
+			}
+			f.flush();
+			f.close();
+		}catch(IOException e) {
+			return false;
+		}finally{
+			return true;
 		}
 	}
 }
