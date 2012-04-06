@@ -3,7 +3,7 @@ package nl.giantit.minecraft.GiantShop.Locationer.Executors;
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
-import nl.giantit.minecraft.GiantShop.Locationer.core.Commands.*;
+import nl.giantit.minecraft.GiantShop.Locationer.core.Commands.chat.*;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -25,7 +25,12 @@ public class chat {
 	public static boolean exec(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player player = (Player) sender;
 		
-		Heraut.say(player, "test");
+		if(args.length == 0 || args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") || args[0].equalsIgnoreCase("?")) {
+			help.showHelp(player, args);
+		}else{
+			Heraut.say(player, "Command not found sending help!");
+			help.showHelp(player, args);
+		}
 		
 		return true;
 	}
