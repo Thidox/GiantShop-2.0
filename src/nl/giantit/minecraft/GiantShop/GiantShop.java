@@ -40,14 +40,14 @@ public class GiantShop extends JavaPlugin {
 	private Items itemHandler;
 	private Eco econHandler;
 	private Messages msgHandler;
+	private Locationer locHandler;
 	private String name, dir, pubName;
 	private String bName = "Moulin Rouge";
 	
 	public static final Logger log = Logger.getLogger("Minecraft");
-	public Locationer loc;
+	
 	public boolean useLoc = false;
 	public List<String> cmds;
-	
 	private void setPlugin() {
 		GiantShop.plugin = this;
 	}
@@ -85,7 +85,7 @@ public class GiantShop extends JavaPlugin {
 			
 			if(conf.getBoolean("GiantShop.Location.useGiantShopLocation")) {
 				useLoc = true;
-				loc = new Locationer(this);
+				locHandler = new Locationer(this);
 				cmds = conf.getStringList("GiantShop.Location.protected.Commands");
 				
 				if(conf.getBoolean("GiantShop.Location.showPlayerEnteredShop"))
@@ -127,7 +127,7 @@ public class GiantShop extends JavaPlugin {
 			
 			return chat.exec(sender, cmd, commandLabel, args);
 		}else if (cmd.getName().equalsIgnoreCase("loc")) {
-			return loc.onCommand(sender, cmd, commandLabel, args);
+			return locHandler.onCommand(sender, cmd, commandLabel, args);
 		}
 		
 		return false;
@@ -171,6 +171,10 @@ public class GiantShop extends JavaPlugin {
 	
 	public Messages getMsgHandler() {
 		return this.msgHandler;
+	}
+	
+	public Locationer getLocHandler() {
+		return this.locHandler;
 	}
 	
 	public void extract(String file) {
