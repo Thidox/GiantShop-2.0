@@ -2,7 +2,7 @@ GiantShop:
     global:
         version: 0.4
         name: GiantShop
-        debug: true
+        debug: false
         opHasPerms: true
         perPage: 5
         useStock: true
