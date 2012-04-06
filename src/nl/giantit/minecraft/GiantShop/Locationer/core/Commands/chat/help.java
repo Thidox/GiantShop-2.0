@@ -77,7 +77,7 @@ public class help {
 
 				String helpEntry = data[0];
 				String description = data[1];
-				String permission = data[2];
+				
 				Messages msg = GiantShop.getPlugin().getMsgHandler();
 				HashMap<String, String> params = new HashMap<String, String>();
 				params.put("command", helpEntry);
