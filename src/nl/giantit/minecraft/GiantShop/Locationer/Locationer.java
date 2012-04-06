@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 
 /**
  *
@@ -28,6 +29,7 @@ public class Locationer {
 	private List<String> worlds, allow;
 	private chat chat;
 	private console console;
+	private HashMap<Player, HashMap<String, Location>> points = new HashMap<Player, HashMap<String, Location>>();
 
 	public Locationer(GiantShop plugin) {
 		this.plugin = plugin;
@@ -52,6 +54,17 @@ public class Locationer {
 		}
 		
 		return false;
+	}
+	
+	public HashMap<String, Location> getPlayerPoints(Player p) {
+		if(points.containsKey(p))
+			return points.get(p);
+		
+		return new HashMap<String, Location>();
+	}
+	
+	public void setPlayerPoint(Player p, HashMap<String, Location> tmp) {
+		points.put(p, tmp);
 	}
 	
 	@Deprecated
