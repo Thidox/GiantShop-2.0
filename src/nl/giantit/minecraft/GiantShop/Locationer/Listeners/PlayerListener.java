@@ -66,7 +66,7 @@ public class PlayerListener implements Listener {
 														+ ", " + event.getClickedBlock().getLocation().getBlockZ());
 				}else if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 					HashMap<String, Location> point = lH.getPlayerPoints(event.getPlayer());
-					point.put("min", event.getClickedBlock().getLocation());
+					point.put("max", event.getClickedBlock().getLocation());
 
 					lH.setPlayerPoint(event.getPlayer(), point);
 					Heraut.say(event.getPlayer(), "Successfully set second point to: " 
