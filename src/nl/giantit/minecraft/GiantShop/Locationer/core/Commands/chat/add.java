@@ -5,6 +5,7 @@ import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.perm;
+import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
 
 import org.bukkit.entity.Player;
 
@@ -19,6 +20,7 @@ public class add {
 	private static config conf = config.Obtain();
 	private static perm perms = perm.Obtain();
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
+	private static Locationer lH = GiantShop.getPlugin().getLocHandler();
 	
 	public static void add(Player player, String[] args) {
 		if(perms.has(player, "giantshop.location.add")) {
