@@ -1,6 +1,6 @@
 GiantShop:
     global:
-        version: 0.4
+        version: 0.5
         name: GiantShop
         debug: false
         opHasPerms: true
@@ -25,6 +25,9 @@ GiantShop:
         perPage: 5
         useGiantShopLocation: true
         showPlayerEnteredShop: true
+        tool:
+            id: 351
+            type: 6
         protect:
             Worlds:
                 disableOffList: true
