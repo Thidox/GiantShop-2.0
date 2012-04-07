@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
  * @author Giant
  */
 public class chat {
+	
 	private GiantShop plugin;
 	private perm perm;
 	
@@ -32,6 +33,8 @@ public class chat {
 			list.list(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "add", "a")) {
 			add.add(player, args);
+		}else if(Misc.isEitherIgnoreCase(args[0], "remove", "r")) {
+			remove.remove(player, args);
 		}else{
 			Heraut.say(player, "Command not found sending help!");
 			help.showHelp(player, args);
