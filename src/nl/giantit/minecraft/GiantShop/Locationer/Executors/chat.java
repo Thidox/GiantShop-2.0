@@ -34,7 +34,7 @@ public class chat {
 		}else if(Misc.isEitherIgnoreCase(args[0], "add", "a")) {
 			add.add(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "update", "u")) {
-			remove.remove(player, args);
+			update.update(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "remove", "r")) {
 			remove.remove(player, args);
 		}else{
