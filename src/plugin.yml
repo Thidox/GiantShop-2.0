@@ -2,14 +2,13 @@ name: GiantShop
 main: nl.giantit.minecraft.GiantShop.GiantShop
 version: 0.4.DEV
 commands:
-    s:
-        description: Shopping goes through here!
-        usage: /s [params]
     shop:
         description: Shopping goes through here!
+        aliases: [s]
         usage: /shop [params]
     loc:
         description: This will enable you to make shop locations!
+        aliases: [shoploc, l, sl]
         usage: /loc [params]
 permissions:
     giantshop.*:
