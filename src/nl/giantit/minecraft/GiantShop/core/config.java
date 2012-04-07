@@ -44,10 +44,7 @@ public class config {
 	}
 	
 	public List<String> getStringList(String setting) {
-		String tmp = this.configuration.getString(setting, "");
-		String[] splitted = tmp.split(", ");
-		
-		return java.util.Arrays.asList(splitted);
+		return this.configuration.getStringList(setting);
 	}
 	
 	public Boolean getBoolean(String setting) {
