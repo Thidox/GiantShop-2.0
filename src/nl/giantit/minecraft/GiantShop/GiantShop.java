@@ -86,7 +86,7 @@ public class GiantShop extends JavaPlugin {
 			if(conf.getBoolean("GiantShop.Location.useGiantShopLocation")) {
 				useLoc = true;
 				locHandler = new Locationer(this);
-				cmds = conf.getStringList("GiantShop.Location.protected.Commands");
+				cmds = conf.getStringList("GiantShop.Location.protect.Commands");
 				
 				if(conf.getBoolean("GiantShop.Location.showPlayerEnteredShop"))
 					getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
