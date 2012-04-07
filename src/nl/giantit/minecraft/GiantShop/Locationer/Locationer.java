@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 /**
  *
@@ -24,8 +25,9 @@ public class Locationer {
 
 	private GiantShop plugin;
 	private Indaface slHandle;
+	private Indaface wlHandle;
 	private config conf;
-	private ArrayList<Indaface> shops;
+	private ArrayList<Indaface> shops = new ArrayList<Indaface>();
 	private List<String> worlds, allow;
 	private chat chat;
 	private console console;
@@ -34,12 +36,11 @@ public class Locationer {
 	public Locationer(GiantShop plugin) {
 		this.plugin = plugin;
 		this.conf = config.Obtain();
-		if(conf.getString("GiantShop.Location.useWorldEdit").equalsIgnoreCase("WorldEdit"))
-			this.slHandle = new WorldEditLoc(plugin);
-		else
-			this.slHandle = new PlainJane(plugin);
+		
+		this.wlHandle = new WorldEditLoc(plugin);
+		this.slHandle = new PlainJane(plugin);
 
-		shops = slHandle.getShops();
+		shopLoader sL = new shopLoader(this.plugin, this);
 		worlds = conf.getStringList("GiantShop.Location.protect.Worlds.protected");
 		allow = conf.getStringList("GiantShop.Location.protect.Worlds.allowed");
 	}
@@ -67,68 +68,21 @@ public class Locationer {
 		points.put(p, tmp);
 	}
 	
-	@Deprecated
-	public void print(String[] args) {
-		int perPag = (conf.getInt("GiantShop.Location.perPage") > 0) ? conf.getInt("GiantShop.Location.perPage") : 5;
-		int pag;
-		if(args.length >= 3) {
-			try {
-				pag = Integer.valueOf(args[2].toString());
-			}catch(Exception e) {
-				pag = 1;
-			}
-		}else if(args.length >= 2) {
-			try {
-				pag = Integer.valueOf(args[1].toString());
-			}catch(Exception e) {
-				pag = 1;
-			}
-		}else
-			pag = 1;
-		
-		int curPag = (pag > 0) ? pag : 1;
-		int itemCount = shops.size();
-
-		int pages = ((int)Math.ceil((double)itemCount / (double)perPag) < 1) ? 1 : (int)Math.ceil((double)itemCount / (double)perPag);
-		int start = (curPag * perPag) - perPag;
-
-		if(shops.isEmpty()) {
-			Heraut.say("&d[&f" + conf.getString("GiantShop.global.name") + "&d]&c Sorry no shops yet :(");
-			return;
-		}else if(curPag > pages) {
-			Heraut.say("&d[&f" + conf.getString("GiantShop.global.name") + "&d]&c My shop list only has " + pages + " pages!!");
-			return;
-		}else {
-			Heraut.say("&d[&f" + conf.getString("GiantShop.global.name") + "&d]&f Showing available shops. Page &e" + curPag + "&f/&e" + pages);
-			for(int i = start; i < (((start + perPag) > itemCount) ? itemCount : (start + perPag)); i++) {
-				Indaface shop = shops.get(i);
-				
-				Heraut.say("&eID: &f" + shop.getID() + " &eName: &f" + shop.getName() + " &eWorld: &f" + shop.getWorldName() + " &eMinX: &f"
-							+ (shop.getLocation()).get(0).getBlockX()	+ " &eMinY: &f"	+ (shop.getLocation()).get(0).getBlockY() + " &eMinZ: &f"
-							+ (shop.getLocation()).get(0).getBlockZ() + " &eMaxX: &f" + (shop.getLocation()).get(1).getBlockX() + " &eMaxY: &f"
-							+ (shop.getLocation()).get(1).getBlockY() + " &eMaxZ: &f" + (shop.getLocation()).get(1).getBlockZ());
-			}
-		}
-		/*Heraut.say("[" + conf.getString("GiantShop.global.name") + "] Showing available shops");
-		for(Indaface shop : shops) {
-			Heraut.say("ID: " + shop.getID() + " Name: " + shop.getName() + " World: " + shop.getWorldName() + " MinX: " + (shop.getLocation()).get(0).getBlockX() + " MinY: "
-					+ (shop.getLocation()).get(0).getBlockY() + " MinZ: " + (shop.getLocation()).get(0).getBlockZ() + " MaxX: " + (shop.getLocation()).get(1).getBlockX() + " MaxY: "
-					+ (shop.getLocation()).get(1).getBlockY() + " MaxZ: " + (shop.getLocation()).get(1).getBlockZ());
-		}*/
+	public void remPlayerPoint(Player p) {
+		if(points.containsKey(p))
+			points.remove(p);
 	}
-	
-	@Deprecated
-	public boolean addShop(Player player, ArrayList<Location> loc, String name) {
-		Indaface shop = slHandle.newShop(loc, name, player.getWorld().getName());
+
+	public boolean addShop(ArrayList<Location> loc, String name) {
+		Indaface shop = slHandle.newShop(loc, name);
 		if(shop != null) {
 			shops.add(shop);
 			return true;
 		}
 
 		return false;
-		//shops.add(new Indaface(plugin, locs));
 	}
-
+	
 	@Deprecated
 	public boolean removeShop(int id) {
 		int i = 0;
@@ -186,7 +140,7 @@ public class Locationer {
 			}
 		}
 
-		return "unknown";
+		return "Nameless shop";
 	}
 	
 	public Boolean canUse(Player player) {
