@@ -33,6 +33,8 @@ public class chat {
 			list.list(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "add", "a")) {
 			add.add(player, args);
+		}else if(Misc.isEitherIgnoreCase(args[0], "update", "u")) {
+			remove.remove(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "remove", "r")) {
 			remove.remove(player, args);
 		}else{
