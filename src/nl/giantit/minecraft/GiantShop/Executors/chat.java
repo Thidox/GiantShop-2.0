@@ -25,28 +25,24 @@ public class chat {
 		Player player = (Player) sender;
 		
 		if(args.length == 0 || args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") || args[0].equalsIgnoreCase("?")) {
-			//done
 			if(plugin.useLoc && plugin.cmds.contains("help")) {
 				if(plugin.getLocHandler().canUse(player))
 					help.showHelp(player, args);
 			}else
 				help.showHelp(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "sendhelp", "sh")) {
-			//done
 			if(plugin.useLoc && plugin.cmds.contains("sendhelp")) {
 				if(plugin.getLocHandler().canUse(player))
 					help.sendHelp(player, args);
 			}else
 				help.sendHelp(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "list", "l")) {
-			//done
 			if(plugin.useLoc && plugin.cmds.contains("list")) {
 				if(plugin.getLocHandler().canUse(player))
 					list.list(player, args);
 			}else
 				list.list(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "check", "c")) {
-			//done for now
 			if(plugin.useLoc && plugin.cmds.contains("check")) {
 				if(plugin.getLocHandler().canUse(player))
 					check.check(player, args);
@@ -55,46 +51,36 @@ public class chat {
 		}else if(args[0].equalsIgnoreCase("search")) {
 			//futuristic ideas! :D
 		}else if(Misc.isEitherIgnoreCase(args[0], "buy", "b")) {
-			//done
-			//needs testing!
 			if(plugin.useLoc && plugin.cmds.contains("buy")) {
 				if(plugin.getLocHandler().canUse(player))
 					buy.buy(player, args);
 			}else
 				buy.buy(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "sell", "s")) {
-			//done
-			//needs testing!
 			if(plugin.useLoc && plugin.cmds.contains("sell")) {
 				if(plugin.getLocHandler().canUse(player))
 					sell.sell(player, args);
 			}else
 				sell.sell(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "gift", "g")) {
-			//in dev
 			if(plugin.useLoc && plugin.cmds.contains("gift")) {
 				if(plugin.getLocHandler().canUse(player))
 					buy.gift(player, args);
 			}else
 				buy.gift(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "add", "a")) {
-			//finished for now
 			if(plugin.useLoc && plugin.cmds.contains("add")) {
 				if(plugin.getLocHandler().canUse(player))
 					add.add(player, args);
 			}else
 				add.add(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "update", "u")) {
-			//done
-			//needs testing!
 			if(plugin.useLoc && plugin.cmds.contains("update")) {
 				if(plugin.getLocHandler().canUse(player))
 					update.update(player, args);
 			}else
 				update.update(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "remove", "r")) {
-			//done
-			//needs testing!
 			if(plugin.useLoc && plugin.cmds.contains("remove")) {
 				if(plugin.getLocHandler().canUse(player))
 					remove.remove(player, args);
