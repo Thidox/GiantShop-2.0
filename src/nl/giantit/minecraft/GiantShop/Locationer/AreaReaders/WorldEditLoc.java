@@ -70,7 +70,7 @@ public class WorldEditLoc implements Indaface {
 	}
 	
 	@Override
-	public Indaface newShop(ArrayList<Location> loc, String name, String world) {
+	public Indaface newShop(ArrayList<Location> loc, String name) {
 		Indaface shop = new PlainJane(plugin);
 		
 		return shop;
