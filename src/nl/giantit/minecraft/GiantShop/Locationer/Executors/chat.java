@@ -28,6 +28,8 @@ public class chat {
 		
 		if(args.length == 0 || args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") || args[0].equalsIgnoreCase("?")) {
 			help.showHelp(player, args);
+		}else if(Misc.isEitherIgnoreCase(args[0], "list", "l")) {
+			list.list(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "add", "a")) {
 			add.add(player, args);
 		}else{
