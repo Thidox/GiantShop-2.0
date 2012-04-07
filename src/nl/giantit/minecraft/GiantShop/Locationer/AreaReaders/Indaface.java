@@ -13,7 +13,8 @@ public interface Indaface {
 	public ArrayList<Indaface> getShops();
 	public Indaface getShop(int id);
 	public Indaface getShop(String name, String World);
-	public Indaface newShop(ArrayList<Location> loc, String name, String world);
+	
+	public Indaface newShop(ArrayList<Location> loc, String name);
 	
 	public void remove(int id);
 	public void remove(String name, String World);
