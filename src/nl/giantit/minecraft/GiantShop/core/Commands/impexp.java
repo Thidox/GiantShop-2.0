@@ -269,19 +269,19 @@ public class impexp {
 								tmp.put(3, temp);
 							}else if(field.equalsIgnoreCase("locMinY")) {
 								temp.put("data", item[3]);
-								tmp.put(3, temp);
+								tmp.put(4, temp);
 							}else if(field.equalsIgnoreCase("locMinZ")) {
 								temp.put("data", item[3]);
-								tmp.put(3, temp);
+								tmp.put(5, temp);
 							}else if(field.equalsIgnoreCase("locMaxX")) {
 								temp.put("data", item[3]);
-								tmp.put(3, temp);
+								tmp.put(6, temp);
 							}else if(field.equalsIgnoreCase("locMaxY")) {
 								temp.put("data", item[3]);
-								tmp.put(3, temp);
+								tmp.put(7, temp);
 							}else if(field.equalsIgnoreCase("locMaxZ")) {
 								temp.put("data", item[3]);
-								tmp.put(3, temp);
+								tmp.put(8, temp);
 							}
 						}
 						values.add(tmp);
