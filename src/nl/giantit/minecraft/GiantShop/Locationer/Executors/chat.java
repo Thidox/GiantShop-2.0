@@ -3,6 +3,7 @@ package nl.giantit.minecraft.GiantShop.Locationer.Executors;
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
+import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.Locationer.core.Commands.chat.*;
 
 import org.bukkit.command.Command;
@@ -27,6 +28,8 @@ public class chat {
 		
 		if(args.length == 0 || args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") || args[0].equalsIgnoreCase("?")) {
 			help.showHelp(player, args);
+		}else if(Misc.isEitherIgnoreCase(args[0], "add", "a")) {
+			add.add(player, args);
 		}else{
 			Heraut.say(player, "Command not found sending help!");
 			help.showHelp(player, args);
