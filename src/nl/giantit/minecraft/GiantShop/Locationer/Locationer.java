@@ -74,6 +74,10 @@ public class Locationer {
 		if(points.containsKey(p))
 			points.remove(p);
 	}
+	
+	public ArrayList<Indaface> getShops() {
+		return this.shops;
+	}
 
 	public boolean addShop(ArrayList<Location> loc, String name) {
 		Indaface shop = slHandle.newShop(loc, name);
@@ -84,23 +88,7 @@ public class Locationer {
 
 		return false;
 	}
-	
-	@Deprecated
-	public boolean removeShop(int id) {
-		int i = 0;
-		for(Indaface shop : shops) {
-			if(shop.getID() == id) {
-				slHandle.remove(id);
-				shops.remove(i);
-				return true;
-			}
-			i++;
-		}
-		
-		return false;
-	}
 
-	@Deprecated
 	public boolean removeShop(String name, String World) {
 		int i = 0;
 		for(Indaface shop : shops) {
