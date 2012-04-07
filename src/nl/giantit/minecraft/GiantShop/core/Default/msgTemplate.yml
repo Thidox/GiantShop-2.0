@@ -11,6 +11,7 @@ admin:
     addStock: You have successfully added C_YELLOW%amount C_WHITEto the stock of item C_YELLOW%item!
     updated: You have successfully updated item C_YELLOW%item!
     removed: Item C_YELLOW%item C_WHITEhas been successfully removed from the shop!
+    shopAdded: We have successfully created a shop with name C_YELLOW%shop C_WHITEin the world C_YELLOW%worldC_WHITE!
 errors:
     noPermissions: C_REDWe are sorry but you do not have access to that command (C_YELLOW%commandC_RED)!
     syntaxError: C_REDPlease use the appropriate syntax for the C_YELLOW%command C_REDcommand!
@@ -26,3 +27,5 @@ errors:
     itemNotInShop: C_REDWe are sorry but %item has not been added the shop yet!
     itemNotUnique: C_REDWe are sorry but %item resulted in more then 1 result from our database, we do not really know which one to use now!
     unkown: C_REDWe are sorry but an unknown error occured!
+    locTaken: C_REDWe are sorry but a shop was already found at %minX, %minY, %minZ, %maxX, %maxY, %maxZ in the world %world!
+    shopNameTaken: C_REDWe are sorry but a shop with the name %shop has already been found in the world %world!
