@@ -43,6 +43,8 @@ public class Locationer {
 		shopLoader sL = new shopLoader(this.plugin, this);
 		worlds = conf.getStringList("GiantShop.Location.protect.Worlds.protected");
 		allow = conf.getStringList("GiantShop.Location.protect.Worlds.allowed");
+		
+		plugin.log.log(Level.INFO, "[GiantShopLocation] Has successfully been initialized!");
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
