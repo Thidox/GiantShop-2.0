@@ -30,6 +30,14 @@ public class PlainJane implements Indaface {
 		this.world = loc.get(0).getWorld();
 	}
 	
+	public PlainJane(GiantShop plugin, ArrayList<Location> loc, String name) {
+		this.plugin = plugin;
+		
+		this.loc = loc;
+		this.name = name;
+		this.world = loc.get(0).getWorld();
+	}
+	
 	public PlainJane(GiantShop plugin, int id, ArrayList<Location> loc) {
 		this.plugin = plugin;
 		
@@ -69,10 +77,8 @@ public class PlainJane implements Indaface {
 	}
 	
 	@Override
-	public Indaface newShop(ArrayList<Location> loc, String name, String world) {
-		Indaface shop = new PlainJane(plugin);
-		
-		return shop;
+	public Indaface newShop(ArrayList<Location> loc, String name) {
+		return new PlainJane(plugin, loc, name);
 	}
 	
 	@Override
