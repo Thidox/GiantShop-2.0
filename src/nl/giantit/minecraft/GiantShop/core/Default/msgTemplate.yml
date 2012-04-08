@@ -1,4 +1,4 @@
-version: 0.9
+version: 1.0
 main:
     buy: You have just bought C_YELLOW%amount C_WHITEof item C_YELLOW%item for C_YELLOW%cash!
     giftSender: You have just gifted C_YELLOW%amount C_WHITEof item C_YELLOW%item C_WHITEto user C_YELLOW%giftReceiver for C_YELLOW%cash!
@@ -12,6 +12,12 @@ admin:
     updated: You have successfully updated item C_YELLOW%item!
     removed: Item C_YELLOW%item C_WHITEhas been successfully removed from the shop!
     shopAdded: We have successfully created a shop with name C_YELLOW%shop C_WHITEin the world C_YELLOW%worldC_WHITE!
+    shopSelected: We have successfully selected the shop with name C_YELLOW%shop C_WHITEin the world C_YELLOW%worldC_WHITE for updating!
+    locUpdated: We have successfully changed the shops location to %minX, %minY, %minZ, %maxX, %maxY, %maxZ!
+    worldUpdated: We have successfully changed the shops with world to %minX, %minY, %minZ, %maxX, %maxY, %maxZ in world C_YELLOW%worldC_WHITE!
+    nameUpdated: We have successfully changed the shops name to C_YELLOW%shopC_WHITE!
+    shopUpdated: We have successfully updated the shop with name C_YELLOW%shop C_WHITEin the world C_YELLOW%worldC_WHITE!
+    shopRemoved: We have successfully removed the shop with name C_YELLOW%shop C_WHITEin the world C_YELLOW%worldC_WHITE!
 errors:
     noPermissions: C_REDWe are sorry but you do not have access to that command (C_YELLOW%commandC_RED)!
     syntaxError: C_REDPlease use the appropriate syntax for the C_YELLOW%command C_REDcommand!
@@ -29,3 +35,5 @@ errors:
     unkown: C_REDWe are sorry but an unknown error occured!
     locTaken: C_REDWe are sorry but a shop was already found at %minX, %minY, %minZ, %maxX, %maxY, %maxZ in the world %world!
     shopNameTaken: C_REDWe are sorry but a shop with the name %shop has already been found in the world %world!
+    shopNotFound: C_REDWe are sorry but we are unable to find a shop with the name %shop has already been found in the world %world!
+    noShopSelected: C_REDWe are sorry, but you need to select a shop before you can update!
