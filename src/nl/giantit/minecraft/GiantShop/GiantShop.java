@@ -42,7 +42,7 @@ public class GiantShop extends JavaPlugin {
 	private Messages msgHandler;
 	private Locationer locHandler;
 	private String name, dir, pubName;
-	private String bName = "Moulin Rouge";
+	private String bName = "Nipple Clamp";
 	
 	public static final Logger log = Logger.getLogger("Minecraft");
 	
