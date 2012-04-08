@@ -51,6 +51,9 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
+		if(event.getAction() != Action.LEFT_CLICK_BLOCK && event.getAction() != Action.RIGHT_CLICK_BLOCK)
+			return;
+		
 		if(perm.Obtain().has(event.getPlayer(), "giantshop.location.add")) {
 			config conf = config.Obtain();
 			ItemStack i = event.getItem();
