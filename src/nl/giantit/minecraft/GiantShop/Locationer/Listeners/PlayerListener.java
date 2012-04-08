@@ -57,6 +57,9 @@ public class PlayerListener implements Listener {
 		if(perm.Obtain().has(event.getPlayer(), "giantshop.location.add")) {
 			config conf = config.Obtain();
 			ItemStack i = event.getItem();
+			if(i == null)
+				return;
+				
 			if(i.getTypeId() == conf.getInt("GiantShop.Location.tool.id") && i.getData().getData() == (byte)((int) conf.getInt("GiantShop.Location.tool.type"))) {
 				if(event.getAction() == Action.LEFT_CLICK_BLOCK) {
 					HashMap<String, Location> point = lH.getPlayerPoints(event.getPlayer());
