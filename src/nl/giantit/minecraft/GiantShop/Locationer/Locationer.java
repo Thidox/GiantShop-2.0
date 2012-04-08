@@ -111,6 +111,14 @@ public class Locationer {
 		return false;
 	}
 
+	public boolean inShop(Location loc, String filter) {
+		for(Indaface shop : shops) {
+			if(shop.inShop(loc) && !shop.getName().equals(filter)) return true;
+		}
+
+		return false;
+	}
+
 	public int inShop(Location loc, int useless) {
 		for(Indaface shop : shops) {
 			if(shop.inShop(loc)) return shop.getID();
