@@ -736,6 +736,7 @@ public class SQLite implements iDriver {
 					SQL += ", ";
 				
 				SQL += field.getKey() + "='" + field.getValue() + "'";
+				i++;
 			}
 			
 			this.buildQuery(SQL + " \n", true, false, false);
@@ -758,6 +759,8 @@ public class SQLite implements iDriver {
 					SQL += field.getKey() + "=" + field.getValue().get("data");
 				}else
 					SQL += field.getKey() + "='" + field.getValue().get("data") + "'";
+				
+				i++;
 			}
 			
 			this.buildQuery(SQL + " \n", true, false, false);
