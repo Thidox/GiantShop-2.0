@@ -70,8 +70,6 @@ public class PlayerListener implements Listener {
 														+ event.getClickedBlock().getLocation().getBlockX() 
 														+ ", " + event.getClickedBlock().getLocation().getBlockY()
 														+ ", " + event.getClickedBlock().getLocation().getBlockZ());
-					
-					event.setCancelled(true);
 				}else if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 					HashMap<String, Location> point = lH.getPlayerPoints(event.getPlayer());
 					point.put("max", event.getClickedBlock().getLocation());
@@ -81,8 +79,6 @@ public class PlayerListener implements Listener {
 													+ event.getClickedBlock().getLocation().getBlockX() 
 													+ ", " + event.getClickedBlock().getLocation().getBlockY()
 													+ ", " + event.getClickedBlock().getLocation().getBlockZ());
-					
-					event.setCancelled(true);
 				}
 			}
 		}
