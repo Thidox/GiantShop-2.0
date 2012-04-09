@@ -115,45 +115,60 @@ public class buy {
 							String name = iH.getItemNameByID(itemID, iT);
 
 							int perStack = Integer.parseInt(res.get("perStack"));
+							int stock = Integer.parseInt(res.get("stock"));
 							double sellFor = Double.parseDouble(res.get("sellFor"));
 							double balance = eH.getBalance(player);
 
 							double cost = sellFor * (double) quantity;
 							int amount = perStack * quantity;
 
-							if((balance - cost) < 0) {
-								HashMap<String, String> data = new HashMap<String, String>();
-								data.put("needed", String.valueOf(cost));
-								data.put("have", String.valueOf(balance));
+							if(stock == -1 || (stock - amount) >= 0) {
+								if((balance - cost) < 0) {
+									HashMap<String, String> data = new HashMap<String, String>();
+									data.put("needed", String.valueOf(cost));
+									data.put("have", String.valueOf(balance));
 
-								Heraut.say(mH.getMsg(Messages.msgType.ERROR, "insufFunds", data));
-							}else{
-								if(eH.withdraw(player, cost)) {
-									ItemStack iStack;
-									Inventory inv = player.getInventory();
+									Heraut.say(mH.getMsg(Messages.msgType.ERROR, "insufFunds", data));
+								}else{
+									if(eH.withdraw(player, cost)) {
+										ItemStack iStack;
+										Inventory inv = player.getInventory();
 
-									if(itemType != null && itemType != -1) {
-										iStack = new MaterialData(itemID, (byte) ((int) itemType)).toItemStack(amount);
-									}else{
-										iStack = new ItemStack(itemID, amount);
-									}
+										if(itemType != null && itemType != -1) {
+											iStack = new MaterialData(itemID, (byte) ((int) itemType)).toItemStack(amount);
+										}else{
+											iStack = new ItemStack(itemID, amount);
+										}
 
-									if(conf.getBoolean("GiantShop.global.broadcastBuy"))
-										Heraut.broadcast(player.getName() + " bought some " + name);
+										if(conf.getBoolean("GiantShop.global.broadcastBuy"))
+											Heraut.broadcast(player.getName() + " bought some " + name);
 
-									Heraut.say("You have just bought " + amount + " of " + name + " for " + cost);
-									Heraut.say("Your new balance is: " + eH.getBalance(player));
+										Heraut.say("You have just bought " + amount + " of " + name + " for " + cost);
+										Heraut.say("Your new balance is: " + eH.getBalance(player));
 
-									HashMap<Integer, ItemStack> left;
-									left = inv.addItem(iStack);
+										HashMap<Integer, ItemStack> left;
+										left = inv.addItem(iStack);
+										
+										if(stock != -1) {
+											HashMap<String, String> t = new HashMap<String, String>();
+											t.put("stock", String.valueOf((stock - amount)));
 
-									if(!left.isEmpty()) {
-										Heraut.say(mH.getMsg(Messages.msgType.ERROR, "infFull"));
-										for(Map.Entry<Integer, ItemStack> stack : left.entrySet()) {
-											player.getWorld().dropItem(player.getLocation(), stack.getValue());
+											DB.update("#__items").set(t).where(where).updateQuery();
+										}
+
+										if(!left.isEmpty()) {
+											Heraut.say(mH.getMsg(Messages.msgType.ERROR, "infFull"));
+											for(Map.Entry<Integer, ItemStack> stack : left.entrySet()) {
+												player.getWorld().dropItem(player.getLocation(), stack.getValue());
+											}
 										}
 									}
 								}
+							}else{
+								HashMap<String, String> data = new HashMap<String, String>();
+								data.put("name", String.valueOf(cost));
+
+								Heraut.say(mH.getMsg(Messages.msgType.ERROR, "itemOutOfStock", data));
 							}
 
 							//More future stuff
