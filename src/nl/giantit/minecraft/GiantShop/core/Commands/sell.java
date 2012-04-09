@@ -156,6 +156,7 @@ public class sell {
 							String name = iH.getItemNameByID(itemID, iT);
 
 							int perStack = Integer.parseInt(res.get("perStack"));
+							int stock = Integer.parseInt(res.get("stock"));
 							double sellFor = Double.parseDouble(res.get("buyFor"));
 
 							double cost = sellFor * (double) quantity;
@@ -181,12 +182,19 @@ public class sell {
 								Heraut.say("Your new balance is: " + eH.getBalance(player));
 
 								removeItem(inv, iStack);
+								
+								if(stock != -1) {
+									HashMap<String, String> t = new HashMap<String, String>();
+									t.put("stock", String.valueOf((stock + amount)));
+
+									DB.update("#__items").set(t).where(where).updateQuery();
+								}
 							}else{
 								HashMap<String, String> data = new HashMap<String, String>();
 								data.put("needed", String.valueOf(amount));
 								data.put("have", String.valueOf(stackAmt));
 
-								Heraut.say(mH.getMsg(Messages.msgType.ERROR, "insufItems", data));
+								Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "insufItems", data));
 							}
 
 							//More future stuff
