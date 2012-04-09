@@ -207,7 +207,7 @@ public class Messages {
 				if(entry.getKey() != null && entry.getValue() != null) {
 					Template = Template.replace("%" + entry.getKey(), entry.getValue());
 				}else{
-					this.plugin.getLogger().log(Level.SEVERE, "[" + plugin.getName() + "] Message template engine received invalid parameter! (null)");
+					GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Message template engine received invalid parameter! (null)");
 				}
 			}
 			Template = Template.replace("&n", plugin.getPubName());
@@ -216,7 +216,7 @@ public class Messages {
 			return Template;
 		}
 		
-		this.plugin.getLogger().log(Level.SEVERE, "[" + plugin.getName() + "] Template for " + template + " does not exist!");
+		GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Template for " + template + " does not exist!");
 		return "&cRequested template does not exist!";
 	}
 }
