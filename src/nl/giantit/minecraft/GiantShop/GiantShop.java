@@ -71,6 +71,7 @@ public class GiantShop extends JavaPlugin {
 			
 			extractDefaultFile("conf.yml");
 		}
+		
 		config conf = config.Obtain();
 		try {
 			conf.loadConfig(configFile);
