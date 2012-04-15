@@ -290,7 +290,7 @@ public class impexp {
 					if(!commence) {
 						Heraut.say(sender, "Found " + values.size() + " shops to import!");
 					}else{
-						Heraut.say(sender, "Truncating items shops!");
+						Heraut.say(sender, "Truncating shops table!");
 						DB.Truncate("#__shops").updateQuery();
 						
 						Heraut.say(sender, "Importing " + values.size() + " shops...");
@@ -383,10 +383,10 @@ public class impexp {
 					if(!commence) {
 						Heraut.say(sender, "Found " + values.size() + " discounts to import!");
 					}else{
-						Heraut.say(sender, "Truncating items __discounts!");
+						Heraut.say(sender, "Truncating discounts table!");
 						DB.Truncate("#__discounts").updateQuery();
 						
-						Heraut.say(sender, "Importing " + values.size() + " __discounts...");
+						Heraut.say(sender, "Importing " + values.size() + " discounts...");
 						DB.insert("#__discounts", fields, values).updateQuery();
 					}
 					
