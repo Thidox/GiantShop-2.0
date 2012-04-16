@@ -23,8 +23,8 @@ public class help {
 	
 	private static void init() {
 		entries = new ArrayList<String[]>();
-		entries.add(new String[] {"loc", "Show GiantShopLocation help page 1", "giantshop.location.access"});
-		entries.add(new String[] {"loc help|h|? (page)", "Show GiantShopLocation help page x", "giantshop.location.access"});
+		entries.add(new String[] {"/loc", "Show GiantShopLocation help page 1", "giantshop.location.access"});
+		entries.add(new String[] {"/loc help|h|? (page)", "Show GiantShopLocation help page x", "giantshop.location.access"});
 	}
 	
 	public static void showHelp(Player player, String[] args) {
