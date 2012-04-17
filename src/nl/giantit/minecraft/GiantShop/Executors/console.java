@@ -58,6 +58,10 @@ public class console {
 			//done
 			//needs testing
 			impexp.exp(sender, args);
+		}else if(Misc.isEitherIgnoreCase(args[0], "truncate", "t")) {
+			//done
+			//needs testing
+			truncate.truncate(sender, args);
 		}else{
 			sender.sendMessage("[" + plugin.getName() + "] Command not found! See help for more information.");
 		}
