@@ -63,6 +63,8 @@ public class update {
 				HashMap<String, String> res = resSet.get(0);
 				res.put("name", name);
 				res.put("world", world);
+				res.put("oname", name);
+				res.put("oworld", world);
 				
 				stored.put(player, res);
 				
@@ -118,7 +120,8 @@ public class update {
 					
 					data = new HashMap<String, String>();
 					data.put("shop", name);
-					Heraut.say(player, mH.getMsg(Messages.msgType.ADMIN, "worldUpdated", data));
+					
+					Heraut.say(player, mH.getMsg(Messages.msgType.ADMIN, "nameUpdated", data));
 				}else{
 					data = new HashMap<String, String>();
 					data.put("shop", name);
@@ -288,13 +291,16 @@ public class update {
 	private static void save(Player player, String[] args) {
 		HashMap<String, String> tmp = stored.get(player);
 		
+		String oname = tmp.remove("oname");
+		String oworld = tmp.remove("oworld");
+		
 		HashMap<String, String> data = new HashMap<String, String>();
-		data.put("name", tmp.get("name"));
-		data.put("world", tmp.get("world"));
+		data.put("name", oname);
+		data.put("world", oworld);
 
 		DB.update("#__shops").set(tmp).where(data).updateQuery();
 		
-		lH.removeShop(tmp.get("name"), tmp.get("world"));
+		lH.removeShop(oname, oworld);
 		
 		double minX = Double.parseDouble(tmp.get("locMinX"));
 		double minY = Double.parseDouble(tmp.get("locMinY"));
