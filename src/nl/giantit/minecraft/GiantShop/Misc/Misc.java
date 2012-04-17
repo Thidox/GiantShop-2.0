@@ -29,4 +29,19 @@ public class Misc {
 		}
 		return false;
 	}
+	
+	public static String join(String glue, String... input) {
+		StringBuilder sb = new StringBuilder();
+		
+		int i = 0;
+		for(String string : input) {
+			sb.append(string);
+			if(i < input.length - 1)
+				sb.append(glue);
+			
+			i++;
+		}
+		
+		return sb.toString();
+    }
 }
