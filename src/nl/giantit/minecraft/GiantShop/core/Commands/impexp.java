@@ -70,7 +70,8 @@ public class impexp {
 								lineNumber++;
 								
 								if(lineNumber <= 1) {
-									if(!line.equals("itemID, itemType, sellFor, buyFor, perStack, stock, shops")) {
+									if(!line.equals("itemID,itemType,sellFor,buyFor,perStack,stock,shops") 
+											&& !line.equals("itemID, itemType, sellFor, buyFor, perStack, stock, shops")) {
 										Heraut.say(sender, "The given file is not a proper items file!");
 										br.close();
 										return;
@@ -79,7 +80,7 @@ public class impexp {
 								}
 
 								//break comma separated line using ", "
-								String[] st = line.split(", ");
+								String[] st = line.replaceAll(" ", "").split(",");
 								if(st.length >= 6) {
 									items.add(st);
 								}else{
@@ -127,7 +128,7 @@ public class impexp {
 							stock = Integer.parseInt(item[5]);
 						}catch(NumberFormatException e) {
 							err = true;
-							Heraut.say(sender, "Invalid entry detected! (" + lineNumber + ":" + item.toString() + ")");
+							Heraut.say(sender, "Invalid entry detected! (line " + lineNumber + ": " + Misc.join(", ", item) + ")");
 							continue;
 						}
 						
@@ -169,7 +170,7 @@ public class impexp {
 							values.add(tmp);
 						}else{
 							err = true;
-							Heraut.say(sender, "Invalid entry detected! (" + lineNumber + ":" + item.toString() + ")");
+							Heraut.say(sender, "Invalid entry detected! (line " + lineNumber + ": " + Misc.join(", ", item) + ")");
 							continue;
 						}
 					}
@@ -667,7 +668,7 @@ public class impexp {
 	private static boolean expItem(ArrayList<HashMap<String, String>> iResSet, String dir, String file) {
 		try{
 			BufferedWriter f = new BufferedWriter(new FileWriter(dir + File.separator + file));
-			f.write("itemID, itemType, sellFor, buyFor, perStack, stock, shops");
+			f.write("itemID,itemType,sellFor,buyFor,perStack,stock,shops");
 			f.newLine();
 			for(int i = 0; i < iResSet.size(); i++) {
 				HashMap<String, String> data = iResSet.get(i);
@@ -680,7 +681,7 @@ public class impexp {
 				String stock = data.get("stock");
 				String shops = (!data.get("shops").isEmpty()) ? data.get("shops") : "null";
 
-				f.write(itemId + ", " + dataType + ", " + sellFor + ", " + buyFor + ", " + amount + ", " + stock + ", " + shops);
+				f.write(itemId + "," + dataType + "," + sellFor + "," + buyFor + "," + amount + "," + stock + "," + shops);
 				f.newLine();
 			}
 			f.flush();
