@@ -1,4 +1,4 @@
-version: 0.3
+version: 0.4
 names:
     item0: Air
     item1: Stone
@@ -26,7 +26,7 @@ names:
     item23: Dispenser
     item24: Sandstone
     item25: Note Block
-    item26: Bed
+    item26: Bed Block
     item27: Powered Rail
     item28: Detector Rail
     item29: Sticky Piston
@@ -41,7 +41,7 @@ names:
     item40: Toadstool
     item41: Gold Block
     item42: Iron Block
-    item43: Slab
+    item43: Double Slab
     item44: Slab
     item45: Brick Block
     item46: TNT
@@ -49,6 +49,7 @@ names:
     item48: Moss Stone
     item49: Obsidian
     item50: Torch
+    item51: Fire
     item52: Spawner
     item53: Wooden Stairs
     item54: Chest
@@ -61,14 +62,14 @@ names:
     item61: Furnace
     item62: Burning Furnace
     item63: Sign Post
-    item64: Wooden Door
+    item64: Wooden Door Block
     item65: Ladder
     item66: Rails
     item67: Cobblestone Stairs
     item68: Wall Sign
     item69: Lever
     item70: Stone Pressure Plate
-    item71: Iron Door
+    item71: Iron Door Block
     item72: Wooden Pressure Plate
     item73: Redstone Ore
     item74: Glowing Redstone Ore
@@ -94,6 +95,7 @@ names:
     item94: Redstone Repeater Block
     item95: Locked Chest
     item96: Trapdoor
+    item97: Silverfish
     item98: Stone Bricks
     item99: Huge Mushroom
     item100: Huge Toadstool
@@ -104,14 +106,15 @@ names:
     item107: Fence Gate
     item108: Brick Stairs
     item109: Stone Brick Stairs
+    item110: Mycelium
     item111: Lily Pad
     item112: Nether Brick
     item113: Nether Brick Fence
     item114: Nether Brick Stairs
-    item115: Nether Wart
+    item115: Nether Wart Block
     item116: Echantment Table
-    item117: Brewing Stand
-    item118: Cauldron
+    item117: Brewing Stand Block
+    item118: Cauldron block
     item119: End Portal
     item120: End Portal Frame
     item121: End Stone
@@ -260,27 +263,56 @@ names:
     item2265: ward Disc
     item2266: 11 Disc
 types:
+    item5:
+        type0:
+        - Oak Wood Plank
+        type1:
+        - Pine Wood Plank
+        - Spruce Wood Plank
+        type2:
+        - Birch Wood Plank
+        type3:
+        - Jungle Wood Plank
+    item6:
+        type0:
+        - Oak Sapling
+        type1:
+        - Pine Sapling
+        - Spruce Sapling
+        type2:
+        - Birch Sapling
+        type3:
+        - Jungle Sapling
+        type4:
+        - Jungle Sapling (dropless)
     item17:
         type0:
         - Oak Log
         type1:
         - Pine Log
-        - red
-        - Redwood
+        - Spruce Log
         type2:
         - Birch Log
-        - white
         type3:
-        - Special oak log
+        - Jungle Log
     item18:
         type0:
         - Oak Leaves
         type1:
         - Pine Leaves
+        - Spruce Leaves
         type2:
         - Birch Leaves
         type3:
         - Jungle Leaves
+    item24:
+        type0:
+        - Normal
+        type1:
+        - Hieroglyphic
+        - Creeper
+        type2:
+        - Smooth
     item35:
         type0:
         - White Wool
@@ -403,6 +435,20 @@ types:
         - Monster Mob Spawner
         type14:
         - Enderman Mob Spawner
+    item98:
+        type0:
+        - Normal
+        type1:
+        - Mossy
+        type2:
+        - Cracked
+        type3:
+        - Circle
+    item263:
+        type0:
+        - Coal
+        type1:
+        - Charcoal
     item351:
         type0:
         - Ink Sac
@@ -454,7 +500,7 @@ types:
         type15:
         - Bone Meal
         - White Dye
-    item374:
+    item373:
         type0:
         - Water Bottle
         - Mundane Potion
@@ -625,7 +671,7 @@ types:
         - Mooshroom Egg
         type98:
         - Ocelot Egg
-        type99:
+        type120:
         - Villager Egg
 aliases:
     None: '0'
