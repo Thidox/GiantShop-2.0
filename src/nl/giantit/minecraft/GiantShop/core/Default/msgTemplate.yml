@@ -1,4 +1,4 @@
-version: 1.0
+version: 1.1
 main:
     buy: You have just bought C_YELLOW%amount C_WHITEof item C_YELLOW%item for C_YELLOW%cash!
     giftSender: You have just gifted C_YELLOW%amount C_WHITEof item C_YELLOW%item C_WHITEto user C_YELLOW%giftReceiver for C_YELLOW%cash!
@@ -13,10 +13,11 @@ admin:
     removed: Item C_YELLOW%item C_WHITEhas been successfully removed from the shop!
     shopAdded: We have successfully created a shop with name C_YELLOW%shop C_WHITEin the world C_YELLOW%worldC_WHITE!
     shopSelected: We have successfully selected the shop with name C_YELLOW%shop C_WHITEin the world C_YELLOW%worldC_WHITE for updating!
+    nameUpdated: We have successfully changed the shops name to C_YELLOW%nameC_WHITE!
     locUpdated: We have successfully changed the shops location to %minX, %minY, %minZ, %maxX, %maxY, %maxZ!
-    worldUpdated: We have successfully changed the shops with world to %minX, %minY, %minZ, %maxX, %maxY, %maxZ in world C_YELLOW%worldC_WHITE!
+    worldUpdated: We have successfully changed the shops world to %minX, %minY, %minZ, %maxX, %maxY, %maxZ in world C_YELLOW%worldC_WHITE!
     nameUpdated: We have successfully changed the shops name to C_YELLOW%shopC_WHITE!
-    shopUpdated: We have successfully updated the shop with name C_YELLOW%shop C_WHITEin the world C_YELLOW%worldC_WHITE!
+    shopUpdated: We have successfully updated the shop to name C_YELLOW%shop C_WHITEin the world C_YELLOW%worldC_WHITE!
     shopRemoved: We have successfully removed the shop with name C_YELLOW%shop C_WHITEin the world C_YELLOW%worldC_WHITE!
 errors:
     noPermissions: C_REDWe are sorry but you do not have access to that command (C_YELLOW%commandC_RED)!
