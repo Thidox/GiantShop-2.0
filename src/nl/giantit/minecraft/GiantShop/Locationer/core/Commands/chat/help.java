@@ -25,6 +25,15 @@ public class help {
 		entries = new ArrayList<String[]>();
 		entries.add(new String[] {"/loc", "Show GiantShopLocation help page 1", "giantshop.location.access"});
 		entries.add(new String[] {"/loc help|h|? (page)", "Show GiantShopLocation help page x", "giantshop.location.access"});
+		entries.add(new String[] {"/loc list|l (page)", "Show GiantShopLocation shop list page x", "giantshop.location.list"});
+		entries.add(new String[] {"/loc add|a| (name)", "Finish the creation of the GiantShopLocation shop", "giantshop.location.create"});
+		entries.add(new String[] {"/loc update|u select|s [-n:name] (-w:[world])", "Select a GSL shop for updating", "giantshop.location.update"});
+		entries.add(new String[] {"/loc update|u show", "Show current details for the selected GSL shop", "giantshop.location.update"});
+		entries.add(new String[] {"/loc update|u set -t:name -n:[name]", "Update the shops name", "giantshop.location.update"});
+		entries.add(new String[] {"/loc update|u set -t:world", "Update the world the shop is located in", "giantshop.location.update"});
+		entries.add(new String[] {"/loc update|u set -t:loc", "Same as -t:world, but does not update shops world", "giantshop.location.update"});
+		entries.add(new String[] {"/loc update|u save", "Saves the changes made to the GSL shop", "giantshop.location.update"});
+		entries.add(new String[] {"/loc remove|r [-n:name] (-w:[world])", "Remove a shop from GSL", "giantshop.location.remove"});
 	}
 	
 	public static void showHelp(Player player, String[] args) {

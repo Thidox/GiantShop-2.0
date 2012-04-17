@@ -27,31 +27,45 @@ public class help {
 		entries = new ArrayList<String[]>();
 		entries.add(new String[] {"shop", "Show GiantShop help page 1", "null"});
 		entries.add(new String[] {"shop help|h|? (page)", "Show GiantShop help page x", "null"});
-		entries.add(new String[] {"shop sendhelp|sh (receiver) (page)", "Send GiantShop help page x to player y", "giantshop.admin.sendhelp"});
-		entries.add(new String[] {"shop list|l", "Show all items in the shop", "giantshop.shop.list"});
-		entries.add(new String[] {"shop check|c (item)", "Show all available item info for item x", "giantshop.shop.check"});
-		entries.add(new String[] {"shop search (part)", "Show all items matching (part)", "giantshop.shop.search"});
-		entries.add(new String[] {"shop buy|b (item) (amount)", "Buy (amount) of item (item)", "giantshop.shop.buy"});
-		entries.add(new String[] {"shop gift|g (player) (item) (amount)", "Gift (amount) of item (item) to player (player)", "giantshop.shop.gift"});
-		entries.add(new String[] {"shop sell|s (item) (amount)", "Sell (amount) of item (item)", "giantshop.shop.sell"});
-		entries.add(new String[] {"shop add|a (item) (amount) (sellFor) (buyFor) (stock)", "Add an item to the shop", "giantshop.admin.add"});
-		entries.add(new String[] {"shop update|u (item)", "Show GiantShop help page x", "giantshop.admin.update"});
-		entries.add(new String[] {"shop remove|r (item)", "Show GiantShop help page x", "giantshop.admin.remove"});
-		entries.add(new String[] {"shop addstock|as (item)", "Show GiantShop help page x", "giantshop.admin.addstock"});
+		entries.add(new String[] {"shop sendhelp|sh [receiver] (page)", "Send GiantShop help page x to player y", "giantshop.admin.sendhelp"});
+		entries.add(new String[] {"shop list|l (page)", "Show all items in the shop", "giantshop.shop.list"});
+		entries.add(new String[] {"shop check|c [item](:[type])", "Show all available item info for item x", "giantshop.shop.check"});
+	//	entries.add(new String[] {"shop search (part)", "Show all items matching (part)", "giantshop.shop.search"}); //Future plans!
+		entries.add(new String[] {"shop buy|b [item](:[type]) (amount)", "Buy (amount) of item (item)", "giantshop.shop.buy"});
+		entries.add(new String[] {"shop gift|g [player[ [item](:[type]) (amount)", "Gift (amount) of item (item) to player (player)", "giantshop.shop.gift"});
+		entries.add(new String[] {"shop sell|s [item](:[type]) (amount)", "Sell (amount) of item (item)", "giantshop.shop.sell"});
+		entries.add(new String[] {"shop add|a [item](:[type]) [amount] [sellFor] (buyFor) (stock)", "Add an item to the shop", "giantshop.admin.add"});
+		entries.add(new String[] {"shop update|u select [item](:[type])", "Select an item for updating", "giantshop.admin.update"});
+		entries.add(new String[] {"shop update|u show", "Show current details for the selected item", "giantshop.admin.update"});
+		entries.add(new String[] {"shop update|u set sellFor [new value]", "Update the amount of money needed for buying", "giantshop.admin.update"});
+		entries.add(new String[] {"shop update|u set buyFor [new value]", "Update the amount of money a player receives on selling", "giantshop.admin.update"});
+		entries.add(new String[] {"shop update|u set stock [new value]", "Update the quantity of items in the shop", "giantshop.admin.update"});
+		entries.add(new String[] {"shop update|u set perStack [new value]", "Update the quantity of items per amount", "giantshop.admin.update"});
+	//	entries.add(new String[] {"shop update|u set shops [new value]", "Update a value of the item", "giantshop.admin.update"}); // Future stuff!
+		entries.add(new String[] {"shop update|u save", "Saves the changes that you made to the item", "giantshop.admin.update"});
+		entries.add(new String[] {"shop remove|r [item](:[type])", "Remove an item from the shop", "giantshop.admin.remove"});
 		
 		cEntries = new ArrayList<String[]>();
 		cEntries.add(new String[] {"shop", "Show GiantShop help page 1"});
 		cEntries.add(new String[] {"shop help|h|? (page)", "Show GiantShop help page x"});
 		cEntries.add(new String[] {"shop sendhelp|sh (receiver) (page)", "Send GiantShop help page x to player y"});
-		cEntries.add(new String[] {"shop list|l", "Show all items in the shop"});
-		cEntries.add(new String[] {"shop check|c (item)", "Show all available item info for item x"});
-		cEntries.add(new String[] {"shop search (part)", "Show all items matching (part)"});
-		cEntries.add(new String[] {"shop add|a (item)", "Add an item to the shop"});
-		cEntries.add(new String[] {"shop update|u (item)", "Show GiantShop help page x"});
-		cEntries.add(new String[] {"shop remove|r (item)", "Show GiantShop help page x"});
-		cEntries.add(new String[] {"shop addstock|as (item)", "Show GiantShop help page x"});
-		cEntries.add(new String[] {"shop import|i", "Import current GiantShop config"});
-		cEntries.add(new String[] {"shop export|e", "Export current GiantShop config"});
+		cEntries.add(new String[] {"shop list|l (page)", "Show all items in the shop"});
+		cEntries.add(new String[] {"shop check|c [item](:[type])", "Show all available item info for item x"});
+	//	cEntries.add(new String[] {"shop search (part)", "Show all items matching (part)"}); //Future plans!
+		cEntries.add(new String[] {"shop add|a [item](:[type]) [amount] [sellFor] (buyFor) (stock)", "Add an item to the shop"});
+		cEntries.add(new String[] {"shop update|u select [item](:[type])", "Select an item for updating"});
+		cEntries.add(new String[] {"shop update|u show", "Show current details for the selected item"});
+		cEntries.add(new String[] {"shop update|u set sellFor [new value]", "Update the amount of money needed for buying"});
+		cEntries.add(new String[] {"shop update|u set buyFor [new value]", "Update the amount of money a player receives on selling"});
+		cEntries.add(new String[] {"shop update|u set stock [new value]", "Update the quantity of items in the shop"});
+		cEntries.add(new String[] {"shop update|u set perStack [new value]", "Update the quantity of items per amount"});
+	//	entries.add(new String[] {"shop update|u set shops [new value]", "Update a value of the item"}); // Future stuff!
+		cEntries.add(new String[] {"shop update|u save", "Saves the changes that you made to the item"});
+		cEntries.add(new String[] {"shop remove|r [item](:[type])", "Remove an item from the shop"});
+		cEntries.add(new String[] {"shop import|i (-t:[type]) (-p:[path]) (-f:[file]) (-c:[commence])", "Import an earlier made file backup into GiantShop"});
+		cEntries.add(new String[] {"shop importLegacy|iL (-p:[path]) (-f:[file]) (-c:[commence])", "Import your old GiantShop data.csv file back into the new GiantShop!"});
+		cEntries.add(new String[] {"shop export|e (type)", "Creates a backup of the given table"});
+		cEntries.add(new String[] {"shop truncate|t [type]", "Remove all data from the given table (This proccess is NOT reversible!)"});
 	}
 	
 	public static void showHelp(Player player, String[] args) {
