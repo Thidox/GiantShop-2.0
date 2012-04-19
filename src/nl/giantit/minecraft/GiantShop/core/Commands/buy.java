@@ -321,7 +321,7 @@ public class buy {
 											}
 
 											if(conf.getBoolean("GiantShop.global.broadcastBuy"))
-												Heraut.broadcast(player.getName() + " gifted some " + name + " to ");
+												Heraut.broadcast(player.getName() + " gifted some " + name + " to " + giftReceiver.getDisplayName());
 
 											HashMap<String, String> data = new HashMap<String, String>();
 											data.put("amount", String.valueOf(amount));
