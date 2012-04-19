@@ -1,11 +1,10 @@
 GiantShop:
     global:
-        version: 0.5
+        version: 0.6
         name: GiantShop
         debug: false
         opHasPerms: true
         perPage: 5
-        useStock: true
         broadcastBuy: true
         broadcastSell: false
     db:
@@ -21,6 +20,10 @@ GiantShop:
         permissionEngine: sperm
     Economy:
         Engine: ICONOMY6
+    stock:
+        useStock: true
+        allowOverStock: false
+        defaultMaxStock: 50
     Location:
         perPage: 5
         useGiantShopLocation: true
