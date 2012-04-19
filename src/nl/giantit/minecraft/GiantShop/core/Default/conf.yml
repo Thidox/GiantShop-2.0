@@ -24,6 +24,11 @@ GiantShop:
         useStock: true
         allowOverStock: false
         defaultMaxStock: 50
+        stockDefinesCost: true
+        maxInflation: 50
+        maxDeflation: 20
+        amountTillMaxInflation: 20
+        amountTillMaxDeflation: 50
     Location:
         perPage: 5
         useGiantShopLocation: true
