@@ -199,19 +199,6 @@ public class sell {
 	
 									Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "insufItems", data));
 								}
-	
-								//More future stuff
-								/*if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
-								 *		ArrayList<Indaface> shops = GiantShop.getPlugin().getLocationHandler().parseShops(res.get("shops"));
-								 *		for(Indaface shop : shops) {
-								 *			if(shop.inShop(player.getLocation())) {
-								 *				//Player can get the item he wants! :D
-								 *			}
-								 *		}
-								 * }else{
-								 *		//Just a global store then :)
-								 * }
-								 */
 							}else{
 								Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "stockExeedsMaxStock"));
 							}
