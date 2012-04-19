@@ -84,6 +84,7 @@ public class update {
 			fields.add("sellFor");
 			fields.add("buyFor");
 			fields.add("stock");
+			fields.add("maxStock");
 			fields.add("perStack");
 			fields.add("shops");
 			
@@ -101,6 +102,7 @@ public class update {
 				tmp.put("sellFor", res.get("sellFor"));
 				tmp.put("buyFor", res.get("buyFor"));
 				tmp.put("stock", res.get("stock"));
+				tmp.put("maxStock", res.get("maxStock"));
 				tmp.put("perStack", res.get("perStack"));
 				tmp.put("shops", res.get("shops"));
 				stored.put(player, tmp);
@@ -172,6 +174,7 @@ public class update {
 			fields.add("sellFor");
 			fields.add("buyFor");
 			fields.add("stock");
+			fields.add("maxStock");
 			fields.add("perStack");
 			fields.add("shops");
 			
@@ -189,6 +192,7 @@ public class update {
 				tmp.put("sellFor", res.get("sellFor"));
 				tmp.put("buyFor", res.get("buyFor"));
 				tmp.put("stock", res.get("stock"));
+				tmp.put("maxStock", res.get("maxStock"));
 				tmp.put("perStack", res.get("perStack"));
 				tmp.put("shops", res.get("shops"));
 				storedC.put(sender, tmp);
@@ -278,6 +282,30 @@ public class update {
 				}catch(NumberFormatException e) {
 					HashMap<String, String> data = new HashMap<String, String>();
 					data.put("command", "update set stock");
+
+					Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "syntaxError", data));
+				}
+			}else if(args[2].equalsIgnoreCase("maxStock")) {
+				try{
+					int maxStock = Integer.parseInt(args[3]);
+					if(maxStock >= 0) {
+						HashMap<String, String> tmp = stored.get(player);
+						tmp.put("maxStock", String.valueOf(maxStock));
+						stored.put(player, tmp);
+						
+						Heraut.say(player, "Succesfully updated the max stock to " + maxStock + "!");
+					}else{
+						maxStock = -1;
+						
+						HashMap<String, String> tmp = stored.get(player);
+						tmp.put("maxStock", String.valueOf(maxStock));
+						stored.put(player, tmp);
+						
+						Heraut.say(player, "Succesfully set the max stock to unlimited!");
+					}
+				}catch(NumberFormatException e) {
+					HashMap<String, String> data = new HashMap<String, String>();
+					data.put("command", "update set maxStock");
 
 					Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "syntaxError", data));
 				}
@@ -388,6 +416,30 @@ public class update {
 
 					Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "syntaxError", data));
 				}
+			}else if(args[2].equalsIgnoreCase("maxStock")) {
+				try{
+					int maxStock = Integer.parseInt(args[3]);
+					if(maxStock >= 0) {
+						HashMap<String, String> tmp = storedC.get(sender);
+						tmp.put("maxStock", String.valueOf(maxStock));
+						storedC.put(sender, tmp);
+						
+						Heraut.say(sender, "Succesfully updated the max stock to " + maxStock + "!");
+					}else{
+						maxStock = -1;
+						
+						HashMap<String, String> tmp = storedC.get(sender);
+						tmp.put("maxStock", String.valueOf(maxStock));
+						storedC.put(sender, tmp);
+						
+						Heraut.say(sender, "Succesfully set the max stock to unlimited!");
+					}
+				}catch(NumberFormatException e) {
+					HashMap<String, String> data = new HashMap<String, String>();
+					data.put("command", "update set maxStock");
+
+					Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "syntaxError", data));
+				}
 			}else if(args[2].equalsIgnoreCase("perStack")) {
 				try{
 					int perStack = Integer.parseInt(args[3]);
@@ -423,47 +475,61 @@ public class update {
 	private static void save(Player player) {
 		HashMap<String, String> tmp = stored.get(player);
 		
-		int itemID = Integer.parseInt(tmp.get("itemID"));
-		Integer itemType;
-		try{
-			itemType = Integer.parseInt(tmp.get("itemType"));
-		}catch(NumberFormatException e) {
-			itemType = null;
+		int s = Integer.parseInt(tmp.get("stock"));
+		int mS = Integer.parseInt(tmp.get("maxStock"));
+		
+		if(s == -1 || mS == -1 || (s <= mS && !conf.getBoolean("GiantShop.stock.allowOverStock"))) {
+			int itemID = Integer.parseInt(tmp.get("itemID"));
+			Integer itemType;
+			try{
+				itemType = Integer.parseInt(tmp.get("itemType"));
+			}catch(NumberFormatException e) {
+				itemType = null;
+			}
+			String name = iH.getItemNameByID(itemID, itemType);
+			
+			tmp.remove("itemID");
+			tmp.remove("itemType");
+			
+			HashMap<String, String> data = new HashMap<String, String>();
+			data.put("itemID", "" + itemID);
+			data.put("type", "" + ((itemType == null) ? -1 : itemType));
+			
+			DB.update("#__items").set(tmp).where(data).updateQuery();
+			Heraut.say(player, "You have successfully updated " + name + "!");
+		}else{
+			Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "stockExeedsMaxStock"));
 		}
-		String name = iH.getItemNameByID(itemID, itemType);
-		
-		tmp.remove("itemID");
-		tmp.remove("itemType");
-		
-		HashMap<String, String> data = new HashMap<String, String>();
-		data.put("itemID", "" + itemID);
-		data.put("type", "" + ((itemType == null) ? -1 : itemType));
-		
-		DB.update("#__items").set(tmp).where(data).updateQuery();
-		Heraut.say(player, "You have successfully updated " + name + "!");
 	}
 	
 	private static void save(CommandSender sender) {
 		HashMap<String, String> tmp = storedC.get(sender);
+
+		int s = Integer.parseInt(tmp.get("stock"));
+		int mS = Integer.parseInt(tmp.get("maxStock"));
 		
-		int itemID = Integer.parseInt(tmp.get("itemID"));
-		Integer itemType;
-		try{
-			itemType = Integer.parseInt(tmp.get("itemType"));
-		}catch(NumberFormatException e) {
-			itemType = null;
+		if(s == -1 || mS == -1 || (s <= mS && !conf.getBoolean("GiantShop.stock.allowOverStock"))) {
+			int itemID = Integer.parseInt(tmp.get("itemID"));
+			Integer itemType;
+			try{
+				itemType = Integer.parseInt(tmp.get("itemType"));
+			}catch(NumberFormatException e) {
+				itemType = null;
+			}
+			String name = iH.getItemNameByID(itemID, itemType);
+			
+			tmp.remove("itemID");
+			tmp.remove("itemType");
+			
+			HashMap<String, String> data = new HashMap<String, String>();
+			data.put("itemID", "" + itemID);
+			data.put("type", "" + ((itemType == null) ? -1 : itemType));
+			
+			DB.update("#__items").set(tmp).where(data).updateQuery();
+			Heraut.say(sender, "You have successfully updated " + name + "!");
+		}else{
+			Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "stockExeedsMaxStock"));
 		}
-		String name = iH.getItemNameByID(itemID, itemType);
-		
-		tmp.remove("itemID");
-		tmp.remove("itemType");
-		
-		HashMap<String, String> data = new HashMap<String, String>();
-		data.put("itemID", "" + itemID);
-		data.put("type", "" + ((itemType == null) ? -1 : itemType));
-		
-		DB.update("#__items").set(tmp).where(data).updateQuery();
-		Heraut.say(sender, "You have successfully updated " + name + "!");
 	}
 	
 	public static void update(Player player, String[] args) {
@@ -505,6 +571,7 @@ public class update {
 						Heraut.say(player, "Leaves shop for: " + (!data.get("sellFor").equals("-1.0") ? data.get("sellFor") : "Doesn't leave the shop!"));
 						Heraut.say(player, "Returns to shop for: " + (!data.get("buyFor").equals("-1.0") ? data.get("buyFor") : "No returns!"));
 						Heraut.say(player, "Amount of items in the shop: " + (!data.get("stock").equals("-1") ? data.get("stock") : "unlimited"));
+						Heraut.say(player, "Maximum amount of items in the shop: " + (!data.get("maxStock").equals("-1") ? data.get("maxStock") : "unlimited"));
 					}else{
 						Heraut.say(player, "You have not selected an item yet!");
 					}
