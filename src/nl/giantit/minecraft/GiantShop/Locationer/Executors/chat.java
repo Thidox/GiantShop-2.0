@@ -24,7 +24,7 @@ public class chat {
 		perm = plugin.getPermMan();
 	}
 
-	public static boolean exec(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+	public boolean exec(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player player = (Player) sender;
 		
 		if(args.length == 0 || args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") || args[0].equalsIgnoreCase("?")) {

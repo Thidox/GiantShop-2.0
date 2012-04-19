@@ -16,7 +16,7 @@ public class console {
 		this.plugin = plugin;
 	}
 
-	public static boolean exec(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+	public boolean exec(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		return true;
 	}
 }
