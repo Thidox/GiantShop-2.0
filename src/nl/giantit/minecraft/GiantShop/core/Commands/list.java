@@ -76,9 +76,10 @@ public class list {
 					params.put("sellFor", entry.get("sellFor"));
 					params.put("buyFor", entry.get("buyFor"));
 					
-					if(conf.getBoolean("GiantShop.global.useStock") == true)
+					if(conf.getBoolean("GiantShop.stock.useStock") == true)
 						params.put("stock", (!entry.get("stock").equals("-1") ? entry.get("stock") : "unlimited"));
-					
+					else
+						params.put("stock", "unlimited");
 					// Future stuff
 					// Probably am going to want to do this VERY different though :D
 					/* if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
