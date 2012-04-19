@@ -122,7 +122,7 @@ public class buy {
 							double cost = sellFor * (double) quantity;
 							int amount = perStack * quantity;
 
-							if(stock == -1 || (stock - amount) >= 0) {
+							if(!conf.getBoolean("GiantShop.stock.useStock") || stock == -1 || (stock - amount) >= 0) {
 								if((balance - cost) < 0) {
 									HashMap<String, String> data = new HashMap<String, String>();
 									data.put("needed", String.valueOf(cost));
@@ -149,7 +149,7 @@ public class buy {
 										HashMap<Integer, ItemStack> left;
 										left = inv.addItem(iStack);
 										
-										if(stock != -1) {
+										if(conf.getBoolean("GiantShop.stock.useStock") && stock != -1) {
 											HashMap<String, String> t = new HashMap<String, String>();
 											t.put("stock", String.valueOf((stock - amount)));
 
@@ -302,7 +302,7 @@ public class buy {
 								double cost = sellFor * (double) quantity;
 								int amount = perStack * quantity;
 
-								if(stock == -1 || (stock - amount) >= 0) {
+								if(!conf.getBoolean("GiantShop.stock.useStock") || stock == -1 || (stock - amount) >= 0) {
 									if((balance - cost) < 0) {
 										HashMap<String, String> data = new HashMap<String, String>();
 										data.put("needed", String.valueOf(cost));
