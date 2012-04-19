@@ -74,7 +74,7 @@ public class sell {
 	
 	public static void sell(Player player, String[] args) {
 		Heraut.savePlayer(player);
-		if(perms.has(player, "giantshop.shop.buy")) {
+		if(perms.has(player, "giantshop.shop.sell")) {
 			if(args.length >= 2) {
 				int itemID;
 				Integer itemType = -1;
@@ -109,7 +109,7 @@ public class sell {
 						itemType = Integer.parseInt(data[1]);
 					}catch(NumberFormatException e) {
 						HashMap<String, String> data = new HashMap<String, String>();
-						data.put("command", "buy");
+						data.put("command", "sell");
 
 						Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "syntaxError", data));
 						return;
@@ -213,13 +213,13 @@ public class sell {
 				}
 			}else{
 				HashMap<String, String> data = new HashMap<String, String>();
-				data.put("command", "buy");
+				data.put("command", "sell");
 
 				Heraut.say(mH.getMsg(Messages.msgType.ERROR, "syntaxError", data));
 			}
 		}else{
 			HashMap<String, String> data = new HashMap<String, String>();
-			data.put("command", "buy");
+			data.put("command", "sell");
 
 			Heraut.say(mH.getMsg(Messages.msgType.ERROR, "noPermissions", data));
 		}
