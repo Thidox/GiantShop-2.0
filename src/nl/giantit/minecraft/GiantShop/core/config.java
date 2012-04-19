@@ -31,7 +31,7 @@ public class config {
 		
 		double v = this.getDouble("GiantShop.global.version");
 		if(v < this.yamlVersion) {
-			GiantShop.getPlugin().getLogger().log(Level.INFO, "[" + GiantShop.getPlugin().getPubName() + "] Your conf.yml has ran out of date. Updating now!");
+			GiantShop.getPlugin().getLogger().log(Level.INFO, "Your conf.yml has ran out of date. Updating now!");
 			File oconfigFile = new File(GiantShop.getPlugin().getDir(), "conf.yml." + v + ".bak");
 			this.file.renameTo(oconfigFile);
 			GiantShop.getPlugin().extract("conf.yml");
