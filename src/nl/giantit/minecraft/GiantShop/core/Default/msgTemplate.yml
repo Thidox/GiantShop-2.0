@@ -1,8 +1,8 @@
 version: 1.1
 main:
     buy: You have just bought C_YELLOW%amount C_WHITEof item C_YELLOW%item for C_YELLOW%cash!
-    giftSender: You have just gifted C_YELLOW%amount C_WHITEof item C_YELLOW%item C_WHITEto user C_YELLOW%giftReceiver for C_YELLOW%cash!
-    giftReceiver: C_YELLOW%giftSender C_WHITEjust gifted you C_YELLOW%amount C_WHITEof item C_YELLOW%item!
+    giftSender: You have just gifted C_YELLOW%amount C_WHITEof item C_YELLOW%item C_WHITEto user C_YELLOW%giftReceiverC_WHITE for C_YELLOW%cash!
+    giftReceiver: C_YELLOW%giftSender C_WHITEjust gifted you C_YELLOW%amount C_WHITEof item C_YELLOW%itemC_WHITE!
     sell: You have just sold C_YELLOW%amount C_WHITEof item C_YELLOW%item for C_YELLOW%cash!
     helpCommand: C_RED/%command C_YELLOW-C_WHITE %description
     itemListEntry: ID C_YELLOW%id C_WHITEType C_YELLOW%type C_WHITEName C_YELLOW%name C_WHITEAmount C_YELLOW%perStack C_WHITESell for C_YELLOW%sellFor C_WHITEBuy for C_YELLOW%buyFor C_WHITEStock C_YELLOW%stock
