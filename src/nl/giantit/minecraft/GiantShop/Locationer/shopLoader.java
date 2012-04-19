@@ -52,7 +52,7 @@ public class shopLoader {
 
 					lH.addShop(locs, name);
 				}catch(NumberFormatException e) {
-					plugin.log.log(Level.WARNING, "[GiantShopLocation] Invalid shop passed during load!");
+					GiantShop.log.log(Level.WARNING, "[GiantShopLocation] Invalid shop passed during load!");
 				}
 			}
 		}

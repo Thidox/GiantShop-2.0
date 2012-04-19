@@ -1,6 +1,5 @@
 package nl.giantit.minecraft.GiantShop.core.Eco;
 
-import java.util.logging.Level;
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.Eco.Engines.*;

@@ -23,41 +23,42 @@ public class db {
 	private SQLite sqlite;
 	private iDriver dbDriver;
 	private String driver;
+	private double curS = 1.0, curI = 1.1, curD = 1.0;
 	
 	private void dbInitMySQL() {
 		if(!this.dbDriver.tableExists("#__versions")){
-			this.dbDriver.buildQuery("CREATE TABLE #__versions \n");
+			this.dbDriver.buildQuery("CREATE TABLE #__versions \n", false, false, false, true);
 			this.dbDriver.buildQuery("(tableName VARCHAR(100) NOT NULL, version DOUBLE NOT NULL DEFAULT '1.0');", true, true, false);
 			this.dbDriver.updateQuery();
 			
-			plugin.log.log(Level.INFO, "Revisions table successfully created!");
+			GiantShop.log.log(Level.INFO, "Revisions table successfully created!");
 		}
 		
 		if(!this.dbDriver.tableExists("#__shops")){
-			this.dbDriver.buildQuery("INSERT INTO #__versions \n");
+			this.dbDriver.buildQuery("INSERT INTO #__versions \n", false, false, false, true);
 			this.dbDriver.buildQuery("(tableName, version) \n", true);
 			this.dbDriver.buildQuery("VALUES \n", true);
 			this.dbDriver.buildQuery("('shops', '1.0');", true, true);
 			this.dbDriver.updateQuery();
 			
-			this.dbDriver.buildQuery("CREATE TABLE #__shops \n");
+			this.dbDriver.buildQuery("CREATE TABLE #__shops \n", false, false, false, true);
 			this.dbDriver.buildQuery("(id INT(3) NOT NULL AUTO_INCREMENT, name VARCHAR(100) NOT NULL, perms VARCHAR(100) DEFAULT NULL, world VARCHAR(100) NOT NULL, ", true);
 			this.dbDriver.buildQuery("locMinX DOUBLE NOT NULL, locMinY DOUBLE NOT NULL, locMinZ DOUBLE NOT NULL, ", true);
 			this.dbDriver.buildQuery("locMaxX DOUBLE NOT NULL, locMaxY DOUBLE NOT NULL, locMaxZ DOUBLE NOT NULL, ", true);
 			this.dbDriver.buildQuery("PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARSET=latin1;", true, true, false);
 			this.dbDriver.updateQuery();
 			
-			plugin.log.log(Level.INFO, "Shops table successfully created!");
+			GiantShop.log.log(Level.INFO, "Shops table successfully created!");
 		}
 		
 		if(!this.dbDriver.tableExists("#__items")){
-			this.dbDriver.buildQuery("INSERT INTO #__versions \n");
+			this.dbDriver.buildQuery("INSERT INTO #__versions \n", false, false, false, true);
 			this.dbDriver.buildQuery("(tableName, version) \n", true);
 			this.dbDriver.buildQuery("VALUES \n", true);
 			this.dbDriver.buildQuery("('items', '1.0');", true, true);
 			this.dbDriver.updateQuery();
 			
-			this.dbDriver.buildQuery("CREATE TABLE #__items \n");
+			this.dbDriver.buildQuery("CREATE TABLE #__items \n", false, false, false, true);
 			this.dbDriver.buildQuery("(id INT(3) NOT NULL AUTO_INCREMENT, itemID INT(3) NOT NULL, type INT(3) default '-1', ", true);
 			this.dbDriver.buildQuery("sellFor DOUBLE DEFAULT '-1', buyFor DOUBLE DEFAULT '-1', ", true);
 			this.dbDriver.buildQuery("stock INT(3) DEFAULT '-1', perStack int(3) DEFAULT '1', ", true);
@@ -65,86 +66,86 @@ public class db {
 			this.dbDriver.buildQuery("PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARSET=latin1;", true, true, false);
 			this.dbDriver.updateQuery();
 			
-			plugin.log.log(Level.INFO, "Items table successfully created!");
+			GiantShop.log.log(Level.INFO, "Items table successfully created!");
 		}
 		
 		if(!this.dbDriver.tableExists("#__discounts")){
-			this.dbDriver.buildQuery("INSERT INTO #__versions \n");
+			this.dbDriver.buildQuery("INSERT INTO #__versions \n", false, false, false, true);
 			this.dbDriver.buildQuery("(tableName, version) \n", true);
 			this.dbDriver.buildQuery("VALUES \n", true);
 			this.dbDriver.buildQuery("('discounts', '1.0');", true, true);
 			this.dbDriver.updateQuery();
 			
-			this.dbDriver.buildQuery("CREATE TABLE #__discounts \n");
+			this.dbDriver.buildQuery("CREATE TABLE #__discounts \n", false, false, false, true);
 			this.dbDriver.buildQuery("(id INT(3) PRIMARY KEY, itemID INT(3) NOT NULL, discount INT(3) DEFAULT '10', ", true);
 			this.dbDriver.buildQuery("user VARCHAR(100) DEFAULT NULL, `group` VARCHAR(100) DEFAULT NULL);", true, true, false);
 			this.dbDriver.updateQuery();
 			
-			plugin.log.log(Level.INFO, "Discounts table successfully created!");
+			GiantShop.log.log(Level.INFO, "Discounts table successfully created!");
 		}
 	}
 	
 	private void dbInitSQLite() {
 		if(!this.dbDriver.tableExists("#__versions")){
-			this.dbDriver.buildQuery("CREATE TABLE #__versions \n");
+			this.dbDriver.buildQuery("CREATE TABLE #__versions \n", false, false, false, true);
 			this.dbDriver.buildQuery("(tableName VARCHAR(100) NOT NULL, version DOUBLE NOT NULL DEFAULT '1.0');", true, true, false);
 			this.dbDriver.updateQuery();
 			
-			plugin.log.log(Level.INFO, "Revisions table successfully created!");
+			GiantShop.log.log(Level.INFO, "Revisions table successfully created!");
 		}
 		
 		if(!this.dbDriver.tableExists("#__shops")){
-			this.dbDriver.buildQuery("INSERT INTO #__versions \n");
+			this.dbDriver.buildQuery("INSERT INTO #__versions \n", false, false, false, true);
 			this.dbDriver.buildQuery("(tableName, version) \n", true);
 			this.dbDriver.buildQuery("VALUES \n", true);
 			this.dbDriver.buildQuery("('shops', '1.0');", true, true);
 			this.dbDriver.updateQuery();
 			
-			this.dbDriver.buildQuery("CREATE TABLE #__shops \n");
+			this.dbDriver.buildQuery("CREATE TABLE #__shops \n", false, false, false, true);
 			this.dbDriver.buildQuery("(id INTEGER PRIMARY KEY, name VARCHAR(100) NOT NULL, perms VARCHAR(100) DEFAULT NULL, world VARCHAR(100) NOT NULL, ", true);
 			this.dbDriver.buildQuery("locMinX DOUBLE NOT NULL, locMinY DOUBLE NOT NULL, locMinZ DOUBLE NOT NULL, ", true);
 			this.dbDriver.buildQuery("locMaxX DOUBLE NOT NULL, locMaxY DOUBLE NOT NULL, locMaxZ DOUBLE NOT NULL);", true, true, false);
 			this.dbDriver.updateQuery();
 			
-			plugin.log.log(Level.INFO, "Shops table successfully created!");
+			GiantShop.log.log(Level.INFO, "Shops table successfully created!");
 		}
 		
 		if(!this.dbDriver.tableExists("#__items")){
-			this.dbDriver.buildQuery("INSERT INTO #__versions \n");
+			this.dbDriver.buildQuery("INSERT INTO #__versions \n", false, false, false, true);
 			this.dbDriver.buildQuery("(tableName, version) \n", true);
 			this.dbDriver.buildQuery("VALUES \n", true);
 			this.dbDriver.buildQuery("('items', '1.0');", true, true);
 			this.dbDriver.updateQuery();
 			
-			this.dbDriver.buildQuery("CREATE TABLE #__items \n");
+			this.dbDriver.buildQuery("CREATE TABLE #__items \n", false, false, false, true);
 			this.dbDriver.buildQuery("(id INTEGER PRIMARY KEY, itemID INT(3) NOT NULL, type INT(3) default '-1', ", true);
 			this.dbDriver.buildQuery("sellFor DOUBLE DEFAULT '-1', buyFor DOUBLE DEFAULT '-1', ", true);
 			this.dbDriver.buildQuery("stock INT(3) DEFAULT '-1', perStack int(3) DEFAULT '1', ", true);
 			this.dbDriver.buildQuery("shops VARCHAR(100) DEFAULT NULL);", true, true, false);
 			this.dbDriver.updateQuery();
 			
-			plugin.log.log(Level.INFO, "Items table successfully created!");
+			GiantShop.log.log(Level.INFO, "Items table successfully created!");
 		}
 		
 		if(!this.dbDriver.tableExists("#__discounts")){
-			this.dbDriver.buildQuery("INSERT INTO #__versions \n");
+			this.dbDriver.buildQuery("INSERT INTO #__versions \n", false, false, false, true);
 			this.dbDriver.buildQuery("(tableName, version) \n", true);
 			this.dbDriver.buildQuery("VALUES \n", true);
 			this.dbDriver.buildQuery("('discounts', '1.0');", true, true);
 			this.dbDriver.updateQuery();
 			
-			this.dbDriver.buildQuery("CREATE TABLE #__discounts \n");
+			this.dbDriver.buildQuery("CREATE TABLE #__discounts \n", false, false, false, true);
 			this.dbDriver.buildQuery("(id INTEGER PRIMARY KEY, itemID INT(3) NOT NULL, discount INT(3) DEFAULT '10', ", true);
 			this.dbDriver.buildQuery("user VARCHAR(100) DEFAULT NULL, `group` VARCHAR(100) DEFAULT NULL);", true, true, false);
 			this.dbDriver.updateQuery();
 			
-			plugin.log.log(Level.INFO, "Discounts table successfully created!");
+			GiantShop.log.log(Level.INFO, "Discounts table successfully created!");
 		}
 	}
 	
 	private void dbUpdateMySQL() {
 		//do some update stuff
-		this.dbDriver.buildQuery("SELECT tableName, version FROM #__versions");
+		this.dbDriver.buildQuery("SELECT tableName, version FROM #__versions", false, false, false, true);
 		ArrayList<HashMap<String, String>> res = this.mysql.execQuery();
 		for(int i = 0; i < res.size(); i++) {
 			HashMap<String, String> row = res.get(i);
@@ -153,8 +154,8 @@ public class db {
 			
 			if(table.equalsIgnoreCase("shops") && version < 1.0)
 				dbUpdater.updateShop();
-			else if(table.equalsIgnoreCase("items") && version < 1.0)
-				dbUpdater.updateItems();
+			else if(table.equalsIgnoreCase("items") && version < curI)
+				dbUpdater.updateItemsMySQL(this, version, curI);
 			else if(table.equalsIgnoreCase("discounts") && version < 1.0)
 				dbUpdater.updateDisc();
 		}
@@ -162,7 +163,7 @@ public class db {
 	
 	private void dbUpdateSQLite() {
 		//do some update stuff
-		this.dbDriver.buildQuery("SELECT tableName, version FROM #__versions");
+		this.dbDriver.buildQuery("SELECT tableName, version FROM #__versions", false, false, false, true);
 		ArrayList<HashMap<String, String>> res = this.sqlite.execQuery();
 		for(int i = 0; i < res.size(); i++) {
 			HashMap<String, String> row = res.get(i);
@@ -171,8 +172,8 @@ public class db {
 			
 			if(table.equalsIgnoreCase("shops") && version < 1.0)
 				dbUpdater.updateShop();
-			else if(table.equalsIgnoreCase("items") && version < 1.0)
-				dbUpdater.updateItems();
+			else if(table.equalsIgnoreCase("items") && version < curI)
+				dbUpdater.updateItemsSQLite(this, version, curI);
 			else if(table.equalsIgnoreCase("discounts") && version < 1.0)
 				dbUpdater.updateDisc();
 		}
@@ -217,7 +218,11 @@ public class db {
 	}
 	
 	public void buildQuery(String string, Boolean add, Boolean finalize, Boolean debug) {
-		this.dbDriver.buildQuery(string, add, finalize, debug);
+		buildQuery(string, add, finalize, debug, false);
+	}
+	
+	public void buildQuery(String string, Boolean add, Boolean finalize, Boolean debug, Boolean table) {
+		this.dbDriver.buildQuery(string, add, finalize, debug, table);
 	}
 	
 	public void buildQuery(String string, Integer add) {

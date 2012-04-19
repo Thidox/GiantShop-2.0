@@ -15,6 +15,7 @@ public interface iDriver {
 	public void buildQuery(String string, Boolean add);
 	public void buildQuery(String string, Boolean add, Boolean finalize);
 	public void buildQuery(String string, Boolean add, Boolean finalize, Boolean debug);
+	public void buildQuery(String string, Boolean add, Boolean finalize, Boolean debug, Boolean table);
 	
 	public void buildQuery(String string, Integer add);
 	public void buildQuery(String string, Integer add, Boolean finalize);

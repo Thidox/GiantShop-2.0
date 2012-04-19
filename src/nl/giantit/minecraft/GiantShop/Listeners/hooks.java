@@ -37,7 +37,7 @@ public class hooks implements Listener {
 		if (plugin.getPermMan() != null) {
 			if (event.getPlugin().getDescription().getName().equals("PermissionsEx")) {
 				plugin.setPermMan(null);
-				plugin.log.log(Level.INFO, "[" + plugin.getName() + "] un-hooked from PermissionsEX.");
+				GiantShop.log.log(Level.INFO, "[" + plugin.getName() + "] un-hooked from PermissionsEX.");
 				plugin.getPluginLoader().disablePlugin(plugin);
 			}
 		}
@@ -54,7 +54,7 @@ public class hooks implements Listener {
 						if (PermissionsEx.isEnabled() && PermissionsEx.getClass().getName().equals("ru.tehkode.permissions.bukkit.PermissionsEx")) {
 							PermissionsEx pex = (PermissionsEx)PermissionsEx;
 							plugin.setPermMan(new perm((PermissionManager)pex.getPermissionManager()));
-							plugin.log.log(Level.INFO, "[" + plugin.getName() + "] hooked into PermissionsEX.");
+							GiantShop.log.log(Level.INFO, "[" + plugin.getName() + "] hooked into PermissionsEX.");
 						}
 					}
 				}

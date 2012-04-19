@@ -49,14 +49,14 @@ public class MySQL implements iDriver {
 			Class.forName("com.mysql.jdbc.Driver");
 			this.con = DriverManager.getConnection(dbPath);
 		}catch(SQLException e) {
-			this.plugin.log.log(Level.SEVERE, "[" + this.plugin.getName() + "] Failed to connect to database: SQL error!");
+			GiantShop.log.log(Level.SEVERE, "[" + this.plugin.getName() + "] Failed to connect to database: SQL error!");
 			if(conf.getBoolean("GiantShop.global.debug")) {
-				this.plugin.log.log(Level.INFO, e.getMessage());
+				GiantShop.log.log(Level.INFO, e.getMessage());
 			}
 		}catch(ClassNotFoundException e) {
-			this.plugin.log.log(Level.SEVERE, "[" + this.plugin.getName() + "] Failed to connect to database: MySQL library not found!");
+			GiantShop.log.log(Level.SEVERE, "[" + this.plugin.getName() + "] Failed to connect to database: MySQL library not found!");
 			if(conf.getBoolean("GiantShop.global.debug")) {
-				this.plugin.log.log(Level.INFO, e.getMessage());
+				GiantShop.log.log(Level.INFO, e.getMessage());
 			}
 		}
 	}
@@ -71,9 +71,9 @@ public class MySQL implements iDriver {
 
 			return res.next();
 		}catch (SQLException e) {
-			plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "]: Could not load table " + table);
+			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "]: Could not load table " + table);
 			if(conf.getBoolean("GiantShop.global.debug")) {
-				this.plugin.log.log(Level.INFO, e.getMessage());
+				GiantShop.log.log(Level.INFO, e.getMessage());
 			}
             return false;
 		} finally {
@@ -82,9 +82,9 @@ public class MySQL implements iDriver {
 					res.close();
 				}
 			}catch (Exception e) {
-				plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "]: Could not close result connection to database");
+				GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "]: Could not close result connection to database");
 				if(conf.getBoolean("GiantShop.global.debug")) {
-					this.plugin.log.log(Level.INFO, e.getMessage());
+					GiantShop.log.log(Level.INFO, e.getMessage());
 				}
 				return false;
 			}
@@ -109,10 +109,17 @@ public class MySQL implements iDriver {
 		return;
 	}
 	
+	
 	@Override
 	public void buildQuery(String string, Boolean add, Boolean finalize, Boolean debug) {
+		buildQuery(string, add, finalize, debug, false);
+	}
+	
+	@Override
+	public void buildQuery(String string, Boolean add, Boolean finalize, Boolean debug, Boolean table) {
 		int last = sql.size();
-		string = string.replace("#__", prefix);
+		if(table)
+			string = string.replace("#__", prefix);
 		
 		if(false == add) {
 			HashMap<String, String> ad = new HashMap<String, String>();
@@ -120,7 +127,7 @@ public class MySQL implements iDriver {
 			sql.add(ad);
 			
 			if(debug == true)
-				plugin.log.log(Level.INFO, "[" + plugin.getName() + "] " + sql.get(last).get("sql"));
+				GiantShop.log.log(Level.INFO, "[" + plugin.getName() + "] " + sql.get(last).get("sql"));
 		}else{
 			last = sql.size() - 1;
 			try {
@@ -128,7 +135,7 @@ public class MySQL implements iDriver {
 				if(SQL.containsKey("sql")) {
 					if(SQL.containsKey("finalize")) {
 						if(true == debug)
-							plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] SQL syntax is finalized!");
+							GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] SQL syntax is finalized!");
 						return;
 					}else{
 						SQL.put("sql", SQL.get("sql") + string);
@@ -140,13 +147,13 @@ public class MySQL implements iDriver {
 					}
 				}else
 					if(true == debug)
-						plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + last + " is not a valid SQL query!");
+						GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + last + " is not a valid SQL query!");
 				
 				if(debug == true)
-					plugin.log.log(Level.INFO, "[" + plugin.getName() + "] " + sql.get(last).get("sql"));
+					GiantShop.log.log(Level.INFO, "[" + plugin.getName() + "] " + sql.get(last).get("sql"));
 			}catch(NullPointerException e) {
 				if(true == debug)
-					plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + last + " is not a valid SQL query!");
+					GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + last + " is not a valid SQL query!");
 			}
 		}
 			
@@ -175,7 +182,7 @@ public class MySQL implements iDriver {
 			if(SQL.containsKey("sql")) {
 				if(SQL.containsKey("finalize")) {
 					if(true == debug)
-						plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] SQL syntax is finalized!");
+						GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] SQL syntax is finalized!");
 					return;
 				}else{
 					SQL.put("sql", SQL.get("sql") + string);
@@ -187,13 +194,13 @@ public class MySQL implements iDriver {
 				}
 			}else
 				if(true == debug)
-					plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + add.toString() + " is not a valid SQL query!");
+					GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + add.toString() + " is not a valid SQL query!");
 		
 			if(debug == true)
-				plugin.log.log(Level.INFO, "[" + plugin.getName() + "] " + sql.get(last).get("sql"));
+				GiantShop.log.log(Level.INFO, "[" + plugin.getName() + "] " + sql.get(last).get("sql"));
 		}catch(NullPointerException e) {
 			if(true == debug)
-				plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + add.toString() + " is not a valid SQL query!");
+				GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + add.toString() + " is not a valid SQL query!");
 		}
 		
 		return;
@@ -223,9 +230,9 @@ public class MySQL implements iDriver {
 						data.add(row);
 					}
 				}catch (SQLException e) {
-					plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not execute query!");
+					GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not execute query!");
 					if(conf.getBoolean("GiantShop.global.debug")) {
-						this.plugin.log.log(Level.INFO, e.getMessage());
+						GiantShop.log.log(Level.INFO, e.getMessage());
 					}
 				} finally {
 					try {
@@ -233,17 +240,17 @@ public class MySQL implements iDriver {
 							st.close();
 						}
 					}catch (Exception e) {
-						plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
+						GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
 						if(conf.getBoolean("GiantShop.global.debug")) {
-							this.plugin.log.log(Level.INFO, e.getMessage());
+							GiantShop.log.log(Level.INFO, e.getMessage());
 						}
 					}
 				}
 			}
 		}catch(NullPointerException e) {
-			plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + queryID.toString() + " is not a valid SQL query!");
+			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + queryID.toString() + " is not a valid SQL query!");
 			if(conf.getBoolean("GiantShop.global.debug")) {
-				this.plugin.log.log(Level.INFO, e.getMessage());
+				GiantShop.log.log(Level.INFO, e.getMessage());
 			}
 		}
 		
@@ -273,9 +280,9 @@ public class MySQL implements iDriver {
 						data.add(row);
 					}
 				}catch (SQLException e) {
-					plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not execute query!");
+					GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not execute query!");
 					if(conf.getBoolean("GiantShop.global.debug")) {
-						this.plugin.log.log(Level.INFO, e.getMessage());
+						GiantShop.log.log(Level.INFO, e.getMessage());
 					}
 				} finally {
 					try {
@@ -283,15 +290,15 @@ public class MySQL implements iDriver {
 							st.close();
 						}
 					}catch (Exception e) {
-						plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
+						GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
 						if(conf.getBoolean("GiantShop.global.debug")) {
-							this.plugin.log.log(Level.INFO, e.getMessage());
+							GiantShop.log.log(Level.INFO, e.getMessage());
 						}
 					}
 				}
 			}
 		}catch(NullPointerException e) {
-			plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + queryID.toString() + " is not a valid SQL query!");
+			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + queryID.toString() + " is not a valid SQL query!");
 		}
 		
 		return data;
@@ -309,9 +316,9 @@ public class MySQL implements iDriver {
 					st = con.createStatement();
 					st.executeUpdate(SQL.get("sql"));
 				}catch (SQLException e) {
-					plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not execute query!");
+					GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not execute query!");
 					if(conf.getBoolean("GiantShop.global.debug")) {
-						this.plugin.log.log(Level.INFO, e.getMessage());
+						GiantShop.log.log(Level.INFO, e.getMessage());
 					}
 				} finally {
 					try {
@@ -319,15 +326,15 @@ public class MySQL implements iDriver {
 							st.close();
 						}
 					}catch (Exception e) {
-						plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
+						GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
 						if(conf.getBoolean("GiantShop.global.debug")) {
-							this.plugin.log.log(Level.INFO, e.getMessage());
+							GiantShop.log.log(Level.INFO, e.getMessage());
 						}
 					}
 				}
 			}
 		}catch(NullPointerException e) {
-			plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + queryID.toString() + " is not a valid SQL query!");
+			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + queryID.toString() + " is not a valid SQL query!");
 		}
 	}
 	
@@ -342,9 +349,9 @@ public class MySQL implements iDriver {
 					st = con.createStatement();
 					st.executeUpdate(SQL.get("sql"));
 				}catch (SQLException e) {
-					plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not execute query!");
+					GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not execute query!");
 					if(conf.getBoolean("GiantShop.global.debug")) {
-						this.plugin.log.log(Level.INFO, e.getMessage());
+						GiantShop.log.log(Level.INFO, e.getMessage());
 					}
 				} finally {
 					try {
@@ -352,15 +359,15 @@ public class MySQL implements iDriver {
 							st.close();
 						}
 					}catch (Exception e) {
-						plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
+						GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
 						if(conf.getBoolean("GiantShop.global.debug")) {
-							this.plugin.log.log(Level.INFO, e.getMessage());
+							GiantShop.log.log(Level.INFO, e.getMessage());
 						}
 					}
 				}
 			}
 		}catch(NullPointerException e) {
-			plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + queryID.toString() + " is not a valid SQL query!");
+			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + queryID.toString() + " is not a valid SQL query!");
 		}
 	}
 	
@@ -377,9 +384,9 @@ public class MySQL implements iDriver {
 		
 			return row;
 		}catch (Exception e) {
-			plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not count rows for query (" + queryID.toString() + ")!");
+			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not count rows for query (" + queryID.toString() + ")!");
 			if(conf.getBoolean("GiantShop.global.debug")) {
-				this.plugin.log.log(Level.INFO, e.getMessage());
+				GiantShop.log.log(Level.INFO, e.getMessage());
 			}
 		}
 		
@@ -397,9 +404,9 @@ public class MySQL implements iDriver {
 		
 			return row;
 		}catch (Exception e) {
-			plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not count rows for query (" + queryID.toString() + ")!");
+			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not count rows for query (" + queryID.toString() + ")!");
 			if(conf.getBoolean("GiantShop.global.debug")) {
-				this.plugin.log.log(Level.INFO, e.getMessage());
+				GiantShop.log.log(Level.INFO, e.getMessage());
 			}
 		}
 		
@@ -424,9 +431,9 @@ public class MySQL implements iDriver {
 				data.add(row);
 			}
 		}catch (SQLException e) {
-			plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not grab item data");
+			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not grab item data");
 			if(conf.getBoolean("GiantShop.global.debug")) {
-				this.plugin.log.log(Level.INFO, e.getMessage());
+				GiantShop.log.log(Level.INFO, e.getMessage());
 			}
 		} finally {
 			try {
@@ -434,9 +441,9 @@ public class MySQL implements iDriver {
 					query.get(queryID).close();
 				}
 			}catch (Exception e) {
-				plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
+				GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
 				if(conf.getBoolean("GiantShop.global.debug")) {
-					this.plugin.log.log(Level.INFO, e.getMessage());
+					GiantShop.log.log(Level.INFO, e.getMessage());
 				}
 			}
 		}
@@ -451,9 +458,9 @@ public class MySQL implements iDriver {
 			ResultSet res = query.get(queryID);
 			res.getRow();
 		}catch (SQLException e) {
-			plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not grab item data");
+			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not grab item data");
 			if(conf.getBoolean("GiantShop.global.debug")) {
-				this.plugin.log.log(Level.INFO, e.getMessage());
+				GiantShop.log.log(Level.INFO, e.getMessage());
 			}
 		} finally {
 			try {
@@ -461,9 +468,9 @@ public class MySQL implements iDriver {
 					query.get(queryID).close();
 				}
 			}catch (Exception e) {
-				plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
+				GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
 				if(conf.getBoolean("GiantShop.global.debug")) {
-					this.plugin.log.log(Level.INFO, e.getMessage());
+					GiantShop.log.log(Level.INFO, e.getMessage());
 				}
 			}
 		}
@@ -487,9 +494,9 @@ public class MySQL implements iDriver {
 				}
 			}
 		}catch (SQLException e) {
-			plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not grab item data");
+			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not grab item data");
 			if(conf.getBoolean("GiantShop.global.debug")) {
-				this.plugin.log.log(Level.INFO, e.getMessage());
+				GiantShop.log.log(Level.INFO, e.getMessage());
 			}
 		} finally {
 			try {
@@ -497,9 +504,9 @@ public class MySQL implements iDriver {
 					query.get(queryID).close();
 				}
 			}catch (Exception e) {
-				plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
+				GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
 				if(conf.getBoolean("GiantShop.global.debug")) {
-					this.plugin.log.log(Level.INFO, e.getMessage());
+					GiantShop.log.log(Level.INFO, e.getMessage());
 				}
 			}
 		}
@@ -521,9 +528,9 @@ public class MySQL implements iDriver {
 				}
 			}
 		}catch (SQLException e) {
-			plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not grab item data");
+			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not grab item data");
 			if(conf.getBoolean("GiantShop.global.debug")) {
-				this.plugin.log.log(Level.INFO, e.getMessage());
+				GiantShop.log.log(Level.INFO, e.getMessage());
 			}
 		} finally {
 			try {
@@ -531,9 +538,9 @@ public class MySQL implements iDriver {
 					query.get(queryID).close();
 				}
 			}catch (Exception e) {
-				plugin.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
+				GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
 				if(conf.getBoolean("GiantShop.global.debug")) {
-					this.plugin.log.log(Level.INFO, e.getMessage());
+					GiantShop.log.log(Level.INFO, e.getMessage());
 				}
 			}
 		}

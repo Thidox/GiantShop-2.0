@@ -688,9 +688,9 @@ public class impexp {
 			f.close();
 		}catch(IOException e) {
 			return false;
-		}finally{
-			return true;
 		}
+		
+		return true;
 	}
 	
 	private static boolean expShop(ArrayList<HashMap<String, String>> sResSet, String dir, String file) {
@@ -718,9 +718,9 @@ public class impexp {
 			f.close();
 		}catch(IOException e) {
 			return false;
-		}finally{
-			return true;
 		}
+			
+		return true;
 	}
 	
 	private static boolean expDiscount(ArrayList<HashMap<String, String>> dResSet, String dir, String file) {
@@ -743,8 +743,8 @@ public class impexp {
 			f.close();
 		}catch(IOException e) {
 			return false;
-		}finally{
-			return true;
 		}
+		
+		return true;
 	}
 }
