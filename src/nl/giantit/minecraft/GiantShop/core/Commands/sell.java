@@ -164,7 +164,7 @@ public class sell {
 							double cost = sellFor * (double) quantity;
 							int amount = perStack * quantity;
 							
-							if(!conf.getBoolean("GiantShop.stock.useStock") || stock + amount <= maxStock) {
+							if(!conf.getBoolean("GiantShop.stock.useStock") || stock == -1 || maxStock == -1 || (stock + amount <= maxStock || conf.getBoolean("GiantShop.stock.allowOverStock"))) {
 								ItemStack iStack;
 								Inventory inv = player.getInventory();
 	
