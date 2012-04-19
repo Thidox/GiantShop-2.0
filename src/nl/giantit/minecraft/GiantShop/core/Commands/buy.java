@@ -341,6 +341,13 @@ public class buy {
 
 											HashMap<Integer, ItemStack> left;
 											left = inv.addItem(iStack);
+											
+											if(conf.getBoolean("GiantShop.stock.useStock") && stock != -1) {
+												HashMap<String, String> t = new HashMap<String, String>();
+												t.put("stock", String.valueOf((stock - amount)));
+
+												DB.update("#__items").set(t).where(where).updateQuery();
+											}
 
 											if(!left.isEmpty()) {
 												Heraut.say(giftReceiver, mH.getMsg(Messages.msgType.ERROR, "infFull"));
