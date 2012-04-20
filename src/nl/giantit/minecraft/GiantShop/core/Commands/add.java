@@ -31,7 +31,7 @@ public class add {
 			int itemID;
 			Integer itemType = null;
 			Double sellFor = -1.0, buyFor = -1.0;
-			int stock = -1, perStack = 0;
+			int stock = -1, maxStock = -1, perStack = 1;
 			String shops = "";
 			
 			if(args.length < 4) {
@@ -99,11 +99,18 @@ public class add {
 						try {
 							perStack = Integer.parseInt(args[2]);
 							sellFor = Double.parseDouble(args[3]);
-							if(args.length >= 5) {
+							if(args.length >= 5)
 								buyFor = Double.parseDouble(args[4]);
-								if(args.length > 6)
-									stock = Integer.parseInt(args[5]);
+							if(args.length >= 6)
+								stock = Integer.parseInt(args[5]);
+							if(args.length >= 7) {
+								maxStock = Integer.parseInt(args[6]);
+							}else{
+								maxStock = conf.getInt("GiantShop.stock.defaultMaxStock");
+								maxStock = (maxStock > 0) ? maxStock : -1;
 							}
+							
+							Heraut.say(player, "Args length: " + args.length);
 						}catch(NumberFormatException e) {
 							data = new HashMap<String, String>();
 							data.put("command", "add");
@@ -118,39 +125,46 @@ public class add {
 						fields.add("sellFor");
 						fields.add("buyFor");
 						fields.add("stock");
+						fields.add("maxStock");
 						fields.add("perStack");
 						fields.add("shops");
 
 						ArrayList<HashMap<Integer, HashMap<String, String>>> values = new ArrayList<HashMap<Integer, HashMap<String, String>>>();
 						HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
+						int i = 0;
 						for(String field : fields) {
 							HashMap<String, String> temp = new HashMap<String, String>();
 							if(field.equalsIgnoreCase("itemID")) {
 								temp.put("kind", "INT");
 								temp.put("data", "" + itemID);
-								tmp.put(0, temp);
+								tmp.put(i, temp);
 							}else if(field.equalsIgnoreCase("type")) {
 								temp.put("kind", "INT");
 								temp.put("data", "" + ((itemType == null) ? -1 : itemType));
-								tmp.put(1, temp);
+								tmp.put(i, temp);
 							}else if(field.equalsIgnoreCase("sellFor")) {
 								temp.put("data", "" + sellFor);
-								tmp.put(2, temp);
+								tmp.put(i, temp);
 							}else if(field.equalsIgnoreCase("buyFor")) {
 								temp.put("data", "" + buyFor);
-								tmp.put(3, temp);
+								tmp.put(i, temp);
 							}else if(field.equalsIgnoreCase("stock")) {
 								temp.put("kind", "INT");
 								temp.put("data", "" + stock);
-								tmp.put(4, temp);
+								tmp.put(i, temp);
+							}else if(field.equalsIgnoreCase("maxStock")) {
+								temp.put("kind", "INT");
+								temp.put("data", "" + maxStock);
+								tmp.put(i, temp);
 							}else if(field.equalsIgnoreCase("perStack")) {
 								temp.put("kind", "INT");
 								temp.put("data", "" + perStack);
-								tmp.put(5, temp);
+								tmp.put(i, temp);
 							}else if(field.equalsIgnoreCase("shops")) {
 								temp.put("data", shops);
-								tmp.put(6, temp);
+								tmp.put(i, temp);
 							}
+							i++;
 						}
 						values.add(tmp);
 						
@@ -179,7 +193,7 @@ public class add {
 		int itemID;
 		Integer itemType = null;
 		Double sellFor = -1.0, buyFor = -1.0;
-		int stock = -1, perStack = 0;
+		int stock = -1, maxStock = -1, perStack = 1;
 		String shops = "";
 
 		if(args.length < 4) {
@@ -247,10 +261,15 @@ public class add {
 					try {
 						perStack = Integer.parseInt(args[2]);
 						sellFor = Double.parseDouble(args[3]);
-						if(args.length >= 5) {
+						if(args.length >= 5)
 							buyFor = Double.parseDouble(args[4]);
-							if(args.length > 6)
-								stock = Integer.parseInt(args[5]);
+						if(args.length >= 6)
+							stock = Integer.parseInt(args[5]);
+						if(args.length >= 7) {
+							maxStock = Integer.parseInt(args[6]);
+						}else{
+							maxStock = conf.getInt("GiantShop.stock.defaultMaxStock");
+							maxStock = (maxStock > 0) ? maxStock : -1;
 						}
 					}catch(NumberFormatException e) {
 						data = new HashMap<String, String>();
@@ -266,39 +285,46 @@ public class add {
 					fields.add("sellFor");
 					fields.add("buyFor");
 					fields.add("stock");
+					fields.add("maxStock");
 					fields.add("perStack");
 					fields.add("shops");
 
 					ArrayList<HashMap<Integer, HashMap<String, String>>> values = new ArrayList<HashMap<Integer, HashMap<String, String>>>();
 					HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
+					int i = 0;
 					for(String field : fields) {
 						HashMap<String, String> temp = new HashMap<String, String>();
 						if(field.equalsIgnoreCase("itemID")) {
 							temp.put("kind", "INT");
 							temp.put("data", "" + itemID);
-							tmp.put(0, temp);
+							tmp.put(i, temp);
 						}else if(field.equalsIgnoreCase("type")) {
 							temp.put("kind", "INT");
 							temp.put("data", "" + ((itemType == null) ? -1 : itemType));
-							tmp.put(1, temp);
+							tmp.put(i, temp);
 						}else if(field.equalsIgnoreCase("sellFor")) {
 							temp.put("data", "" + sellFor);
-							tmp.put(2, temp);
+							tmp.put(i, temp);
 						}else if(field.equalsIgnoreCase("buyFor")) {
 							temp.put("data", "" + buyFor);
-							tmp.put(3, temp);
+							tmp.put(i, temp);
 						}else if(field.equalsIgnoreCase("stock")) {
 							temp.put("kind", "INT");
 							temp.put("data", "" + stock);
-							tmp.put(4, temp);
+							tmp.put(i, temp);
+						}else if(field.equalsIgnoreCase("maxStock")) {
+							temp.put("kind", "INT");
+							temp.put("data", "" + maxStock);
+							tmp.put(i, temp);
 						}else if(field.equalsIgnoreCase("perStack")) {
 							temp.put("kind", "INT");
 							temp.put("data", "" + perStack);
-							tmp.put(5, temp);
+							tmp.put(i, temp);
 						}else if(field.equalsIgnoreCase("shops")) {
 							temp.put("data", shops);
-							tmp.put(6, temp);
+							tmp.put(i, temp);
 						}
+						i++;
 					}
 					values.add(tmp);
 
