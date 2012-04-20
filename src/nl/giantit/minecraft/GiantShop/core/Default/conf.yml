@@ -26,8 +26,8 @@ GiantShop:
         defaultMaxStock: 50
         stockDefinesCost: true
         maxInflation: 50
-        maxDeflation: 20
-        amountTillMaxInflation: 20
+        maxDeflation: 25
+        amountTillMaxInflation: 10
         amountTillMaxDeflation: 50
     Location:
         perPage: 5
