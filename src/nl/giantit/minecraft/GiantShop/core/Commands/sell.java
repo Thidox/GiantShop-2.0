@@ -1,6 +1,9 @@
 package nl.giantit.minecraft.GiantShop.core.Commands;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
+import nl.giantit.minecraft.GiantShop.API.stock.ItemNotFoundException;
+import nl.giantit.minecraft.GiantShop.API.stock.Events.StockUpdateEvent;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.core.Database.db;
@@ -191,6 +194,11 @@ public class sell {
 										t.put("stock", String.valueOf((stock + amount)));
 	
 										DB.update("#__items").set(t).where(where).updateQuery();
+
+										try {
+											StockUpdateEvent event = new StockUpdateEvent(player, GiantShopAPI.Obtain().getStockAPI().getItemStock(itemID, itemType), StockUpdateEvent.StockUpdateType.INCREASE);
+											GiantShop.getPlugin().getSrvr().getPluginManager().callEvent(event);
+										}catch(ItemNotFoundException e) {}
 									}
 								}else{
 									HashMap<String, String> data = new HashMap<String, String>();

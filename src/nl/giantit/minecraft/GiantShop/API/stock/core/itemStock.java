@@ -6,10 +6,10 @@ import nl.giantit.minecraft.GiantShop.API.stock.ItemNotFoundException;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.Database.db;
 
+import org.bukkit.Bukkit;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import org.bukkit.Bukkit;
 
 /**
  *
