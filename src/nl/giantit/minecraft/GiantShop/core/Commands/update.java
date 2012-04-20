@@ -1,13 +1,17 @@
 package nl.giantit.minecraft.GiantShop.core.Commands;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.Misc.Heraut;
-import nl.giantit.minecraft.GiantShop.Misc.Messages;
+import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
+import nl.giantit.minecraft.GiantShop.API.stock.ItemNotFoundException;
+import nl.giantit.minecraft.GiantShop.API.stock.Events.StockUpdateEvent;
+import nl.giantit.minecraft.GiantShop.API.stock.Events.MaxStockUpdateEvent;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.core.Database.db;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
+import nl.giantit.minecraft.GiantShop.Misc.Heraut;
+import nl.giantit.minecraft.GiantShop.Misc.Messages;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -103,6 +107,8 @@ public class update {
 				tmp.put("buyFor", res.get("buyFor"));
 				tmp.put("stock", res.get("stock"));
 				tmp.put("maxStock", res.get("maxStock"));
+				tmp.put("ostock", res.get("stock"));
+				tmp.put("omaxStock", res.get("maxStock"));
 				tmp.put("perStack", res.get("perStack"));
 				tmp.put("shops", res.get("shops"));
 				stored.put(player, tmp);
@@ -193,6 +199,8 @@ public class update {
 				tmp.put("buyFor", res.get("buyFor"));
 				tmp.put("stock", res.get("stock"));
 				tmp.put("maxStock", res.get("maxStock"));
+				tmp.put("ostock", res.get("stock"));
+				tmp.put("omaxStock", res.get("maxStock"));
 				tmp.put("perStack", res.get("perStack"));
 				tmp.put("shops", res.get("shops"));
 				storedC.put(sender, tmp);
@@ -477,6 +485,8 @@ public class update {
 		
 		int s = Integer.parseInt(tmp.get("stock"));
 		int mS = Integer.parseInt(tmp.get("maxStock"));
+		int oS = Integer.parseInt(tmp.remove("ostock"));
+		int omS = Integer.parseInt(tmp.remove("omaxStock"));
 		
 		if(s == -1 || mS == -1 || (s <= mS && !conf.getBoolean("GiantShop.stock.allowOverStock"))) {
 			int itemID = Integer.parseInt(tmp.get("itemID"));
@@ -497,6 +507,16 @@ public class update {
 			
 			DB.update("#__items").set(tmp).where(data).updateQuery();
 			Heraut.say(player, "You have successfully updated " + name + "!");
+			
+			try {
+				StockUpdateEvent.StockUpdateType t = (oS < s) ? StockUpdateEvent.StockUpdateType.INCREASE : StockUpdateEvent.StockUpdateType.DECREASE;
+				MaxStockUpdateEvent.StockUpdateType mt = (omS < mS) ? MaxStockUpdateEvent.StockUpdateType.INCREASE : MaxStockUpdateEvent.StockUpdateType.DECREASE;
+				
+				StockUpdateEvent event = new StockUpdateEvent(player, GiantShopAPI.Obtain().getStockAPI().getItemStock(itemID, itemType), t);
+				MaxStockUpdateEvent events = new MaxStockUpdateEvent(player, GiantShopAPI.Obtain().getStockAPI().getItemStock(itemID, itemType), mt);
+				GiantShop.getPlugin().getSrvr().getPluginManager().callEvent(event);
+				GiantShop.getPlugin().getSrvr().getPluginManager().callEvent(events);
+			}catch(ItemNotFoundException e) {}
 		}else{
 			Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "stockExeedsMaxStock"));
 		}
@@ -507,6 +527,8 @@ public class update {
 
 		int s = Integer.parseInt(tmp.get("stock"));
 		int mS = Integer.parseInt(tmp.get("maxStock"));
+		int oS = Integer.parseInt(tmp.remove("ostock"));
+		int omS = Integer.parseInt(tmp.remove("omaxStock"));
 		
 		if(s == -1 || mS == -1 || (s <= mS && !conf.getBoolean("GiantShop.stock.allowOverStock"))) {
 			int itemID = Integer.parseInt(tmp.get("itemID"));
@@ -527,6 +549,16 @@ public class update {
 			
 			DB.update("#__items").set(tmp).where(data).updateQuery();
 			Heraut.say(sender, "You have successfully updated " + name + "!");
+			
+			try {
+				StockUpdateEvent.StockUpdateType t = (oS < s) ? StockUpdateEvent.StockUpdateType.INCREASE : StockUpdateEvent.StockUpdateType.DECREASE;
+				MaxStockUpdateEvent.StockUpdateType mt = (omS < mS) ? MaxStockUpdateEvent.StockUpdateType.INCREASE : MaxStockUpdateEvent.StockUpdateType.DECREASE;
+				
+				StockUpdateEvent event = new StockUpdateEvent(null, GiantShopAPI.Obtain().getStockAPI().getItemStock(itemID, itemType), t);
+				MaxStockUpdateEvent events = new MaxStockUpdateEvent(null, GiantShopAPI.Obtain().getStockAPI().getItemStock(itemID, itemType), mt);
+				GiantShop.getPlugin().getSrvr().getPluginManager().callEvent(event);
+				GiantShop.getPlugin().getSrvr().getPluginManager().callEvent(events);
+			}catch(ItemNotFoundException e) {}
 		}else{
 			Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "stockExeedsMaxStock"));
 		}
