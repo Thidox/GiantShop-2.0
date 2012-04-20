@@ -17,14 +17,14 @@ import java.util.HashMap;
  */
 public class itemStock {
 	
-	private config conf = config.Obtain();
+	private final config conf = config.Obtain();
 	private int id;
 	private Integer type;
 	private int stock;
 	private int maxStock;
 	private int perStack;
 	
-	private void loadStock() throws ItemNotFoundException {
+	private final void loadStock() throws ItemNotFoundException {
 		db DB = db.Obtain();
 		
 		ArrayList<String> fields = new ArrayList<String>();
@@ -53,23 +53,23 @@ public class itemStock {
 		this.loadStock();
 	}
 	
-	public int getStock() {
+	public final int getStock() {
 		return this.stock;
 	}
 	
-	public int getMaxStock() {
+	public final int getMaxStock() {
 		return this.maxStock;
 	}
 	
-	public int getID() {
+	public final int getID() {
 		return this.id;
 	}
 	
-	public Integer getType() {
+	public final Integer getType() {
 		return this.type;
 	}
 	
-	public stockResponse setStock(int value) {
+	public final stockResponse setStock(int value) {
 		if(value < 0)
 			return stockResponse.INVALIDSTOCKPASSED;
 		
@@ -96,7 +96,7 @@ public class itemStock {
 		return stockResponse.STOCKUPDATED;
 	}
 	
-	public stockResponse setMaxStock(int value) {
+	public final stockResponse setMaxStock(int value) {
 		if(value < 0)
 			return stockResponse.INVALIDSTOCKPASSED;
 		
