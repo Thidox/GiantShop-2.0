@@ -168,6 +168,30 @@ public class sell {
 							int amount = perStack * quantity;
 							
 							if(!conf.getBoolean("GiantShop.stock.useStock") || stock == -1 || maxStock == -1 || (stock + amount <= maxStock || conf.getBoolean("GiantShop.stock.allowOverStock"))) {
+								if(conf.getBoolean("GiantShop.stock.useStock") && conf.getBoolean("GiantShop.stock.stockDefinesCost") && maxStock != -1 && stock != -1) {
+									double maxInfl = conf.getDouble("GiantShop.stock.maxInflation");
+									double maxDefl = conf.getDouble("GiantShop.stock.maxDeflation");
+									int atmi = conf.getInt("GiantShop.stock.amountTillMaxInflation");
+									int atmd = conf.getInt("GiantShop.stock.amountTillMaxDeflation");
+									double split = Math.round((atmi + atmd) / 2);
+									if(maxStock <= atmi + atmd); {
+										split = maxStock / 2;
+										atmi = 0;
+										atmd = maxStock;
+									}
+									
+									if(stock >= atmd) {
+										cost = (sellFor * (1.0 - maxDefl / 100.0)) * (double) quantity; 
+									}else if(stock <= atmi) {
+										cost = (sellFor * (1.0 + maxInfl / 100.0)) * (double) quantity; 
+									}else{
+										if(stock < split) {
+											cost = (double)Math.round(((sellFor * (1.0 + (maxInfl / stock) / 100)) * (double) quantity) * 100.0) / 100.0;
+										}else if(stock > split) {
+											cost = 2.0 + (double)Math.round(((sellFor / (maxDefl * stock / 100)) * (double) quantity) * 100.0) / 100.0;
+										}
+									}
+								}
 								ItemStack iStack;
 								Inventory inv = player.getInventory();
 	
