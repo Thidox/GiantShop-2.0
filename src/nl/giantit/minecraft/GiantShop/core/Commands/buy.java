@@ -102,6 +102,7 @@ public class buy {
 					fields.add("perStack");
 					fields.add("sellFor");
 					fields.add("stock");
+					fields.add("maxStock");
 					fields.add("shops");
 
 					HashMap<String, String> where = new HashMap<String, String>();
@@ -116,6 +117,7 @@ public class buy {
 
 							int perStack = Integer.parseInt(res.get("perStack"));
 							int stock = Integer.parseInt(res.get("stock"));
+							int maxStock = Integer.parseInt(res.get("maxStock"));
 							double sellFor = Double.parseDouble(res.get("sellFor"));
 							double balance = eH.getBalance(player);
 
@@ -123,6 +125,31 @@ public class buy {
 							int amount = perStack * quantity;
 
 							if(!conf.getBoolean("GiantShop.stock.useStock") || stock == -1 || (stock - amount) >= 0) {
+								if(conf.getBoolean("GiantShop.stock.useStock") && conf.getBoolean("GiantShop.stock.stockDefinesCost") && maxStock != -1 && stock != -1) {
+									double maxInfl = conf.getDouble("GiantShop.stock.maxInflation");
+									double maxDefl = conf.getDouble("GiantShop.stock.maxDeflation");
+									int atmi = conf.getInt("GiantShop.stock.amountTillMaxInflation");
+									int atmd = conf.getInt("GiantShop.stock.amountTillMaxDeflation");
+									double split = Math.round((atmi + atmd) / 2);
+									if(maxStock <= atmi + atmd); {
+										split = maxStock / 2;
+										atmi = 0;
+										atmd = maxStock;
+									}
+									
+									if(stock >= atmd) {
+										cost = (sellFor * (1.0 - maxDefl / 100.0)) * (double) quantity; 
+									}else if(stock <= atmi) {
+										cost = (sellFor * (1.0 + maxInfl / 100.0)) * (double) quantity; 
+									}else{
+										if(stock < split) {
+											cost = (double)Math.round(((sellFor * (1.0 + (maxInfl / stock) / 100)) * (double) quantity) * 100.0) / 100.0;
+										}else if(stock > split) {
+											cost = 2.0 + (double)Math.round(((sellFor / (maxDefl * stock / 100)) * (double) quantity) * 100.0) / 100.0;
+										}
+									}
+								}
+								
 								if((balance - cost) < 0) {
 									HashMap<String, String> data = new HashMap<String, String>();
 									data.put("needed", String.valueOf(cost));
