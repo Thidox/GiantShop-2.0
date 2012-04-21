@@ -162,9 +162,9 @@ public class sell {
 							int perStack = Integer.parseInt(res.get("perStack"));
 							int stock = Integer.parseInt(res.get("stock"));
 							int maxStock = Integer.parseInt(res.get("maxStock"));
-							double sellFor = Double.parseDouble(res.get("buyFor"));
+							double buyFor = Double.parseDouble(res.get("buyFor"));
 
-							double cost = sellFor * (double) quantity;
+							double cost = buyFor * (double) quantity;
 							int amount = perStack * quantity;
 							
 							if(!conf.getBoolean("GiantShop.stock.useStock") || stock == -1 || maxStock == -1 || (stock + amount <= maxStock || conf.getBoolean("GiantShop.stock.allowOverStock"))) {
@@ -181,14 +181,14 @@ public class sell {
 									}
 									
 									if(stock >= atmd) {
-										cost = (sellFor * (1.0 - maxDefl / 100.0)) * (double) quantity; 
+										cost = (buyFor * (1.0 - maxDefl / 100.0)) * (double) quantity; 
 									}else if(stock <= atmi) {
-										cost = (sellFor * (1.0 + maxInfl / 100.0)) * (double) quantity; 
+										cost = (buyFor * (1.0 + maxInfl / 100.0)) * (double) quantity; 
 									}else{
 										if(stock < split) {
-											cost = (double)Math.round(((sellFor * (1.0 + (maxInfl / stock) / 100)) * (double) quantity) * 100.0) / 100.0;
+											cost = (double)Math.round(((buyFor * (1.0 + (maxInfl / stock) / 100)) * (double) quantity) * 100.0) / 100.0;
 										}else if(stock > split) {
-											cost = 2.0 + (double)Math.round(((sellFor / (maxDefl * stock / 100)) * (double) quantity) * 100.0) / 100.0;
+											cost = 2.0 + (double)Math.round(((buyFor / (maxDefl * stock / 100)) * (double) quantity) * 100.0) / 100.0;
 										}
 									}
 								}
