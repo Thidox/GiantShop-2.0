@@ -30,6 +30,8 @@ import java.io.InputStream;
  * @author Giant
  */
 public class GiantShop extends JavaPlugin {
+
+	public static final Logger log = Logger.getLogger("Minecraft");
 	
 	private static GiantShop plugin;
 	private static Server Server;
@@ -44,10 +46,9 @@ public class GiantShop extends JavaPlugin {
 	private String name, dir, pubName;
 	private String bName = "Tight Laced";
 	
-	public static final Logger log = Logger.getLogger("Minecraft");
-	
 	public boolean useLoc = false;
 	public List<String> cmds;
+	
 	private void setPlugin() {
 		GiantShop.plugin = this;
 	}
