@@ -40,9 +40,12 @@ public class Locationer {
 		this.wlHandle = new WorldEditLoc(plugin);
 		this.slHandle = new PlainJane(plugin);
 
-		shopLoader sL = new shopLoader(this.plugin, this);
+		new shopLoader(this.plugin, this);
 		worlds = conf.getStringList("GiantShop.Location.protect.Worlds.protected");
 		allow = conf.getStringList("GiantShop.Location.protect.Worlds.allowed");
+		
+		chat = new chat(this.plugin);
+		console = new console(this.plugin);
 		
 		GiantShop.log.log(Level.INFO, "[GiantShopLocation] " + String.valueOf(shops.size()) + (shops.size() == 1 ? " shop" : " shops") + " loaded!");
 	}
