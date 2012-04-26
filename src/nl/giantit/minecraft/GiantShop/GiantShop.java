@@ -44,7 +44,7 @@ public class GiantShop extends JavaPlugin {
 	private Messages msgHandler;
 	private Locationer locHandler;
 	private String name, dir, pubName;
-	private String bName = "Tight Laced";
+	private String bName = "Red Welts";
 	
 	public boolean useLoc = false;
 	public List<String> cmds;
