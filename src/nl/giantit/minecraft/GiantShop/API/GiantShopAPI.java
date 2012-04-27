@@ -2,6 +2,7 @@ package nl.giantit.minecraft.GiantShop.API;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.API.stock.stockAPI;
+import nl.giantit.minecraft.GiantShop.core.Items.Items;
 
 /**
  *
@@ -11,6 +12,7 @@ public class GiantShopAPI {
 	
 	private GiantShop plugin;
 	private static GiantShopAPI instance;
+	private static Items iH;
 	
 	private stockAPI sAPI;
 	
@@ -22,10 +24,15 @@ public class GiantShopAPI {
 		this.plugin = plugin;
 		this.setInstance();
 		this.sAPI = new stockAPI(plugin);
+		this.iH = plugin.getItemHandler();
 	}
 	
 	public stockAPI getStockAPI() {
-		return sAPI;
+		return this.sAPI;
+	}
+	
+	public Items getItemHandlerAPI() {
+		return this.iH;
 	}
 	
 	public static GiantShopAPI Obtain() {
