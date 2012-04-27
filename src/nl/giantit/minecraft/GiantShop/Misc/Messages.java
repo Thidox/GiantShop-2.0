@@ -18,7 +18,7 @@ public class Messages {
 	
 	private GiantShop plugin;
 	private YamlConfiguration config;
-	private double yamlVersion = 1.1;
+	private double yamlVersion = 1.2;
 	private HashMap<String, String> mainMsgs, adminMsgs, errorMsgs;
 	
 	public enum msgType {
