@@ -24,6 +24,14 @@ import java.util.List;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.net.URL;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  *
@@ -43,6 +51,7 @@ public class GiantShop extends JavaPlugin {
 	private Eco econHandler;
 	private Messages msgHandler;
 	private Locationer locHandler;
+	private int tID;
 	private String name, dir, pubName;
 	private String bName = "Red Welts";
 	
@@ -94,6 +103,19 @@ public class GiantShop extends JavaPlugin {
 					getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 				
 			}
+			
+			if(conf.getBoolean("GiantShop.global.checkForUpdates")) {
+				tID = getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+					@Override
+					public void run() {
+						String nv = updateCheck(getDescription().getVersion());
+						if(isNewer(nv, getDescription().getVersion())) 
+							log.log(Level.WARNING, "[" + name + "] " + nv + " has been released! You are currently running: " + getDescription().getVersion());
+					}
+				}, 0L, 432000L);
+				
+			}
+			
 			pubName = conf.getString("GiantShop.global.name");
 			chat = new chat(this);
 			console = new console(this);
@@ -109,6 +131,7 @@ public class GiantShop extends JavaPlugin {
 			}
 		}catch(Exception e) {
 			log.log(Level.SEVERE, "[" + this.name + "](" + this.bName + ") Failed to load!");
+			e.printStackTrace();
 			if(conf.getBoolean("GiantShop.global.debug"))
 				log.log(Level.INFO, "" + e);
 			Server.getPluginManager().disablePlugin(this);
@@ -117,6 +140,10 @@ public class GiantShop extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
+		if(!Double.isNaN(tID)) {
+			getServer().getScheduler().cancelTask(tID);
+		}
+		
 		log.log(Level.INFO, "[" + this.name + "] Was successfully dissabled!");
 	}
 	
@@ -228,5 +255,43 @@ public class GiantShop extends JavaPlugin {
 				}
 			}
 		}
+	}
+	
+	public String updateCheck(String version) {
+        String uri = "http://dev.bukkit.org/server-mods/giantshop/files.rss";
+        try {
+            URL url = new URL(uri);
+            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(url.openConnection().getInputStream());
+            doc.getDocumentElement().normalize();
+            Node firstNode = doc.getElementsByTagName("item").item(0);
+            if(firstNode.getNodeType() == 1) {
+                NodeList firstElementTagName = ((Element)firstNode).getElementsByTagName("title");
+                NodeList firstNodes = ((Element)firstElementTagName.item(0)).getChildNodes();
+                return firstNodes.item(0).getNodeValue().replace("GiantShop 2.0", "").replaceAll(" \\(([a-zA-Z ]+)\\)", "").trim();
+            }
+        }catch (Exception e) {	
+        }
+        
+        return version;
+    }
+	
+	public boolean isNewer(String newVersion, String version) {
+		String[] nv = newVersion.replaceAll("\\.[a-zA-Z]+", "").split("\\.");
+		String[] v = version.replaceAll("\\.[a-zA-Z]+", "").split("\\.");
+		Boolean isNew = false;
+		
+		for(int i = 0; i < nv.length; i++) {
+			int tn = Integer.valueOf(nv[i]);
+			int tv = 0;
+			if(v.length >= i)
+				tv = Integer.valueOf(v[i]);
+			
+			if(tn > tv) {
+				isNew = true;
+				break;
+			}
+		}
+
+		return isNew;
 	}
 }
