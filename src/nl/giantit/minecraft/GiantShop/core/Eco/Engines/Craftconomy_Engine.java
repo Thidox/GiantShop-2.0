@@ -46,7 +46,7 @@ public class Craftconomy_Engine implements iEco {
 	
 	@Override
 	public boolean isLoaded() {
-		return false;
+		return eco != null;
 	}
 	
 	@Override

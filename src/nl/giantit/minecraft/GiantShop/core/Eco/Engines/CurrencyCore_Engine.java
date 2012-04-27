@@ -45,7 +45,7 @@ public class CurrencyCore_Engine implements iEco {
 	
 	@Override
 	public boolean isLoaded() {
-		return false;
+		return eco.isEnabled();
 	}
 	
 	@Override

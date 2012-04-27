@@ -45,7 +45,7 @@ public class MineConomy_Engine implements iEco {
 	
 	@Override
 	public boolean isLoaded() {
-		return false;
+		return eco != null;
 	}
 	
 	@Override
