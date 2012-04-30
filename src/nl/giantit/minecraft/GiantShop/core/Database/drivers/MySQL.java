@@ -61,6 +61,7 @@ public class MySQL implements iDriver {
 		this.user = conf.getString("GiantShop.db.user");
 		this.pass = conf.getString("GiantShop.db.password");
 		this.prefix = conf.getString("GiantShop.db.prefix");
+		this.connect();
 	}
 	
 	@Override
