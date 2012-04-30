@@ -32,18 +32,7 @@ public class MySQL implements iDriver {
 	private Connection con = null;
 	private config conf = null;
 	
-	private MySQL() {
-		this.plugin = GiantShop.getPlugin();
-		
-		conf = config.Obtain();
-		
-		this.db = conf.getString("GiantShop.db.database");
-		this.host = conf.getString("GiantShop.db.host");
-		this.port = conf.getString("GiantShop.db.port");
-		this.user = conf.getString("GiantShop.db.user");
-		this.pass = conf.getString("GiantShop.db.password");
-		this.prefix = conf.getString("GiantShop.db.prefix");
-		
+	private void connect() {
 		String dbPath = "jdbc:mysql://" + this.host + ":" + this.port + "/" + this.db + "?user=" + this.user + "&password=" + this.pass;
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
@@ -59,6 +48,19 @@ public class MySQL implements iDriver {
 				GiantShop.log.log(Level.INFO, e.getMessage());
 			}
 		}
+	}
+	
+	private MySQL() {
+		this.plugin = GiantShop.getPlugin();
+		
+		this.conf = config.Obtain();
+		
+		this.db = conf.getString("GiantShop.db.database");
+		this.host = conf.getString("GiantShop.db.host");
+		this.port = conf.getString("GiantShop.db.port");
+		this.user = conf.getString("GiantShop.db.user");
+		this.pass = conf.getString("GiantShop.db.password");
+		this.prefix = conf.getString("GiantShop.db.prefix");
 	}
 	
 	@Override
@@ -209,7 +211,7 @@ public class MySQL implements iDriver {
 	@Override
 	public ArrayList<HashMap<String, String>> execQuery() {
 		Integer queryID = ((sql.size() - 1 > 0) ? (sql.size() - 1) : 0);
-		Statement st = null;
+		/*Statement st = null;
 		
 		ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 		try {
@@ -252,9 +254,9 @@ public class MySQL implements iDriver {
 			if(conf.getBoolean("GiantShop.global.debug")) {
 				GiantShop.log.log(Level.INFO, e.getMessage());
 			}
-		}
+		}*/
 		
-		return data;
+		return this.execQuery(queryID);
 	}
 	
 	@Override
@@ -266,6 +268,9 @@ public class MySQL implements iDriver {
 			HashMap<String, String> SQL = sql.get(queryID);
 			if(SQL.containsKey("sql")) {
 				try {
+					if(con.isClosed() || !con.isValid(0))
+						this.connect();
+					
 					st = con.createStatement();
 					//query.add(queryID, st.executeQuery(SQL.get("sql")));
 					ResultSet res = st.executeQuery(SQL.get("sql"));
@@ -307,7 +312,7 @@ public class MySQL implements iDriver {
 	@Override
 	public void updateQuery() {
 		Integer queryID = ((sql.size() - 1 > 0) ? (sql.size() - 1) : 0);
-		Statement st = null;
+		/*Statement st = null;
 		
 		try {
 			HashMap<String, String> SQL = sql.get(queryID);
@@ -335,7 +340,8 @@ public class MySQL implements iDriver {
 			}
 		}catch(NullPointerException e) {
 			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + queryID.toString() + " is not a valid SQL query!");
-		}
+		}*/
+		this.updateQuery(queryID);
 	}
 	
 	@Override
@@ -375,7 +381,7 @@ public class MySQL implements iDriver {
 	public int countResult() {
 		Integer queryID = ((query.size() - 1 > 0) ? (query.size() - 1) : 0);
 		
-		if(query.get(queryID) == null)
+		/*if(query.get(queryID) == null)
 			return 0;
 		try {
 			query.get(queryID).last();
@@ -390,7 +396,8 @@ public class MySQL implements iDriver {
 			}
 		}
 		
-		return 0;
+		return 0;*/
+		return this.countResult(queryID);
 	}
 	
 	@Override
@@ -417,7 +424,9 @@ public class MySQL implements iDriver {
 	public ArrayList<HashMap<String, String>> getResult() {
 		Integer queryID = ((query.size() - 1 > 0) ? (query.size() - 1) : 0);
 		
-		ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+		return this.getResult(queryID);
+		
+		/*ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 		try {
 			ResultSet res = query.get(queryID);
 			while(res.next()) {
@@ -448,7 +457,7 @@ public class MySQL implements iDriver {
 			}
 		}
 		
-		return data;
+		return data;*/
 	}
 	
 	@Override
@@ -481,8 +490,9 @@ public class MySQL implements iDriver {
 	@Override
 	public HashMap<String, String> getSingleResult() {
 		Integer queryID = ((query.size() - 1 > 0) ? (query.size() - 1) : 0);
+		return this.getSingleResult(queryID);
 		
-		HashMap<String, String> data = new HashMap<String, String>();
+		/*HashMap<String, String> data = new HashMap<String, String>();
 		try {
 			ResultSet res = query.get(queryID);
 			res.last();
@@ -511,7 +521,7 @@ public class MySQL implements iDriver {
 			}
 		}
 		
-		return data;
+		return data;*/
 	}
 	
 	@Override
