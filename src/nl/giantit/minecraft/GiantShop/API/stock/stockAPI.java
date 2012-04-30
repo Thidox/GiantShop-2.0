@@ -7,6 +7,7 @@ import nl.giantit.minecraft.GiantShop.core.Items.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -22,7 +23,16 @@ public class stockAPI {
 		this.iH = plugin.getItemHandler();
 	}
 	
-	public itemStock getItemStock(String name) throws ItemNotFoundException {
+	public final ArrayList<itemStock> getItemStock(ArrayList<String> names) throws ItemNotFoundException {
+		ArrayList<itemStock> temp = new ArrayList<itemStock>();
+		for(String name : names) {
+			temp.add(this.getItemStock(name));
+		}
+		
+		return temp;
+	}
+	
+	public final itemStock getItemStock(String name) throws ItemNotFoundException {
 		ItemID IID = iH.getItemIDByName(name);
 		if(IID != null) {
 			int id = IID.getId();
@@ -33,7 +43,16 @@ public class stockAPI {
 		return null;
 	}
 	
-	public itemStock getItemStock(int id, Integer type) throws ItemNotFoundException {
+	public final ArrayList<itemStock> getItemStock(HashMap<Integer, Integer> data) throws ItemNotFoundException {
+		ArrayList<itemStock> temp = new ArrayList<itemStock>();
+		for(Map.Entry<Integer, Integer> entry : data.entrySet()) {
+			temp.add(this.getItemStock(entry.getKey(), entry.getValue()));
+		}
+		
+		return temp;
+	}
+	
+	public final itemStock getItemStock(int id, Integer type) throws ItemNotFoundException {
 		if(iH.isValidItem(id, type)) {
 			return new itemStock(id, type);
 		}
@@ -41,7 +60,7 @@ public class stockAPI {
 		return null;
 	}
 	
-	public HashMap<String, itemStock> getItemStocks() throws ItemNotFoundException {
+	public final HashMap<String, itemStock> getItemStocks() throws ItemNotFoundException {
 		HashMap<String, itemStock> stocks = new HashMap<String, itemStock>();
 		
 		db DB = db.Obtain();
