@@ -1,4 +1,4 @@
-version: 0.4
+version: 0.5
 names:
     item0: Air
     item1: Stone
@@ -112,7 +112,7 @@ names:
     item113: Nether Brick Fence
     item114: Nether Brick Stairs
     item115: Nether Wart Block
-    item116: Echantment Table
+    item116: Enchantment Table
     item117: Brewing Stand Block
     item118: Cauldron block
     item119: End Portal
@@ -503,133 +503,100 @@ types:
     item373:
         type0:
         - Water Bottle
-        - Mundane Potion
-        type1:
-        - Potion of Regeneration
-        type2:
-        - Potion of Swiftness
-        type3:
-        - Potion of Fire Resistance
-        type4:
-        - Potion of Posion
-        type5:
-        - Potion of Healing
-        type6:
-        - Clear Potion
-        type7:
-        - Clear Potion
-        type8:
-        - Potion of Weakness
-        type9:
-        - Potion of Strength
-        type10:
-        - Potion of Slowness
-        type11:
-        - Diffuse Potion
-        type12:
-        - Potion of Harming
-        type13:
-        - Artless Potion
-        type14:
-        - Thin Potion
-        type15:
-        - Thin Potion
         type16:
-        - Awkward Potion
-        type17:
-        - Potion of Regeneration
-        type18:
-        - Potion of Swiftness
-        type19:
-        - Potion of Fire Resistance
-        type20:
-        - Potion of Posion
-        type21:
-        - Potion of Healing
-        type22:
-        - Bundling Potion
-        type23:
-        - Bundling Potion
-        type24:
-        - Potion of Weakness
-        type25:
-        - Potion of Strength
-        type26:
-        - Potion of Slowness
-        type27:
-        - Smooth Potion
-        type28:
-        - Potion of Harming
-        type29:
-        - Suave Potion
-        type30:
-        - Debonair Potion
-        type31:
-        - Debonair Potion
+        - Akward Potion
         type32:
         - Thick Potion
-        type33:
-        - Potion of Regeneration II
-        type34:
-        - Potion of Swiftness II 
-        type35:
-        - Potion of Fire Resistance
-        type36:
-        - Potion of Poison II 
-        type37:
-        - Potion of Healing II 
-        type38:
-        - Charming Potion
-        type39:
-        - Charming Potion
-        type40:
-        - Potion of Weakness
-        type41:
-        - Potion of Strength ||
-        type42:
-        - Potion of Slowness
-        type43:
-        - Refined Potion
-        type44:
-        - Potion of Harming II 
-        type45:
-        - Cordial Potion
-        type46:
-        - Sparkling Potion
-        type47:
-        - Sparkling Potion
-        type48:
-        - Potent Potion
-        type49:
-        - Potion of Regeneration II
-        type50:
-        - Potion of Swiftness II 
-        type51:
-        - Potion of Fire Resistance
-        type52:
-        - Potion of Poison II 
-        type53:
-        - Potion of Healing II 
-        type54:
-        - Rank Potion
-        type55:
-        - Rank Potion
-        type56:
-        - Potion of Weakness
-        type57:
-        - Potion of Strength II
-        type58:
-        - Potion of Slowness
-        type59:
-        - Acrid Potion
-        type60:
-        - Potion of Harming II
-        type61:
-        - Gross Potion
-        type62:
-        - Stinky Potion
-        type63:
-        - Stinky Potion
+        type64:
+        - Mundane Potion
+        type8193:
+        - Regeneration Potion (0:45)
+        type8194:
+        - Swiftness Potion (3:00)
+        type8195:
+        - Fire Resistance Potion (3:00)
+        type8196:
+        - Poison Potion (0:45)
+        type8197:
+        - Healing Potion
+        type8200:
+        - Weakness Potion (1:30)
+        type8201:
+        - Strength Potion (3:00)
+        type8202:
+        - Slowness Potion (1:30)
+        type8204:
+        - Potion of Harming
+        type8225:
+        - Regeneration Potion II (0:22)
+        type8226:
+        - Swiftness Potion II (1:30)
+        type8228:
+        - Poison Potion II (0:22)
+        type8229:
+        - Healing Potion II
+        type8233:
+        - Strength Potion II (1:30)
+        type8236:
+        - Harming Potion II
+        type8257:
+        - Regeneration Potion (2:00)
+        type8258:
+        - Swiftness Potion (8:00)
+        type8259:
+        - Fire Resistance Potion (8:00)
+        type8260:
+        - Poison Potion (2:00)
+        type8264:
+        - Weakness Potion (4:00)
+        type8265:
+        - Strength Potion (8:00)
+        type8266:
+        - Slowness Potion (4:00)
+        type16385:
+        - Regeneration Splash (0:33)
+        type16386:
+        - Swiftness Splash (2:15)
+        type16387:
+        - Fire Resistance Splash (2:15)
+        type16388:
+        - Poison Splash (0:33)
+        type16389:
+        - Healing Splash
+        type16392:
+        - Weakness Splash (1:07)
+        type16393:
+        - Strength Splash (2:15)
+        type16394:
+        - Slowness Splash (1:07)
+        type16396:
+        - Harming Splash
+        type16418:
+        - Swiftness Splash II (1:07)
+        type16420:
+        - Poison Splash II (0:16)
+        type16421:
+        - Healing Splash II 
+        type16425:
+        - Strength Splash II (1:07)
+        type16428:
+        - Harming Splash II
+        type16449:
+        - Regeneration Splash (1:30)
+        type16450:
+        - Swiftness Splash (6:00)
+        type16451:
+        - Fire Resistance Splash (6:00)
+        type16452:
+        - Poison Splash (1:30)
+        type16456:
+        - Weakness Splash (3:00) 
+        type16457:
+        - Strength Splash (6:00)
+        type16458:
+        - Slowness Splash (3:00)
+        type16471:
+        - Regeneration Splash II (0:16)
     item383:
         type50:
         - Creeper Egg
