@@ -279,17 +279,25 @@ public class GiantShop extends JavaPlugin {
 		String[] nv = newVersion.replaceAll("\\.[a-zA-Z]+", "").split("\\.");
 		String[] v = version.replaceAll("\\.[a-zA-Z]+", "").split("\\.");
 		Boolean isNew = false;
+		Boolean prevIsEqual = null; 
 		
 		for(int i = 0; i < nv.length; i++) {
-			int tn = Integer.valueOf(nv[i]);
+			int tn = Integer.parseInt(nv[i]);
 			int tv = 0;
-			if(v.length >= i)
-				tv = Integer.valueOf(v[i]);
+			if(v.length - 1 >= i)
+				tv = Integer.parseInt(v[i]);
 			
 			if(tn > tv) {
-				isNew = true;
-				break;
+				if(i == 0 || prevIsEqual == true) {
+					isNew = true;
+					break;
+				}
+			}else if(tn == tv) {
+				prevIsEqual = true;
+			}else{
+				prevIsEqual = false;
 			}
+			
 		}
 
 		return isNew;
