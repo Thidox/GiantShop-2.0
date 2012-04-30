@@ -295,7 +295,7 @@ public class GiantShop extends JavaPlugin {
 			}else if(tn == tv) {
 				prevIsEqual = true;
 			}else{
-				prevIsEqual = false;
+				break;
 			}
 			
 		}
