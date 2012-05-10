@@ -99,7 +99,11 @@ public class itemStock {
 		db DB = db.Obtain();
 		DB.update("#__items").set(fields).where(where).updateQuery();
 		
-		Logger.Log(LoggerType.APISTOCKUPDATE, "{m:API Stock update: old stock: " + String.valueOf(oS) + "; new stock: " + String.valueOf(value) + ";}");
+		Logger.Log(LoggerType.APISTOCKUPDATE, 
+					"{id: " + String.valueOf(this.id) + "; " +
+					"type:" + String.valueOf((this.type == null || this.type <= 0) ? -1 : this.type) + "; " +
+					"oS:" + String.valueOf(oS) + "; " +
+					"nS:" + String.valueOf(this.stock) + ";}");
 		
 		return stockResponse.STOCKUPDATED;
 	}
@@ -128,7 +132,11 @@ public class itemStock {
 		db DB = db.Obtain();
 		DB.update("#__items").set(fields).where(where).updateQuery();
 		
-		Logger.Log(LoggerType.APIMAXSTOCKUPDATE, "{m:API Maxstock update: old maxstock: " + String.valueOf(oS) + "; new maxstock: " + String.valueOf(value) + ";}");
+		Logger.Log(LoggerType.APIMAXSTOCKUPDATE, 
+				"{id: " + String.valueOf(this.id) + "; " +
+				"type:" + String.valueOf((this.type == null || this.type <= 0) ? -1 : this.type) + "; " +
+				"oS:" + String.valueOf(oS) + "; " +
+				"nS:" + String.valueOf(this.maxStock) + ";}");
 		
 		return stockResponse.MAXSTOCKUPDATED;
 	}
