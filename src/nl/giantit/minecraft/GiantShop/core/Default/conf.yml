@@ -8,6 +8,7 @@ GiantShop:
         broadcastBuy: true
         broadcastSell: false
         checkForUpdates: true
+        logActions: true
     db:
         driver: SQLite
         database: GiantShop
