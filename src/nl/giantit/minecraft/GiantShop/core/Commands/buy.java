@@ -176,7 +176,7 @@ public class buy {
 										Logger.Log(LoggerType.BUY,
 													player, 
 													"{id: " + String.valueOf(itemID) + "; " +
-													"type:" + itemType.toString() + "; " +
+													"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + "; " +
 													"nS:" + String.valueOf(stock) + "; " +
 													"oS:" + String.valueOf(stock + amount) + "; " +
 													"amount:" + String.valueOf(amount) + ";" +
@@ -377,7 +377,7 @@ public class buy {
 											Logger.Log(LoggerType.GIFT,
 														player, 
 														"{id: " + String.valueOf(itemID) + "; " +
-														"type:" + itemType.toString() + "; " +
+														"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + "; " +
 														"nS:" + String.valueOf(stock) + "; " +
 														"oS:" + String.valueOf(stock + amount) + "; " +
 														"amount:" + String.valueOf(amount) + ";" +
