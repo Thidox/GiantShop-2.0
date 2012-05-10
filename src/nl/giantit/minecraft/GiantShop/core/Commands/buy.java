@@ -177,8 +177,8 @@ public class buy {
 													player, 
 													"{id: " + String.valueOf(itemID) + "; " +
 													"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + "; " +
-													"nS:" + String.valueOf(stock) + "; " +
-													"oS:" + String.valueOf(stock + amount) + "; " +
+													"oS:" + String.valueOf(stock) + "; " +
+													"nS:" + String.valueOf(stock - amount) + "; " +
 													"amount:" + String.valueOf(amount) + ";" +
 													"total:" + String.valueOf(cost) + ";}");
 
@@ -378,8 +378,8 @@ public class buy {
 														player, 
 														"{id: " + String.valueOf(itemID) + "; " +
 														"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + "; " +
-														"nS:" + String.valueOf(stock) + "; " +
-														"oS:" + String.valueOf(stock + amount) + "; " +
+														"oS:" + String.valueOf(stock) + "; " +
+														"nS:" + String.valueOf(stock - amount) + "; " +
 														"amount:" + String.valueOf(amount) + ";" +
 														"total:" + String.valueOf(cost) + ";" +
 														"receiver:" + giftReceiver.getName() + "}");
