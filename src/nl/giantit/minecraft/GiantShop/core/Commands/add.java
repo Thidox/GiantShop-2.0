@@ -181,7 +181,7 @@ public class add {
 									"pS: " + String.valueOf(perStack) + "; " +
 									"s:" + String.valueOf(stock) + "; " +
 									"mS:" + String.valueOf(maxStock) + "; " +
-									"shops:" + shops + "}");
+									"shops:" + shops + ";}");
 					}else{
 						Heraut.say(player, msgs.getMsg(Messages.msgType.ERROR, "itemAlreadyFound"));
 					}
@@ -351,7 +351,7 @@ public class add {
 								"pS: " + String.valueOf(perStack) + "; " +
 								"s:" + String.valueOf(stock) + "; " +
 								"mS:" + String.valueOf(maxStock) + "; " +
-								"shops:" + shops + "}");
+								"shops:" + shops + ";}");
 				}else{
 					Heraut.say(sender, msgs.getConsoleMsg(Messages.msgType.ERROR, "itemAlreadyFound"));
 				}
