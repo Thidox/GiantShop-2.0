@@ -175,7 +175,7 @@ public class add {
 						Logger.Log(LoggerType.ADD,
 									player, 
 									"{id: " + String.valueOf(itemID) + "; " +
-									"type:" + itemType.toString() + "; " +
+									"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + "; " +
 									"sF:" + String.valueOf(sellFor) + "; " +
 									"bF:" + String.valueOf(buyFor) + "; " +
 									"pS: " + String.valueOf(perStack) + "; " +
@@ -345,7 +345,7 @@ public class add {
 					Logger.Log(LoggerType.ADD,
 								sender, 
 								"{id: " + String.valueOf(itemID) + "; " +
-								"type:" + itemType.toString() + "; " +
+								"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + "; " +
 								"sF:" + String.valueOf(sellFor) + "; " +
 								"bF:" + String.valueOf(buyFor) + "; " +
 								"pS: " + String.valueOf(perStack) + "; " +
