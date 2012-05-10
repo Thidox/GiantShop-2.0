@@ -8,6 +8,7 @@ import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.core.Database.db;
 import nl.giantit.minecraft.GiantShop.core.Items.*;
+import nl.giantit.minecraft.GiantShop.core.Logger.*;
 import nl.giantit.minecraft.GiantShop.core.Eco.iEco;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
@@ -210,7 +211,16 @@ public class sell {
 	
 									Heraut.say("You have just sold " + amount + " of " + name + " for " + cost);
 									Heraut.say("Your new balance is: " + eH.getBalance(player));
-	
+									Logger.Log(LoggerType.SELL,
+												player, 
+												"{id: " + String.valueOf(itemID) + "; " +
+												"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + "; " +
+												"oS:" + String.valueOf(stock) + "; " +
+												"nS:" + String.valueOf(stock + amount) + "; " +
+												"amount:" + String.valueOf(amount) + ";" +
+												"total:" + String.valueOf(cost) + ";}");
+									
+									
 									removeItem(inv, iStack);
 									
 									if(conf.getBoolean("GiantShop.stock.useStock") && stock != -1) {
