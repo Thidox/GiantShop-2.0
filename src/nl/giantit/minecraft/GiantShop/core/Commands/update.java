@@ -508,7 +508,7 @@ public class update {
 			
 			DB.update("#__items").set(tmp).where(data).updateQuery();
 			Heraut.say(player, "You have successfully updated " + name + "!");
-			Logger.Log(LoggerType.SELL,
+			Logger.Log(LoggerType.UPDATE,
 						player, 
 						"{id: " + String.valueOf(itemID) + "; " +
 						"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + "; " +
@@ -561,7 +561,7 @@ public class update {
 			
 			DB.update("#__items").set(tmp).where(data).updateQuery();
 			Heraut.say(sender, "You have successfully updated " + name + "!");
-			Logger.Log(LoggerType.SELL,
+			Logger.Log(LoggerType.UPDATE,
 					sender, 
 					"{id: " + String.valueOf(itemID) + "; " +
 					"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + "; " +
