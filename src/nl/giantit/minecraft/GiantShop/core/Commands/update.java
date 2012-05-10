@@ -481,7 +481,7 @@ public class update {
 	}
 	
 	private static void save(Player player) {
-		HashMap<String, String> tmp = stored.get(player);
+		HashMap<String, String> tmp = stored.remove(player);
 		
 		int s = Integer.parseInt(tmp.get("stock"));
 		int mS = Integer.parseInt(tmp.get("maxStock"));
@@ -523,7 +523,7 @@ public class update {
 	}
 	
 	private static void save(CommandSender sender) {
-		HashMap<String, String> tmp = storedC.get(sender);
+		HashMap<String, String> tmp = storedC.remove(sender);
 
 		int s = Integer.parseInt(tmp.get("stock"));
 		int mS = Integer.parseInt(tmp.get("maxStock"));
