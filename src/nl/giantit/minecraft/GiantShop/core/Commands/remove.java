@@ -8,6 +8,7 @@ import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.core.Database.db;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
+import nl.giantit.minecraft.GiantShop.core.Logger.*;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -92,6 +93,10 @@ public class remove {
 					if(resSet.size() == 1) { 
 						DB.delete("#__items").where(data).updateQuery();
 						Heraut.say(player, "Item " + name + " has been successfully removed from the store!");
+						Logger.Log(LoggerType.REMOVE,
+									player, 
+									"{id: " + String.valueOf(itemID) + "; " +
+									"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + ";}");
 					}else{
 						Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noneOrMoreResults"));
 					}
@@ -175,6 +180,10 @@ public class remove {
 				if(resSet.size() == 1) { 
 					DB.delete("#__items").where(data).updateQuery();
 					Heraut.say(sender, "Item " + name + " has been successfully removed from the store!");
+					Logger.Log(LoggerType.REMOVE,
+								sender, 
+								"{id: " + String.valueOf(itemID) + "; " +
+								"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + ";}");
 				}else{
 					Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "noneOrMoreResults"));
 				}
