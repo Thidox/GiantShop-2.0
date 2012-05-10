@@ -10,6 +10,7 @@ import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.core.Database.db;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
+import nl.giantit.minecraft.GiantShop.core.Logger.*;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 
@@ -507,6 +508,17 @@ public class update {
 			
 			DB.update("#__items").set(tmp).where(data).updateQuery();
 			Heraut.say(player, "You have successfully updated " + name + "!");
+			Logger.Log(LoggerType.SELL,
+						player, 
+						"{id: " + String.valueOf(itemID) + "; " +
+						"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + "; " +
+						"pS:" + tmp.get("perStack") + "; " +
+						"sF:" + tmp.get("sellFor") + "; " +
+						"bF:" + tmp.get("buyFor") + "; " +
+						"oS:" + String.valueOf(oS) + "; " +
+						"nS:" + tmp.get("stock") + "; " +
+						"oMS:" + tmp.get("maxStock") + ";" +
+						"nMS:" + String.valueOf(omS) + ";}");
 			
 			try {
 				StockUpdateEvent.StockUpdateType t = (oS < s) ? StockUpdateEvent.StockUpdateType.INCREASE : StockUpdateEvent.StockUpdateType.DECREASE;
@@ -549,6 +561,17 @@ public class update {
 			
 			DB.update("#__items").set(tmp).where(data).updateQuery();
 			Heraut.say(sender, "You have successfully updated " + name + "!");
+			Logger.Log(LoggerType.SELL,
+					sender, 
+					"{id: " + String.valueOf(itemID) + "; " +
+					"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + "; " +
+					"pS:" + tmp.get("perStack") + "; " +
+					"sF:" + tmp.get("sellFor") + "; " +
+					"bF:" + tmp.get("buyFor") + "; " +
+					"oS:" + String.valueOf(oS) + "; " +
+					"nS:" + tmp.get("stock") + "; " +
+					"oMS:" + tmp.get("maxStock") + ";" +
+					"nMS:" + String.valueOf(omS) + ";}");
 			
 			try {
 				StockUpdateEvent.StockUpdateType t = (oS < s) ? StockUpdateEvent.StockUpdateType.INCREASE : StockUpdateEvent.StockUpdateType.DECREASE;
