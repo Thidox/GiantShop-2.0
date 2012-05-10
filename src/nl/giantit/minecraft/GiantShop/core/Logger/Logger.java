@@ -73,7 +73,7 @@ public class Logger {
 					temp.put("data", "" + data);
 					tmp.put(i, temp);
 				}else if(field.equalsIgnoreCase("date")) {
-					temp.put("data", "" + Logger.getTimestamp());
+					temp.put("data", "" + (int) Logger.getTimestamp());
 					tmp.put(i, temp);
 				}
 				i++;
