@@ -173,7 +173,7 @@ public class buy {
 
 										Heraut.say("You have just bought " + amount + " of " + name + " for " + cost);
 										Heraut.say("Your new balance is: " + eH.getBalance(player));
-										Logger.Log(LoggerType.ADD,
+										Logger.Log(LoggerType.BUY,
 													player, 
 													"{id: " + String.valueOf(itemID) + "; " +
 													"type:" + itemType.toString() + "; " +
