@@ -374,6 +374,15 @@ public class buy {
 											data.put("giftSender", player.getDisplayName());
 
 											Heraut.say(giftReceiver, mH.getMsg(Messages.msgType.MAIN, "giftReceiver", data));
+											Logger.Log(LoggerType.GIFT,
+														player, 
+														"{id: " + String.valueOf(itemID) + "; " +
+														"type:" + itemType.toString() + "; " +
+														"nS:" + String.valueOf(stock) + "; " +
+														"oS:" + String.valueOf(stock + amount) + "; " +
+														"amount:" + String.valueOf(amount) + ";" +
+														"total:" + String.valueOf(cost) + ";" +
+														"receiver:" + giftReceiver.getName() + "}");
 
 											HashMap<Integer, ItemStack> left;
 											left = inv.addItem(iStack);
