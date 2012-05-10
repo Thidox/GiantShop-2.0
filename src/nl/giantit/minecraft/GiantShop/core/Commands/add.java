@@ -8,6 +8,7 @@ import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.core.Database.db;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
+import nl.giantit.minecraft.GiantShop.core.Logger.*;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -171,6 +172,16 @@ public class add {
 						DB.insert("#__items", fields, values).updateQuery();
 
 						Heraut.say(player, "The requested item (&e" + name + "&f) has been added to the shop!");
+						Logger.Log(LoggerType.ADD,
+									player, 
+									"{id: " + String.valueOf(itemID) + "; " +
+									"type:" + itemType.toString() + "; " +
+									"sF:" + String.valueOf(sellFor) + "; " +
+									"bF:" + String.valueOf(buyFor) + "; " +
+									"pS: " + String.valueOf(perStack) + "; " +
+									"s:" + String.valueOf(stock) + "; " +
+									"mS:" + String.valueOf(maxStock) + "; " +
+									"shops:" + shops + "}");
 					}else{
 						Heraut.say(player, msgs.getMsg(Messages.msgType.ERROR, "itemAlreadyFound"));
 					}
@@ -331,6 +342,16 @@ public class add {
 					DB.insert("#__items", fields, values).updateQuery();
 
 					Heraut.say(sender, "The requested item (" + name + ") has been added to the shop!");
+					Logger.Log(LoggerType.ADD,
+								sender, 
+								"{id: " + String.valueOf(itemID) + "; " +
+								"type:" + itemType.toString() + "; " +
+								"sF:" + String.valueOf(sellFor) + "; " +
+								"bF:" + String.valueOf(buyFor) + "; " +
+								"pS: " + String.valueOf(perStack) + "; " +
+								"s:" + String.valueOf(stock) + "; " +
+								"mS:" + String.valueOf(maxStock) + "; " +
+								"shops:" + shops + "}");
 				}else{
 					Heraut.say(sender, msgs.getConsoleMsg(Messages.msgType.ERROR, "itemAlreadyFound"));
 				}
