@@ -5,6 +5,7 @@ import nl.giantit.minecraft.GiantShop.API.stock.stockResponse;
 import nl.giantit.minecraft.GiantShop.API.stock.ItemNotFoundException;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.Database.db;
+import nl.giantit.minecraft.GiantShop.core.Logger.*;
 
 import org.bukkit.Bukkit;
 
@@ -73,9 +74,14 @@ public class itemStock {
 		if(value < 0)
 			return stockResponse.INVALIDSTOCKPASSED;
 		
-		if(value > this.maxStock)
+		if(this.stock == -1)
+			return stockResponse.STOCKISUNLIMITED;
+		
+		
+		if(value > this.maxStock && this.maxStock != -1)
 			if(!conf.getBoolean("GiantShop.stock.allowOverStock"))
 				return stockResponse.STOCKHIGHERTHENMAX;
+		
 		
 		int oS = this.stock;
 		this.stock = value;
@@ -92,6 +98,8 @@ public class itemStock {
 		
 		db DB = db.Obtain();
 		DB.update("#__items").set(fields).where(where).updateQuery();
+		
+		Logger.Log(LoggerType.APISTOCKUPDATE, "{m:API Stock update: old stock: " + String.valueOf(oS) + "; new stock: " + String.valueOf(value) + ";}");
 		
 		return stockResponse.STOCKUPDATED;
 	}
@@ -119,6 +127,8 @@ public class itemStock {
 		
 		db DB = db.Obtain();
 		DB.update("#__items").set(fields).where(where).updateQuery();
+		
+		Logger.Log(LoggerType.APIMAXSTOCKUPDATE, "{m:API Maxstock update: old maxstock: " + String.valueOf(oS) + "; new maxstock: " + String.valueOf(value) + ";}");
 		
 		return stockResponse.MAXSTOCKUPDATED;
 	}
