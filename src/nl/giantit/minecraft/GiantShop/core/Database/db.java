@@ -34,6 +34,22 @@ public class db {
 			GiantShop.log.log(Level.INFO, "Revisions table successfully created!");
 		}
 		
+		if(!this.dbDriver.tableExists("#__log")){
+			this.dbDriver.buildQuery("INSERT INTO #__versions \n", false, false, false, true);
+			this.dbDriver.buildQuery("(tableName, version) \n", true);
+			this.dbDriver.buildQuery("VALUES \n", true);
+			this.dbDriver.buildQuery("('log', '1.0');", true, true);
+			this.dbDriver.updateQuery();
+			
+			this.dbDriver.buildQuery("CREATE TABLE #__log \n", false, false, false, true);
+			this.dbDriver.buildQuery("(id INT(3) NOT NULL AUTO_INCREMENT, type INT(3) NOT NULL, user VARCHAR(100) DEFAULT NULL, ", true);
+			this.dbDriver.buildQuery("data VARCHAR(100) DEFAULT NULL, date INT(50) DEFAULT 0, ", true);
+			this.dbDriver.buildQuery("PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARSET=latin1;", true, true, false);
+			this.dbDriver.updateQuery();
+			
+			GiantShop.log.log(Level.INFO, "Logging table successfully created!");
+		}
+		
 		if(!this.dbDriver.tableExists("#__shops")){
 			this.dbDriver.buildQuery("INSERT INTO #__versions \n", false, false, false, true);
 			this.dbDriver.buildQuery("(tableName, version) \n", true);
@@ -92,6 +108,21 @@ public class db {
 			this.dbDriver.updateQuery();
 			
 			GiantShop.log.log(Level.INFO, "Revisions table successfully created!");
+		}
+		
+		if(!this.dbDriver.tableExists("#__log")){
+			this.dbDriver.buildQuery("INSERT INTO #__versions \n", false, false, false, true);
+			this.dbDriver.buildQuery("(tableName, version) \n", true);
+			this.dbDriver.buildQuery("VALUES \n", true);
+			this.dbDriver.buildQuery("('log', '1.0');", true, true);
+			this.dbDriver.updateQuery();
+			
+			this.dbDriver.buildQuery("CREATE TABLE #__log \n", false, false, false, true);
+			this.dbDriver.buildQuery("(id INTEGER PRIMARY KEY, type INTEGER NOT NULL, user VARCHAR(100) DEFAULT NULL, ", true);
+			this.dbDriver.buildQuery("data VARCHAR(100) DEFAULT NULL, date INTEGER DEFAULT 0);", true, true, false);
+			this.dbDriver.updateQuery();
+			
+			GiantShop.log.log(Level.INFO, "Logging table successfully created!");
 		}
 		
 		if(!this.dbDriver.tableExists("#__shops")){
