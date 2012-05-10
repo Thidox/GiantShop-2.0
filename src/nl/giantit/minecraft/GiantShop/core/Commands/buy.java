@@ -5,6 +5,7 @@ import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.core.Database.db;
 import nl.giantit.minecraft.GiantShop.core.Items.*;
+import nl.giantit.minecraft.GiantShop.core.Logger.*;
 import nl.giantit.minecraft.GiantShop.core.Eco.iEco;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
@@ -172,6 +173,14 @@ public class buy {
 
 										Heraut.say("You have just bought " + amount + " of " + name + " for " + cost);
 										Heraut.say("Your new balance is: " + eH.getBalance(player));
+										Logger.Log(LoggerType.ADD,
+													player, 
+													"{id: " + String.valueOf(itemID) + "; " +
+													"type:" + itemType.toString() + "; " +
+													"nS:" + String.valueOf(stock) + "; " +
+													"oS:" + String.valueOf(stock + amount) + "; " +
+													"amount:" + String.valueOf(amount) + ";" +
+													"total:" + String.valueOf(cost) + ";}");
 
 										HashMap<Integer, ItemStack> left;
 										left = inv.addItem(iStack);
