@@ -11,7 +11,6 @@ public enum LoggerType {
 	APIMAXSTOCKUPDATE(8),
 	UNKNOWN(20);
 	
-	
 	private int id;
 	
 	private LoggerType(Integer i) {

@@ -220,7 +220,6 @@ public class sell {
 												"amount:" + String.valueOf(amount) + ";" +
 												"total:" + String.valueOf(cost) + ";}");
 									
-									
 									removeItem(inv, iStack);
 									
 									if(conf.getBoolean("GiantShop.stock.useStock") && stock != -1) {
