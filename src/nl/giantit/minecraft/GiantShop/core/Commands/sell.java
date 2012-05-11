@@ -36,38 +36,43 @@ public class sell {
 	private static Items iH = GiantShop.getPlugin().getItemHandler();
 	private static iEco eH = GiantShop.getPlugin().getEcoHandler().getEngine();
 	
-	private static int hasAmount(Inventory inv, ItemStack item, int itemID) {
+	private static int hasAmount(Inventory inv, ItemStack item, Integer itemType) {
 		MaterialData type = item.getData();
 		ArrayList<ItemStack> properStack = new ArrayList<ItemStack>();
 		int amount = 0;
 
-		HashMap<Integer, ? extends ItemStack> stacky = inv.all(itemID);
+		HashMap<Integer, ? extends ItemStack> stacky = inv.all(item.getTypeId());
 		for(Map.Entry<Integer, ? extends ItemStack> stack : stacky.entrySet()) {
 			ItemStack tmp = stack.getValue();
 
-			if(type == null && tmp.getData() == null) {
+			if(type == null && tmp.getType() == null) {
 				properStack.add(tmp);
 				amount += tmp.getAmount();
-			}else if(type != null && tmp.getData() != null && type.toString().equalsIgnoreCase(tmp.getData().toString())) {
-				properStack.add(tmp);
-				amount += tmp.getAmount();
+			}else{
+				if(item.getTypeId() == 373 && type != null && tmp.getData() != null && item.getDurability() == tmp.getDurability()) {
+					properStack.add(tmp);
+					amount += tmp.getAmount();
+				}else if(type != null && tmp.getData() != null && type.toString().equalsIgnoreCase(tmp.getData().toString())) {
+					properStack.add(tmp);
+					amount += tmp.getAmount();
+				}
 			}
 		}
 		return amount;
 	}
 	
-	private static void removeItem(Inventory inventory, ItemStack item) {
+	private static void removeItem(Inventory inventory, ItemStack item, Integer itemType) {
 		int amt = item.getAmount();
 		ItemStack[] items = inventory.getContents();
-		for (int i = 0; i < items.length; i++) {
-			if (items[i] != null && items[i].getType() == item.getType() && items[i].getDurability() == item.getDurability()) {
-				if (items[i].getAmount() > amt) {
+		for(int i = 0; i < items.length; i++) {
+			if(items[i] != null && items[i].getTypeId() == item.getTypeId() && items[i].getDurability() == item.getDurability()) {
+				if(items[i].getAmount() > amt) {
 					items[i].setAmount(items[i].getAmount() - amt);
 					break;
-				} else if (items[i].getAmount() == amt) {
+				}else if(items[i].getAmount() == amt) {
 					items[i] = null;
 					break;
-				} else {
+				}else{
 					amt -= items[i].getAmount();
 					items[i] = null;
 				}
@@ -197,12 +202,15 @@ public class sell {
 								Inventory inv = player.getInventory();
 	
 								if(itemType != null && itemType != -1) {
-									iStack = new MaterialData(itemID, (byte) ((int) itemType)).toItemStack(amount);
+									if(itemID != 373)
+										iStack = new MaterialData(itemID, (byte) ((int) itemType)).toItemStack(amount);
+									else
+										iStack = new ItemStack(itemID, amount, (short) ((int) itemType));
 								}else{
 									iStack = new ItemStack(itemID, amount);
 								}
 								
-								int stackAmt = hasAmount(inv, iStack, itemID);
+								int stackAmt = hasAmount(inv, iStack, itemType);
 								if(stackAmt >= amount) {
 									if(conf.getBoolean("GiantShop.global.broadcastSell"))
 										Heraut.broadcast(player.getName() + " sold some " + name);
@@ -220,7 +228,7 @@ public class sell {
 												"amount:" + String.valueOf(amount) + ";" +
 												"total:" + String.valueOf(cost) + ";}");
 									
-									removeItem(inv, iStack);
+									removeItem(inv, iStack, itemType);
 									
 									if(conf.getBoolean("GiantShop.stock.useStock") && stock != -1) {
 										HashMap<String, String> t = new HashMap<String, String>();
