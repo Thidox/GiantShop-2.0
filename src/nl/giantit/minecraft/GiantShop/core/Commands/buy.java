@@ -163,7 +163,10 @@ public class buy {
 										Inventory inv = player.getInventory();
 
 										if(itemType != null && itemType != -1) {
-											iStack = new MaterialData(itemID, (byte) ((int) itemType)).toItemStack(amount);
+											if(itemID != 373)
+												iStack = new MaterialData(itemID, (byte) ((int) itemType)).toItemStack(amount);
+											else
+												iStack = new ItemStack(itemID, amount, (short) ((int) itemType));
 										}else{
 											iStack = new ItemStack(itemID, amount);
 										}
