@@ -82,7 +82,7 @@ public class check {
 			fields.add("sellFor");
 			fields.add("buyFor");
 			fields.add("stock");
-			fields.add("maxstock");
+			fields.add("maxStock");
 			fields.add("shops");
 			
 			HashMap<String, String> where = new HashMap<String, String>();
@@ -99,7 +99,7 @@ public class check {
 				HashMap<String, String> res = resSet.get(0);
 				
 				int stock = Integer.parseInt(res.get("stock"));
-				int maxStock = Integer.parseInt(res.get("maxstock"));
+				int maxStock = Integer.parseInt(res.get("maxStock"));
 				double sellFor = Double.parseDouble(res.get("sellFor"));
 				double buyFor = Double.parseDouble(res.get("buyFor"));
 				
@@ -155,7 +155,7 @@ public class check {
 				Heraut.say(player, "Leaves shop for: " + (!sf.equals("-1.0") ? sf : "Not for sale!"));
 				Heraut.say(player, "Returns to shop for: " + (!bf.equals("-1.0") ? bf : "No returns!"));
 				Heraut.say(player, "Amount of items in the shop: " + (!res.get("stock").equals("-1") ? res.get("stock") : "unlimited"));
-				Heraut.say(player, "Maximum amount of items in the shop: " + (!res.get("maxstock").equals("-1") ? res.get("maxstock") : "unlimited"));
+				Heraut.say(player, "Maximum amount of items in the shop: " + (!res.get("maxStock").equals("-1") ? res.get("maxStock") : "unlimited"));
 				//More future stuff
 				/*if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
 				 *		ArrayList<Indaface> shops = GiantShop.getPlugin().getLocationHandler().parseShops(res.get("shops"));
