@@ -1,4 +1,4 @@
-version: 1.1
+version: 1.2
 main:
     broadcastBuy: C_YELLOW%player C_WHITEbought some C_YELLOW%name 
     broadcastSell: C_YELLOW%player C_WHITEsold some C_YELLOW%name 
@@ -9,6 +9,7 @@ main:
     sell: You have just sold C_YELLOW%amount C_WHITEof item C_YELLOW%item for C_YELLOW%cash!
     helpCommand: C_RED/%command C_YELLOW-C_WHITE %description
     itemListEntry: ID C_YELLOW%id C_WHITEType C_YELLOW%type C_WHITEName C_YELLOW%name C_WHITEAmount C_YELLOW%perStack C_WHITESell for C_YELLOW%sellFor C_WHITEBuy for C_YELLOW%buyFor C_WHITEStock C_YELLOW%stock
+    newBalance: Your new balance is%colon C_YELLOW%balance
 admin:
     add: You just added item C_YELLOW%item C_WHITEwith quantity C_YELLOW%amount sold for C_YELLOW%sellFor bought for C_YELLOW%buyFor with stock C_YELLOW%stock!
     addStock: You have successfully added C_YELLOW%amount C_WHITEto the stock of item C_YELLOW%item!
