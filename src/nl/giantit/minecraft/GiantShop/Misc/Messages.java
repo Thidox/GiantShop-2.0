@@ -168,7 +168,8 @@ public class Messages {
 					GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Message template engine received invalid parameter! (null)");
 				}
 			}
-			Template = Template.replace("&n", plugin.getPubName());
+			Template = Template.replace("%n", plugin.getPubName());
+			Template = Template.replace("%colon", ":");
 			
 			Template = this.colourfy(Template);
 			return Template;
@@ -210,7 +211,8 @@ public class Messages {
 					GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Message template engine received invalid parameter! (null)");
 				}
 			}
-			Template = Template.replace("&n", plugin.getPubName());
+			Template = Template.replace("%n", plugin.getPubName());
+			Template = Template.replace("%colon", ":");
 			
 			Template = this.deColourfy(Template);
 			return Template;
