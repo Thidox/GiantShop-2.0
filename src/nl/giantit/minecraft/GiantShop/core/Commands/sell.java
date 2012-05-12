@@ -13,6 +13,7 @@ import nl.giantit.minecraft.GiantShop.core.Tools.InventoryHandler;
 import nl.giantit.minecraft.GiantShop.core.Eco.iEco;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
+import nl.giantit.minecraft.GiantShop.Misc.Messages.msgType;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -168,12 +169,18 @@ public class sell {
 								
 								int stackAmt = InventoryHandler.hasAmount(inv, iStack);
 								if(stackAmt >= amount) {
-									if(conf.getBoolean("GiantShop.global.broadcastSell"))
-										Heraut.broadcast(player.getName() + " sold some " + name);
+									HashMap<String, String> data = new HashMap<String, String>();
+									data.put("amount", String.valueOf(amount));
+									data.put("item", name);
+									data.put("cash", String.valueOf(cost));
+									data.put("player", player.getDisplayName());
+
+									if(conf.getBoolean("GiantShop.global.broadcast.sell"))
+										Heraut.broadcast(mH.getMsg(msgType.MAIN, "broadcastSell", data));
 	
 									eH.deposit(player, cost);
 	
-									Heraut.say("You have just sold " + amount + " of " + name + " for " + cost);
+									Heraut.broadcast(mH.getMsg(msgType.MAIN, "sell", data));
 									Heraut.say("Your new balance is: " + eH.getBalance(player));
 									Logger.Log(LoggerType.SELL,
 												player, 
