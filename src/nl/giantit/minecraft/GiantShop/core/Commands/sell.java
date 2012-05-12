@@ -174,6 +174,7 @@ public class sell {
 									data.put("item", name);
 									data.put("cash", String.valueOf(cost));
 									data.put("player", player.getDisplayName());
+									data.put("balance", String.valueOf(eH.getBalance(player)));
 
 									if(conf.getBoolean("GiantShop.broadcast.sell"))
 										Heraut.broadcast(mH.getMsg(msgType.MAIN, "broadcastSell", data));
@@ -181,7 +182,7 @@ public class sell {
 									eH.deposit(player, cost);
 	
 									Heraut.broadcast(mH.getMsg(msgType.MAIN, "sell", data));
-									Heraut.say("Your new balance is: " + eH.getBalance(player));
+									Heraut.say(mH.getMsg(msgType.MAIN, "newBalance", data));
 									Logger.Log(LoggerType.SELL,
 												player, 
 												"{id: " + String.valueOf(itemID) + "; " +

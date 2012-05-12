@@ -177,12 +177,13 @@ public class buy {
 										data.put("item", name);
 										data.put("cash", String.valueOf(cost));
 										data.put("player", player.getDisplayName());
+										data.put("balance", String.valueOf(eH.getBalance(player)));
 
 										if(conf.getBoolean("GiantShop.broadcast.buy"))
 											Heraut.broadcast(mH.getMsg(msgType.MAIN, "broadcastBuy", data));
 
 										Heraut.broadcast(mH.getMsg(msgType.MAIN, "buy", data));
-										Heraut.say("Your new balance is: " + eH.getBalance(player));
+										Heraut.say(mH.getMsg(msgType.MAIN, "newBalance", data));
 										Logger.Log(LoggerType.BUY,
 													player, 
 													"{id: " + String.valueOf(itemID) + "; " +
@@ -372,12 +373,13 @@ public class buy {
 											data.put("giftReceiver", giftReceiver.getDisplayName());
 											data.put("cash", String.valueOf(cost));
 											data.put("giftSender", player.getDisplayName());
+											data.put("balance", String.valueOf(eH.getBalance(player)));
 
 											if(conf.getBoolean("GiantShop.broadcast.gift"))
 												Heraut.broadcast(mH.getMsg(msgType.MAIN, "broadcastGift", data));
 
 											Heraut.say(mH.getMsg(Messages.msgType.MAIN, "giftSender", data));
-											Heraut.say("Your new balance is: " + eH.getBalance(player));
+											Heraut.say(mH.getMsg(msgType.MAIN, "newBalance", data));
 
 											Heraut.say(giftReceiver, mH.getMsg(Messages.msgType.MAIN, "giftReceiver", data));
 											Logger.Log(LoggerType.GIFT,
