@@ -649,6 +649,8 @@ public class MySQL implements iDriver {
 					SQL += field.getKey() + " IS NULL";
 				}else if(field.getValue().containsKey("kind") && field.getValue().get("kind").equalsIgnoreCase("NOTNULL")) {
 					SQL += field.getKey() + " IS NOT NULL";
+				}else if(field.getValue().containsKey("kind") && field.getValue().get("kind").equalsIgnoreCase("NOT")) {
+					SQL += field.getKey() + "!='" + field.getValue().get("data")+"'";
 				}else
 					SQL += field.getKey() + "='" + field.getValue().get("data")+"'";
 				
