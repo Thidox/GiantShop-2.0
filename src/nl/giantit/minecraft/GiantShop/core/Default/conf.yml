@@ -1,6 +1,6 @@
 GiantShop:
     global:
-        version: 0.6
+        version: 0.7
         name: GiantShop
         debug: false
         opHasPerms: true
@@ -37,6 +37,7 @@ GiantShop:
         Engine: ICONOMY6
     stock:
         useStock: true
+        hideEmptyStock: false
         allowOverStock: false
         defaultMaxStock: 50
         stockDefinesCost: true
