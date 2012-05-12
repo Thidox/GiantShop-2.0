@@ -9,6 +9,7 @@ import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.core.Database.db;
 import nl.giantit.minecraft.GiantShop.core.Items.*;
 import nl.giantit.minecraft.GiantShop.core.Logger.*;
+import nl.giantit.minecraft.GiantShop.core.Tools.InventoryHandler;
 import nl.giantit.minecraft.GiantShop.core.Eco.iEco;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
@@ -35,51 +36,6 @@ public class sell {
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	private static Items iH = GiantShop.getPlugin().getItemHandler();
 	private static iEco eH = GiantShop.getPlugin().getEcoHandler().getEngine();
-	
-	private static int hasAmount(Inventory inv, ItemStack item, Integer itemType) {
-		MaterialData type = item.getData();
-		ArrayList<ItemStack> properStack = new ArrayList<ItemStack>();
-		int amount = 0;
-
-		HashMap<Integer, ? extends ItemStack> stacky = inv.all(item.getTypeId());
-		for(Map.Entry<Integer, ? extends ItemStack> stack : stacky.entrySet()) {
-			ItemStack tmp = stack.getValue();
-
-			if(type == null && tmp.getType() == null) {
-				properStack.add(tmp);
-				amount += tmp.getAmount();
-			}else{
-				if(item.getTypeId() == 373 && type != null && tmp.getData() != null && item.getDurability() == tmp.getDurability()) {
-					properStack.add(tmp);
-					amount += tmp.getAmount();
-				}else if(type != null && tmp.getData() != null && type.toString().equalsIgnoreCase(tmp.getData().toString())) {
-					properStack.add(tmp);
-					amount += tmp.getAmount();
-				}
-			}
-		}
-		return amount;
-	}
-	
-	private static void removeItem(Inventory inventory, ItemStack item, Integer itemType) {
-		int amt = item.getAmount();
-		ItemStack[] items = inventory.getContents();
-		for(int i = 0; i < items.length; i++) {
-			if(items[i] != null && items[i].getTypeId() == item.getTypeId() && items[i].getDurability() == item.getDurability()) {
-				if(items[i].getAmount() > amt) {
-					items[i].setAmount(items[i].getAmount() - amt);
-					break;
-				}else if(items[i].getAmount() == amt) {
-					items[i] = null;
-					break;
-				}else{
-					amt -= items[i].getAmount();
-					items[i] = null;
-				}
-			}
-		}
-		inventory.setContents(items);
-	}
 	
 	public static void sell(Player player, String[] args) {
 		Heraut.savePlayer(player);
@@ -210,7 +166,7 @@ public class sell {
 									iStack = new ItemStack(itemID, amount);
 								}
 								
-								int stackAmt = hasAmount(inv, iStack, itemType);
+								int stackAmt = InventoryHandler.hasAmount(inv, iStack);
 								if(stackAmt >= amount) {
 									if(conf.getBoolean("GiantShop.global.broadcastSell"))
 										Heraut.broadcast(player.getName() + " sold some " + name);
@@ -228,7 +184,7 @@ public class sell {
 												"amount:" + String.valueOf(amount) + ";" +
 												"total:" + String.valueOf(cost) + ";}");
 									
-									removeItem(inv, iStack, itemType);
+									InventoryHandler.removeItem(inv, iStack);
 									
 									if(conf.getBoolean("GiantShop.stock.useStock") && stock != -1) {
 										HashMap<String, String> t = new HashMap<String, String>();
