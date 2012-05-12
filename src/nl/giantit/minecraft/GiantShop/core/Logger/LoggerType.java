@@ -1,23 +1,29 @@
 package nl.giantit.minecraft.GiantShop.core.Logger;
 
 public enum LoggerType {
-	BUY(1),
-	GIFT(2),
-	SELL(3),
-	ADD(4),
-	UPDATE(5),
-	REMOVE(6),
-	APISTOCKUPDATE(7),
-	APIMAXSTOCKUPDATE(8),
-	UNKNOWN(20);
+	BUY(1, "buy"),
+	GIFT(2, "gift"),
+	SELL(3, "sell"),
+	ADD(4, "add"),
+	UPDATE(5, "update"),
+	REMOVE(6, "remove"),
+	APISTOCKUPDATE(7, "apistockupdate"),
+	APIMAXSTOCKUPDATE(8, "apimaxstockupdate"),
+	UNKNOWN(20, "unknown");
 	
 	private int id;
+	private String name;
 	
-	private LoggerType(Integer i) {
+	private LoggerType(Integer i, String n) {
 		id = i;
+		name = n;
 	}
 	
 	public int getID() {
 		return id;
+	}
+	
+	public String getName() {
+		return name;
 	}
 }
