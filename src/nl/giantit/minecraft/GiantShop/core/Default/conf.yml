@@ -5,10 +5,12 @@ GiantShop:
         debug: false
         opHasPerms: true
         perPage: 5
-        broadcastBuy: true
-        broadcastSell: false
         checkForUpdates: true
         logActions: true
+    broadcast:
+        buy: true
+        sell: false
+        gift: true
     db:
         driver: SQLite
         database: GiantShop
