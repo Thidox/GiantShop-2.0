@@ -9,6 +9,7 @@ import nl.giantit.minecraft.GiantShop.core.Logger.*;
 import nl.giantit.minecraft.GiantShop.core.Eco.iEco;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
+import nl.giantit.minecraft.GiantShop.Misc.Messages.msgType;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -171,10 +172,16 @@ public class buy {
 											iStack = new ItemStack(itemID, amount);
 										}
 
-										if(conf.getBoolean("GiantShop.global.broadcastBuy"))
-											Heraut.broadcast(player.getName() + " bought some " + name);
+										HashMap<String, String> data = new HashMap<String, String>();
+										data.put("amount", String.valueOf(amount));
+										data.put("item", name);
+										data.put("cash", String.valueOf(cost));
+										data.put("player", player.getDisplayName());
 
-										Heraut.say("You have just bought " + amount + " of " + name + " for " + cost);
+										if(conf.getBoolean("GiantShop.global.broadcast.buy"))
+											Heraut.broadcast(mH.getMsg(msgType.MAIN, "broadcastBuy", data));
+
+										Heraut.broadcast(mH.getMsg(msgType.MAIN, "buy", data));
 										Heraut.say("Your new balance is: " + eH.getBalance(player));
 										Logger.Log(LoggerType.BUY,
 													player, 
@@ -359,22 +366,18 @@ public class buy {
 												iStack = new ItemStack(itemID, amount);
 											}
 
-											if(conf.getBoolean("GiantShop.global.broadcastBuy"))
-												Heraut.broadcast(player.getName() + " gifted some " + name + " to " + giftReceiver.getDisplayName());
-
 											HashMap<String, String> data = new HashMap<String, String>();
 											data.put("amount", String.valueOf(amount));
 											data.put("item", name);
 											data.put("giftReceiver", giftReceiver.getDisplayName());
 											data.put("cash", String.valueOf(cost));
+											data.put("giftSender", player.getDisplayName());
+
+											if(conf.getBoolean("GiantShop.global.broadcast.gift"))
+												Heraut.broadcast(mH.getMsg(msgType.MAIN, "broadcastGift", data));
 
 											Heraut.say(mH.getMsg(Messages.msgType.MAIN, "giftSender", data));
 											Heraut.say("Your new balance is: " + eH.getBalance(player));
-
-											data = new HashMap<String, String>();
-											data.put("amount", String.valueOf(amount));
-											data.put("item", name);
-											data.put("giftSender", player.getDisplayName());
 
 											Heraut.say(giftReceiver, mH.getMsg(Messages.msgType.MAIN, "giftReceiver", data));
 											Logger.Log(LoggerType.GIFT,
