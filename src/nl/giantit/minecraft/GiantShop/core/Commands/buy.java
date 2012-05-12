@@ -178,7 +178,7 @@ public class buy {
 										data.put("cash", String.valueOf(cost));
 										data.put("player", player.getDisplayName());
 
-										if(conf.getBoolean("GiantShop.global.broadcast.buy"))
+										if(conf.getBoolean("GiantShop.broadcast.buy"))
 											Heraut.broadcast(mH.getMsg(msgType.MAIN, "broadcastBuy", data));
 
 										Heraut.broadcast(mH.getMsg(msgType.MAIN, "buy", data));
@@ -373,7 +373,7 @@ public class buy {
 											data.put("cash", String.valueOf(cost));
 											data.put("giftSender", player.getDisplayName());
 
-											if(conf.getBoolean("GiantShop.global.broadcast.gift"))
+											if(conf.getBoolean("GiantShop.broadcast.gift"))
 												Heraut.broadcast(mH.getMsg(msgType.MAIN, "broadcastGift", data));
 
 											Heraut.say(mH.getMsg(Messages.msgType.MAIN, "giftSender", data));

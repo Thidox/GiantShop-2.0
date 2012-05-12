@@ -175,7 +175,7 @@ public class sell {
 									data.put("cash", String.valueOf(cost));
 									data.put("player", player.getDisplayName());
 
-									if(conf.getBoolean("GiantShop.global.broadcast.sell"))
+									if(conf.getBoolean("GiantShop.broadcast.sell"))
 										Heraut.broadcast(mH.getMsg(msgType.MAIN, "broadcastSell", data));
 	
 									eH.deposit(player, cost);
