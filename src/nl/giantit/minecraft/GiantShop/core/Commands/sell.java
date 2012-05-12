@@ -180,7 +180,7 @@ public class sell {
 												"{id: " + String.valueOf(itemID) + "; " +
 												"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + "; " +
 												"oS:" + String.valueOf(stock) + "; " +
-												"nS:" + String.valueOf(stock + amount) + "; " +
+												"nS:" + String.valueOf((stock != -1 ? stock + amount : stock)) + "; " +
 												"amount:" + String.valueOf(amount) + ";" +
 												"total:" + String.valueOf(cost) + ";}");
 									
