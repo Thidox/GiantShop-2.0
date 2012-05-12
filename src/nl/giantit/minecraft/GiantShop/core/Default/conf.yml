@@ -6,7 +6,18 @@ GiantShop:
         opHasPerms: true
         perPage: 5
         checkForUpdates: true
-        logActions: true
+    log:
+        useLogging: true
+        log:
+            sell: true
+            buy: true
+            gift: true
+            add: true
+            update: true
+            remove: true
+            apistockupdate: true
+            apimaxstockupdate: true
+            unknown: true
     broadcast:
         buy: true
         sell: false
