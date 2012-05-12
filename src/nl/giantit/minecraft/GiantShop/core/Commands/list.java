@@ -51,10 +51,19 @@ public class list {
 			fields.add("stock");
 			fields.add("shops");
 			
+
+			HashMap<String, HashMap<String, String>> where = new HashMap<String, HashMap<String, String>>();
+			HashMap<String, String> t = new HashMap<String, String>();
+			if(conf.getBoolean("GiantShop.stock.hideEmptyStock")) {
+				t.put("kind", "NOT");
+				t.put("data", "0");
+				where.put("stock", t);
+			}
+			
 			HashMap<String, String> order = new HashMap<String, String>();
 			order.put("itemID", "ASC");
 			order.put("type", "ASC");
-			ArrayList<HashMap<String, String>> data = DB.select(fields).from("#__items").orderBy(order).execQuery();
+			ArrayList<HashMap<String, String>> data = DB.select(fields).from("#__items").where(where, true).orderBy(order).execQuery();
 			
 			int pages = ((int)Math.ceil((double)data.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)data.size() / (double)perPage);
 			int start = (curPag * perPage) - perPage;
