@@ -78,6 +78,14 @@ public class Locationer {
 			points.remove(p);
 	}
 	
+	public Indaface getShop(String name, String world) {
+		for(Indaface shop : shops) {
+			if(shop.getName().equals(name) && shop.getWorldName().equals(world)) return shop;
+		}
+
+		return null;
+	}
+	
 	public ArrayList<Indaface> getShops() {
 		return this.shops;
 	}
