@@ -53,9 +53,9 @@ public class GiantShop extends JavaPlugin {
 	private Locationer locHandler;
 	private int tID;
 	private String name, dir, pubName;
-	private String bName = "Red Welts";
+	private String bName = "Dental Dam";
 	
-	public boolean useLoc = false;
+	private boolean useLoc = false;
 	public List<String> cmds;
 	
 	private void setPlugin() {
@@ -172,6 +172,10 @@ public class GiantShop extends JavaPlugin {
 	
 	public String getSeparator() {
 		return File.separator;
+	}
+	
+	public Boolean useLocation() {
+		return this.useLoc;
 	}
 	
 	public db getDB() {
