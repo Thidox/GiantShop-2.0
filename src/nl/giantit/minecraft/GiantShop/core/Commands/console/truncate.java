@@ -1,4 +1,4 @@
-package nl.giantit.minecraft.GiantShop.core.Commands;
+package nl.giantit.minecraft.GiantShop.core.Commands.console;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.core.Database.db;

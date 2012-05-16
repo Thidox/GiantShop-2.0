@@ -18,8 +18,8 @@ import java.util.HashMap;
  */
 public class help {
 	
-	private static ArrayList<String[]> entries = new ArrayList<String[]>();
 	private static ArrayList<String[]> cEntries = new ArrayList<String[]>();
+	private static ArrayList<String[]> entries = new ArrayList<String[]>();
 	private static config conf = config.Obtain();
 	private static perm perms = perm.Obtain();
 	
@@ -68,148 +68,7 @@ public class help {
 		cEntries.add(new String[] {"shop truncate|t [type]", "Remove all data from the given table (This proccess is NOT reversible!)"});
 	}
 	
-	public static void showHelp(Player player, String[] args) {
-		if(entries.isEmpty())
-			init();
-		
-		ArrayList<String[]> uEntries = new ArrayList<String[]>();
-		for(int i = 0; i < entries.size(); i++) {
-			String[] data = entries.get(i);
-
-			String permission = data[2];
-
-			if(permission.equalsIgnoreCase("null") || perms.has((Player)player, (String)permission)) {
-				uEntries.add(data);				
-			}else{
-				continue;
-			}
-		}
-		
-		String name = GiantShop.getPlugin().getPubName();
-		int perPage = conf.getInt("GiantShop.global.perPage");
-		int curPag = 0;
-		
-		int page;
-		if(args.length >= 2) {
-			try{
-				curPag = Integer.parseInt(args[1]);
-			}catch(Exception e) {
-				curPag = 1;
-			}
-		}else
-			curPag = 1;
-		
-		curPag = (curPag > 0) ? curPag : 1;
-		
-		int pages = ((int)Math.ceil((double)uEntries.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)uEntries.size() / (double)perPage);
-		int start = (curPag * perPage) - perPage;
-		
-		Heraut.savePlayer(player);
-		
-		if(uEntries.size() <= 0) {
-			Heraut.say("&e[&3" + name + "&e]&c Sorry no help entries yet :(");
-		}else if(curPag > pages) {
-			Heraut.say("&e[&3" + name + "&e]&c My help list only has &e" + pages + " &cpages!!");
-		}else{
-			Heraut.say("&e[&3" + name + "&e]&f Help. Page: &e" + curPag + "&f/&e" + pages);
-
-			for(int i = start; i < (((start + perPage) > uEntries.size()) ? uEntries.size() : (start + perPage)); i++) {
-				String[] data = uEntries.get(i);
-
-				String helpEntry = data[0];
-				String description = data[1];
-				String permission = data[2];
-				Messages msg = GiantShop.getPlugin().getMsgHandler();
-				HashMap<String, String> params = new HashMap<String, String>();
-				params.put("command", helpEntry);
-				params.put("description", description);
-				
-				Heraut.say(msg.getMsg(Messages.msgType.MAIN, "helpCommand", params));
-			}
-		}
-	}
-	
-	public static void sendHelp(Player player, String[] args) {
-		if(entries.isEmpty())
-			init();
-		
-		String name = conf.getString("GiantShop.global.name");
-		int perPage = conf.getInt("GiantShop.global.perPage");
-		int curPag = 0;
-		
-		int page;
-		String usr;
-		
-		if(args.length >= 2) {
-			usr = args[1];
-			if(args.length >= 3) {
-				try{
-					curPag = Integer.parseInt(args[2]);
-				}catch(Exception e) {
-					curPag = 1;
-				}
-			}else
-				curPag = 1;
-		}else{
-			curPag = 1;
-			usr = null;
-		}
-		
-		if(usr != null) {
-			Player receiver = GiantShop.getPlugin().getServer().getPlayer(usr);
-			if(receiver != null && receiver.isOnline()) {
-				
-				ArrayList<String[]> uEntries = new ArrayList<String[]>();
-				for(int i = 0; i < entries.size(); i++) {
-					String[] data = entries.get(i);
-
-					String permission = data[2];
-
-					if(permission.equalsIgnoreCase("null") || perms.has(receiver, (String)permission)) {
-						uEntries.add(data);				
-					}else{
-						continue;
-					}
-				}
-				curPag = (curPag > 0) ? curPag : 1;
-				
-				int pages = ((int)Math.ceil((double)uEntries.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)uEntries.size() / (double)perPage);
-				int start = (curPag * perPage) - perPage;
-
-				if(uEntries.size() <= 0) {
-					Heraut.say(player, "&e[&3" + name + "&e]&c Sorry no help entries yet :(");
-					return;
-				}else if(curPag > pages) {
-					Heraut.say(player, "&e[&3" + name + "&e]&c My help list for player " + usr + " only has &e" + pages + " &cpages!!");
-					return;
-				}else{
-					if(!perms.has(player, "giantshop.admin.sendhelp")) {
-						Heraut.say(player, "&cYou have no access to that command!");
-						return;
-					}
-					Heraut.say(player, "&e[&3" + name + "&e]&f Sending help page &e" + curPag + "&f to player &e" + usr);
-					Heraut.say(receiver, "&e[&3" + name + "&e]&f You were sent help by " + player.getDisplayName() + "!");
-					Heraut.say(receiver, "&e[&3" + name + "&e]&f Help. Page: &e" + curPag + "&f/&e" + pages);
-
-					for(int i = start; i < (((start + perPage) > uEntries.size()) ? uEntries.size() : (start + perPage)); i++) {
-						String[] data = uEntries.get(i);
-
-						String helpEntry = data[0];
-						String description = data[1];
-						String permission = data[2];
-
-						Heraut.say(receiver, "&c/" + helpEntry + " &e-&f " + description);
-					}
-				}
-			}else{
-				Heraut.say(player, "&e[&3" + name + "&e]&c The requested player does not to be offline or even not existing! :(");
-			}
-		}else{
-			help.showHelp(player, args);
-		}
-	}
-	
-	public static void showConsoleHelp(CommandSender sender, String[] args) {
+	public static void showHelp(CommandSender sender, String[] args) {
 		if(cEntries.isEmpty())
 			init();
 		
@@ -250,7 +109,7 @@ public class help {
 		}
 	}
 	
-	public static void sendConsoleHelp(CommandSender sender, String[] args) {
+	public static void sendHelp(CommandSender sender, String[] args) {
 		if(entries.isEmpty())
 			init();
 		
@@ -322,7 +181,7 @@ public class help {
 				Heraut.say(sender, "[" + name + "] The requested player does not to be offline or even not existing! :(");
 			}
 		}else{
-			help.showConsoleHelp(sender, args);
+			help.showHelp(sender, args);
 		}
 	}
 }
