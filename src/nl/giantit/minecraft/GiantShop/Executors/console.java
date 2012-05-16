@@ -2,7 +2,7 @@ package nl.giantit.minecraft.GiantShop.Executors;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.core.Commands.*;
+import nl.giantit.minecraft.GiantShop.core.Commands.console.*;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
