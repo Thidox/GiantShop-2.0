@@ -23,21 +23,21 @@ public class console {
 		//on hold till after buy/sell command
 		if(args.length == 0 || args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") || args[0].equalsIgnoreCase("?")) {
 			//done
-			help.showConsoleHelp(sender, args);
+			help.showHelp(sender, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "sendhelp", "sh")) {
 			//done
-			help.sendConsoleHelp(sender, args);
+			help.sendHelp(sender, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "list", "l")) {
 			//done
 			//needs testing
-			list.listConsole(sender, args);
+			list.list(sender, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "check", "c")) {
 			//done
 			//needs testing
 			check.check(sender, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "add", "a")) {
 			//done
-			add.addConsole(sender, args);
+			add.add(sender, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "update", "u")) {
 			//done
 			//needs testing
