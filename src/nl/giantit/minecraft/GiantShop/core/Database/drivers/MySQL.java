@@ -73,6 +73,12 @@ public class MySQL implements iDriver {
 			res = data.getTables(null, null, table, null);
 
 			return res.next();
+		}catch (NullPointerException e) {
+			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "]: Could not load table " + table);
+			if(conf.getBoolean("GiantShop.global.debug")) {
+				GiantShop.log.log(Level.INFO, e.getMessage());
+			}
+            return false;
 		}catch (SQLException e) {
 			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "]: Could not load table " + table);
 			if(conf.getBoolean("GiantShop.global.debug")) {
