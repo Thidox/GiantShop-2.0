@@ -131,9 +131,10 @@ public class GiantShop extends JavaPlugin {
 			}
 		}catch(Exception e) {
 			log.log(Level.SEVERE, "[" + this.name + "](" + this.bName + ") Failed to load!");
-			e.printStackTrace();
-			if(conf.getBoolean("GiantShop.global.debug"))
+			if(conf.getBoolean("GiantShop.global.debug")) {
 				log.log(Level.INFO, "" + e);
+				e.printStackTrace();
+			}
 			Server.getPluginManager().disablePlugin(this);
 		}
 	}
