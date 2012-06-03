@@ -2,6 +2,7 @@ package nl.giantit.minecraft.GiantShop.Misc;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -73,7 +74,7 @@ public class Messages {
 	}
 	
 	private String colourfy(String template) {
-		template = template.replaceAll("C_BLACK", "&0");
+		/*template = template.replaceAll("C_BLACK", "&0");
 		template = template.replaceAll("C_DARKBLUE", "&1");
 		template = template.replaceAll("C_GREEN", "&2");
 		template = template.replaceAll("C_BLUE", "&3");
@@ -88,7 +89,24 @@ public class Messages {
 		template = template.replaceAll("C_RED", "&c");
 		template = template.replaceAll("C_PINK", "&d");
 		template = template.replaceAll("C_YELLOW", "&e");
-		template = template.replaceAll("C_WHITE", "&f");
+		template = template.replaceAll("C_WHITE", "&f");*/
+		
+		template = template.replaceAll("C_BLACK", ChatColor.BLACK + "");
+		template = template.replaceAll("C_DARKBLUE", ChatColor.DARK_BLUE + "");
+		template = template.replaceAll("C_GREEN", ChatColor.DARK_GREEN + "");
+		template = template.replaceAll("C_BLUE", ChatColor.DARK_AQUA + "");
+		template = template.replaceAll("C_DARKRED", ChatColor.DARK_RED + "");
+		template = template.replaceAll("C_MAGENTA", ChatColor.DARK_PURPLE + "");
+		template = template.replaceAll("C_GOLD", ChatColor.GOLD + "");
+		template = template.replaceAll("C_LIGHTGRAY", ChatColor.GRAY + "");
+		template = template.replaceAll("C_GRAY", ChatColor.DARK_GRAY + "");
+		template = template.replaceAll("C_PURPLE", ChatColor.BLUE + "");
+		template = template.replaceAll("C_LIGHTGREEN", ChatColor.GREEN + "");
+		template = template.replaceAll("C_LIGHTBLUE", ChatColor.AQUA + "");
+		template = template.replaceAll("C_RED", ChatColor.RED + "");
+		template = template.replaceAll("C_PINK", ChatColor.LIGHT_PURPLE + "");
+		template = template.replaceAll("C_YELLOW", ChatColor.YELLOW + "");
+		template = template.replaceAll("C_WHITE", ChatColor.WHITE + "");
 		return template;
 	}
 	
