@@ -18,7 +18,7 @@ public class Heraut {
 	}
 	
     public static String parse(String input) {
-        return input.replaceAll("(&([a-fA-F0-9]))", "ยง$2").replace("\\\\\u00A7", "&");
+        return input.replaceAll("(&([a-fA-F0-9]))", "ง$2").replace("\\\\\u00A7", "&");
     }
 	
 	public static void say (String message) {
