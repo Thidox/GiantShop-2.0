@@ -181,7 +181,7 @@ public class sell {
 	
 									eH.deposit(player, cost);
 	
-									Heraut.broadcast(mH.getMsg(msgType.MAIN, "sell", data));
+									Heraut.say(mH.getMsg(msgType.MAIN, "sell", data));
 									Heraut.say(mH.getMsg(msgType.MAIN, "newBalance", data));
 									Logger.Log(LoggerType.SELL,
 												player, 

@@ -182,7 +182,7 @@ public class buy {
 										if(conf.getBoolean("GiantShop.broadcast.buy"))
 											Heraut.broadcast(mH.getMsg(msgType.MAIN, "broadcastBuy", data));
 
-										Heraut.broadcast(mH.getMsg(msgType.MAIN, "buy", data));
+										Heraut.say(mH.getMsg(msgType.MAIN, "buy", data));
 										Heraut.say(mH.getMsg(msgType.MAIN, "newBalance", data));
 										Logger.Log(LoggerType.BUY,
 													player, 
