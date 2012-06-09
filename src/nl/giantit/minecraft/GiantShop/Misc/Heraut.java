@@ -33,10 +33,22 @@ public class Heraut {
 		sender.sendMessage(message);
 	}
 
-
 	public static void broadcast (String message) {
 		for(Player p : GiantShop.getPlugin().getSrvr().getOnlinePlayers()) {
 			p.sendMessage(parse(message));
+		}
+	}
+	
+	public static void broadcast (String message, Boolean opOnly) {
+		if(!opOnly) {
+			broadcast(message);
+			return;
+		}
+		
+		for(Player p : GiantShop.getPlugin().getSrvr().getOnlinePlayers()) {
+			if(p.isOp()) {
+				p.sendMessage(parse(message));
+			}
 		}
 	}
 }
