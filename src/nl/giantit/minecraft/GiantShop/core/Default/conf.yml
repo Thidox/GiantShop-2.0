@@ -5,7 +5,9 @@ GiantShop:
         debug: false
         opHasPerms: true
         perPage: 5
+    Updater:
         checkForUpdates: true
+        broadcast: true
     log:
         useLogging: true
         log:
