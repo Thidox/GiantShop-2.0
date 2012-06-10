@@ -97,7 +97,7 @@ public class GiantShop extends JavaPlugin {
 				
 			}
 			
-			if(conf.getBoolean("GiantShop.global.checkForUpdates")) {
+			if(conf.getBoolean("GiantShop.Updater.checkForUpdates")) {
 				getServer().getPluginManager().registerEvents(new nl.giantit.minecraft.GiantShop.Listeners.PlayerListener(this), this);
 				this.updater = new Updater(this);
 			}
