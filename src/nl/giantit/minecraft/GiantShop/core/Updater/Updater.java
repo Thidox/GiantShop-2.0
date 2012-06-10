@@ -50,22 +50,22 @@ public class Updater {
 	}
 	
 	public String updateCheck(String version) {
-        String uri = "http://dev.bukkit.org/server-mods/giantshop/files.rss";
-        try {
-            URL url = new URL(uri);
-            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(url.openConnection().getInputStream());
-            doc.getDocumentElement().normalize();
-            Node firstNode = doc.getElementsByTagName("item").item(0);
-            if(firstNode.getNodeType() == 1) {
-                NodeList firstElementTagName = ((Element)firstNode).getElementsByTagName("title");
-                NodeList firstNodes = ((Element)firstElementTagName.item(0)).getChildNodes();
-                return firstNodes.item(0).getNodeValue().replace("GiantShop 2.0", "").replaceAll(" \\(([a-zA-Z ]+)\\)", "").trim();
-            }
-        }catch (Exception e) {	
-        }
-        
-        return version;
-    }
+		String uri = "http://dev.bukkit.org/server-mods/giantshop/files.rss";
+		try {
+			URL url = new URL(uri);
+			Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(url.openConnection().getInputStream());
+			doc.getDocumentElement().normalize();
+			Node firstNode = doc.getElementsByTagName("item").item(0);
+			if(firstNode.getNodeType() == 1) {
+				NodeList firstElementTagName = ((Element)firstNode).getElementsByTagName("title");
+				NodeList firstNodes = ((Element)firstElementTagName.item(0)).getChildNodes();
+				return firstNodes.item(0).getNodeValue().replace("GiantShop 2.0", "").replaceAll(" \\(([a-zA-Z ]+)\\)", "").trim();
+			}
+		}catch (Exception e) {	
+		}
+		
+		return version;
+	}
 	
 	public boolean isNewer(String newVersion, String version) {
 		String[] nv = newVersion.replaceAll("\\.[a-zA-Z]+", "").split("\\.");
