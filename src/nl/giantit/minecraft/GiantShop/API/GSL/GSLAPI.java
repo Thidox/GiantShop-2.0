@@ -57,8 +57,11 @@ public class GSLAPI {
 		return this.loc.removeShop(name, World);
 	}
 
-	public Indaface getShop(String name) {
-		return null;
+	public Indaface getShop(String name, String world) {
+		if(!this.useLocation())
+			return null;
+		
+		return this.loc.getShop(name, world);
 	}
 	
 	public ArrayList<Indaface> getShops() {
