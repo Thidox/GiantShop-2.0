@@ -1,19 +1,20 @@
 package nl.giantit.minecraft.GiantShop.Locationer.core.Commands.chat;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Database.db;
+import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
+import nl.giantit.minecraft.GiantShop.Misc.Misc;
+import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.perm;
-import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
+import nl.giantit.minecraft.GiantShop.core.Database.Database;
+import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import nl.giantit.minecraft.GiantShop.Misc.Misc;
 
 /**
  *
@@ -22,7 +23,7 @@ import nl.giantit.minecraft.GiantShop.Misc.Misc;
 public class update {
 	
 	private static config conf = config.Obtain();
-	private static db DB = db.Obtain();
+	private static iDriver DB = Database.Obtain().getEngine();
 	private static perm perms = perm.Obtain();
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	private static Locationer lH = GiantShop.getPlugin().getLocHandler();
