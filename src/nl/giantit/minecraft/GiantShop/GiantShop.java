@@ -2,9 +2,10 @@ package nl.giantit.minecraft.GiantShop;
 
 import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Database.db;
+import nl.giantit.minecraft.GiantShop.core.Database.Database;
 import nl.giantit.minecraft.GiantShop.core.Eco.Eco;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
+import nl.giantit.minecraft.GiantShop.core.Metrics.MetricsHandler;
 import nl.giantit.minecraft.GiantShop.core.Updater.Updater;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
@@ -20,6 +21,7 @@ import org.bukkit.command.CommandSender;
 
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.HashMap;
 import java.util.List;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,7 +37,7 @@ public class GiantShop extends JavaPlugin {
 	
 	private static GiantShop plugin;
 	private static Server Server;
-	private db database;
+	private Database db;
 	private perm perms;
 	private chat chat;
 	private console console;
@@ -44,6 +46,7 @@ public class GiantShop extends JavaPlugin {
 	private Messages msgHandler;
 	private Locationer locHandler;
 	private Updater updater;
+	private MetricsHandler metrics;
 	private int tID;
 	private String name, dir, pubName;
 	private String bName = "Dental Dam";
@@ -78,7 +81,7 @@ public class GiantShop extends JavaPlugin {
 		config conf = config.Obtain();
 		try {
 			conf.loadConfig(configFile);
-			this.database = new db(this);
+			this.db = Database.Obtain(null, (HashMap<String, String>) conf.getMap(this.name + ".db"));
 			
 			getServer().getPluginManager().registerEvents(new hooks(this), this);
 			if(conf.getBoolean("GiantShop.permissions.usePermissions") == true) {
@@ -114,6 +117,10 @@ public class GiantShop extends JavaPlugin {
 			}else{
 				log.log(Level.WARNING, "[" + this.name + "] Could not load economy engine yet!");
 				log.log(Level.WARNING, "[" + this.name + "] Errors might occur if you do not see '[GiantShop]Successfully hooked into (whichever) Engine!' after this message!");
+			}
+			
+			if(conf.getBoolean(this.name + ".metrics.useMetrics")) {
+				this.metrics = new MetricsHandler(this);
 			}
 		}catch(Exception e) {
 			log.log(Level.SEVERE, "[" + this.name + "](" + this.bName + ") Failed to load!");
@@ -180,8 +187,8 @@ public class GiantShop extends JavaPlugin {
 		return this.updater.getNewVersion();
 	}
 	
-	public db getDB() {
-		return this.database;
+	public Database getDB() {
+		return this.db;
 	}
 	
 	public perm getPermMan() {
