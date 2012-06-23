@@ -4,7 +4,8 @@ import nl.giantit.minecraft.GiantShop.API.stock.Events.*;
 import nl.giantit.minecraft.GiantShop.API.stock.stockResponse;
 import nl.giantit.minecraft.GiantShop.API.stock.ItemNotFoundException;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Database.db;
+import nl.giantit.minecraft.GiantShop.core.Database.Database;
+import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Logger.*;
 
 import org.bukkit.Bukkit;
@@ -26,7 +27,7 @@ public class itemStock {
 	private int perStack;
 	
 	private final void loadStock() throws ItemNotFoundException {
-		db DB = db.Obtain();
+		iDriver DB = Database.Obtain().getEngine();
 		
 		ArrayList<String> fields = new ArrayList<String>();
 		fields.add("stock");
@@ -96,7 +97,7 @@ public class itemStock {
 		where.put("itemID", String.valueOf(id));
 		where.put("type", (type == null || type.intValue() == 0 || type.intValue() == -1) ? "-1" : String.valueOf(type.intValue()));
 		
-		db DB = db.Obtain();
+		iDriver DB = Database.Obtain().getEngine();
 		DB.update("#__items").set(fields).where(where).updateQuery();
 		
 		Logger.Log(LoggerType.APISTOCKUPDATE, 
@@ -129,7 +130,7 @@ public class itemStock {
 		where.put("itemID", String.valueOf(id));
 		where.put("type", (type == null || type.intValue() == 0 || type.intValue() == -1) ? "-1" : String.valueOf(type.intValue()));
 		
-		db DB = db.Obtain();
+		iDriver DB = Database.Obtain().getEngine();
 		DB.update("#__items").set(fields).where(where).updateQuery();
 		
 		Logger.Log(LoggerType.APIMAXSTOCKUPDATE, 

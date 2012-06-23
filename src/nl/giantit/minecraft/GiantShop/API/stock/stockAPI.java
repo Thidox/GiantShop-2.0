@@ -2,7 +2,8 @@ package nl.giantit.minecraft.GiantShop.API.stock;
 
 import nl.giantit.minecraft.GiantShop.API.stock.core.itemStock;
 import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.Database.db;
+import nl.giantit.minecraft.GiantShop.core.Database.Database;
+import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Items.*;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class stockAPI {
 	public final HashMap<String, itemStock> getItemStocks() throws ItemNotFoundException {
 		HashMap<String, itemStock> stocks = new HashMap<String, itemStock>();
 		
-		db DB = db.Obtain();
+		iDriver DB = Database.Obtain().getEngine();
 		ArrayList<String> fields = new ArrayList<String>();
 		fields.add("itemID");
 		fields.add("type");
