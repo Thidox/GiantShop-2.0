@@ -1,7 +1,8 @@
 package nl.giantit.minecraft.GiantShop.core.Logger;
 
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Database.db;
+import nl.giantit.minecraft.GiantShop.core.Database.Database;
+import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -48,7 +49,7 @@ public class Logger {
 		config conf = config.Obtain();
 		if(conf.getBoolean("GiantShop.log.useLogging")) {
 			if(conf.getBoolean("GiantShop.log.log." + t.getName().toLowerCase())) {
-				db DB = db.Obtain(); 
+				iDriver DB = Database.Obtain().getEngine();
 				int type = t.getID();
 				
 				ArrayList<String> fields = new ArrayList<String>();
