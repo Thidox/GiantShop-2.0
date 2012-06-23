@@ -1,6 +1,6 @@
 GiantShop:
     global:
-        version: 0.7
+        version: 0.8
         name: GiantShop
         debug: false
         opHasPerms: true
@@ -8,6 +8,15 @@ GiantShop:
     Updater:
         checkForUpdates: true
         broadcast: true
+    metrics:
+        useMetrics: true
+        send:
+            database: true
+            updater: true
+            permEngine: true
+            ecoEngine: true
+            stock: true
+            gsl: true
     log:
         useLogging: true
         log:

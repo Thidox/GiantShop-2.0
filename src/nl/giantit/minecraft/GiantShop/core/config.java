@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 
 /**
@@ -20,7 +21,7 @@ public class config {
 	
 	private YamlConfiguration configuration;
 	private File file;
-	private double yamlVersion = 0.7;
+	private double yamlVersion = 0.8;
 	
 	private config() {
 	}
@@ -57,6 +58,20 @@ public class config {
 	
 	public Double getDouble(String setting) {
 		return this.configuration.getDouble(setting, 0);
+	}
+
+	public HashMap<String, ?> getMap(String setting) {
+		HashMap<String, Object> m = new HashMap<String, Object>();
+		Set<String> t = this.configuration.getConfigurationSection(setting).getKeys(false);
+		if(t == null) {
+			GiantShop.getPlugin().getLogger().log(Level.SEVERE, "Section " + setting + " was not found in the conf.yml! It might be broken...");
+		}
+		
+		for(String i : t) {
+			m.put(i, this.configuration.get(setting + "." + i));
+		}
+		
+		return m;
 	}
 	
 	public static config Obtain() {
