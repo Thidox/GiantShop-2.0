@@ -5,10 +5,12 @@ import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.perm;
-import nl.giantit.minecraft.GiantShop.core.Database.db;
-import nl.giantit.minecraft.GiantShop.core.Items.Items;
+import nl.giantit.minecraft.GiantShop.core.Database.Database;
+import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
-import nl.giantit.minecraft.GiantShop.core.Logger.*;
+import nl.giantit.minecraft.GiantShop.core.Items.Items;
+import nl.giantit.minecraft.GiantShop.core.Logger.Logger;
+import nl.giantit.minecraft.GiantShop.core.Logger.LoggerType;
 
 import org.bukkit.entity.Player;
 
@@ -23,7 +25,7 @@ import java.util.logging.Level;
 public class remove {
 	
 	private static config conf = config.Obtain();
-	private static db DB = db.Obtain();
+	private static iDriver DB = Database.Obtain().getEngine();
 	private static perm perms = perm.Obtain();
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	private static Items iH = GiantShop.getPlugin().getItemHandler();

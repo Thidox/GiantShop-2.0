@@ -4,9 +4,10 @@ import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Database.db;
-import nl.giantit.minecraft.GiantShop.core.Items.Items;
+import nl.giantit.minecraft.GiantShop.core.Database.Database;
+import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
+import nl.giantit.minecraft.GiantShop.core.Items.Items;
 
 import org.bukkit.command.CommandSender;
 
@@ -25,7 +26,7 @@ public class check {
 		Items iH = GiantShop.getPlugin().getItemHandler();
 		config conf = config.Obtain();
 		
-		db DB = db.Obtain();
+		iDriver DB = Database.Obtain().getEngine();
 		int itemID;
 		Integer itemType = -1;
 

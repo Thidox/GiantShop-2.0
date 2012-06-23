@@ -1,9 +1,10 @@
 package nl.giantit.minecraft.GiantShop.core.Commands.console;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.Database.db;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
+import nl.giantit.minecraft.GiantShop.core.Database.Database;
+import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 
 import org.bukkit.command.CommandSender;
 
@@ -15,7 +16,7 @@ import java.util.HashMap;
  */
 public class truncate {
 	
-	private static db DB = db.Obtain();
+	private static iDriver DB = Database.Obtain().getEngine();
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	
 	public static void truncate(CommandSender sender, String[] args) {

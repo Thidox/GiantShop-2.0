@@ -5,9 +5,10 @@ import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.perm;
-import nl.giantit.minecraft.GiantShop.core.Database.db;
-import nl.giantit.minecraft.GiantShop.core.Items.Items;
+import nl.giantit.minecraft.GiantShop.core.Database.Database;
+import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
+import nl.giantit.minecraft.GiantShop.core.Items.Items;
 
 import org.bukkit.entity.Player;
 
@@ -28,7 +29,7 @@ public class check {
 		config conf = config.Obtain();
 		if(perms.has(player, "giantshop.shop.check")) {
 			if(args.length >= 2) {
-				db DB = db.Obtain();
+				iDriver DB = Database.Obtain().getEngine();
 				int itemID;
 				Integer itemType = -1;
 				
