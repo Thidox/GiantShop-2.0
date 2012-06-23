@@ -9,6 +9,8 @@ import java.util.HashMap;
  */
 public interface iDriver {
 	
+	public void close();
+	
 	public boolean tableExists(String table);
 	
 	public void buildQuery(String string);
@@ -37,6 +39,7 @@ public interface iDriver {
 	public HashMap<String, String> getSingleResult(Integer queryID);
 	
 	public iDriver select(String field);
+	public iDriver select(String... fields);
 	public iDriver select(ArrayList<String> fields);
 	public iDriver select(HashMap<String, String> fields);
 	
@@ -55,11 +58,15 @@ public interface iDriver {
 	public iDriver set(HashMap<String, String> fields);
 	public iDriver set(HashMap<String, HashMap<String, String>> fields, Boolean shite);
 	
+	public iDriver insert(String table, ArrayList<String> fields, HashMap<Integer, HashMap<String, String>> values);
 	public iDriver insert(String table, ArrayList<String> fields, ArrayList<HashMap<Integer, HashMap<String, String>>> values);
 	
 	public iDriver delete(String table);
 	
 	public iDriver Truncate(String table);
+	
+	public iDriver create(String table);
+	public iDriver fields(HashMap<String, HashMap<String, String>> fields);
 	
 	public iDriver debug(Boolean dbg);
 	public iDriver Finalize();
