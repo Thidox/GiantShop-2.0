@@ -1,7 +1,8 @@
 package nl.giantit.minecraft.GiantShop.Locationer;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.Database.db;
+import nl.giantit.minecraft.GiantShop.core.Database.Database;
+import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -20,7 +21,7 @@ public class shopLoader {
 	private Locationer lH;
 	
 	private void loadShops() {
-		db DB = db.Obtain();
+		iDriver DB = Database.Obtain().getEngine();
 		ArrayList<String> fields = new ArrayList<String>();
 		fields.add("name");
 		fields.add("world");
