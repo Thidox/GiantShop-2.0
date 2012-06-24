@@ -48,16 +48,16 @@ public class MetricsHandler {
 				});
 			}
 
-			/*if(conf.getBoolean(plugin.getName() + ".metrics.send.permEngine")) {
+			if(conf.getBoolean(plugin.getName() + ".metrics.send.permEngine")) {
 				Graph graph = metrics.createGraph("Permissions engine");
-				graph.addPlotter(new Metrics.Plotter("sperm") {
+				graph.addPlotter(new Metrics.Plotter(plugin.getPermHandler().getEngineName()) {
 					
 					@Override
 					public int getValue() {
 						return 1;
 					}
 				});
-			}*/
+			}
 
 			if(conf.getBoolean(plugin.getName() + ".metrics.send.ecoEngine")) {
 				Graph graph = metrics.createGraph("Economy engine");
