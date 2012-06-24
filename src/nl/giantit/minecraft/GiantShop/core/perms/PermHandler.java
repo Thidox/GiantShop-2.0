@@ -1,10 +1,7 @@
 package nl.giantit.minecraft.GiantShop.core.perms;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.perms.Engines.gmEngine;
-import nl.giantit.minecraft.GiantShop.core.perms.Engines.npEngine;
-import nl.giantit.minecraft.GiantShop.core.perms.Engines.pexEngine;
-import nl.giantit.minecraft.GiantShop.core.perms.Engines.spermEngine;
+import nl.giantit.minecraft.GiantShop.core.perms.Engines.*;
 
 public class PermHandler {
 
@@ -13,10 +10,21 @@ public class PermHandler {
 	private Engines engine;
 	
 	public enum Engines {
-		GROUP_MANAGER,
-		PERMISSIONSEX,
-		SPERM,
-		NOPERM
+		GROUP_MANAGER("Essentials Group Manager"),
+		PERMISSIONSEX("Permissions Ex"),
+		SPERM("Bukkit Superperms"),
+		NOPERM("No Permissions");
+		
+		private String name;
+		
+		private Engines(String s) {
+			this.name = s;
+		}
+		
+		@Override
+		public String toString() {
+			return this.name;
+		}
 	}
 	
 	private boolean packageExists(String...Packages) {
@@ -71,6 +79,10 @@ public class PermHandler {
 	
 	public Permission getEngine() {
 		return Engine;
+	}
+	
+	public String getEngineName() {
+		return this.engine.toString();
 	}
 	
 	public boolean isEnabled() {
