@@ -16,19 +16,29 @@ public class Eco {
 	Engines engine;
 	
 	public enum Engines {
-		AECO,
-		CRAFTCONOMY,
-		CURRENCYCORE,
-		ECONXP,
-		ESSENTIALS,
-		MCMONEY,
-		MINECONOMY,
-		MULTICURRENCY,
-		BOSE6,
-		BOSE7,
-		ICONOMY4,
-		ICONOMY5,
-		ICONOMY6
+		AECO("AECO"),
+		CRAFTCONOMY("Craftconomy"),
+		CURRENCYCORE("CurrencyCore"),
+		ESSENTIALS("BoseConomy 7"),
+		MCMONEY("McMoney"),
+		MINECONOMY("MineConomy"),
+		MULTICURRENCY("MultiCurrency"),
+		BOSE6("BoseConomy 6"),
+		BOSE7("BoseConomy 7"),
+		ICONOMY4("iConomy 4"),
+		ICONOMY5("iConomy 5"),
+		ICONOMY6("iConomy 6");
+		
+		private String value;
+		
+		private Engines(String s) {
+			this.value = s;
+		}
+		
+		@Override
+		public String toString() {
+			return this.value;
+		}
 	}
 	
 	private boolean packageExists(String...Packages) {
@@ -158,5 +168,9 @@ public class Eco {
 	
 	public iEco getEngine() {
 		return this.Engine;
+	}
+	
+	public String getEngineName() {
+		return this.engine.toString();
 	}
 }
