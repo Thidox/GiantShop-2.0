@@ -1,11 +1,11 @@
 package nl.giantit.minecraft.GiantShop.Locationer.Listeners;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.perm;
-import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
+import nl.giantit.minecraft.GiantShop.Misc.Heraut;
+import nl.giantit.minecraft.GiantShop.core.config;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,7 +13,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.Location;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,9 +22,10 @@ import java.util.HashMap;
  * @author Giant
  */
 public class PlayerListener implements Listener {
-	GiantShop plugin;
-	Locationer lH;
-	ArrayList<Player> inShop = new ArrayList<Player>();
+	
+	private GiantShop plugin;
+	private Locationer lH;
+	private ArrayList<Player> inShop = new ArrayList<Player>();
 	
 	public PlayerListener(GiantShop plugin) {
 		this.plugin = plugin;
@@ -53,7 +53,7 @@ public class PlayerListener implements Listener {
 		if(event.getAction() != Action.LEFT_CLICK_BLOCK && event.getAction() != Action.RIGHT_CLICK_BLOCK)
 			return;
 		
-		if(perm.Obtain().has(event.getPlayer(), "giantshop.location.add")) {
+		if(plugin.getPermHandler().getEngine().has(event.getPlayer(), "giantshop.location.add")) {
 			config conf = config.Obtain();
 			ItemStack i = event.getItem();
 			if(i == null)
