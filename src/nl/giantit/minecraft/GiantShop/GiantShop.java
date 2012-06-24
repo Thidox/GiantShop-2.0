@@ -1,31 +1,31 @@
 package nl.giantit.minecraft.GiantShop;
 
-import nl.giantit.minecraft.GiantShop.core.perm;
+import nl.giantit.minecraft.GiantShop.Executors.chat;
+import nl.giantit.minecraft.GiantShop.Executors.console;
+import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
+import nl.giantit.minecraft.GiantShop.Misc.Messages;
+import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.Database.Database;
 import nl.giantit.minecraft.GiantShop.core.Eco.Eco;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Metrics.MetricsHandler;
 import nl.giantit.minecraft.GiantShop.core.Updater.Updater;
-import nl.giantit.minecraft.GiantShop.Misc.Messages;
-import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.Executors.*;
-import nl.giantit.minecraft.GiantShop.Listeners.*;
-import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
+import nl.giantit.minecraft.GiantShop.core.perms.PermHandler;
 
 import org.bukkit.Server;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.entity.Player;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.logging.Logger;
-import java.util.logging.Level;
-import java.util.HashMap;
-import java.util.List;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -38,7 +38,7 @@ public class GiantShop extends JavaPlugin {
 	private static GiantShop plugin;
 	private static Server Server;
 	private Database db;
-	private perm perms;
+	private PermHandler permHandler;
 	private chat chat;
 	private console console;
 	private Items itemHandler;
@@ -83,29 +83,28 @@ public class GiantShop extends JavaPlugin {
 			conf.loadConfig(configFile);
 			this.db = Database.Obtain(null, (HashMap<String, String>) conf.getMap(this.name + ".db"));
 			
-			getServer().getPluginManager().registerEvents(new hooks(this), this);
-			if(conf.getBoolean("GiantShop.permissions.usePermissions") == true) {
-				if(conf.getString("GiantShop.permissions.permissionEngine").equals("sperm")) {
-					setPermMan(new perm());
-				}
+			if(conf.getBoolean(this.name + ".permissions.usePermissions")) {
+				permHandler = new PermHandler(this, conf.getString(this.name + ".permissions.Engine"), conf.getBoolean(this.name + ".permissions.opHasPerms"));
+			}else{
+				permHandler = new PermHandler(this, "NOPERM", true);
 			}
 			
-			if(conf.getBoolean("GiantShop.Location.useGiantShopLocation")) {
+			if(conf.getBoolean(this.name + ".Location.useGiantShopLocation")) {
 				useLoc = true;
 				locHandler = new Locationer(this);
-				cmds = conf.getStringList("GiantShop.Location.protect.Commands");
+				cmds = conf.getStringList(this.name + ".Location.protect.Commands");
 				
-				if(conf.getBoolean("GiantShop.Location.showPlayerEnteredShop"))
+				if(conf.getBoolean(this.name + ".Location.showPlayerEnteredShop"))
 					getServer().getPluginManager().registerEvents(new nl.giantit.minecraft.GiantShop.Locationer.Listeners.PlayerListener(this), this);
 				
 			}
 			
-			if(conf.getBoolean("GiantShop.Updater.checkForUpdates")) {
+			if(conf.getBoolean(this.name + ".Updater.checkForUpdates")) {
 				getServer().getPluginManager().registerEvents(new nl.giantit.minecraft.GiantShop.Listeners.PlayerListener(this), this);
 				this.updater = new Updater(this);
 			}
 			
-			pubName = conf.getString("GiantShop.global.name");
+			pubName = conf.getString(this.name + ".global.name");
 			chat = new chat(this);
 			console = new console(this);
 			itemHandler = new Items(this);
@@ -124,7 +123,7 @@ public class GiantShop extends JavaPlugin {
 			}
 		}catch(Exception e) {
 			log.log(Level.SEVERE, "[" + this.name + "](" + this.bName + ") Failed to load!");
-			if(conf.getBoolean("GiantShop.global.debug")) {
+			if(conf.getBoolean(this.name + ".global.debug")) {
 				log.log(Level.INFO, "" + e);
 				e.printStackTrace();
 			}
@@ -191,12 +190,8 @@ public class GiantShop extends JavaPlugin {
 		return this.db;
 	}
 	
-	public perm getPermMan() {
-		return this.perms;
-	}
-	
-	public void setPermMan(perm perm) {
-		this.perms = perm;
+	public PermHandler getPermHandler() {
+		return this.permHandler;
 	}
 	
 	public Server getSrvr() {
