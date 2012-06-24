@@ -25,6 +25,73 @@ public class MetricsHandler {
 					}
 				});
 			}
+
+			if(conf.getBoolean(plugin.getName() + ".metrics.send.updater")) {
+				Graph graph = metrics.createGraph("Update warning");
+				graph.addPlotter(new Metrics.Plotter((conf.getBoolean(plugin.getName() + ".Updater.checkForUpdates") ? "Enabled" : "Disabled")) {
+					
+					@Override
+					public int getValue() {
+						return 1;
+					}
+				});
+			}
+
+			if(conf.getBoolean(plugin.getName() + ".metrics.send.logging")) {
+				Graph graph = metrics.createGraph("Use logging");
+				graph.addPlotter(new Metrics.Plotter((conf.getBoolean(plugin.getName() + ".log.useLogging") ? "Yes" : "No")) {
+					
+					@Override
+					public int getValue() {
+						return 1;
+					}
+				});
+			}
+
+			/*if(conf.getBoolean(plugin.getName() + ".metrics.send.permEngine")) {
+				Graph graph = metrics.createGraph("Permissions engine");
+				graph.addPlotter(new Metrics.Plotter("sperm") {
+					
+					@Override
+					public int getValue() {
+						return 1;
+					}
+				});
+			}*/
+
+			if(conf.getBoolean(plugin.getName() + ".metrics.send.ecoEngine")) {
+				Graph graph = metrics.createGraph("Economy engine");
+				graph.addPlotter(new Metrics.Plotter(plugin.getEcoHandler().getEngineName()) {
+					
+					@Override
+					public int getValue() {
+						return 1;
+					}
+				});
+			}
+
+			if(conf.getBoolean(plugin.getName() + ".metrics.send.stock")) {
+				Graph graph = metrics.createGraph("Using item stock");
+				graph.addPlotter(new Metrics.Plotter((conf.getBoolean(plugin.getName() + ".stock.useStock") ? "Yes" : "No")) {
+					
+					@Override
+					public int getValue() {
+						return 1;
+					}
+				});
+			}
+
+			if(conf.getBoolean(plugin.getName() + ".metrics.send.gsl")) {
+				Graph graph = metrics.createGraph("Using GiantShop Location");
+				graph.addPlotter(new Metrics.Plotter((plugin.useLocation() ? "Yes" : "No")) {
+					
+					@Override
+					public int getValue() {
+						return 1;
+					}
+				});
+			}
+			
 			metrics.start();
 		} catch (IOException e) {
 			plugin.getLogger().warning("Failed to load metrics!");
