@@ -2,6 +2,7 @@ package nl.giantit.minecraft.GiantShop.core.Metrics;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.core.config;
+import nl.giantit.minecraft.GiantShop.core.Database.Database;
 import nl.giantit.minecraft.GiantShop.core.Metrics.Metrics.Graph;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class MetricsHandler {
 			
 			if(conf.getBoolean(plugin.getName() + ".metrics.send.database")) {
 				Graph graph = metrics.createGraph("Database Engine");
-				graph.addPlotter(new Metrics.Plotter() {
+				graph.addPlotter(new Metrics.Plotter(Database.Obtain().getType()) {
 					
 					@Override
 					public int getValue() {
