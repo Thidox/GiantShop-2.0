@@ -4,7 +4,7 @@ import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.perm;
+import nl.giantit.minecraft.GiantShop.core.perms.Permission;
 
 import org.bukkit.entity.Player;
 
@@ -19,7 +19,7 @@ public class help {
 	
 	private static ArrayList<String[]> entries = new ArrayList<String[]>();
 	private static config conf = config.Obtain();
-	private static perm perms = perm.Obtain();
+	private static Permission perms = GiantShop.getPlugin().getPermHandler().getEngine();
 	
 	private static void init() {
 		entries = new ArrayList<String[]>();
