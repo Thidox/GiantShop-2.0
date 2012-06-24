@@ -4,10 +4,10 @@ import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.perm;
 import nl.giantit.minecraft.GiantShop.core.Database.Database;
 import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
+import nl.giantit.minecraft.GiantShop.core.perms.Permission;
 
 import org.bukkit.entity.Player;
 
@@ -23,7 +23,7 @@ public class list {
 	public static void list(Player player, String[] args) {
 		Messages msgs = GiantShop.getPlugin().getMsgHandler();
 		Items iH = GiantShop.getPlugin().getItemHandler();
-		perm perms = perm.Obtain();
+		Permission perms = GiantShop.getPlugin().getPermHandler().getEngine();
 		config conf = config.Obtain();
 		if(perms.has(player, "giantshop.shop.list")) {
 			String name = GiantShop.getPlugin().getPubName();
