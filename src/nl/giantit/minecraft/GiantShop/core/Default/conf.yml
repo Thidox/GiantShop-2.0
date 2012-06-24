@@ -13,6 +13,7 @@ GiantShop:
         send:
             database: true
             updater: true
+            logging: true
             permEngine: true
             ecoEngine: true
             stock: true
