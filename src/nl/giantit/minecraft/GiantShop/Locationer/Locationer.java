@@ -157,7 +157,7 @@ public class Locationer {
 		String name = conf.getString("GiantShop.global.name");
 		if(Misc.contains(worlds, world)) {
 			// Should we protect on a per world basis? And is this world included in the protection?
-			if(!inShop(player.getLocation()) && !plugin.getPermMan().has(player, "giantshop.location.override")) {
+			if(!inShop(player.getLocation()) && !plugin.getPermHandler().getEngine().has(player, "giantshop.location.override")) {
 				// Player not in shop, cancel!
 				Heraut.say(player, "&d[&f" + name + "&d]&c You are not in a shop!");
 				return false;
