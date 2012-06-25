@@ -1,6 +1,5 @@
 package nl.giantit.minecraft.GiantShop.core.Database;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.core.Database.drivers.*;
 
 import java.util.HashMap;
@@ -28,7 +27,6 @@ public class Database {
 	}
 	
 	private static HashMap<String, Database> instance = new HashMap<String, Database>();
-	private GiantShop plugin;
 	private iDriver dbDriver;
 	private dbType t;
 	
