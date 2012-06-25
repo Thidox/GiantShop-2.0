@@ -3,7 +3,6 @@ GiantShop:
         version: 0.8
         name: GiantShop
         debug: false
-        opHasPerms: true
         perPage: 5
     Updater:
         checkForUpdates: true
@@ -44,7 +43,8 @@ GiantShop:
         password: 
     permissions:
         usePermissions: true
-        permissionEngine: sperm
+        Engine: SPERM
+        opHasPerms: true
     Economy:
         Engine: ICONOMY6
     stock:
