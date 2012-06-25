@@ -55,46 +55,46 @@ permissions:
             giantshop.location.list: true
     giantshop.shop.buy:
         description: Gives access to the buying feature
-        default: true
+        default: false
     giantshop.shop.sell:
         description: Gives access to the selling feature
-        default: true
+        default: false
     giantshop.shop.gift:
         description: Gives access to the gifting feature
-        default: true
+        default: false
     giantshop.shop.list:
         description: Gives access to the item list feature
-        default: true
+        default: false
     giantshop.shop.check:
         description: Gives access to the item checking feature
-        default: true
+        default: false
     giantshop.shop.search:
         description: Gives access to the item searching feature
-        default: true
+        default: false
     giantshop.admin.sendhelp:
         description: Enables admin to send GiantShop help to user
-        default: op
+        default: false
     giantshop.admin.add:
         description: Enables admin to add items to GiantShop
-        default: op
+        default: false
     giantshop.admin.update:
         description: Enables admin to update items in GiantShop
-        default: op
+        default: false
     giantshop.admin.remove:
         description: Enables admin to remove items from GiantShop
-        default: op
+        default: false
     giantshop.location.overide:
         description: Enables admin to override location
-        default: op
+        default: false
     giantshop.location.access:
         description: Enables admin to use location plugin
-        default: op
+        default: false
     giantshop.location.create:
         description: Enables admin to create shop
-        default: op
+        default: false
     giantshop.location.remove:
         description: Enables admin to remove shop
-        default: op
+        default: false
     giantshop.location.list:
         description: Enables admin to list available shops
-        default: op
+        default: false
