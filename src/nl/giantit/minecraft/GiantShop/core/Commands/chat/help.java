@@ -65,7 +65,6 @@ public class help {
 		int perPage = conf.getInt("GiantShop.global.perPage");
 		int curPag = 0;
 		
-		int page;
 		if(args.length >= 2) {
 			try{
 				curPag = Integer.parseInt(args[1]);
@@ -172,7 +171,6 @@ public class help {
 
 						String helpEntry = data[0];
 						String description = data[1];
-						String permission = data[2];
 
 						Heraut.say(receiver, "&c/" + helpEntry + " &e-&f " + description);
 					}
