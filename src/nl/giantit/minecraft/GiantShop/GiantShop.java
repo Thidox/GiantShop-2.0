@@ -10,6 +10,8 @@ import nl.giantit.minecraft.GiantShop.core.Database.Database;
 import nl.giantit.minecraft.GiantShop.core.Eco.Eco;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Metrics.MetricsHandler;
+import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discounter;
+import nl.giantit.minecraft.GiantShop.core.Tools.dbInit.dbInit;
 import nl.giantit.minecraft.GiantShop.core.Updater.Updater;
 import nl.giantit.minecraft.GiantShop.core.perms.PermHandler;
 
@@ -22,7 +24,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,6 +47,7 @@ public class GiantShop extends JavaPlugin {
 	private Messages msgHandler;
 	private Locationer locHandler;
 	private Updater updater;
+	private Discounter discounter;
 	private MetricsHandler metrics;
 	private int tID;
 	private String name, dir, pubName;
@@ -82,6 +84,7 @@ public class GiantShop extends JavaPlugin {
 		try {
 			conf.loadConfig(configFile);
 			this.db = Database.Obtain(null, conf.getMap(this.name + ".db"));
+			new dbInit(this);
 			
 			if(conf.getBoolean(this.name + ".permissions.usePermissions")) {
 				permHandler = new PermHandler(this, conf.getString(this.name + ".permissions.Engine"), conf.getBoolean(this.name + ".permissions.opHasPerms"));
@@ -110,6 +113,8 @@ public class GiantShop extends JavaPlugin {
 			itemHandler = new Items(this);
 			econHandler = new Eco(this);
 			msgHandler = new Messages(this);
+			
+			discounter = new Discounter(this);
 			
 			if(econHandler.isLoaded()) {
 				log.log(Level.INFO, "[" + this.name + "](" + this.bName + ") Was successfully enabled!");
@@ -208,6 +213,10 @@ public class GiantShop extends JavaPlugin {
 	
 	public Messages getMsgHandler() {
 		return this.msgHandler;
+	}
+	
+	public Discounter getDiscounter() {
+		return this.discounter;
 	}
 	
 	public Locationer getLocHandler() {
