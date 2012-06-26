@@ -47,6 +47,8 @@ GiantShop:
         opHasPerms: true
     Economy:
         Engine: ICONOMY6
+    discounts:
+        useDiscounts: true
     stock:
         useStock: true
         hideEmptyStock: false
