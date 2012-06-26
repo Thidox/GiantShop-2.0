@@ -20,59 +20,6 @@ public class Discounter {
 	private Permission perm;
 	private Set<Discount> discounts = new HashSet<Discount>();
 	
-	private class Discount {
-		
-		private String owner;
-		private String group;
-		private Boolean hasGroup = true;
-		private int id;
-		private int type;
-		private int disc;
-		
-		public Discount(int id, int type, int disc, String data) {
-			this(id, type, disc, data, true);
-		}
-		
-		public Discount(int id, int type, int disc, String data, Boolean group) {
-			this.id = id;
-			this.type = type;
-			this.disc = disc;
-			if(!group) {
-				this.hasGroup = false;
-				this.owner = data;
-			}else{
-				this.hasGroup = true;
-				this.group = data;
-				
-				if(plugin.getPermHandler().getEngineName().equalsIgnoreCase("No Permissions") || plugin.getPermHandler().getEngineName().equalsIgnoreCase("Bukkit Superperms")) {
-					if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-						plugin.getLogger().warning("Groups not supported! Discount for item " + plugin.getItemHandler().getItemNameByID(id, type) + " will not work for group " + data + "!");
-					}
-				}
-			}
-		}
-		
-		public Boolean hasGroup() {
-			return this.hasGroup;
-		}
-		
-		public String getOwner() {
-			return this.owner;
-		}
-		
-		public String getGroup() {
-			return this.group;
-		}
-		
-		public int getDiscount() {
-			return this.disc;
-		}
-		
-		public Boolean forItem(int id, int type) {
-			return this.id == id && this.type == type;
-		}
-	}
-	
 	private void loadDiscounts() {
 		iDriver db = plugin.getDB().getEngine();
 		ArrayList<HashMap<String, String>> resSet = db.select("itemID", "type", "discount", "user", "grp").from("#__discounts").execQuery();
@@ -84,9 +31,9 @@ public class Discounter {
 			int discount = Integer.parseInt(res.get("discount"));
 			
 			if(res.get("grp") == null || res.get("grp").equalsIgnoreCase("")) {
-				discounts.add(new Discount(id, type, discount, res.get("user"), false));
+				discounts.add(new Discount(plugin, id, type, discount, res.get("user"), false));
 			}else{
-				discounts.add(new Discount(id, type, discount, res.get("grp"), true));
+				discounts.add(new Discount(plugin, id, type, discount, res.get("grp"), true));
 			}
 		}
 	}
@@ -104,10 +51,10 @@ public class Discounter {
 	public Boolean hasDiscount(ItemID iID, Player p) {
 		Discount t = null;
 		for(Discount discount : this.discounts) {
-			if(discount.hasGroup && !this.perm.inGroup(p, discount.getGroup()))
+			if(discount.hasGroup() && !this.perm.inGroup(p, discount.getGroup()))
 				continue;
 			
-			if(!discount.hasGroup && !discount.getOwner().equalsIgnoreCase(p.getName()))
+			if(!discount.hasGroup() && !discount.getOwner().equalsIgnoreCase(p.getName()))
 				continue;
 			
 			if(discount.forItem(iID.getId(), (iID.getType() == null ? 0 : iID.getType()))) {
@@ -127,10 +74,10 @@ public class Discounter {
 	public int getDiscount(ItemID iID, Player p) {
 		Discount t = null;
 		for(Discount discount : this.discounts) {
-			if(discount.hasGroup && !this.perm.inGroup(p, discount.getGroup()))
+			if(discount.hasGroup() && !this.perm.inGroup(p, discount.getGroup()))
 				continue;
 			
-			if(!discount.hasGroup && !discount.getOwner().equalsIgnoreCase(p.getName()))
+			if(!discount.hasGroup() && !discount.getOwner().equalsIgnoreCase(p.getName()))
 				continue;
 			
 			if(discount.forItem(iID.getId(), (iID.getType() == null ? 0 : iID.getType()))) {
