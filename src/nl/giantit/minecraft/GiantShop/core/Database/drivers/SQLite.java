@@ -948,7 +948,7 @@ public class SQLite implements iDriver {
 			String d = (!def.equalsIgnoreCase("")) ? " DEFAULT " + def : "";
 			String c = (i < fields.size()) ? ",\n" : ""; 
 			
-			this.buildQuery(field + " " + type + n + d + c, true);
+			this.buildQuery("ADD " + field + " " + type + n + d + c, true);
 		}
 		
 		return this;
