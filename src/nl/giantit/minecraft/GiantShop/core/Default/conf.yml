@@ -49,6 +49,7 @@ GiantShop:
         Engine: ICONOMY6
     discounts:
         useDiscounts: true
+        affectsSales: true
     stock:
         useStock: true
         hideEmptyStock: false
