@@ -3,10 +3,12 @@ package nl.giantit.minecraft.GiantShop.core.Commands.chat;
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
+import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.Database.Database;
 import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
+import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discounter;
 import nl.giantit.minecraft.GiantShop.core.perms.Permission;
 
 import org.bukkit.entity.Player;
@@ -25,6 +27,7 @@ public class list {
 		Items iH = GiantShop.getPlugin().getItemHandler();
 		Permission perms = GiantShop.getPlugin().getPermHandler().getEngine();
 		config conf = config.Obtain();
+		Discounter disc = GiantShop.getPlugin().getDiscounter();
 		if(perms.has(player, "giantshop.shop.list")) {
 			String name = GiantShop.getPlugin().getPubName();
 			int perPage = conf.getInt("GiantShop.global.perPage");
@@ -123,6 +126,17 @@ public class list {
 							}
 						}
 					}
+					
+					Integer type = Integer.parseInt(entry.get("type"));
+					type = type <= 0 ? null : type;
+					
+					int discount = disc.getDiscount(iH.getItemIDByName(iH.getItemNameByID(Integer.parseInt(entry.get("itemID")), type)), player);
+					if(discount > 0) {
+						double actualDiscount = (100 - discount) / 100D;
+						buyFor = Misc.Round(buyFor * actualDiscount, 2);
+						if(conf.getBoolean(GiantShop.getPlugin().getName() + ".discounts.affectsSales"))
+							sellFor = Misc.Round(sellFor * actualDiscount, 2);
+					}
 
 					String sf = String.valueOf(sellFor);
 					String bf = String.valueOf(buyFor);
@@ -130,7 +144,7 @@ public class list {
 					HashMap<String, String> params = new HashMap<String, String>();
 					params.put("id", entry.get("itemID"));
 					params.put("type", (!entry.get("type").equals("-1") ? entry.get("type") : "0"));
-					params.put("name", iH.getItemNameByID(Integer.parseInt(entry.get("itemID")), Integer.parseInt(params.get("type"))));
+					params.put("name", iH.getItemNameByID(Integer.parseInt(entry.get("itemID")), type));
 					params.put("perStack", entry.get("perStack"));
 					params.put("sellFor", (!sf.equals("-1.0") ? sf : "Not for sale!"));
 					params.put("buyFor", (!bf.equals("-1.0") ? bf : "No returns!"));

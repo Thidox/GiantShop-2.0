@@ -3,11 +3,13 @@ package nl.giantit.minecraft.GiantShop.core.Commands.chat;
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
+import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.Database.Database;
 import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
+import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discounter;
 import nl.giantit.minecraft.GiantShop.core.perms.Permission;
 
 import org.bukkit.entity.Player;
@@ -27,6 +29,7 @@ public class check {
 		Items iH = GiantShop.getPlugin().getItemHandler();
 		Permission perms = GiantShop.getPlugin().getPermHandler().getEngine();
 		config conf = config.Obtain();
+		Discounter disc = GiantShop.getPlugin().getDiscounter();
 		if(perms.has(player, "giantshop.shop.check")) {
 			if(args.length >= 2) {
 				iDriver DB = Database.Obtain().getEngine();
@@ -76,7 +79,7 @@ public class check {
 						return;
 					}
 				}
-				itemType = (itemType == null || itemType == 0) ? -1 : itemType;
+				itemType = (itemType == null || itemType <= 0) ? -1 : itemType;
 				
 				ArrayList<String> fields = new ArrayList<String>();
 				fields.add("perStack");
@@ -94,7 +97,7 @@ public class check {
 				if(resSet.size() == 1) {
 					//Wait didn't we just do this the other way round?!
 					//Yea we did! Why? Because we can!
-					itemType = (itemType == -1) ? 0 : itemType;
+					itemType = (itemType <= 0) ? null : itemType;
 					
 					String name = iH.getItemNameByID(itemID, itemType);
 					HashMap<String, String> res = resSet.get(0);
@@ -146,12 +149,20 @@ public class check {
 						}
 					}
 					
+					int discount = disc.getDiscount(iH.getItemIDByName(iH.getItemNameByID(itemID, itemType)), player);
+					if(discount > 0) {
+						double actualDiscount = (100 - discount) / 100D;
+						buyFor = Misc.Round(buyFor * actualDiscount, 2);
+						if(conf.getBoolean(GiantShop.getPlugin().getName() + ".discounts.affectsSales"))
+							sellFor = Misc.Round(sellFor * actualDiscount, 2);
+					}
+					
 					String sf = String.valueOf(sellFor);
 					String bf = String.valueOf(buyFor);
 					
 					Heraut.say(player, "Here's the result for " + name + "!");
 					Heraut.say(player, "ID: " + itemID);
-					Heraut.say(player, "Type: " + itemType);
+					Heraut.say(player, "Type: " + (itemType == null ? 0 : itemType));
 					Heraut.say(player, "Quantity per amount: " + res.get("perStack"));
 					Heraut.say(player, "Leaves shop for: " + (!sf.equals("-1.0") ? sf : "Not for sale!"));
 					Heraut.say(player, "Returns to shop for: " + (!bf.equals("-1.0") ? bf : "No returns!"));

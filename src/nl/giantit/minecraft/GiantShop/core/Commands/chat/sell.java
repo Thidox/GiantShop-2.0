@@ -6,6 +6,7 @@ import nl.giantit.minecraft.GiantShop.API.stock.ItemNotFoundException;
 import nl.giantit.minecraft.GiantShop.API.stock.Events.StockUpdateEvent;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
+import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.Misc.Messages.msgType;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.Database.Database;
@@ -16,6 +17,7 @@ import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Logger.Logger;
 import nl.giantit.minecraft.GiantShop.core.Logger.LoggerType;
 import nl.giantit.minecraft.GiantShop.core.Tools.InventoryHandler;
+import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discounter;
 import nl.giantit.minecraft.GiantShop.core.perms.Permission;
 
 import org.bukkit.entity.Player;
@@ -39,6 +41,7 @@ public class sell {
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	private static Items iH = GiantShop.getPlugin().getItemHandler();
 	private static iEco eH = GiantShop.getPlugin().getEcoHandler().getEngine();
+	private static Discounter disc = GiantShop.getPlugin().getDiscounter();
 	
 	public static void sell(Player player, String[] args) {
 		Heraut.savePlayer(player);
@@ -157,6 +160,15 @@ public class sell {
 										}
 									}
 								}
+
+								if(conf.getBoolean(GiantShop.getPlugin().getName() + ".discounts.affectsSales")) {
+									int discount = disc.getDiscount(iH.getItemIDByName(iH.getItemNameByID(itemID, iT)), player);
+									if(discount > 0) {
+										double actualDiscount = (100 - discount) / 100D;
+										cost = Misc.Round(cost * actualDiscount, 2);
+									}
+								}
+								
 								ItemStack iStack;
 								Inventory inv = player.getInventory();
 	

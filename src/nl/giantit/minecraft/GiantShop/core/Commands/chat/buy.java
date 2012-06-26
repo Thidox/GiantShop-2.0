@@ -4,6 +4,7 @@ import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.Misc.Messages.msgType;
+import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.Database.Database;
 import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
@@ -12,6 +13,7 @@ import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Logger.Logger;
 import nl.giantit.minecraft.GiantShop.core.Logger.LoggerType;
+import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discounter;
 import nl.giantit.minecraft.GiantShop.core.perms.Permission;
 
 import org.bukkit.entity.Player;
@@ -36,6 +38,7 @@ public class buy {
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	private static Items iH = GiantShop.getPlugin().getItemHandler();
 	private static iEco eH = GiantShop.getPlugin().getEcoHandler().getEngine();
+	private static Discounter disc = GiantShop.getPlugin().getDiscounter();
 	
 	public static void buy(Player player, String[] args) {
 		Heraut.savePlayer(player);
@@ -154,6 +157,12 @@ public class buy {
 										}
 									}
 								}
+
+								int discount = disc.getDiscount(iH.getItemIDByName(iH.getItemNameByID(itemID, iT)), player);
+								if(discount > 0) {
+									double actualDiscount = (100 - discount) / 100D;
+									cost = Misc.Round(cost * actualDiscount, 2);
+								}
 								
 								if((balance - cost) < 0) {
 									HashMap<String, String> data = new HashMap<String, String>();
@@ -162,7 +171,7 @@ public class buy {
 
 									Heraut.say(mH.getMsg(Messages.msgType.ERROR, "insufFunds", data));
 								}else{
-									if(eH.withdraw(player, cost)) {
+									if(eH.withdraw(player, cost) || cost == 0) {
 										ItemStack iStack;
 										Inventory inv = player.getInventory();
 
