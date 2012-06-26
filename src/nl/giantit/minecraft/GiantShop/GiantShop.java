@@ -81,7 +81,7 @@ public class GiantShop extends JavaPlugin {
 		config conf = config.Obtain();
 		try {
 			conf.loadConfig(configFile);
-			this.db = Database.Obtain(null, (HashMap<String, String>) conf.getMap(this.name + ".db"));
+			this.db = Database.Obtain(null, conf.getMap(this.name + ".db"));
 			
 			if(conf.getBoolean(this.name + ".permissions.usePermissions")) {
 				permHandler = new PermHandler(this, conf.getString(this.name + ".permissions.Engine"), conf.getBoolean(this.name + ".permissions.opHasPerms"));

@@ -60,15 +60,15 @@ public class config {
 		return this.configuration.getDouble(setting, 0);
 	}
 
-	public HashMap<String, ?> getMap(String setting) {
-		HashMap<String, Object> m = new HashMap<String, Object>();
+	public HashMap<String, String> getMap(String setting) {
+		HashMap<String, String> m = new HashMap<String, String>();
 		Set<String> t = this.configuration.getConfigurationSection(setting).getKeys(false);
 		if(t == null) {
 			GiantShop.getPlugin().getLogger().log(Level.SEVERE, "Section " + setting + " was not found in the conf.yml! It might be broken...");
 		}
 		
 		for(String i : t) {
-			m.put(i, this.configuration.get(setting + "." + i));
+			m.put(i, String.valueOf(this.configuration.get(setting + "." + i)));
 		}
 		
 		return m;
