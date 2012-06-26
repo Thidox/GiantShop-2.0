@@ -921,6 +921,62 @@ public class MySQL implements iDriver {
 		
 		return this;
 	}
+
+	@Override
+	public iDriver alter(String table) {
+		table = table.replace("#__", prefix);
+		this.buildQuery("ALTER TABLE " + table + "\n", false, false, false);
+		
+		return this;
+	}
+	
+	@Override
+	public iDriver add(HashMap<String, HashMap<String, String>> fields) {
+		int i = 0;
+		for(Map.Entry<String, HashMap<String, String>> entry : fields.entrySet()) {
+			i++;
+			HashMap<String, String> data = entry.getValue();
+			
+			String field = entry.getKey();
+			String type = "VARCHAR";
+			Integer length = 100;
+			Boolean NULL = false;
+			String def = "";
+			
+			if(data.containsKey("TYPE")) {
+				type = data.get("TYPE");
+			}
+			
+			if(data.containsKey("LENGTH")) {
+				if(null != data.get("LENGTH")) {
+					try{
+						length = Integer.parseInt(data.get("LENGTH"));
+						length = length < 0 ? 100 : length;
+					}catch(NumberFormatException e) {}
+				}else
+					length = null;
+			}
+			
+			if(data.containsKey("NULL")) {
+				NULL = Boolean.parseBoolean(data.get("NULL"));
+			}
+			
+			if(data.containsKey("DEFAULT")) {
+				def = data.get("DEFAULT");
+			}
+			
+			if(length != null)
+				type += "(" + length + ")";
+			
+			String n = (!NULL) ? " NOT NULL" : " DEFAULT NULL";
+			String d = (!def.equalsIgnoreCase("")) ? " DEFAULT " + def : "";
+			String c = (i < fields.size()) ? ",\n" : ""; 
+			
+			this.buildQuery(field + " " + type + n + d + c, true);
+		}
+		
+		return this;
+	}
 	
 	@Override
 	public iDriver debug(Boolean dbg) {

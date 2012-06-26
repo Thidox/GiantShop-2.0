@@ -67,6 +67,9 @@ public interface iDriver {
 	
 	public iDriver create(String table);
 	public iDriver fields(HashMap<String, HashMap<String, String>> fields);
+
+	public iDriver alter(String table);
+	public iDriver add(HashMap<String, HashMap<String, String>> fields);
 	
 	public iDriver debug(Boolean dbg);
 	public iDriver Finalize();
