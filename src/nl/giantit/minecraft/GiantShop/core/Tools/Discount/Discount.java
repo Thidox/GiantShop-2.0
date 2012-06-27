@@ -55,6 +55,14 @@ public class Discount {
 		return this.disc;
 	}
 	
+	public int getItemId() {
+		return this.id;
+	}
+	
+	public int getItemType() {
+		return this.type;
+	}
+	
 	public Boolean forItem(int id, int type) {
 		return this.id == id && this.type == type;
 	}
