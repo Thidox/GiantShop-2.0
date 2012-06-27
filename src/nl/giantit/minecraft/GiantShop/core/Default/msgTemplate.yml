@@ -1,4 +1,4 @@
-version: 1.2
+version: 1.3
 main:
     broadcastBuy: C_YELLOW%player C_WHITEbought some C_YELLOW%item 
     broadcastSell: C_YELLOW%player C_WHITEsold some C_YELLOW%item  
@@ -10,6 +10,7 @@ main:
     helpCommand: C_RED/%command C_YELLOW-C_WHITE %description
     itemListEntry: ID C_YELLOW%id C_WHITEType C_YELLOW%type C_WHITEName C_YELLOW%name C_WHITEAmount C_YELLOW%perStack C_WHITESell for C_YELLOW%sellFor C_WHITEBuy for C_YELLOW%buyFor C_WHITEStock C_YELLOW%stock
     newBalance: Your new balance is%colon C_YELLOW%balance
+    discountEntry: C_YELLOW%discount% C_WHITEon C_YELLOW%item 
 admin:
     add: You just added item C_YELLOW%item C_WHITEwith quantity C_YELLOW%amount sold for C_YELLOW%sellFor bought for C_YELLOW%buyFor with stock C_YELLOW%stock!
     addStock: You have successfully added C_YELLOW%amount C_WHITEto the stock of item C_YELLOW%item!
@@ -23,6 +24,7 @@ admin:
     nameUpdated: We have successfully changed the shops name to C_YELLOW%shopC_WHITE!
     shopUpdated: We have successfully updated the shop to name C_YELLOW%shop C_WHITEin the world C_YELLOW%worldC_WHITE!
     shopRemoved: We have successfully removed the shop with name C_YELLOW%shop C_WHITEin the world C_YELLOW%worldC_WHITE!
+    discountEntry: C_YELLOW%discount% C_WHITEon C_YELLOW%item C_WHITEfor %grplay C_YELLOW%for
 errors:
     noPermissions: C_REDWe are sorry but you do not have access to that command (C_YELLOW%commandC_RED)!
     syntaxError: C_REDPlease use the appropriate syntax for the C_YELLOW%command C_REDcommand!
