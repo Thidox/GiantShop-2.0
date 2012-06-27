@@ -105,7 +105,7 @@ public class List {
 					type = (type <= 0) ? null : type;
 					data.put("discount", String.valueOf(disc.getDiscount()));
 					data.put("item", iH.getItemNameByID(disc.getItemId(), type));
-					data.put("grplay", (disc.hasGroup() ? "group " : "player "));
+					data.put("grplay", (disc.hasGroup() ? "group" : "player"));
 					data.put("for", (disc.hasGroup() ? disc.getGroup() : disc.getOwner()));
 					
 					Heraut.say(p, mH.getMsg(Messages.msgType.ADMIN, "discountEntry", data));
