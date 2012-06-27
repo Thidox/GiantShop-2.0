@@ -30,8 +30,8 @@ public class List {
 			
 			if(args.length >= 2) {
 				try{
-					curPag = Integer.parseInt(args[1]);
-				}catch(Exception e) {
+					curPag = Integer.parseInt(args[2]);
+				}catch(NumberFormatException e) {
 					curPag = 1;
 				}
 			}else
@@ -77,8 +77,8 @@ public class List {
 			
 			if(args.length >= 3) {
 				try{
-					curPag = Integer.parseInt(args[2]);
-				}catch(Exception e) {
+					curPag = Integer.parseInt(args[3]);
+				}catch(NumberFormatException e) {
 					curPag = 1;
 				}
 			}else
