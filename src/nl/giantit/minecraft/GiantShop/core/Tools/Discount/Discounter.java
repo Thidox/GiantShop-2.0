@@ -93,4 +93,26 @@ public class Discounter {
 		
 		return (t != null) ? t.getDiscount() : 0;
 	}
+	
+	public Set<Discount> getAllDiscounts() {
+		return this.discounts;
+	}
+	
+	public Set<Discount> getAllDiscounts(Player p) {
+		Set<Discount> disc = new HashSet<Discount>();
+		
+		for(Discount discount : this.discounts) {
+			if(discount.hasGroup() && !this.perm.inGroup(p, discount.getGroup())) 
+				continue;
+			
+			if(!discount.hasGroup() && !discount.getOwner().equalsIgnoreCase(p.getName()))
+				continue;
+			
+			disc.add(discount);
+		}
+		
+		return disc;
+	}
+	
+	
 }
