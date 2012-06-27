@@ -44,11 +44,11 @@ public class List {
 			int start = (curPag * perPage) - perPage;
 			
 			if(discounts.size() <= 0) {
-				Heraut.say("&e[&3" + name + "&e]&c Sorry no discounts for you yet :(");
+				Heraut.say(p, "&e[&3" + name + "&e]&c Sorry no discounts for you yet :(");
 			}else if(curPag > pages) {
-				Heraut.say("&e[&3" + name + "&e]&c Your discounts list only has &e" + pages + " &cpages!!");
+				Heraut.say(p, "&e[&3" + name + "&e]&c Your discounts list only has &e" + pages + " &cpages!!");
 			}else{
-				Heraut.say("&e[&3" + name + "&e]&f Discounts. Page: &e" + curPag + "&f/&e" + pages);
+				Heraut.say(p, "&e[&3" + name + "&e]&f Discounts. Page: &e" + curPag + "&f/&e" + pages);
 
 				Iterator<Discount> discIterator = discounts.iterator();
 				for(int i = start; i < (((start + perPage) > discounts.size()) ? discounts.size() : (start + perPage)); i++) {
@@ -91,11 +91,11 @@ public class List {
 			int start = (curPag * perPage) - perPage;
 			
 			if(discounts.size() <= 0) {
-				Heraut.say("&e[&3" + name + "&e]&c Sorry no discounts yet :(");
+				Heraut.say(p, "&e[&3" + name + "&e]&c Sorry no discounts yet :(");
 			}else if(curPag > pages) {
-				Heraut.say("&e[&3" + name + "&e]&c Discounts list only has &e" + pages + " &cpages!!");
+				Heraut.say(p, "&e[&3" + name + "&e]&c Discounts list only has &e" + pages + " &cpages!!");
 			}else{
-				Heraut.say("&e[&3" + name + "&e]&f Discounts. Page: &e" + curPag + "&f/&e" + pages);
+				Heraut.say(p, "&e[&3" + name + "&e]&f Discounts. Page: &e" + curPag + "&f/&e" + pages);
 
 				Iterator<Discount> discIterator = discounts.iterator();
 				for(int i = start; i < (((start + perPage) > discounts.size()) ? discounts.size() : (start + perPage)); i++) {
