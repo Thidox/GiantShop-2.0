@@ -57,7 +57,6 @@ public class help {
 		int perPage = conf.getInt("GiantShop.Location.perPage");
 		int curPag = 0;
 		
-		int page;
 		if(args.length >= 2) {
 			try{
 				curPag = Integer.parseInt(args[1]);

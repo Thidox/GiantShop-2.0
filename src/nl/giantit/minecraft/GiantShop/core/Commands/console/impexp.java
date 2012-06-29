@@ -356,9 +356,8 @@ public class impexp {
 					fields.add("group");
 					
 					values = new ArrayList<HashMap<Integer, HashMap<String, String>>>();
-					int lineNumber = 0;
-					for(String[] item : items) {
-						lineNumber++;
+					for(int lineNumber = 0; lineNumber < items.size(); lineNumber++) {
+						String[] item = items.get(lineNumber);
 						
 						HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
 						for(String field : fields) {
