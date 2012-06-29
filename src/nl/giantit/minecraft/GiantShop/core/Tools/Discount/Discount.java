@@ -41,6 +41,10 @@ public class Discount {
 		}
 	}
 	
+	public void setDiscount(int disc) {
+		this.disc = disc;
+	}
+	
 	public int getDiscountID() {
 		return this.id;
 	}
