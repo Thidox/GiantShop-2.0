@@ -4,7 +4,6 @@ import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discount;
 import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discounter;
@@ -20,8 +19,6 @@ public class Remove {
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	private static Items iH = GiantShop.getPlugin().getItemHandler();
 	private static Discounter dH = GiantShop.getPlugin().getDiscounter();
-	private static config conf = config.Obtain();
-	private static String name = GiantShop.getPlugin().getPubName();
 	
 	public static void exec(Player p, String[] args) {
 		if(perms.has(p, "giantshop.admin.discount.remove")) {
