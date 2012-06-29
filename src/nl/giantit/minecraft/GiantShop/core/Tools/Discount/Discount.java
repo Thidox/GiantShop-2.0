@@ -11,17 +11,19 @@ public class Discount {
 	private String group;
 	private Boolean hasGroup = true;
 	private int id;
+	private int itemID;
 	private int type;
 	private int disc;
 	
-	public Discount(GiantShop plugin, int id, int type, int disc, String data) {
-		this(plugin, id, type, disc, data, true);
+	public Discount(GiantShop plugin, int id, int itemID, int type, int disc, String data) {
+		this(plugin, id, itemID, type, disc, data, true);
 	}
 	
-	public Discount(GiantShop plugin, int id, int type, int disc, String data, Boolean group) {
+	public Discount(GiantShop plugin, int id, int itemID, int type, int disc, String data, Boolean group) {
 		this.plugin = plugin;
 		
 		this.id = id;
+		this.itemID = itemID;
 		this.type = type;
 		this.disc = disc;
 		if(!group) {
@@ -37,6 +39,10 @@ public class Discount {
 				}
 			}
 		}
+	}
+	
+	public int getDiscountID() {
+		return this.id;
 	}
 	
 	public Boolean hasGroup() {
@@ -56,7 +62,7 @@ public class Discount {
 	}
 	
 	public int getItemId() {
-		return this.id;
+		return this.itemID;
 	}
 	
 	public int getItemType() {
