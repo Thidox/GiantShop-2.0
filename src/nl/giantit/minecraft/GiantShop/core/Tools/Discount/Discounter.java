@@ -134,6 +134,33 @@ public class Discounter {
 		}
 	}
 	
+	public int removeDiscount(int discountID) {
+		Discount d = null;
+		for(Discount discount : this.discounts) {
+			if(discount.getDiscountID() != discountID)
+				continue;
+			
+			d = discount;
+			break;
+		}
+		
+		if(d == null) {
+			return 1;
+		}else{
+			iDriver db = plugin.getDB().getEngine();
+			
+			HashMap<String, HashMap<String, String>> where = new HashMap<String, HashMap<String, String>>();
+			HashMap<String, String> data = new HashMap<String, String>();
+			data.put("kind", "INT");
+			data.put("data", "" + discountID);
+			where.put("id", data);
+			
+			this.discounts.remove(d);
+			db.delete("#__discounts").where(where, true).updateQuery();
+			return 0;
+		}
+	}
+	
 	public Boolean hasDiscount(ItemID iID, Player p) {
 		Discount t = null;
 		for(Discount discount : this.discounts) {
@@ -213,8 +240,31 @@ public class Discounter {
 
 			if(!group && (discount.hasGroup() || !discount.getOwner().equalsIgnoreCase(d)))
 				continue;
-
+			
 			disc.add(discount);
+		}
+		
+		return disc;
+	}
+	
+	public Discount getDiscount(ItemID iID, String d) {
+		return this.getDiscount(iID, d, true);
+	}
+	
+	public Discount getDiscount(ItemID iID, String d, Boolean group) {
+		Discount disc = null;
+		
+		for(Discount discount : this.discounts) {
+			if(group && (!discount.hasGroup() || !discount.getGroup().equalsIgnoreCase(d)))
+				continue;
+
+			if(!group && (discount.hasGroup() || !discount.getOwner().equalsIgnoreCase(d)))
+				continue;
+
+			if(discount.forItem(iID.getId(), (iID.getType() == null ? 0 : iID.getType()))) {
+				disc = discount;
+				break;
+			}
 		}
 		
 		return disc;
