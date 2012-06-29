@@ -48,8 +48,8 @@ errors:
     noShopSelected: C_REDWe are sorry, but you need to select a shop before you can update!
     itemOutOfStock: C_REDWe are sorry, but the requested item is out of stock!
     stockExeedsMaxStock: C_REDWe are sorry, but the given item stock exceeds our maximal capacity!
-    DiscountNoOwner: C_REDPlease enter a user of group for the discount!
-    DiscountZero: C_REDDiscounts can not be 0!
-    DiscountDupe: C_REDA discount that is exactly the same already exists!
+    discountNoOwner: C_REDPlease enter a user of group for the discount!
+    discountZero: C_REDDiscounts can not be 0!
+    discountDupe: C_REDA discount that is exactly the same already exists!
     discountNotFound: C_REDWe are sorry but the requested discount does not seem to exist!
     playerNotFound: C_REDWe are sorry but the player %player does not seem to exist!
