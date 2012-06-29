@@ -70,10 +70,6 @@ public class Remove {
 				if(iH.isValidItem(id, type)) {
 					if(user != null && !UnF) {
 						Discount d = dH.getDiscount(iH.getItemIDByName(iH.getItemNameByID(itemID, type)), user, false);
-						p.sendMessage(itemID + "");
-						p.sendMessage(type + "");
-						p.sendMessage(user + "");
-						p.sendMessage(iH.getItemNameByID(itemID, type));
 						if(d != null) {
 							id = d.getDiscountID();
 						}else{
