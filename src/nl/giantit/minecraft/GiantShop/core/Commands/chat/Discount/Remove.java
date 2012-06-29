@@ -12,6 +12,6 @@ public class Remove {
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	
 	public static void exec(Player player, String[] args) {
-		
+		// Meh not in the mood to do now...
 	}
 }
