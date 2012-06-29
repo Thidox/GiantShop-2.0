@@ -256,31 +256,31 @@ public class impexp {
 							HashMap<String, String> temp = new HashMap<String, String>();
 							if(field.equalsIgnoreCase("name")) {
 								temp.put("data", "" + item[0]);
-								tmp.put(0, temp);
+								tmp.put(lineNumber, temp);
 							}else if(field.equalsIgnoreCase("perms")) {
 								temp.put("data", "" + item[1]);
-								tmp.put(1, temp);
+								tmp.put(lineNumber, temp);
 							}else if(field.equalsIgnoreCase("world")) {
 								temp.put("data", "" + item[2]);
-								tmp.put(2, temp);
+								tmp.put(lineNumber, temp);
 							}else if(field.equalsIgnoreCase("locMinX")) {
 								temp.put("data", item[3]);
-								tmp.put(3, temp);
+								tmp.put(lineNumber, temp);
 							}else if(field.equalsIgnoreCase("locMinY")) {
 								temp.put("data", item[3]);
-								tmp.put(4, temp);
+								tmp.put(lineNumber, temp);
 							}else if(field.equalsIgnoreCase("locMinZ")) {
 								temp.put("data", item[3]);
-								tmp.put(5, temp);
+								tmp.put(lineNumber, temp);
 							}else if(field.equalsIgnoreCase("locMaxX")) {
 								temp.put("data", item[3]);
-								tmp.put(6, temp);
+								tmp.put(lineNumber, temp);
 							}else if(field.equalsIgnoreCase("locMaxY")) {
 								temp.put("data", item[3]);
-								tmp.put(7, temp);
+								tmp.put(lineNumber, temp);
 							}else if(field.equalsIgnoreCase("locMaxZ")) {
 								temp.put("data", item[3]);
-								tmp.put(8, temp);
+								tmp.put(lineNumber, temp);
 							}
 						}
 						values.add(tmp);
@@ -365,19 +365,19 @@ public class impexp {
 							HashMap<String, String> temp = new HashMap<String, String>();
 							if(field.equalsIgnoreCase("itemID")) {
 								temp.put("data", "" + item[0]);
-								tmp.put(0, temp);
+								tmp.put(lineNumber, temp);
 							}else if(field.equalsIgnoreCase("type")) {
 								temp.put("data", "" + item[1]);
-								tmp.put(0, temp);
+								tmp.put(lineNumber, temp);
 							}else if(field.equalsIgnoreCase("discount")) {
 								temp.put("data", "" + item[2]);
-								tmp.put(1, temp);
+								tmp.put(lineNumber, temp);
 							}else if(field.equalsIgnoreCase("user")) {
 								temp.put("data", "" + item[3]);
-								tmp.put(2, temp);
+								tmp.put(lineNumber, temp);
 							}else if(field.equalsIgnoreCase("group")) {
 								temp.put("data", item[4]);
-								tmp.put(3, temp);
+								tmp.put(lineNumber, temp);
 							}
 						}
 						values.add(tmp);
