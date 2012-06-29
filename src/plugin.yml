@@ -21,10 +21,15 @@ permissions:
             giantshop.shop.list: true
             giantshop.shop.check: true
             giantshop.shop.search: true
+            giantshop.discount.list: true
             giantshop.admin.send: true
             giantshop.admin.add: true
             giantshop.admin.update: true
             giantshop.admin.remove: true
+            giantshop.admin.discount.list: true
+            giantshop.admin.discount.add: true
+            giantshop.admin.discount.update: true
+            giantshop.admin.discount.remove: true
             giantshop.location.access: true
             giantshop.location.create: true
             giantshop.location.remove: true
@@ -39,6 +44,7 @@ permissions:
             giantshop.shop.list: true
             giantshop.shop.check: true
             giantshop.shop.search: true
+            giantshop.discount.list: true
     giantshop.admin.*:
         description: Gives access to all GiantShop admin commands
         children:
@@ -46,6 +52,10 @@ permissions:
             giantshop.admin.add: true
             giantshop.admin.update: true
             giantshop.admin.remove: true
+            giantshop.admin.discount.list: true
+            giantshop.admin.discount.add: true
+            giantshop.admin.discount.update: true
+            giantshop.admin.discount.remove: true
     giantshop.location.*:
         description: Gives access to all GiantShopLocation commands
         children:
@@ -71,6 +81,9 @@ permissions:
     giantshop.shop.search:
         description: Gives access to the item searching feature
         default: false
+    giantshop.discount.list:
+        description: Gives access to the discount list
+        default: false
     giantshop.admin.sendhelp:
         description: Enables admin to send GiantShop help to user
         default: false
@@ -82,6 +95,18 @@ permissions:
         default: false
     giantshop.admin.remove:
         description: Enables admin to remove items from GiantShop
+        default: false
+    giantshop.admin.discount.list:
+        description:  Enables admin to list all known discounts
+        default: false
+    giantshop.admin.discount.add:
+        description: Enables admin to add discounts
+        default: false
+    giantshop.admin.discount.update:
+        description: Enables admin to update discounts
+        default: false
+    giantshop.admin.discount.remove:
+        description: Enables admin to remove discounts
         default: false
     giantshop.location.overide:
         description: Enables admin to override location
