@@ -70,6 +70,6 @@ public class Discount {
 	}
 	
 	public Boolean forItem(int id, int type) {
-		return this.id == id && this.type == type;
+		return this.itemID == id && this.type == type;
 	}
 }
