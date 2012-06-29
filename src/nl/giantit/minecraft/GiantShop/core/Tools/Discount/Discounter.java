@@ -134,6 +134,34 @@ public class Discounter {
 		}
 	}
 	
+	public int updateDiscount(int discountID, int newDiscount) {
+		Discount d = null;
+		for(Discount discount : this.discounts) {
+			if(discount.getDiscountID() != discountID)
+				continue;
+			
+			d = discount;
+			break;
+		}
+		
+		if(d == null) {
+			return 1;
+		}else{
+			/*iDriver db = plugin.getDB().getEngine();
+			
+			HashMap<String, HashMap<String, String>> where = new HashMap<String, HashMap<String, String>>();
+			HashMap<String, String> data = new HashMap<String, String>();
+			data.put("kind", "INT");
+			data.put("data", "" + discountID);
+			where.put("id", data);
+			
+			this.discounts.remove(d);
+			db.delete("#__discounts").where(where, true).updateQuery();*/
+			d.setDiscount(newDiscount);
+			return 0;
+		}
+	}
+	
 	public int removeDiscount(int discountID) {
 		Discount d = null;
 		for(Discount discount : this.discounts) {
