@@ -22,18 +22,24 @@ public class Discounter {
 	
 	private void loadDiscounts() {
 		iDriver db = plugin.getDB().getEngine();
-		ArrayList<HashMap<String, String>> resSet = db.select("itemID", "type", "discount", "user", "grp").from("#__discounts").execQuery();
+		HashMap<String, String> order = new HashMap<String, String>();
+		order.put("itemID", "ASC");
+		order.put("type", "ASC");
+		order.put("id", "ASC");
+		
+		ArrayList<HashMap<String, String>> resSet = db.select("*").from("#__discounts").orderBy(order).execQuery();
 		for(HashMap<String, String> res : resSet) {
-			int id = Integer.parseInt(res.get("itemID"));
+			int id = Integer.parseInt(res.get("id"));
+			int itemId = Integer.parseInt(res.get("itemID"));
 			int type = Integer.parseInt(res.get("type"));
 			type = (type <= 0) ? 0 : type;
 			
 			int discount = Integer.parseInt(res.get("discount"));
 			
 			if(res.get("grp") == null || res.get("grp").equalsIgnoreCase("")) {
-				discounts.add(new Discount(plugin, id, type, discount, res.get("user"), false));
+				discounts.add(new Discount(plugin, id, itemId, type, discount, res.get("user"), false));
 			}else{
-				discounts.add(new Discount(plugin, id, type, discount, res.get("grp"), true));
+				discounts.add(new Discount(plugin, id, itemId, type, discount, res.get("grp"), true));
 			}
 		}
 	}
@@ -45,6 +51,86 @@ public class Discounter {
 		
 		if(this.conf.getBoolean(plugin.getName() + ".discounts.useDiscounts")) {
 			this.loadDiscounts();
+		}
+	}
+	
+	public int addDiscount(ItemID iID, int disc, String data) {
+		return this.addDiscount(iID, disc, data, true);
+	}
+	
+	public int addDiscount(ItemID iID, int disc, String data, Boolean group) {
+		Boolean exists = false;
+		for(Discount discount : this.discounts) {
+			if(!discount.forItem(iID.getId(), (iID.getType() == null) ? 0 : iID.getType()))
+				continue;
+			
+			if(group && (!discount.hasGroup() || !discount.getGroup().equalsIgnoreCase(data)))
+				continue;
+			
+			if(!group && (discount.hasGroup() || !discount.getOwner().equalsIgnoreCase(data)))
+				continue;
+			
+			exists = true;
+			break;
+		}
+		
+		if(exists) {
+			return 1;
+		}else{
+			iDriver db = plugin.getDB().getEngine();
+			ArrayList<String> fields = new ArrayList<String>();
+			fields.add("itemID");
+			fields.add("type");
+			fields.add("discount");
+			
+			if(!group) {
+				fields.add("user");
+			}else{
+				fields.add("grp");
+			}
+			
+			HashMap<Integer, HashMap<String, String>> values = new HashMap<Integer, HashMap<String, String>>();
+			for(int i = 0; i < fields.size(); i++) {
+				String field = fields.get(i);
+				HashMap<String, String> value = new HashMap<String, String>();
+				
+				if(field.equalsIgnoreCase("itemID")) {
+					value.put("kind", "INT");
+					value.put("data", "" + iID.getId());
+				}else if(field.equalsIgnoreCase("type")) {
+					value.put("kind", "INT");
+					value.put("data", "" + ((iID.getType() == null) ? -1 : iID.getType()));
+				}else if(field.equalsIgnoreCase("discount")) {
+					value.put("kind", "INT");
+					value.put("data", "" + disc);
+				}else if(field.equalsIgnoreCase("user")) {
+					value.put("data", "" + data);
+				}else if(field.equalsIgnoreCase("grp")) {
+					value.put("data", "" + data);
+				}
+				
+				values.put(i, value);
+			}
+			
+			db.insert("#__discounts", fields, values).updateQuery();
+			HashMap<String, String> where = new HashMap<String, String>();
+			if(group) {
+				where.put("grp", data);
+			}else{
+				where.put("user", data);
+			}
+			where.put("itemID", "" + iID.getId());
+			where.put("type", "" + ((iID.getType() == null) ? -1 : iID.getType()));
+			
+			ArrayList<HashMap<String, String>> resSet = db.select("id").from("#__discounts").where(where).execQuery();
+			int id = Integer.parseInt(resSet.get(0).get("id"));
+			if(group) {
+				this.discounts.add(new Discount(plugin, id, iID.getId(), ((iID.getType() == null) ? 0 : iID.getType()), disc, data, true));
+				return 0;
+			}else{
+				this.discounts.add(new Discount(plugin, id, iID.getId(), ((iID.getType() == null) ? 0 : iID.getType()), disc, data, false));
+				return 0;
+			}
 		}
 	}
 	
@@ -114,5 +200,24 @@ public class Discounter {
 		return disc;
 	}
 	
+	public Set<Discount> getAllDiscounts(String d) {
+		return this.getAllDiscounts(d, true);
+	}
+	
+	public Set<Discount> getAllDiscounts(String d, Boolean group) {
+		Set<Discount> disc = new HashSet<Discount>();
+		
+		for(Discount discount : this.discounts) {
+			if(group && (!discount.hasGroup() || !discount.getGroup().equalsIgnoreCase(d)))
+				continue;
+
+			if(!group && (discount.hasGroup() || !discount.getOwner().equalsIgnoreCase(d)))
+				continue;
+
+			disc.add(discount);
+		}
+		
+		return disc;
+	}
 	
 }
