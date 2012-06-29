@@ -147,7 +147,7 @@ public class Discounter {
 		if(d == null) {
 			return 1;
 		}else{
-			/*iDriver db = plugin.getDB().getEngine();
+			iDriver db = plugin.getDB().getEngine();
 			
 			HashMap<String, HashMap<String, String>> where = new HashMap<String, HashMap<String, String>>();
 			HashMap<String, String> data = new HashMap<String, String>();
@@ -155,8 +155,13 @@ public class Discounter {
 			data.put("data", "" + discountID);
 			where.put("id", data);
 			
-			this.discounts.remove(d);
-			db.delete("#__discounts").where(where, true).updateQuery();*/
+			HashMap<String, HashMap<String, String>> set = new HashMap<String, HashMap<String, String>>();
+			data = new HashMap<String, String>();
+			data.put("kind", "INT");
+			data.put("data", "" + newDiscount);
+			set.put("discount", data);
+			
+			db.update("#__discounts").set(set, true).where(where, true).updateQuery();
 			d.setDiscount(newDiscount);
 			return 0;
 		}
