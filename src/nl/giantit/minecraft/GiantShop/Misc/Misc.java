@@ -1,11 +1,44 @@
 package nl.giantit.minecraft.GiantShop.Misc;
 
+import nl.giantit.minecraft.GiantShop.GiantShop;
+
+import org.bukkit.OfflinePlayer;
+
+import java.util.HashMap;
 import java.util.List;
 /**
  *
  * @author Giant
  */
 public class Misc {
+	
+	private static HashMap<String, OfflinePlayer> players = new HashMap<String, OfflinePlayer>();
+
+	private static OfflinePlayer getOfflinePlayer(final String name) {
+	
+		OfflinePlayer found = null;
+		int lastLength = Integer.MAX_VALUE;
+		for(OfflinePlayer p : GiantShop.getPlugin().getSrvr().getOfflinePlayers()) {
+			if(p.getFirstPlayed() <= 0)
+				continue;
+			
+			if (p.getName().toLowerCase().startsWith(name.toLowerCase())) {
+				int length = p.getName().length() - name.length();
+				if(length < lastLength) {
+					found = p;
+					lastLength = length;
+				}
+				
+				if(length == 0)
+					break;
+			}
+		}
+		
+		if(found != null)
+			players.put(name, found);
+		
+		return found;
+	}
 	
 	public static boolean isEither(String target, String is, String either) {
 		if(target.equals(is) || target.equals(either))
@@ -63,5 +96,10 @@ public class Misc {
 		return Math.round(r * p) / p;
 	}
 	
-	
+	public static OfflinePlayer getPlayer(String name) {
+		if(players.containsKey(name))
+			return players.get(name);
+		
+		return getOfflinePlayer(name);
+	}
 }
