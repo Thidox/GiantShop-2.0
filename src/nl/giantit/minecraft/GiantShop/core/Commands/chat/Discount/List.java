@@ -28,7 +28,7 @@ public class List {
 			int perPage = conf.getInt("GiantShop.global.perPage");
 			int curPag = 0;
 			
-			if(args.length >= 2) {
+			if(args.length > 2) {
 				try{
 					curPag = Integer.parseInt(args[2]);
 				}catch(NumberFormatException e) {
@@ -74,19 +74,44 @@ public class List {
 		if(perms.has(p, "giantshop.admin.discount.list")) {
 			int perPage = conf.getInt("GiantShop.global.perPage");
 			int curPag = 0;
+			String user = null;
+			String group = null;
 			
-			if(args.length >= 3) {
+			if(args.length > 3) {
 				try{
 					curPag = Integer.parseInt(args[3]);
 				}catch(NumberFormatException e) {
-					curPag = 1;
+					for(int i = 2; i < args.length; i++) {
+						if(args[i].startsWith("-p:")) {
+							try{
+								curPag = Integer.parseInt(args[i].replaceFirst("-p:", ""));
+							}catch(NumberFormatException ex) {
+							}
+							continue;
+						}else if(args[i].startsWith("-u:")) {
+							user = args[i].replaceFirst("-u:", "");
+							if(Misc.getPlayer(user) != null)
+								user = Misc.getPlayer(user).getName();
+							continue;
+						}else if(args[i].startsWith("-g:")) {
+							group = args[i].replaceFirst("-g:", "");
+							continue;
+						}
+					}
 				}
 			}else
 				curPag = 1;
 			
 			curPag = (curPag > 0) ? curPag : 1;
 			
-			Set<Discount> discounts = GiantShop.getPlugin().getDiscounter().getAllDiscounts(p);
+			Set<Discount> discounts;
+			if(user != null) {
+				discounts = GiantShop.getPlugin().getDiscounter().getAllDiscounts(user, false);
+			}else if(group != null) {
+				discounts = GiantShop.getPlugin().getDiscounter().getAllDiscounts(group, true);
+			}else{
+				discounts = GiantShop.getPlugin().getDiscounter().getAllDiscounts();
+			}
 			int pages = ((int)Math.ceil((double)discounts.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)discounts.size() / (double)perPage);
 			int start = (curPag * perPage) - perPage;
 			
@@ -103,6 +128,7 @@ public class List {
 					HashMap<String, String> data = new HashMap<String, String>();
 					Integer type = disc.getItemType();
 					type = (type <= 0) ? null : type;
+					data.put("id", String.valueOf(disc.getDiscountID()));
 					data.put("discount", String.valueOf(disc.getDiscount()));
 					data.put("item", iH.getItemNameByID(disc.getItemId(), type));
 					data.put("grplay", (disc.hasGroup() ? "group" : "player"));
