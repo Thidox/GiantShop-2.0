@@ -322,7 +322,7 @@ public class impexp {
 								lineNumber++;
 								
 								if(lineNumber <= 1) {
-									if(!line.equals("itemID, dicount, user, group")) {
+									if(!line.equals("itemID, type, discount, user, group")) {
 										Heraut.say(sender, "The given file is not a proper discounts file!");
 										br.close();
 										return;
@@ -332,7 +332,7 @@ public class impexp {
 
 								//break comma separated line using ", "
 								String[] st = line.split(", ");
-								if(st.length == 4) {
+								if(st.length == 5) {
 									items.add(st);
 								}else{
 									err = true;
@@ -350,6 +350,7 @@ public class impexp {
 					
 					fields = new ArrayList<String>();
 					fields.add("itemID");
+					fields.add("type");
 					fields.add("discount");
 					fields.add("user");
 					fields.add("group");
@@ -365,14 +366,17 @@ public class impexp {
 							if(field.equalsIgnoreCase("itemID")) {
 								temp.put("data", "" + item[0]);
 								tmp.put(0, temp);
-							}else if(field.equalsIgnoreCase("discount")) {
+							}else if(field.equalsIgnoreCase("type")) {
 								temp.put("data", "" + item[1]);
+								tmp.put(0, temp);
+							}else if(field.equalsIgnoreCase("discount")) {
+								temp.put("data", "" + item[2]);
 								tmp.put(1, temp);
 							}else if(field.equalsIgnoreCase("user")) {
-								temp.put("data", "" + item[2]);
+								temp.put("data", "" + item[3]);
 								tmp.put(2, temp);
 							}else if(field.equalsIgnoreCase("group")) {
-								temp.put("data", item[3]);
+								temp.put("data", item[4]);
 								tmp.put(3, temp);
 							}
 						}
@@ -724,17 +728,18 @@ public class impexp {
 	private static boolean expDiscount(ArrayList<HashMap<String, String>> dResSet, String dir, String file) {
 		try{
 			BufferedWriter f = new BufferedWriter(new FileWriter(dir + File.separator + file));
-			f.write("itemID, dicount, user, group");
+			f.write("itemID, type, discount, user, group");
 			f.newLine();
 			for(int i = 0; i < dResSet.size(); i++) {
 				HashMap<String, String> data = dResSet.get(i);
 
 				String itemID = data.get("itemID");
-				String dicount = data.get("dicount");
+				String type = data.get("type");
+				String dicount = data.get("discount");
 				String user = data.get("user");
-				String group = data.get("world");
+				String group = data.get("group");
 
-				f.write(itemID + ", " + dicount + ", " + user + ", " + group);
+				f.write(itemID + ", " + type + ", " + dicount + ", " + user + ", " + group);
 				f.newLine();
 			}
 			f.flush();
