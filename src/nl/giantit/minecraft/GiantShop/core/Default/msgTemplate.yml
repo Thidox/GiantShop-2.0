@@ -24,7 +24,8 @@ admin:
     nameUpdated: We have successfully changed the shops name to C_YELLOW%shopC_WHITE!
     shopUpdated: We have successfully updated the shop to name C_YELLOW%shop C_WHITEin the world C_YELLOW%worldC_WHITE!
     shopRemoved: We have successfully removed the shop with name C_YELLOW%shop C_WHITEin the world C_YELLOW%worldC_WHITE!
-    discountEntry: C_YELLOW%discount% C_WHITEon C_YELLOW%item C_WHITEfor %grplay C_YELLOW%for
+    discountEntry: (C_RED%idC_WHITE) C_YELLOW%discount% C_WHITEon C_YELLOW%item C_WHITEfor %grplay C_YELLOW%for
+    discountAdd: Successfully added a C_YELLOW%discount% C_WHITEon C_YELLOW%item C_WHITEfor %grplay C_YELLOW%for
 errors:
     noPermissions: C_REDWe are sorry but you do not have access to that command (C_YELLOW%commandC_RED)!
     syntaxError: C_REDPlease use the appropriate syntax for the C_YELLOW%command C_REDcommand!
@@ -46,3 +47,7 @@ errors:
     noShopSelected: C_REDWe are sorry, but you need to select a shop before you can update!
     itemOutOfStock: C_REDWe are sorry, but the requested item is out of stock!
     stockExeedsMaxStock: C_REDWe are sorry, but the given item stock exceeds our maximal capacity!
+    DiscountNoOwner: C_REDPlease enter a user of group for the discount!
+    DiscountZero: C_REDDiscounts can not be 0!
+    DiscountDupe: C_REDA discount that is exactly the same already exists!
+    playerNotFound: C_REDWe are sorry but the player %player does not seem to exist!
