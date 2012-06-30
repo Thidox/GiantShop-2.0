@@ -87,6 +87,8 @@ public class chat {
 				remove.remove(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "discount", "d")) {
 			discount.exec(player, args);
+		}else if(Misc.isEitherIgnoreCase(args[0], "reload", "rel")) {
+			reload.exec(player, args);
 		}else{
 			Heraut.say(player, "Ok, we have no friggin clue what you are on about, so what about we just send you our help page?");
 			help.showHelp(player, args);
