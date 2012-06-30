@@ -148,10 +148,10 @@ public class GiantShop extends JavaPlugin {
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if (Misc.isEitherIgnoreCase(cmd.getName(), "shop", "s")) {
 			if(!(sender instanceof Player)){
-				return console.exec(sender, cmd, commandLabel, args);
+				return console.exec(sender, args);
 			}
 			
-			return chat.exec(sender, cmd, commandLabel, args);
+			return chat.exec(sender, args);
 		}else if (cmd.getName().equalsIgnoreCase("loc")) {
 			return locHandler.onCommand(sender, cmd, commandLabel, args);
 		}

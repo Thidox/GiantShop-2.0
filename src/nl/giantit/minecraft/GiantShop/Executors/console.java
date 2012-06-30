@@ -4,7 +4,6 @@ import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.Commands.console.*;
 
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -19,7 +18,7 @@ public class console {
 		this.plugin = plugin;
 	}
 
-	public boolean exec(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+	public boolean exec(CommandSender sender, String[] args) {
 		//on hold till after buy/sell command
 		if(args.length == 0 || args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") || args[0].equalsIgnoreCase("?")) {
 			//done

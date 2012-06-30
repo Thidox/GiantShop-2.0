@@ -1,11 +1,10 @@
 package nl.giantit.minecraft.GiantShop.Executors;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.Commands.chat.*;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
+import nl.giantit.minecraft.GiantShop.core.Commands.chat.*;
 
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -21,7 +20,7 @@ public class chat {
 		this.plugin = plugin;
 	}
 
-	public boolean exec(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+	public boolean exec(CommandSender sender, String[] args) {
 		Player player = (Player) sender;
 		
 		if(args.length == 0 || args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") || args[0].equalsIgnoreCase("?")) {
