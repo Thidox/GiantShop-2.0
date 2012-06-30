@@ -52,6 +52,13 @@ public class bpEngine implements Permission {
 
 	@Override
 	public boolean has(String p, String perm, String world) {
+		Player pl = plugin.getServer().getPlayer(p);
+		if(pl == null)
+			return false;
+		
+		if(opHasPerms && pl.isOp())
+			return true;
+		
 		return ApiLayer.hasPermission(world, CalculableType.USER, p, perm);
 	}
 
