@@ -28,6 +28,7 @@ admin:
     discountAdd: Successfully added a C_YELLOW%discount% C_WHITEon C_YELLOW%item C_WHITEfor %grplay C_YELLOW%for
     discountUpdated: Successfully updated the discount with id C_YELLOW%idC_WHITE! New discount%colon C_YELLOW%newDiscountC_WHITE.
     discountRemoved: Successfully removed the discount with id C_YELLOW%idC_WHITE!
+    confReload: C_GREENThe configuration file has successfully been reloaded!
 errors:
     noPermissions: C_REDWe are sorry but you do not have access to that command (C_YELLOW%commandC_RED)!
     syntaxError: C_REDPlease use the appropriate syntax for the C_YELLOW%command C_REDcommand!
