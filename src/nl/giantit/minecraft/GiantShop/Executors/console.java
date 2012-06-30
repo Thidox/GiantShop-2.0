@@ -61,6 +61,8 @@ public class console {
 			//done
 			//needs testing
 			truncate.truncate(sender, args);
+		}else if(Misc.isEitherIgnoreCase(args[0], "discount", "d")) {
+			discount.exec(sender, args);
 		}else{
 			sender.sendMessage("[" + plugin.getName() + "] Command not found! See help for more information.");
 		}
