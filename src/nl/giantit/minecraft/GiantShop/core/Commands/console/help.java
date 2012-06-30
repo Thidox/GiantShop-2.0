@@ -47,6 +47,7 @@ public class help {
 		entries.add(new String[] {"shop discount|d add|a (-i:[itemID]) (-t:[type]) (-u:[user]) (-g:[group]) -d:[discount]", "Add a discount to the shop", "giantshop.admin.discount.add"});
 		entries.add(new String[] {"shop discount|d update|u -id:[discountID] -d:[discount]", "Update discount x to y", "giantshop.admin.discount.update"});
 		entries.add(new String[] {"shop discount|d remove|r -id:[discountID]", "Remove discount from the shop", "giantshop.admin.discount.remove"});
+		entries.add(new String[] {"shop reload|rel", "Reload the config file.", "giantshop.admin.reload"});
 		
 		cEntries = new ArrayList<String[]>();
 		cEntries.add(new String[] {"shop", "Show GiantShop help page 1"});
@@ -70,6 +71,7 @@ public class help {
 		cEntries.add(new String[] {"shop discount|d add|a (-i:[itemID]) (-t:[type]) (-u:[user]) (-g:[group]) -d:[discount]", "Add a discount to the shop"});
 		cEntries.add(new String[] {"shop discount|d update|u -id:[discountID] -d:[discount]", "Update discount x to y"});
 		cEntries.add(new String[] {"shop discount|d remove|r -id:[discountID]", "Remove discount from the shop"});
+		cEntries.add(new String[] {"shop reload|rel", "Reload the config file."});
 		cEntries.add(new String[] {"shop import|i (-t:[type]) (-p:[path]) (-f:[file]) (-c:[commence])", "Import an earlier made file backup into GiantShop"});
 		cEntries.add(new String[] {"shop importLegacy|iL (-p:[path]) (-f:[file]) (-c:[commence])", "Import your old GiantShop data.csv file back into the new GiantShop!"});
 		cEntries.add(new String[] {"shop export|e (type)", "Creates a backup of the given table"});

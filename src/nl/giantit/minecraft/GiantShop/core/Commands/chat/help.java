@@ -47,6 +47,7 @@ public class help {
 		entries.add(new String[] {"shop discount|d add|a (-i:[itemID]) (-t:[type]) (-u:[user]) (-g:[group]) -d:[discount]", "Add a discount to the shop", "giantshop.admin.discount.add"});
 		entries.add(new String[] {"shop discount|d update|u -id:[discountID] -d:[discount]", "Update discount x to y", "giantshop.admin.discount.update"});
 		entries.add(new String[] {"shop discount|d remove|r -id:[discountID]", "Remove discount from the shop", "giantshop.admin.discount.remove"});
+		entries.add(new String[] {"shop reload|rel", "Reload the config file.", "giantshop.admin.reload"});
 	}
 	
 	public static void showHelp(Player player, String[] args) {
