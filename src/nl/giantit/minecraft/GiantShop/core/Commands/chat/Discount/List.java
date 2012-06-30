@@ -24,7 +24,7 @@ public class List {
 	private static String name = GiantShop.getPlugin().getPubName();
 	
 	private static void available(Player p, String[] args) {
-		if(perms.has(p, "giantshop.discount.list")) {
+		if(perms.has(p, "giantshop.shop.discount.list")) {
 			int perPage = conf.getInt("GiantShop.global.perPage");
 			int curPag = 0;
 			
