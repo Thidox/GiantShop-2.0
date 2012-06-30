@@ -74,9 +74,9 @@ public class Add {
 						data.put("grplay", "player");
 						data.put("for", user);
 						
-						Heraut.say(sender, mH.getMsg(Messages.msgType.ADMIN, "discountAdd", data));
+						Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ADMIN, "discountAdd", data));
 					}else{
-						Heraut.say(sender, mH.getMsg(Messages.msgType.ERROR, "discountDupe"));
+						Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "discountDupe"));
 					}
 				}else if(group != null) {
 					int a = GiantShop.getPlugin().getDiscounter().addDiscount(iID, discount, group, true);
@@ -87,25 +87,25 @@ public class Add {
 						data.put("grplay", "group");
 						data.put("for", group);
 						
-						Heraut.say(sender, mH.getMsg(Messages.msgType.ADMIN, "discountAdd", data));
+						Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ADMIN, "discountAdd", data));
 					}else{
-						Heraut.say(sender, mH.getMsg(Messages.msgType.ERROR, "discountDupe"));
+						Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "discountDupe"));
 					}
 				}else{
 					if(!UnF) {
-						Heraut.say(sender, mH.getMsg(Messages.msgType.ERROR, "discountNoOwner"));
+						Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "discountNoOwner"));
 					}else{
 						HashMap<String, String> data = new HashMap<String, String>();
 						data.put("player", user);
 						
-						Heraut.say(sender, mH.getMsg(Messages.msgType.ERROR, "playerNotFound", data));
+						Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "playerNotFound", data));
 					}
 				}
 			}else{
-				Heraut.say(sender, mH.getMsg(Messages.msgType.ERROR, "discountZero"));
+				Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "discountZero"));
 			}
 		}else{
-			Heraut.say(sender, mH.getMsg(Messages.msgType.ERROR, "itemNotFound"));
+			Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "itemNotFound"));
 		}
 	}
 }

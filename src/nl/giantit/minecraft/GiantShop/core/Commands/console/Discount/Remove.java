@@ -82,7 +82,7 @@ public class Remove {
 				}
 			}else{
 				//Invalid item!
-				Heraut.say(p, mH.getMsg(Messages.msgType.ERROR, "itemNotFound"));
+				Heraut.say(p, mH.getConsoleMsg(Messages.msgType.ERROR, "itemNotFound"));
 				return;
 			}
 		}
@@ -94,12 +94,12 @@ public class Remove {
 				HashMap<String, String> data = new HashMap<String, String>();
 				data.put("id", String.valueOf(id));
 				
-				Heraut.say(p, mH.getMsg(Messages.msgType.ADMIN, "discountRemoved", data));
+				Heraut.say(p, mH.getConsoleMsg(Messages.msgType.ADMIN, "discountRemoved", data));
 				return;
 			}
 		}
 		
 		//Discount not found!
-		Heraut.say(p, mH.getMsg(Messages.msgType.ERROR, "discountNotFound"));
+		Heraut.say(p, mH.getConsoleMsg(Messages.msgType.ERROR, "discountNotFound"));
 	}
 }

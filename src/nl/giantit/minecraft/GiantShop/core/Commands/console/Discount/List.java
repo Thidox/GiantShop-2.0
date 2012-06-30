@@ -67,11 +67,11 @@ public class List {
 		int start = (curPag * perPage) - perPage;
 		
 		if(discounts.size() <= 0) {
-			Heraut.say(p, "&e[&3" + name + "&e]&c Sorry no discounts yet :(");
+			Heraut.say(p, "[" + name + "] Sorry no discounts yet :(");
 		}else if(curPag > pages) {
-			Heraut.say(p, "&e[&3" + name + "&e]&c Discounts list only has &e" + pages + " &cpages!!");
+			Heraut.say(p, "[" + name + "] Discounts list only has " + pages + " pages!!");
 		}else{
-			Heraut.say(p, "&e[&3" + name + "&e]&f Discounts. Page: &e" + curPag + "&f/&e" + pages);
+			Heraut.say(p, "[" + name + "] Discounts. Page: " + curPag + "/" + pages);
 
 			Iterator<Discount> discIterator = discounts.iterator();
 			for(int i = start; i < (((start + perPage) > discounts.size()) ? discounts.size() : (start + perPage)); i++) {

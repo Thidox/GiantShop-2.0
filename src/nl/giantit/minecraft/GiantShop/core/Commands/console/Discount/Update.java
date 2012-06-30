@@ -91,7 +91,7 @@ public class Update {
 					}
 				}else{
 					//Invalid item!
-					Heraut.say(p, mH.getMsg(Messages.msgType.ERROR, "itemNotFound"));
+					Heraut.say(p, mH.getConsoleMsg(Messages.msgType.ERROR, "itemNotFound"));
 					return;
 				}
 			}
@@ -104,15 +104,15 @@ public class Update {
 					data.put("id", String.valueOf(id));
 					data.put("newDiscount", String.valueOf(discount));
 					
-					Heraut.say(p, mH.getMsg(Messages.msgType.ADMIN, "discountUpdated", data));
+					Heraut.say(p, mH.getConsoleMsg(Messages.msgType.ADMIN, "discountUpdated", data));
 					return;
 				}
 			}
 			
 			//Discount not found!
-			Heraut.say(p, mH.getMsg(Messages.msgType.ERROR, "discountNotFound"));
+			Heraut.say(p, mH.getConsoleMsg(Messages.msgType.ERROR, "discountNotFound"));
 		}else{
-			Heraut.say(p, mH.getMsg(Messages.msgType.ERROR, "discountZero"));
+			Heraut.say(p, mH.getConsoleMsg(Messages.msgType.ERROR, "discountZero"));
 		}
 	}
 }
