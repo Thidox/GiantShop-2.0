@@ -51,7 +51,7 @@ public class GiantShop extends JavaPlugin {
 	private MetricsHandler metrics;
 	private int tID;
 	private String name, dir, pubName;
-	private String bName = "Dental Dam";
+	private String bName = "Forniphilia";
 	
 	private boolean useLoc = false;
 	public List<String> cmds;
