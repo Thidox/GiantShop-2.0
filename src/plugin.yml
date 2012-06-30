@@ -1,6 +1,6 @@
 name: GiantShop
 main: nl.giantit.minecraft.GiantShop.GiantShop
-version: 0.8.DEV
+version: 0.9.DEV
 authors: [Giant]
 commands:
     shop:
