@@ -32,6 +32,7 @@ public class help {
 		entries.add(new String[] {"shop buy|b [item](:[type]) (amount)", "Buy (amount) of item (item)", "giantshop.shop.buy"});
 		entries.add(new String[] {"shop gift|g [player[ [item](:[type]) (amount)", "Gift (amount) of item (item) to player (player)", "giantshop.shop.gift"});
 		entries.add(new String[] {"shop sell|s [item](:[type]) (amount)", "Sell (amount) of item (item)", "giantshop.shop.sell"});
+		entries.add(new String[] {"shop discount|d (page)", "Show your available discounts", "giantshop.shop.discount.list"});
 		entries.add(new String[] {"shop add|a [item](:[type]) [amount] [sellFor] (buyFor) (stock)", "Add an item to the shop", "giantshop.admin.add"});
 		entries.add(new String[] {"shop update|u select [item](:[type])", "Select an item for updating", "giantshop.admin.update"});
 		entries.add(new String[] {"shop update|u show", "Show current details for the selected item", "giantshop.admin.update"});
@@ -39,9 +40,13 @@ public class help {
 		entries.add(new String[] {"shop update|u set buyFor [new value]", "Update the amount of money a player receives on selling", "giantshop.admin.update"});
 		entries.add(new String[] {"shop update|u set stock [new value]", "Update the quantity of items in the shop", "giantshop.admin.update"});
 		entries.add(new String[] {"shop update|u set perStack [new value]", "Update the quantity of items per amount", "giantshop.admin.update"});
-	//	entries.add(new String[] {"shop update|u set shops [new value]", "Update a value of the item", "giantshop.admin.update"}); // Future stuff!
 		entries.add(new String[] {"shop update|u save", "Saves the changes that you made to the item", "giantshop.admin.update"});
 		entries.add(new String[] {"shop remove|r [item](:[type])", "Remove an item from the shop", "giantshop.admin.remove"});
+		entries.add(new String[] {"shop discount|d list|l all|a (page)", "Show all discounts page x", "giantshop.admin.discount.list"});
+		entries.add(new String[] {"shop discount|d list|l all|a (-p:[page]) (-u:[user]) (-g:[group])", "Show all discounts page x for user u or group g", "giantshop.admin.discount.list"});
+		entries.add(new String[] {"shop discount|d add|a (-i:[itemID]) (-t:[type]) (-u:[user]) (-g:[group]) -d:[discount]", "Add a discount to the shop", "giantshop.admin.discount.add"});
+		entries.add(new String[] {"shop discount|d update|u -id:[discountID] -d:[discount]", "Update discount x to y", "giantshop.admin.discount.update"});
+		entries.add(new String[] {"shop discount|d remove|r -id:[discountID]", "Remove discount from the shop", "giantshop.admin.discount.remove"});
 	}
 	
 	public static void showHelp(Player player, String[] args) {
