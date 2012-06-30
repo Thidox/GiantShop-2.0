@@ -40,6 +40,20 @@ public class config {
 		}
 	}
 	
+	public void reload() {
+		this.configuration = null;
+		this.configuration = YamlConfiguration.loadConfiguration(this.file);
+		
+		double v = this.getDouble("GiantShop.global.version");
+		if(v < this.yamlVersion) {
+			GiantShop.getPlugin().getLogger().log(Level.INFO, "Your conf.yml has ran out of date. Updating now!");
+			File oconfigFile = new File(GiantShop.getPlugin().getDir(), "conf.yml." + v + ".bak");
+			this.file.renameTo(oconfigFile);
+			GiantShop.getPlugin().extract("conf.yml");
+			this.configuration = YamlConfiguration.loadConfiguration(this.file);
+		}
+	}
+	
 	public String getString(String setting) {
 		return this.configuration.getString(setting, "");
 	}
