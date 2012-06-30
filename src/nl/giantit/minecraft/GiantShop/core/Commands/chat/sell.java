@@ -183,6 +183,8 @@ public class sell {
 								
 								int stackAmt = InventoryHandler.hasAmount(inv, iStack);
 								if(stackAmt >= amount) {
+									eH.deposit(player, cost);
+									
 									HashMap<String, String> data = new HashMap<String, String>();
 									data.put("amount", String.valueOf(amount));
 									data.put("item", name);
@@ -192,8 +194,6 @@ public class sell {
 
 									if(conf.getBoolean("GiantShop.broadcast.sell"))
 										Heraut.broadcast(mH.getMsg(msgType.MAIN, "broadcastSell", data));
-	
-									eH.deposit(player, cost);
 	
 									Heraut.say(mH.getMsg(msgType.MAIN, "sell", data));
 									Heraut.say(mH.getMsg(msgType.MAIN, "newBalance", data));
