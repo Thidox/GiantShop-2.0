@@ -99,7 +99,7 @@ public class InventoryHandler {
 				}else if(type != null && tmp.getData() != null && item.getDurability() == tmp.getDurability()) {
 					properStack.add(tmp);
 					amount += tmp.getAmount();
-				}else if(isTool(tmp)) {
+				}else if(isTool(tmp) && acceptBroken(tmp)) {
 					properStack.add(tmp);
 					amount += tmp.getAmount();
 				}
