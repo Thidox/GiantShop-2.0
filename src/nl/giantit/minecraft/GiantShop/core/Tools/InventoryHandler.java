@@ -113,7 +113,7 @@ public class InventoryHandler {
 		int amt = item.getAmount();
 		ItemStack[] items = inventory.getContents();
 		for(int i = 0; i < items.length; i++) {
-			if(items[i] != null && items[i].getTypeId() == item.getTypeId() && items[i].getDurability() == item.getDurability() || (isTool(items[i]) && acceptBroken(items[i]))) {
+			if(items[i] != null && items[i].getTypeId() == item.getTypeId() && (items[i].getDurability() == item.getDurability() || (isTool(items[i]) && acceptBroken(items[i])))) {
 				if(items[i].getAmount() > amt) {
 					items[i].setAmount(items[i].getAmount() - amt);
 					break;
