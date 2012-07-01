@@ -1,9 +1,10 @@
 GiantShop:
     global:
-        version: 0.8
+        version: 0.9
         name: GiantShop
         debug: false
         perPage: 5
+        AcceptBrokenTools: false
     Updater:
         checkForUpdates: true
         broadcast: true
