@@ -112,7 +112,6 @@ public class add {
 								maxStock = (maxStock > 0) ? maxStock : -1;
 							}
 							
-							Heraut.say(player, "Args length: " + args.length);
 						}catch(NumberFormatException e) {
 							data = new HashMap<String, String>();
 							data.put("command", "add");
