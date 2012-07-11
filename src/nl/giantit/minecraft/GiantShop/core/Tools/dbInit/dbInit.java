@@ -22,7 +22,7 @@ public class dbInit {
 			data.put("NULL", "false");
 			fields.put("tableName", data);
 			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
+			data.put("TYPE", "INT");
 			data.put("LENGTH", null);
 			data.put("NULL", "false");
 			data.put("DEFAULT", "1.0");
@@ -130,37 +130,37 @@ public class dbInit {
 			fields.put("world", data);
 			
 			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
+			data.put("TYPE", "INT");
 			data.put("LENGTH", null);
 			data.put("NULL", "false");
 			fields.put("locMinX", data);
 			
 			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
+			data.put("TYPE", "INT");
 			data.put("LENGTH", null);
 			data.put("NULL", "false");
 			fields.put("locMinY", data);
 			
 			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
+			data.put("TYPE", "INT");
 			data.put("LENGTH", null);
 			data.put("NULL", "false");
 			fields.put("locMinZ", data);
 			
 			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
+			data.put("TYPE", "INT");
 			data.put("LENGTH", null);
 			data.put("NULL", "false");
 			fields.put("locMaxX", data);
 			
 			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
+			data.put("TYPE", "INT");
 			data.put("LENGTH", null);
 			data.put("NULL", "false");
 			fields.put("locMaxY", data);
 			
 			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
+			data.put("TYPE", "INT");
 			data.put("LENGTH", null);
 			data.put("NULL", "false");
 			fields.put("locMaxZ", data);
@@ -210,13 +210,13 @@ public class dbInit {
 			fields.put("type", data);
 			
 			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
+			data.put("TYPE", "INT");
 			data.put("LENGTH", "3");
 			data.put("DEFAULT", "-1");
 			fields.put("sellFor", data);
 			
 			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
+			data.put("TYPE", "INT");
 			data.put("LENGTH", "3");
 			data.put("DEFAULT", "-1");
 			fields.put("buyFor", data);
