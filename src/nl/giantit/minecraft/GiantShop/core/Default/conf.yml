@@ -1,6 +1,6 @@
 GiantShop:
     global:
-        version: 1.0
+        version: 0.9
         name: GiantShop
         debug: false
         perPage: 5
@@ -72,9 +72,9 @@ GiantShop:
             Worlds:
                 disableOffList: true
                 protected:
-                - world
+                - world1
                 allowed:
-                - world
+                - world1
             Commands:
             - buy
             - gift
