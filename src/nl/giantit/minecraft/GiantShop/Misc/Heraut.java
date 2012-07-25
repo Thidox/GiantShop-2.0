@@ -12,7 +12,8 @@ import org.bukkit.command.CommandSender;
 public class Heraut {
 	 
 	private static Player player = null;
-	
+
+	@Deprecated
 	public static void savePlayer(Player player) {
 		Heraut.player = player;
 	}
@@ -20,7 +21,8 @@ public class Heraut {
     public static String parse(String input) {
         return input.replaceAll("(&([a-fA-F0-9]))", "§$2").replace("\\\\\u00A7", "&");
     }
-	
+
+	@Deprecated
 	public static void say (String message) {
 		player.sendMessage(parse(message));
 	}
