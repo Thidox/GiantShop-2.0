@@ -55,7 +55,7 @@ public class dbInit {
 			data = new HashMap<String, String>();
 			data.put("TYPE", "INT");
 			data.put("LENGTH", "3");
-			data.put("NULL", "false");
+			data.put("NULL", "true");
 			data.put("A_INCR", "true");
 			data.put("P_KEY", "true");
 			fields.put("id", data);
@@ -192,7 +192,7 @@ public class dbInit {
 			data = new HashMap<String, String>();
 			data.put("TYPE", "INT");
 			data.put("LENGTH", "3");
-			data.put("NULL", "false");
+			data.put("NULL", "true");
 			data.put("A_INCR", "true");
 			data.put("P_KEY", "true");
 			fields.put("id", data);
@@ -222,7 +222,7 @@ public class dbInit {
 			fields.put("buyFor", data);
 			
 			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
+			data.put("TYPE", "INT");
 			data.put("LENGTH", null);
 			data.put("DEFAULT", "-1");
 			fields.put("stock", data);
