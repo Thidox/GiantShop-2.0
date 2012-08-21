@@ -371,6 +371,9 @@ public class MySQL implements iDriver {
 			HashMap<String, String> SQL = sql.get(queryID);
 			if(SQL.containsKey("sql")) {
 				try {
+					if(con.isClosed() || !con.isValid(0))
+						this.connect();
+					
 					st = con.createStatement();
 					st.executeUpdate(SQL.get("sql"));
 				}catch (SQLException e) {

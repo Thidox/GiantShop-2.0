@@ -13,7 +13,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.logging.Level;
 
-import me.mjolnir.mineconomy.Accounting;
+import me.mjolnir.mineconomy.internal.MCCom;
 import me.mjolnir.mineconomy.MineConomy;
 
 /**
@@ -55,7 +55,7 @@ public class MineConomy_Engine implements iEco {
 	
 	@Override
 	public double getBalance(String player) {
-		return Accounting.getBalance(player, MineConomy.accounts);
+		return MCCom.getExternalBalance(player);
 	}
 	
 	@Override
@@ -66,9 +66,9 @@ public class MineConomy_Engine implements iEco {
 	@Override
 	public boolean withdraw(String player, double amount) {
 		if(amount > 0) {
-			double b = Accounting.getBalance(player, MineConomy.accounts);
+			double b = MCCom.getExternalBalance(player);
 			if((b - amount) > 0) {
-				Accounting.setBalance(player, (b - amount), MineConomy.accounts);
+				MCCom.setExternalBalance(player, (b - amount));
 				return true;
 			}
 		}
@@ -84,8 +84,8 @@ public class MineConomy_Engine implements iEco {
 	@Override
 	public boolean deposit(String player, double amount) {
 		if(amount > 0) {
-			double b = Accounting.getBalance(player, MineConomy.accounts);
-			Accounting.setBalance(player, (b + amount), MineConomy.accounts);
+			double b = MCCom.getExternalBalance(player);
+			MCCom.setExternalBalance(player, (b + amount));
 			return true;
 		}
 		
