@@ -21,7 +21,7 @@ public class Items {
 	
 	private GiantShop plugin;
 	private YamlConfiguration config;
-	private double itemVersion = 0.5;
+	private double itemVersion = 0.6;
 	private HashMap<ItemID, String> itemsByID = new HashMap<ItemID, String>();
 	private HashMap<String, ItemID> itemsByName = new HashMap<String, ItemID>();
 	private HashMap<ItemID, List<String>> itemTypes = new HashMap<ItemID, List<String>>();
@@ -58,7 +58,6 @@ public class Items {
 		
 		loadNames();
 		loadTypes();
-		loadAliases();
 	}
 	
 	public final void loadNames() {
@@ -77,12 +76,28 @@ public class Items {
 				continue;
 			}
 			
-			
-			String name = config.getString("names." + item);
-			String namePrep = name.toLowerCase().replaceAll(" ", "_");
-			ItemID key = new ItemID(id, null);
-			itemsByID.put(key, name);
-			itemsByName.put(namePrep, key);
+			List<String> names = config.getStringList("names." + item);
+			if(names.size() > 0) {
+				String name = names.get(0);
+				String namePrep = name.toLowerCase().replaceAll(" ", "_");
+				ItemID iID = new ItemID(id, null);
+				iID.setName(name);
+				
+				itemsByID.put(iID, name);
+				itemsByName.put(namePrep, iID);
+				
+				for(int i = 1; i < names.size(); i++) {
+					itemsAliases.put(names.get(i).toLowerCase().replaceAll(" ", "_"), iID);
+				}
+			}else{
+				String name = config.getString("names." + item);
+				String namePrep = name.toLowerCase().replaceAll(" ", "_");
+				ItemID iID = new ItemID(id, null);
+				iID.setName(name);
+				
+				itemsByID.put(iID, name);
+				itemsByName.put(namePrep, iID);
+			}
 		}
 	}
 	
@@ -115,53 +130,20 @@ public class Items {
 				
 				List<String> typeNames = config.getStringList("types." + item + "." + type);
 				if(typeNames.size() > 0) {
-					ItemID el = new ItemID(itemID, typeID);
+					ItemID iID = new ItemID(itemID, typeID);
 					String name = typeNames.get(0).toLowerCase().replaceAll(" ", "_");
-					this.itemTypes.put(el, typeNames);
-					this.itemsByID.put(el, typeNames.get(0));
-					this.itemsByName.put(name, el);
+					iID.setName(typeNames.get(0));
+					
+					this.itemTypes.put(iID, typeNames);
+					this.itemsByID.put(iID, typeNames.get(0));
+					this.itemsByName.put(name, iID);
 					
 					for(int i = 1; i < typeNames.size(); i++) {
-						itemsAliases.put(typeNames.get(i).toLowerCase().replaceAll(" ", "_"), el);
+						itemsAliases.put(typeNames.get(i).toLowerCase().replaceAll(" ", "_"), iID);
 					}
 				}else{
 					plugin.getLogger().log(Level.WARNING, "[" + plugin.getName() + "] Given type does not have any names. (types." + item + "." + type + ")");
 				}
-			}
-		}
-	}
-	
-	public final void loadAliases() {
-		Set<String> list = config.getConfigurationSection("aliases").getKeys(false);
-		if(list == null) {
-			plugin.getLogger().log(Level.INFO, "[" + plugin.getName() + "] There are no item aliases specified in the items.yml file?!");
-		}
-		
-		for(String item : list) {
-			String itemIDString = config.getString("aliases." + item);
-			int itemID;
-			Integer dataType;
-			try{
-				if(itemIDString.matches("[0-9]+/[0-9]+")) {
-					String[] splitted = itemIDString.split("/");
-					itemID = Integer.parseInt(splitted[0]);
-					dataType = Integer.parseInt(splitted[0]);
-				}else{
-					itemID = Integer.parseInt(itemIDString);
-					dataType = null;
-				}
-				
-				ItemID id;
-				if(this.isValidItem(itemID, dataType)) {
-					id = new ItemID(itemID, dataType, item);
-				}else
-					id = new ItemID(itemID, null, item);
-				
-				String name = item.toLowerCase().replaceAll(" ", "_");
-				itemsAliases.put(name, id);
-			}catch(NumberFormatException e) {
-				plugin.getLogger().log(Level.WARNING, "[" + plugin.getName() + "] Invalid item id (" + itemIDString + ") detected for alias " + item + " in items.yml");
-				continue;
 			}
 		}
 	}
