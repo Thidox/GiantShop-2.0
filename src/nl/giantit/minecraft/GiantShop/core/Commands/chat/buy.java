@@ -41,7 +41,6 @@ public class buy {
 	private static Discounter disc = GiantShop.getPlugin().getDiscounter();
 	
 	public static void buy(Player player, String[] args) {
-		Heraut.savePlayer(player);
 		if(perms.has(player, "giantshop.shop.buy")) {
 			if(args.length >= 2) {
 				int itemID;
@@ -98,7 +97,7 @@ public class buy {
 						quantity = (quantity > 0) ? quantity : 1;
 					}catch(NumberFormatException e) {
 						//Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "invQuantity"));
-						Heraut.say("As you did not specify a normal quantity, we'll just use 1 ok? :)");
+						Heraut.say(player, "As you did not specify a normal quantity, we'll just use 1 ok? :)");
 						quantity = 1;
 					}
 				}else
@@ -169,7 +168,7 @@ public class buy {
 									data.put("needed", String.valueOf(cost));
 									data.put("have", String.valueOf(balance));
 
-									Heraut.say(mH.getMsg(Messages.msgType.ERROR, "insufFunds", data));
+									Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "insufFunds", data));
 								}else{
 									if(eH.withdraw(player, cost) || cost == 0) {
 										ItemStack iStack;
@@ -194,8 +193,8 @@ public class buy {
 										if(conf.getBoolean("GiantShop.broadcast.buy"))
 											Heraut.broadcast(mH.getMsg(msgType.MAIN, "broadcastBuy", data));
 
-										Heraut.say(mH.getMsg(msgType.MAIN, "buy", data));
-										Heraut.say(mH.getMsg(msgType.MAIN, "newBalance", data));
+										Heraut.say(player, mH.getMsg(msgType.MAIN, "buy", data));
+										Heraut.say(player, mH.getMsg(msgType.MAIN, "newBalance", data));
 										Logger.Log(LoggerType.BUY,
 													player, 
 													"{id: " + String.valueOf(itemID) + "; " +
@@ -255,25 +254,24 @@ public class buy {
 				HashMap<String, String> data = new HashMap<String, String>();
 				data.put("command", "buy");
 
-				Heraut.say(mH.getMsg(Messages.msgType.ERROR, "syntaxError", data));
+				Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "syntaxError", data));
 			}
 		}else{
 			HashMap<String, String> data = new HashMap<String, String>();
 			data.put("command", "buy");
 
-			Heraut.say(mH.getMsg(Messages.msgType.ERROR, "noPermissions", data));
+			Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noPermissions", data));
 		}
 	}
 	
 	public static void gift(Player player, String[] args) {
-		Heraut.savePlayer(player);
 		if(perms.has(player, "giantshop.shop.gift")) {
 			if(args.length >= 3) {
 				Player giftReceiver = GiantShop.getPlugin().getServer().getPlayer(args[1]);
 				if(giftReceiver == null) {
-					Heraut.say("Receiver does not exist!");
+					Heraut.say(player, "Receiver does not exist!");
 				}else if(!giftReceiver.isOnline()) {
-					Heraut.say("Gift receiver is not online!");
+					Heraut.say(player, "Gift receiver is not online!");
 				}else{
 					int itemID;
 					Integer itemType = -1;
@@ -329,7 +327,7 @@ public class buy {
 							quantity = (quantity > 0) ? quantity : 1;
 						}catch(NumberFormatException e) {
 							//Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "invQuantity"));
-							Heraut.say("As you did not specify a normal quantity, we'll just use 1 ok? :)");
+							Heraut.say(player, "As you did not specify a normal quantity, we'll just use 1 ok? :)");
 							quantity = 1;
 						}
 					}else
@@ -367,7 +365,7 @@ public class buy {
 										data.put("needed", String.valueOf(cost));
 										data.put("have", String.valueOf(balance));
 
-										Heraut.say(mH.getMsg(Messages.msgType.ERROR, "insufFunds", data));
+										Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "insufFunds", data));
 									}else{
 										if(eH.withdraw(player, cost)) {
 											ItemStack iStack;
@@ -390,8 +388,8 @@ public class buy {
 											if(conf.getBoolean("GiantShop.broadcast.gift"))
 												Heraut.broadcast(mH.getMsg(msgType.MAIN, "broadcastGift", data));
 
-											Heraut.say(mH.getMsg(Messages.msgType.MAIN, "giftSender", data));
-											Heraut.say(mH.getMsg(msgType.MAIN, "newBalance", data));
+											Heraut.say(player, mH.getMsg(Messages.msgType.MAIN, "giftSender", data));
+											Heraut.say(player, mH.getMsg(msgType.MAIN, "newBalance", data));
 
 											Heraut.say(giftReceiver, mH.getMsg(Messages.msgType.MAIN, "giftReceiver", data));
 											Logger.Log(LoggerType.GIFT,
@@ -442,13 +440,13 @@ public class buy {
 				HashMap<String, String> data = new HashMap<String, String>();
 				data.put("command", "gift");
 
-				Heraut.say(mH.getMsg(Messages.msgType.ERROR, "syntaxError", data));
+				Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "syntaxError", data));
 			}
 		}else{
 			HashMap<String, String> data = new HashMap<String, String>();
 			data.put("command", "gift");
 
-			Heraut.say(mH.getMsg(Messages.msgType.ERROR, "noPermissions", data));
+			Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noPermissions", data));
 		}
 	}
 }
