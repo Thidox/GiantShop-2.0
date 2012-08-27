@@ -1,7 +1,6 @@
 package nl.giantit.minecraft.GiantShop.core.Database.drivers;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.config;
+import org.bukkit.plugin.Plugin;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -22,7 +21,7 @@ import java.util.logging.Level;
 public class SQLite implements iDriver {
 	
 	private static HashMap<String, SQLite> instance = new HashMap<String, SQLite>();
-	private GiantShop plugin;
+	private Plugin plugin;
 	
 	private ArrayList<HashMap<String, String>> sql = new ArrayList<HashMap<String, String>>();
 	private ArrayList<ResultSet> query = new ArrayList<ResultSet>();
@@ -30,31 +29,39 @@ public class SQLite implements iDriver {
 	
 	private String cur, db, host, port, user, pass, prefix;
 	private Connection con = null;
-	private config conf = null;
+	private Boolean dbg = false;
 	
-	private SQLite(HashMap<String, String> c) {
-		this.plugin = GiantShop.getPlugin();
+	private Boolean parseBool(String s, Boolean d) {
+		if(s.equalsIgnoreCase("1") || s.equalsIgnoreCase("y") || s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true"))
+			return true;
 		
-		this.conf = config.Obtain();
+		return d;
+	}
+	
+	private SQLite(Plugin p, HashMap<String, String> c) {
+		plugin = p;
 		
 		this.db = c.get("database");
 		this.prefix = c.get("prefix");
 		this.user = c.get("user");
 		this.pass = c.get("password");
+		this.dbg = (c.containsKey("debug")) ? this.parseBool(c.get("debug"), false) : false;
 
-		String dbPath = "jdbc:sqlite:" + plugin.getDir() + plugin.getSeparator() + this.db + ".db";
+		String dbPath = "jdbc:sqlite:" + plugin.getDataFolder() + java.io.File.separator + this.db + ".db";
 		try{
 			Class.forName("org.sqlite.JDBC");
 			this.con = DriverManager.getConnection(dbPath, this.user, this.pass);
 		}catch(SQLException e) {
-			GiantShop.log.log(Level.SEVERE, "[" + this.plugin.getName() + "] Failed to connect to database: SQL error!");
-			if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-				GiantShop.log.log(Level.INFO, e.getMessage());
+			plugin.getLogger().log(Level.SEVERE, "Failed to connect to database: SQL error!");
+			if(this.dbg) {
+				plugin.getLogger().log(Level.INFO, e.getMessage());
+				e.printStackTrace();
 			}
 		}catch(ClassNotFoundException e) {
-			GiantShop.log.log(Level.SEVERE, "[" + this.plugin.getName() + "] Failed to connect to database: SQLite library not found!");
-			if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-				GiantShop.log.log(Level.INFO, e.getMessage());
+			plugin.getLogger().log(Level.SEVERE, "Failed to connect to database: SQLite library not found!");
+			if(this.dbg) {
+				plugin.getLogger().log(Level.INFO, e.getMessage());
+				e.printStackTrace();
 			}
 		}
 	}
@@ -75,15 +82,17 @@ public class SQLite implements iDriver {
 	public boolean tableExists(String table) {
 		ResultSet res = null;
 		table = table.replace("#__", prefix);
+		
 		try {
 			DatabaseMetaData data = this.con.getMetaData();
 			res = data.getTables(null, null, table, null);
 
 			return res.next();
 		}catch (SQLException e) {
-			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "]: Could not load table " + table);
-			if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-				GiantShop.log.log(Level.INFO, e.getMessage());
+			plugin.getLogger().log(Level.SEVERE, " Could not load table " + table);
+			if(this.dbg) {
+				plugin.getLogger().log(Level.INFO, e.getMessage());
+				e.printStackTrace();
 			}
             return false;
 		} finally {
@@ -92,9 +101,10 @@ public class SQLite implements iDriver {
 					res.close();
 				}
 			}catch (Exception e) {
-				GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "]: Could not close result connection to database");
-				if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-					GiantShop.log.log(Level.INFO, e.getMessage());
+				plugin.getLogger().log(Level.SEVERE, " Could not close result connection to database");
+				if(this.dbg) {
+					plugin.getLogger().log(Level.INFO, e.getMessage());
+					e.printStackTrace();
 				}
 				return false;
 			}
@@ -103,19 +113,19 @@ public class SQLite implements iDriver {
 	
 	@Override
 	public void buildQuery(String string) {
-		buildQuery(string, false, false, false);
+		this.buildQuery(string, false, false, false);
 		return;
 	}
 	
 	@Override
 	public void buildQuery(String string, Boolean add) {
-		buildQuery(string, add, false, false);
+		this.buildQuery(string, add, false, false);
 		return;
 	}
 	
 	@Override
 	public void buildQuery(String string, Boolean add, Boolean finalize) {
-		buildQuery(string, add, finalize, false);
+		this.buildQuery(string, add, finalize, false);
 		return;
 	}
 	
@@ -126,72 +136,53 @@ public class SQLite implements iDriver {
 	
 	@Override
 	public void buildQuery(String string, Boolean add, Boolean finalize, Boolean debug, Boolean table) {
-		int last = sql.size();
-		if(table)
-			string = string.replace("#__", prefix);
-		
-		if(false == add) {
+		if(!add) {
+			if(table)
+				string = string.replace("#__", prefix);
+			
 			HashMap<String, String> ad = new HashMap<String, String>();
 			ad.put("sql", string);
+			
+			if(finalize)
+				ad.put("finalize", "true");
+			
+			if(debug)
+				ad.put("debug", "true");
+			
 			sql.add(ad);
-			
-			if(debug == true)
-				GiantShop.log.log(Level.INFO, "[" + plugin.getName() + "] " + sql.get(last).get("sql"));
 		}else{
-			last = sql.size() - 1;
-			try {
-				HashMap<String, String> SQL = sql.get(last);
-				if(SQL.containsKey("sql")) {
-					if(SQL.containsKey("finalize")) {
-						if(true == debug)
-							GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] SQL syntax is finalized!");
-						return;
-					}else{
-						SQL.put("sql", SQL.get("sql") + string);
-
-						if(true == finalize)
-							SQL.put("finalize", "true");
-
-						sql.add(last, SQL);
-					}
-				}else
-					if(true == debug)
-						GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + last + " is not a valid SQL query!");
-				
-				if(debug == true)
-					GiantShop.log.log(Level.INFO, "[" + plugin.getName() + "] " + sql.get(last).get("sql"));
-			}catch(NullPointerException e) {
-				if(true == debug)
-					GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + last + " is not a valid SQL query!");
-			}
-		}
+			int last = sql.size() - 1;
 			
-		return;
+			this.buildQuery(string, last, finalize, debug, table);
+		}
 	}
 	
 	@Override
 	public void buildQuery(String string, Integer add) {
-		buildQuery(string, add, false, false);
-		return;
+		this.buildQuery(string, add, false, false);
 	}
 	
 	@Override
 	public void buildQuery(String string, Integer add, Boolean finalize) {
-		buildQuery(string, add, finalize, false);
-		return;
+		this.buildQuery(string, add, finalize, false);
 	}
 	
 	@Override
 	public void buildQuery(String string, Integer add, Boolean finalize, Boolean debug) {
-		int last = sql.size();
-		string = string.replace("#__", prefix);
+		this.buildQuery(string, add, finalize, debug, false);
+	}
+	
+	@Override
+	public void buildQuery(String string, Integer add, Boolean finalize, Boolean debug, Boolean table) {
+		if(table)
+			string = string.replace("#__", prefix);
 		
 		try {
 			HashMap<String, String> SQL = sql.get(add);
 			if(SQL.containsKey("sql")) {
 				if(SQL.containsKey("finalize")) {
 					if(true == debug)
-						GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] SQL syntax is finalized!");
+						plugin.getLogger().log(Level.SEVERE, " SQL syntax is finalized!");
 					return;
 				}else{
 					SQL.put("sql", SQL.get("sql") + string);
@@ -203,67 +194,21 @@ public class SQLite implements iDriver {
 				}
 			}else
 				if(true == debug)
-					GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + add.toString() + " is not a valid SQL query!");
+					plugin.getLogger().log(Level.SEVERE, add.toString() + " is not a valid SQL query!");
 		
 			if(debug == true)
-				GiantShop.log.log(Level.INFO, "[" + plugin.getName() + "] " + sql.get(last).get("sql"));
+				plugin.getLogger().log(Level.INFO, sql.get(add).get("sql"));
 		}catch(NullPointerException e) {
 			if(true == debug)
-				GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + add.toString() + " is not a valid SQL query!");
+				plugin.getLogger().log(Level.SEVERE, "Query " + add.toString() + " could not be found!");
 		}
-		
-		return;
 	}
 	
 	@Override
 	public ArrayList<HashMap<String, String>> execQuery() {
 		Integer queryID = ((sql.size() - 1 > 0) ? (sql.size() - 1) : 0);
-		Statement st = null;
 		
-		ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
-		try {
-			HashMap<String, String> SQL = sql.get(queryID);
-			if(SQL.containsKey("sql")) {
-				try {
-					st = con.createStatement();
-					//query.add(queryID, st.executeQuery(SQL.get("sql")));
-					ResultSet res = st.executeQuery(SQL.get("sql"));
-					while(res.next()) {
-						HashMap<String, String> row = new HashMap<String, String>();
-
-						ResultSetMetaData rsmd = res.getMetaData();
-						int columns = rsmd.getColumnCount();
-						for(int i = 1; i < columns + 1; i++) {
-							row.put(rsmd.getColumnName(i), res.getString(i));
-						}
-						data.add(row);
-					}
-				}catch (SQLException e) {
-					GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not execute query!");
-					if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-						GiantShop.log.log(Level.INFO, e.getMessage());
-					}
-				} finally {
-					try {
-						if(st != null) {
-							st.close();
-						}
-					}catch (Exception e) {
-						GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
-						if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-							GiantShop.log.log(Level.INFO, e.getMessage());
-						}
-					}
-				}
-			}
-		}catch(NullPointerException e) {
-			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + queryID.toString() + " is not a valid SQL query!");
-			if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-				GiantShop.log.log(Level.INFO, e.getMessage());
-			}
-		}
-		
-		return data;
+		return this.execQuery(queryID);
 	}
 	
 	@Override
@@ -284,14 +229,15 @@ public class SQLite implements iDriver {
 						ResultSetMetaData rsmd = res.getMetaData();
 						int columns = rsmd.getColumnCount();
 						for(int i = 1; i < columns + 1; i++) {
-							row.put(rsmd.getColumnName(i), res.getString(i));
+							row.put(rsmd.getColumnName(i).toLowerCase(), res.getString(i));
 						}
 						data.add(row);
 					}
 				}catch (SQLException e) {
-					GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not execute query!");
-					if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-						GiantShop.log.log(Level.INFO, e.getMessage());
+					plugin.getLogger().log(Level.SEVERE, " Could not execute query!");
+					if(this.dbg) {
+						plugin.getLogger().log(Level.INFO, e.getMessage());
+						e.printStackTrace();
 					}
 				} finally {
 					try {
@@ -299,15 +245,16 @@ public class SQLite implements iDriver {
 							st.close();
 						}
 					}catch (Exception e) {
-						GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
-						if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-							GiantShop.log.log(Level.INFO, e.getMessage());
+						plugin.getLogger().log(Level.SEVERE, " Could not close database connection");
+						if(this.dbg) {
+							plugin.getLogger().log(Level.INFO, e.getMessage());
+							e.printStackTrace();
 						}
 					}
 				}
 			}
 		}catch(NullPointerException e) {
-			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + queryID.toString() + " is not a valid SQL query!");
+			plugin.getLogger().log(Level.SEVERE, "Query " + queryID.toString() + " could not be found!");
 		}
 		
 		return data;
@@ -316,35 +263,8 @@ public class SQLite implements iDriver {
 	@Override
 	public void updateQuery() {
 		Integer queryID = ((sql.size() - 1 > 0) ? (sql.size() - 1) : 0);
-		Statement st = null;
 		
-		try {
-			HashMap<String, String> SQL = sql.get(queryID);
-			if(SQL.containsKey("sql")) {
-				try {
-					st = con.createStatement();
-					st.executeUpdate(SQL.get("sql"));
-				}catch (SQLException e) {
-					GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not execute query!");
-					if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-						GiantShop.log.log(Level.INFO, e.getMessage());
-					}
-				} finally {
-					try {
-						if(st != null) {
-							st.close();
-						}
-					}catch (Exception e) {
-						GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
-						if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-							GiantShop.log.log(Level.INFO, e.getMessage());
-						}
-					}
-				}
-			}
-		}catch(NullPointerException e) {
-			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + queryID.toString() + " is not a valid SQL query!");
-		}
+		this.updateQuery(queryID);
 	}
 	
 	@Override
@@ -358,9 +278,10 @@ public class SQLite implements iDriver {
 					st = con.createStatement();
 					st.executeUpdate(SQL.get("sql"));
 				}catch (SQLException e) {
-					GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not execute query!");
-					if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-						GiantShop.log.log(Level.INFO, e.getMessage());
+					plugin.getLogger().log(Level.SEVERE, " Could not execute query!");
+					if(this.dbg) {
+						plugin.getLogger().log(Level.INFO, e.getMessage());
+						e.printStackTrace();
 					}
 				} finally {
 					try {
@@ -368,193 +289,17 @@ public class SQLite implements iDriver {
 							st.close();
 						}
 					}catch (Exception e) {
-						GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
-						if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-							GiantShop.log.log(Level.INFO, e.getMessage());
+						plugin.getLogger().log(Level.SEVERE, " Could not close database connection");
+						if(this.dbg) {
+							plugin.getLogger().log(Level.INFO, e.getMessage());
+							e.printStackTrace();
 						}
 					}
 				}
 			}
 		}catch(NullPointerException e) {
-			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] " + queryID.toString() + " is not a valid SQL query!");
+			plugin.getLogger().log(Level.SEVERE, "Query " + queryID.toString() + " could not be found!");
 		}
-	}
-	
-	@Override
-	public int countResult() {
-		Integer queryID = ((query.size() - 1 > 0) ? (query.size() - 1) : 0);
-		
-		if(query.get(queryID) == null)
-			return 0;
-		try {
-			query.get(queryID).last();
-			int row = query.get(queryID).getRow();
-			query.get(queryID).first();
-		
-			return row;
-		}catch (Exception e) {
-			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not count rows for query (" + queryID.toString() + ")!");
-			if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-				GiantShop.log.log(Level.INFO, e.getMessage());
-			}
-		}
-		
-		return 0;
-	}
-	
-	@Override
-	public int countResult(Integer queryID) {
-		if(query.get(queryID) == null)
-			return 0;
-		try {
-			query.get(queryID).last();
-			int row = query.get(queryID).getRow();
-			query.get(queryID).first();
-		
-			return row;
-		}catch (Exception e) {
-			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not count rows for query (" + queryID.toString() + ")!");
-			if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-				GiantShop.log.log(Level.INFO, e.getMessage());
-			}
-		}
-		
-		return 0;
-	}
-	
-	@Override
-	public ArrayList<HashMap<String, String>> getResult() {
-		Integer queryID = ((query.size() - 1 > 0) ? (query.size() - 1) : 0);
-		
-		ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
-		try {
-			ResultSet res = query.get(queryID);
-			while(res.next()) {
-				HashMap<String, String> row = new HashMap<String, String>();
-				
-				ResultSetMetaData rsmd = res.getMetaData();
-				int columns = rsmd.getColumnCount();
-				for(int i = 0; i < columns; i++) {
-					row.put(rsmd.getColumnName(i), res.getString(i));
-				}
-				data.add(row);
-			}
-		}catch (SQLException e) {
-			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not grab item data");
-			if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-				GiantShop.log.log(Level.INFO, e.getMessage());
-			}
-		} finally {
-			try {
-				if(query.get(queryID) != null) {
-					query.get(queryID).close();
-				}
-			}catch (Exception e) {
-				GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
-				if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-					GiantShop.log.log(Level.INFO, e.getMessage());
-				}
-			}
-		}
-		
-		return data;
-	}
-	
-	@Override
-	public ArrayList<HashMap<String, String>> getResult(Integer queryID) {
-		ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
-		try {
-			ResultSet res = query.get(queryID);
-			res.getRow();
-		}catch (SQLException e) {
-			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not grab item data");
-			if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-				GiantShop.log.log(Level.INFO, e.getMessage());
-			}
-		} finally {
-			try {
-				if(query.get(queryID) != null) {
-					query.get(queryID).close();
-				}
-			}catch (Exception e) {
-				GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
-				if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-					GiantShop.log.log(Level.INFO, e.getMessage());
-				}
-			}
-		}
-		
-		return data;
-	}
-	
-	@Override
-	public HashMap<String, String> getSingleResult() {
-		Integer queryID = ((query.size() - 1 > 0) ? (query.size() - 1) : 0);
-		
-		HashMap<String, String> data = new HashMap<String, String>();
-		try {
-			ResultSet res = query.get(queryID);
-			res.last();
-			while(res.next()) {
-				ResultSetMetaData rsmd = res.getMetaData();
-				int columns = rsmd.getColumnCount();
-				for(int i = 0; i < columns; i++) {
-					data.put(rsmd.getColumnName(i), res.getString(i));
-				}
-			}
-		}catch (SQLException e) {
-			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not grab item data");
-			if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-				GiantShop.log.log(Level.INFO, e.getMessage());
-			}
-		} finally {
-			try {
-				if(query.get(queryID) != null) {
-					query.get(queryID).close();
-				}
-			}catch (Exception e) {
-				GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
-				if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-					GiantShop.log.log(Level.INFO, e.getMessage());
-				}
-			}
-		}
-		
-		return data;
-	}
-	
-	@Override
-	public HashMap<String, String> getSingleResult(Integer queryID) {
-		HashMap<String, String> data = new HashMap<String, String>();
-		try {
-			ResultSet res = query.get(queryID);
-			res.last();
-			while(res.next()) {
-				ResultSetMetaData rsmd = res.getMetaData();
-				int columns = rsmd.getColumnCount();
-				for(int i = 0; i < columns; i++) {
-					data.put(rsmd.getColumnName(i), res.getString(i));
-				}
-			}
-		}catch (SQLException e) {
-			GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not grab item data");
-			if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-				GiantShop.log.log(Level.INFO, e.getMessage());
-			}
-		} finally {
-			try {
-				if(query.get(queryID) != null) {
-					query.get(queryID).close();
-				}
-			}catch (Exception e) {
-				GiantShop.log.log(Level.SEVERE, "[" + plugin.getName() + "] Could not close database connection");
-				if(conf.getBoolean(plugin.getName() + ".global.debug")) {
-					GiantShop.log.log(Level.INFO, e.getMessage());
-				}
-			}
-		}
-		
-		return data;
 	}
 	
 	@Override
@@ -850,6 +595,7 @@ public class SQLite implements iDriver {
 			Integer length = 100;
 			Boolean NULL = false;
 			String def = "";
+			Boolean aincr = false;
 			Boolean pkey = false;
 			
 			if(data.containsKey("TYPE")) {
@@ -859,7 +605,7 @@ public class SQLite implements iDriver {
 			}
 			
 			if(data.containsKey("LENGTH")) {
-				if(null != data.get("LENGTH")) {
+				if(null != data.get("LENGTH") && !type.equals("INTEGER")) {
 					try{
 						length = Integer.parseInt(data.get("LENGTH"));
 						length = length < 0 ? 100 : length;
@@ -876,6 +622,10 @@ public class SQLite implements iDriver {
 				def = data.get("DEFAULT");
 			}
 			
+			if(data.containsKey("A_INCR")) {
+				aincr = Boolean.parseBoolean(data.get("A_INCR"));
+			}
+			
 			if(data.containsKey("P_KEY")) {
 				pkey = Boolean.parseBoolean(data.get("P_KEY"));
 			}
@@ -883,12 +633,16 @@ public class SQLite implements iDriver {
 			if(length != null)
 				type += "(" + length + ")";
 			
-			String n = (!NULL) ? " NOT NULL" : " DEFAULT NULL";
+			String n = "";
+			if(!aincr)
+				n = (!NULL) ? " NOT NULL" : " DEFAULT NULL";
+			
 			String d = (!def.equalsIgnoreCase("")) ? " DEFAULT " + def : ""; 
-			String a = (pkey) ? " PRIMARY KEY" : "";
+			String p = (pkey) ? " PRIMARY KEY" : "";
+			String a = (aincr) ? " AUTOINCREMENT" : "";
 			String c = (i < fields.size()) ? ",\n" : ""; 
 			
-			this.buildQuery(field + " " + type + n + d + a + c, true);
+			this.buildQuery(field + " " + type + n + d + p + a + c, true);
 		}
 		
 		this.buildQuery(");", true, false, false);
@@ -972,9 +726,9 @@ public class SQLite implements iDriver {
 		return this;
 	}
 	
-	public static SQLite Obtain(HashMap<String, String> conf, String instance) {
+	public static SQLite Obtain(Plugin p, HashMap<String, String> conf, String instance) {
 		if(!SQLite.instance.containsKey(instance))
-			SQLite.instance.put(instance, new SQLite(conf));
+			SQLite.instance.put(instance, new SQLite(p, conf));
 		
 		return SQLite.instance.get(instance);
 	}
