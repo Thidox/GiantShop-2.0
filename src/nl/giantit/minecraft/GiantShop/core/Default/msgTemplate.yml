@@ -46,7 +46,7 @@ errors:
     unkown: C_REDWe are sorry but an unknown error occured!
     locTaken: C_REDWe are sorry but a shop was already found at %minX, %minY, %minZ, %maxX, %maxY, %maxZ in the world %world!
     shopNameTaken: C_REDWe are sorry but a shop with the name %shop has already been found in the world %world!
-    shopNotFound: C_REDWe are sorry but we are unable to find a shop with the name %shop has already been found in the world %world!
+    shopNotFound: C_REDWe are sorry but we are unable to find a shop with the name %shop in the world %world!
     noShopSelected: C_REDWe are sorry, but you need to select a shop before you can update!
     itemOutOfStock: C_REDWe are sorry, but the requested item is out of stock!
     stockExeedsMaxStock: C_REDWe are sorry, but the given item stock exceeds our maximal capacity!
