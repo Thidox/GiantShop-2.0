@@ -141,6 +141,8 @@ public class GiantShop extends JavaPlugin {
 		if(null != this.updater)
 			this.updater.stop();
 		
+		this.db.getEngine().close();
+		
 		log.log(Level.INFO, "[" + this.name + "] Was successfully dissabled!");
 	}
 	
