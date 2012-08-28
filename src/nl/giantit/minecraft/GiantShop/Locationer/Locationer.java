@@ -62,6 +62,11 @@ public class Locationer {
 		return false;
 	}
 	
+	public void reload() {
+		shops = new ArrayList<Indaface>();
+		new shopLoader(this.plugin, this);
+	}
+	
 	public HashMap<String, Location> getPlayerPoints(Player p) {
 		if(points.containsKey(p))
 			return points.get(p);
