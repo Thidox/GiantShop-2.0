@@ -124,13 +124,13 @@ public class sell {
 					ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where).execQuery();
 					if(resSet.size() == 1) {
 						HashMap<String, String> res = resSet.get(0);
-						if(!res.get("buyFor").equals("-1.0")) {
+						if(!res.get("buyfor").equals("-1.0")) {
 							String name = iH.getItemNameByID(itemID, iT);
 
-							int perStack = Integer.parseInt(res.get("perStack"));
+							int perStack = Integer.parseInt(res.get("perstack"));
 							int stock = Integer.parseInt(res.get("stock"));
-							int maxStock = Integer.parseInt(res.get("maxStock"));
-							double buyFor = Double.parseDouble(res.get("buyFor"));
+							int maxStock = Integer.parseInt(res.get("maxstock"));
+							double buyFor = Double.parseDouble(res.get("buyfor"));
 
 							double cost = buyFor * (double) quantity;
 							int amount = perStack * quantity;

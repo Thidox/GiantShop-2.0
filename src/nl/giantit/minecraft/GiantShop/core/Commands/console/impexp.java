@@ -674,11 +674,11 @@ public class impexp {
 			for(int i = 0; i < iResSet.size(); i++) {
 				HashMap<String, String> data = iResSet.get(i);
 
-				String itemId = data.get("itemID");
-				String dataType = data.get("itemType");
-				String sellFor = data.get("sellFor");
-				String buyFor = data.get("buyFor");
-				String amount = data.get("perStack");
+				String itemId = data.get("itemid");
+				String dataType = (!data.get("type").equals("-1")) ? data.get("type") : "null";
+				String sellFor = data.get("sellfor");
+				String buyFor = data.get("buyfor");
+				String amount = data.get("perstack");
 				String stock = data.get("stock");
 				String shops = (!data.get("shops").isEmpty()) ? data.get("shops") : "null";
 
@@ -705,12 +705,12 @@ public class impexp {
 				String name = data.get("name");
 				String perms = data.get("perms");
 				String world = data.get("world");
-				String locMinX = data.get("locMinX");
-				String locMinY = data.get("locMinY");
-				String locMinZ = data.get("locMinZ");
-				String locMaxX = data.get("locMaxX");
-				String locMaxY = data.get("locMaxY");
-				String locMaxZ = data.get("locMaxZ");
+				String locMinX = data.get("locminx");
+				String locMinY = data.get("locminy");
+				String locMinZ = data.get("locminz");
+				String locMaxX = data.get("locmaxx");
+				String locMaxY = data.get("locmaxy");
+				String locMaxZ = data.get("locmaxz");
 
 				f.write(name + ", " + perms + ", " + world + ", " + locMinX + ", " + locMinY + ", " + locMinZ + ", " + locMaxX + ", " + locMaxY + ", " + locMaxZ);
 				f.newLine();
@@ -732,7 +732,7 @@ public class impexp {
 			for(int i = 0; i < dResSet.size(); i++) {
 				HashMap<String, String> data = dResSet.get(i);
 
-				String itemID = data.get("itemID");
+				String itemID = data.get("itemid");
 				String type = data.get("type");
 				String dicount = data.get("discount");
 				String user = data.get("user");

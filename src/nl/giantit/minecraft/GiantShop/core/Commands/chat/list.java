@@ -81,9 +81,9 @@ public class list {
 					HashMap<String, String> entry = data.get(i);
 
 					int stock = Integer.parseInt(entry.get("stock"));
-					int maxStock = Integer.parseInt(entry.get("maxStock"));
-					double sellFor = Double.parseDouble(entry.get("sellFor"));
-					double buyFor = Double.parseDouble(entry.get("buyFor"));
+					int maxStock = Integer.parseInt(entry.get("maxstock"));
+					double sellFor = Double.parseDouble(entry.get("sellfor"));
+					double buyFor = Double.parseDouble(entry.get("buyfor"));
 					
 					if(conf.getBoolean("GiantShop.stock.useStock") && conf.getBoolean("GiantShop.stock.stockDefinesCost") && maxStock != -1 && stock != -1) {
 						double maxInfl = conf.getDouble("GiantShop.stock.maxInflation");
@@ -130,7 +130,7 @@ public class list {
 					Integer type = Integer.parseInt(entry.get("type"));
 					type = type <= 0 ? null : type;
 					
-					int discount = disc.getDiscount(iH.getItemIDByName(iH.getItemNameByID(Integer.parseInt(entry.get("itemID")), type)), player);
+					int discount = disc.getDiscount(iH.getItemIDByName(iH.getItemNameByID(Integer.parseInt(entry.get("itemid")), type)), player);
 					if(discount > 0) {
 						double actualDiscount = (100 - discount) / 100D;
 						buyFor = Misc.Round(buyFor * actualDiscount, 2);
@@ -142,16 +142,16 @@ public class list {
 					String bf = String.valueOf(buyFor);
 					
 					HashMap<String, String> params = new HashMap<String, String>();
-					params.put("id", entry.get("itemID"));
+					params.put("id", entry.get("itemid"));
 					params.put("type", (!entry.get("type").equals("-1") ? entry.get("type") : "0"));
-					params.put("name", iH.getItemNameByID(Integer.parseInt(entry.get("itemID")), type));
-					params.put("perStack", entry.get("perStack"));
+					params.put("name", iH.getItemNameByID(Integer.parseInt(entry.get("itemid")), type));
+					params.put("perStack", entry.get("perstack"));
 					params.put("sellFor", (!sf.equals("-1.0") ? sf : "Not for sale!"));
 					params.put("buyFor", (!bf.equals("-1.0") ? bf : "No returns!"));
 					
 					if(conf.getBoolean("GiantShop.stock.useStock") == true) {
 						params.put("stock", (!entry.get("stock").equals("-1") ? entry.get("stock") : "unlimited"));
-						params.put("maxStock", (!entry.get("maxStock").equals("-1") ? entry.get("maxStock") : "unlimited"));
+						params.put("maxStock", (!entry.get("maxstock").equals("-1") ? entry.get("maxstock") : "unlimited"));
 					}else{
 						params.put("stock", "unlimited");
 						params.put("maxStock", "unlimited");

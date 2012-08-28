@@ -30,7 +30,7 @@ public class Discounter {
 		ArrayList<HashMap<String, String>> resSet = db.select("*").from("#__discounts").orderBy(order).execQuery();
 		for(HashMap<String, String> res : resSet) {
 			int id = Integer.parseInt(res.get("id"));
-			int itemId = Integer.parseInt(res.get("itemID"));
+			int itemId = Integer.parseInt(res.get("itemid"));
 			int type = Integer.parseInt(res.get("type"));
 			type = (type <= 0) ? 0 : type;
 			

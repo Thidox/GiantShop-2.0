@@ -55,7 +55,7 @@ public class dbInit {
 			data = new HashMap<String, String>();
 			data.put("TYPE", "INT");
 			data.put("LENGTH", "3");
-			data.put("NULL", "true");
+			data.put("NULL", "false");
 			data.put("A_INCR", "true");
 			data.put("P_KEY", "true");
 			fields.put("id", data);
@@ -192,7 +192,7 @@ public class dbInit {
 			data = new HashMap<String, String>();
 			data.put("TYPE", "INT");
 			data.put("LENGTH", "3");
-			data.put("NULL", "true");
+			data.put("NULL", "false");
 			data.put("A_INCR", "true");
 			data.put("P_KEY", "true");
 			fields.put("id", data);
@@ -307,7 +307,7 @@ public class dbInit {
 		
 		for(int i = 0; i < resSet.size(); i++) {
 			HashMap<String, String> res = resSet.get(i);
-			String table = res.get("tableName");
+			String table = res.get("tablename");
 			Double version = Double.parseDouble(res.get("version"));
 			
 			if(table.equalsIgnoreCase("shops") && version < curS) {

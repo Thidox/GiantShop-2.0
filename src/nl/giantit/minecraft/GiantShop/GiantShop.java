@@ -83,7 +83,7 @@ public class GiantShop extends JavaPlugin {
 		config conf = config.Obtain();
 		try {
 			conf.loadConfig(configFile);
-			this.db = Database.Obtain(null, conf.getMap(this.name + ".db"));
+			this.db = Database.Obtain(this, null, conf.getMap(this.name + ".db"));
 			new dbInit(this);
 			
 			if(conf.getBoolean(this.name + ".permissions.usePermissions")) {

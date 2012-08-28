@@ -38,12 +38,12 @@ public class shopLoader {
 				try {
 					String name = res.get("name");
 					World world = plugin.getSrvr().getWorld(res.get("world"));
-					double minX = Double.valueOf(res.get("locMinX"));
-					double minY = Double.valueOf(res.get("locMinY"));
-					double minZ = Double.valueOf(res.get("locMinZ"));
-					double maxX = Double.valueOf(res.get("locMaxX"));
-					double maxY = Double.valueOf(res.get("locMaxY"));
-					double maxZ = Double.valueOf(res.get("locMaxZ"));
+					double minX = Double.valueOf(res.get("locminx"));
+					double minY = Double.valueOf(res.get("locminy"));
+					double minZ = Double.valueOf(res.get("locminz"));
+					double maxX = Double.valueOf(res.get("locmaxx"));
+					double maxY = Double.valueOf(res.get("locmaxy"));
+					double maxZ = Double.valueOf(res.get("locmaxz"));
 
 					Location min = new Location(world, minX, minY, minZ);
 					Location max = new Location(world, maxX, maxY, maxZ);

@@ -72,8 +72,8 @@ public class stockAPI {
 		ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").execQuery();
 		if(resSet.size() >= 1) {
 			for(HashMap<String, String> res : resSet) {
-				String name = iH.getItemNameByID(Integer.parseInt(res.get("itemID")), Integer.parseInt(res.get("type")));
-				stocks.put(name, new itemStock(Integer.parseInt(res.get("itemID")), Integer.parseInt(res.get("type"))));
+				String name = iH.getItemNameByID(Integer.parseInt(res.get("itemid")), Integer.parseInt(res.get("type")));
+				stocks.put(name, new itemStock(Integer.parseInt(res.get("itemid")), Integer.parseInt(res.get("type"))));
 			}
 		}
 		

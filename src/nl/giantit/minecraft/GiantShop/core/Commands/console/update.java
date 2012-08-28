@@ -102,13 +102,13 @@ public class update {
 				HashMap<String, String> tmp = new HashMap<String, String>();
 				tmp.put("itemID", String.valueOf(itemID));
 				tmp.put("itemType", String.valueOf(itemType));
-				tmp.put("sellFor", res.get("sellFor"));
-				tmp.put("buyFor", res.get("buyFor"));
+				tmp.put("sellFor", res.get("sellfor"));
+				tmp.put("buyFor", res.get("buyfor"));
 				tmp.put("stock", res.get("stock"));
-				tmp.put("maxStock", res.get("maxStock"));
+				tmp.put("maxStock", res.get("maxstock"));
 				tmp.put("ostock", res.get("stock"));
-				tmp.put("omaxStock", res.get("maxStock"));
-				tmp.put("perStack", res.get("perStack"));
+				tmp.put("omaxStock", res.get("maxstock"));
+				tmp.put("perStack", res.get("perstack"));
 				tmp.put("shops", res.get("shops"));
 				storedC.put(sender, tmp);
 				

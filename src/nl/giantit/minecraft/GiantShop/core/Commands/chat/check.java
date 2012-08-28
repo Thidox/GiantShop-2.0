@@ -103,9 +103,9 @@ public class check {
 					HashMap<String, String> res = resSet.get(0);
 					
 					int stock = Integer.parseInt(res.get("stock"));
-					int maxStock = Integer.parseInt(res.get("maxStock"));
-					double sellFor = Double.parseDouble(res.get("sellFor"));
-					double buyFor = Double.parseDouble(res.get("buyFor"));
+					int maxStock = Integer.parseInt(res.get("maxstock"));
+					double sellFor = Double.parseDouble(res.get("sellfor"));
+					double buyFor = Double.parseDouble(res.get("buyfor"));
 					
 					if(conf.getBoolean("GiantShop.stock.useStock") && conf.getBoolean("GiantShop.stock.stockDefinesCost") && maxStock != -1 && stock != -1) {
 						double maxInfl = conf.getDouble("GiantShop.stock.maxInflation");
@@ -163,11 +163,11 @@ public class check {
 					Heraut.say(player, "Here's the result for " + name + "!");
 					Heraut.say(player, "ID: " + itemID);
 					Heraut.say(player, "Type: " + (itemType == null ? 0 : itemType));
-					Heraut.say(player, "Quantity per amount: " + res.get("perStack"));
+					Heraut.say(player, "Quantity per amount: " + res.get("perstack"));
 					Heraut.say(player, "Leaves shop for: " + (!sf.equals("-1.0") ? sf : "Not for sale!"));
 					Heraut.say(player, "Returns to shop for: " + (!bf.equals("-1.0") ? bf : "No returns!"));
 					Heraut.say(player, "Amount of items in the shop: " + (!res.get("stock").equals("-1") ? res.get("stock") : "unlimited"));
-					Heraut.say(player, "Maximum amount of items in the shop: " + (!res.get("maxStock").equals("-1") ? res.get("maxStock") : "unlimited"));
+					Heraut.say(player, "Maximum amount of items in the shop: " + (!res.get("maxstock").equals("-1") ? res.get("maxstock") : "unlimited"));
 					//More future stuff
 					/*if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
 					 *		ArrayList<Indaface> shops = GiantShop.getPlugin().getLocationHandler().parseShops(res.get("shops"));

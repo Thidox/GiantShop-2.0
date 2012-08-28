@@ -119,13 +119,13 @@ public class buy {
 					ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where).execQuery();
 					if(resSet.size() == 1) {
 						HashMap<String, String> res = resSet.get(0);
-						if(!res.get("sellFor").equals("-1.0")) {
+						if(!res.get("sellfor").equals("-1.0")) {
 							String name = iH.getItemNameByID(itemID, iT);
 
-							int perStack = Integer.parseInt(res.get("perStack"));
+							int perStack = Integer.parseInt(res.get("perstack"));
 							int stock = Integer.parseInt(res.get("stock"));
-							int maxStock = Integer.parseInt(res.get("maxStock"));
-							double sellFor = Double.parseDouble(res.get("sellFor"));
+							int maxStock = Integer.parseInt(res.get("maxstock"));
+							double sellFor = Double.parseDouble(res.get("sellfor"));
 							double balance = eH.getBalance(player);
 
 							double cost = sellFor * (double) quantity;
@@ -348,12 +348,12 @@ public class buy {
 						ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where).execQuery();
 						if(resSet.size() == 1) {
 							HashMap<String, String> res = resSet.get(0);
-							if(!res.get("sellFor").equals("-1.0")) {
+							if(!res.get("sellfor").equals("-1.0")) {
 								String name = iH.getItemNameByID(itemID, iT);
 
-								int perStack = Integer.parseInt(res.get("perStack"));
+								int perStack = Integer.parseInt(res.get("perstack"));
 								int stock = Integer.parseInt(res.get("stock"));
-								double sellFor = Double.parseDouble(res.get("sellFor"));
+								double sellFor = Double.parseDouble(res.get("sellfor"));
 								double balance = eH.getBalance(player);
 
 								double cost = sellFor * (double) quantity;
