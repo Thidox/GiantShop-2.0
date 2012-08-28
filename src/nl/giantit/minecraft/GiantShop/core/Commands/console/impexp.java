@@ -237,7 +237,7 @@ public class impexp {
 					
 					fields = new ArrayList<String>();
 					fields.add("name");
-					fields.add("perms");
+					//fields.add("perms");
 					fields.add("world");
 					fields.add("locMinX");
 					fields.add("locMinY");
@@ -247,40 +247,39 @@ public class impexp {
 					fields.add("locMaxZ");
 					
 					values = new ArrayList<HashMap<Integer, HashMap<String, String>>>();
-					int lineNumber = 0;
 					for(String[] item : items) {
-						lineNumber++;
-						
 						HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
+						int i = 0;
 						for(String field : fields) {
+							i++;
 							HashMap<String, String> temp = new HashMap<String, String>();
 							if(field.equalsIgnoreCase("name")) {
 								temp.put("data", "" + item[0]);
-								tmp.put(lineNumber, temp);
-							}else if(field.equalsIgnoreCase("perms")) {
+								tmp.put(i, temp);
+							/*}else if(field.equalsIgnoreCase("perms")) {
 								temp.put("data", "" + item[1]);
-								tmp.put(lineNumber, temp);
+								tmp.put(i, temp);*/
 							}else if(field.equalsIgnoreCase("world")) {
 								temp.put("data", "" + item[2]);
-								tmp.put(lineNumber, temp);
+								tmp.put(i, temp);
 							}else if(field.equalsIgnoreCase("locMinX")) {
 								temp.put("data", item[3]);
-								tmp.put(lineNumber, temp);
+								tmp.put(i, temp);
 							}else if(field.equalsIgnoreCase("locMinY")) {
-								temp.put("data", item[3]);
-								tmp.put(lineNumber, temp);
+								temp.put("data", item[4]);
+								tmp.put(i, temp);
 							}else if(field.equalsIgnoreCase("locMinZ")) {
-								temp.put("data", item[3]);
-								tmp.put(lineNumber, temp);
+								temp.put("data", item[5]);
+								tmp.put(i, temp);
 							}else if(field.equalsIgnoreCase("locMaxX")) {
-								temp.put("data", item[3]);
-								tmp.put(lineNumber, temp);
+								temp.put("data", item[6]);
+								tmp.put(i, temp);
 							}else if(field.equalsIgnoreCase("locMaxY")) {
-								temp.put("data", item[3]);
-								tmp.put(lineNumber, temp);
+								temp.put("data", item[7]);
+								tmp.put(i, temp);
 							}else if(field.equalsIgnoreCase("locMaxZ")) {
-								temp.put("data", item[3]);
-								tmp.put(lineNumber, temp);
+								temp.put("data", item[8]);
+								tmp.put(i, temp);
 							}
 						}
 						values.add(tmp);
@@ -295,6 +294,8 @@ public class impexp {
 						Heraut.say(sender, "Importing " + values.size() + " shops...");
 						DB.insert("#__shops", fields, values).updateQuery();
 					}
+					
+					GiantShop.getPlugin().getLocHandler().reload();
 					
 					if(err) {
 						Heraut.say(sender, "Finished importing shops, though some errors occured!");
