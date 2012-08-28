@@ -175,12 +175,12 @@ public class update {
 				HashMap<String, String> p = stored.get(player);
 				
 				p.put("world", loc1.getWorld().getName());
-				p.put("locMinX", String.valueOf(minX));
-				p.put("locMinY", String.valueOf(minY));
-				p.put("locMinZ", String.valueOf(minZ));
-				p.put("locMaxX", String.valueOf(maxX));
-				p.put("locMaxY", String.valueOf(maxY));
-				p.put("locMaxZ", String.valueOf(maxZ));
+				p.put("locminx", String.valueOf(minX));
+				p.put("locminy", String.valueOf(minY));
+				p.put("locminz", String.valueOf(minZ));
+				p.put("locmaxx", String.valueOf(maxX));
+				p.put("loxmaxy", String.valueOf(maxY));
+				p.put("locmaxz", String.valueOf(maxZ));
 				
 				stored.put(player, p);
 				
@@ -247,12 +247,12 @@ public class update {
 			if(!lH.inShop(l, stored.get(player).get("name")) && !lH.inShop(l2, stored.get(player).get("name"))) {
 				HashMap<String, String> p = stored.get(player);
 				
-				p.put("locMinX", String.valueOf(minX));
-				p.put("locMinY", String.valueOf(minY));
-				p.put("locMinZ", String.valueOf(minZ));
-				p.put("locMaxX", String.valueOf(maxX));
-				p.put("locMaxY", String.valueOf(maxY));
-				p.put("locMaxZ", String.valueOf(maxZ));
+				p.put("locminx", String.valueOf(minX));
+				p.put("locminy", String.valueOf(minY));
+				p.put("locminz", String.valueOf(minZ));
+				p.put("locmaxx", String.valueOf(maxX));
+				p.put("locmaxy", String.valueOf(maxY));
+				p.put("locmaxz", String.valueOf(maxZ));
 				
 				stored.put(player, p);
 				
@@ -303,12 +303,12 @@ public class update {
 		
 		lH.removeShop(oname, oworld);
 		
-		double minX = Double.parseDouble(tmp.get("locMinX"));
-		double minY = Double.parseDouble(tmp.get("locMinY"));
-		double minZ = Double.parseDouble(tmp.get("locMinZ"));
-		double maxX = Double.parseDouble(tmp.get("locMaxX"));
-		double maxY = Double.parseDouble(tmp.get("locMaxY"));
-		double maxZ = Double.parseDouble(tmp.get("locMaxZ"));
+		double minX = Double.parseDouble(tmp.get("locminx"));
+		double minY = Double.parseDouble(tmp.get("locminy"));
+		double minZ = Double.parseDouble(tmp.get("locminz"));
+		double maxX = Double.parseDouble(tmp.get("locmaxx"));
+		double maxY = Double.parseDouble(tmp.get("locmaxy"));
+		double maxZ = Double.parseDouble(tmp.get("locmaxz"));
 		
 		Location l = new Location(GiantShop.getPlugin().getSrvr().getWorld(tmp.get("world")), minX, minY, minZ);
 		Location l2 = new Location(GiantShop.getPlugin().getSrvr().getWorld(tmp.get("world")), maxX, maxY, maxZ);
@@ -354,12 +354,12 @@ public class update {
 					if(stored.containsKey(player)) {
 						HashMap<String, String> data = stored.get(player);
 						Heraut.say(player, "Here's the result for shop " + data.get("name") + " in word " + data.get("world") + "!");
-						Heraut.say(player, "minX: " + data.get("locMinX"));
-						Heraut.say(player, "minY: " + data.get("locMinY"));
-						Heraut.say(player, "minZ: " + data.get("locMinZ"));
-						Heraut.say(player, "maxX: " + data.get("locMaxX"));
-						Heraut.say(player, "maxY: " + data.get("locMaxY"));
-						Heraut.say(player, "maxZ: " + data.get("locMaxZ"));
+						Heraut.say(player, "minX: " + data.get("locminx"));
+						Heraut.say(player, "minY: " + data.get("locminy"));
+						Heraut.say(player, "minZ: " + data.get("locminz"));
+						Heraut.say(player, "maxX: " + data.get("locmaxz"));
+						Heraut.say(player, "maxY: " + data.get("locmaxy"));
+						Heraut.say(player, "maxZ: " + data.get("locmaxz"));
 					}else{
 						Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noShopSelected"));
 					}
