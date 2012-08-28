@@ -36,7 +36,7 @@ public class Discounter {
 			
 			int discount = Integer.parseInt(res.get("discount"));
 			
-			if(res.get("grp") == null || res.get("grp").equalsIgnoreCase("")) {
+			if(res.get("grp") == null || res.get("grp").equalsIgnoreCase("") || res.get("grp").equalsIgnoreCase("null")) {
 				discounts.add(new Discount(plugin, id, itemId, type, discount, res.get("user"), false));
 			}else{
 				discounts.add(new Discount(plugin, id, itemId, type, discount, res.get("grp"), true));
