@@ -44,7 +44,6 @@ public class sell {
 	private static Discounter disc = GiantShop.getPlugin().getDiscounter();
 	
 	public static void sell(Player player, String[] args) {
-		Heraut.savePlayer(player);
 		if(perms.has(player, "giantshop.shop.sell")) {
 			if(args.length >= 2) {
 				int itemID;
@@ -103,7 +102,7 @@ public class sell {
 						quantity = (quantity > 0) ? quantity : 1;
 					}catch(NumberFormatException e) {
 						//Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "invQuantity"));
-						Heraut.say("As you did not specify a normal quantity, we'll just use 1 ok? :)");
+						Heraut.say(player, "As you did not specify a normal quantity, we'll just use 1 ok? :)");
 						quantity = 1;
 					}
 				}else
@@ -195,8 +194,8 @@ public class sell {
 									if(conf.getBoolean("GiantShop.broadcast.sell"))
 										Heraut.broadcast(mH.getMsg(msgType.MAIN, "broadcastSell", data));
 	
-									Heraut.say(mH.getMsg(msgType.MAIN, "sell", data));
-									Heraut.say(mH.getMsg(msgType.MAIN, "newBalance", data));
+									Heraut.say(player, mH.getMsg(msgType.MAIN, "sell", data));
+									Heraut.say(player, mH.getMsg(msgType.MAIN, "newBalance", data));
 									Logger.Log(LoggerType.SELL,
 												player, 
 												"{id: " + String.valueOf(itemID) + "; " +
@@ -242,13 +241,13 @@ public class sell {
 				HashMap<String, String> data = new HashMap<String, String>();
 				data.put("command", "sell");
 
-				Heraut.say(mH.getMsg(Messages.msgType.ERROR, "syntaxError", data));
+				Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "syntaxError", data));
 			}
 		}else{
 			HashMap<String, String> data = new HashMap<String, String>();
 			data.put("command", "sell");
 
-			Heraut.say(mH.getMsg(Messages.msgType.ERROR, "noPermissions", data));
+			Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noPermissions", data));
 		}
 	}
 	
