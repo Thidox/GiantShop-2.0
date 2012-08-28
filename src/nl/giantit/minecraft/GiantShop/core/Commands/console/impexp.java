@@ -132,38 +132,40 @@ public class impexp {
 						
 						if(iH.isValidItem(itemID, itemType)) {
 							HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
+							int i = 0;
 							for(String field : fields) {
 								HashMap<String, String> temp = new HashMap<String, String>();
 								if(field.equalsIgnoreCase("itemID")) {
 									temp.put("kind", "INT");
 									temp.put("data", "" + itemID);
-									tmp.put(0, temp);
+									tmp.put(i, temp);
 								}else if(field.equalsIgnoreCase("type")) {
 									temp.put("kind", "INT");
 									temp.put("data", "" + ((itemType == null) ? -1 : itemType));
-									tmp.put(1, temp);
+									tmp.put(i, temp);
 								}else if(field.equalsIgnoreCase("sellFor")) {
 									temp.put("data", "" + sellFor);
-									tmp.put(2, temp);
+									tmp.put(i, temp);
 								}else if(field.equalsIgnoreCase("buyFor")) {
 									temp.put("data", "" + buyFor);
-									tmp.put(3, temp);
+									tmp.put(i, temp);
 								}else if(field.equalsIgnoreCase("stock")) {
 									temp.put("kind", "INT");
 									temp.put("data", "" + stock);
-									tmp.put(4, temp);
+									tmp.put(i, temp);
 								}else if(field.equalsIgnoreCase("perStack")) {
 									temp.put("kind", "INT");
 									temp.put("data", "" + perStack);
-									tmp.put(5, temp);
+									tmp.put(i, temp);
 								}else if(field.equalsIgnoreCase("shops")) {
 									if(item.length == 7)
 										temp.put("data", (item[6].equals("null") ? "" : item[6]));
 									else
 										temp.put("data", "");
 									
-									tmp.put(6, temp);
+									tmp.put(i, temp);
 								}
+								i++;
 							}
 							values.add(tmp);
 						}else{
@@ -251,7 +253,6 @@ public class impexp {
 						HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
 						int i = 0;
 						for(String field : fields) {
-							i++;
 							HashMap<String, String> temp = new HashMap<String, String>();
 							if(field.equalsIgnoreCase("name")) {
 								temp.put("data", "" + item[0]);
@@ -281,6 +282,7 @@ public class impexp {
 								temp.put("data", item[8]);
 								tmp.put(i, temp);
 							}
+							i++;
 						}
 						values.add(tmp);
 					}
@@ -354,31 +356,33 @@ public class impexp {
 					fields.add("type");
 					fields.add("discount");
 					fields.add("user");
-					fields.add("group");
+					fields.add("grp");
 					
 					values = new ArrayList<HashMap<Integer, HashMap<String, String>>>();
 					for(int lineNumber = 0; lineNumber < items.size(); lineNumber++) {
 						String[] item = items.get(lineNumber);
 						
 						HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
+						int i = 0;
 						for(String field : fields) {
 							HashMap<String, String> temp = new HashMap<String, String>();
 							if(field.equalsIgnoreCase("itemID")) {
 								temp.put("data", "" + item[0]);
-								tmp.put(lineNumber, temp);
+								tmp.put(i, temp);
 							}else if(field.equalsIgnoreCase("type")) {
 								temp.put("data", "" + item[1]);
-								tmp.put(lineNumber, temp);
+								tmp.put(i, temp);
 							}else if(field.equalsIgnoreCase("discount")) {
 								temp.put("data", "" + item[2]);
-								tmp.put(lineNumber, temp);
+								tmp.put(i, temp);
 							}else if(field.equalsIgnoreCase("user")) {
 								temp.put("data", "" + item[3]);
-								tmp.put(lineNumber, temp);
-							}else if(field.equalsIgnoreCase("group")) {
+								tmp.put(i, temp);
+							}else if(field.equalsIgnoreCase("grp")) {
 								temp.put("data", item[4]);
-								tmp.put(lineNumber, temp);
+								tmp.put(i, temp);
 							}
+							i++;
 						}
 						values.add(tmp);
 					}
@@ -737,7 +741,7 @@ public class impexp {
 				String type = data.get("type");
 				String dicount = data.get("discount");
 				String user = data.get("user");
-				String group = data.get("group");
+				String group = data.get("grp");
 
 				f.write(itemID + ", " + type + ", " + dicount + ", " + user + ", " + group);
 				f.newLine();
