@@ -24,6 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -83,7 +84,10 @@ public class GiantShop extends JavaPlugin {
 		config conf = config.Obtain();
 		try {
 			conf.loadConfig(configFile);
-			this.db = Database.Obtain(this, null, conf.getMap(this.name + ".db"));
+			HashMap<String, String> db = (HashMap<String, String>) conf.getMap(this.name + ".db");
+			db.put("debug", conf.getString(this.name + ".global.debug"));
+			
+			this.db = Database.Obtain(this, null, db);
 			new dbInit(this);
 			
 			if(conf.getBoolean(this.name + ".permissions.usePermissions")) {
