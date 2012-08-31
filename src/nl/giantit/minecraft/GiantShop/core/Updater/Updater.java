@@ -3,16 +3,17 @@ package nl.giantit.minecraft.GiantShop.core.Updater;
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.core.config;
-
-import java.net.URL;
-import java.util.logging.Level;
-
-import javax.xml.parsers.DocumentBuilderFactory;
+import nl.giantit.minecraft.GiantShop.core.Updater.Config.confUpdate;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.net.URL;
+import java.util.logging.Level;
+
+import javax.xml.parsers.DocumentBuilderFactory;
 
 public class Updater {
 	
@@ -40,7 +41,9 @@ public class Updater {
 	
 	public Updater(GiantShop plugin) {
 		this.plugin = plugin;
-		this.start();
+		if(conf.getBoolean("GiantShop.Updater.checkForUpdates", false)) {
+			this.start();
+		}
 	}
 	
 	public void stop() {
@@ -65,6 +68,17 @@ public class Updater {
 		}
 		
 		return version;
+	}
+	
+	public iUpdater getUpdater(UpdateType t) {
+		switch(t) {
+			case CONFIG:
+				return new confUpdate();
+			default:
+				break;
+		}
+		
+		return null;
 	}
 	
 	public boolean isNewer(String newVersion, String version) {

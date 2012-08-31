@@ -23,6 +23,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -81,7 +82,7 @@ public class GiantShop extends JavaPlugin {
 			extractDefaultFile("conf.yml");
 		}
 		
-		config conf = config.Obtain();
+		config conf = config.Obtain(this);
 		try {
 			conf.loadConfig(configFile);
 			HashMap<String, String> db = (HashMap<String, String>) conf.getMap(this.name + ".db");
@@ -108,8 +109,9 @@ public class GiantShop extends JavaPlugin {
 			
 			if(conf.getBoolean(this.name + ".Updater.checkForUpdates")) {
 				getServer().getPluginManager().registerEvents(new nl.giantit.minecraft.GiantShop.Listeners.PlayerListener(this), this);
-				this.updater = new Updater(this);
 			}
+			
+			this.updater = new Updater(this);
 			
 			pubName = conf.getString(this.name + ".global.name");
 			chat = new chat(this);
@@ -229,8 +231,16 @@ public class GiantShop extends JavaPlugin {
 		return this.locHandler;
 	}
 	
+	public Updater getUpdater() {
+		return this.updater;
+	}
+	
 	public void extract(String file) {
 		extractDefaultFile(file);
+	}
+	
+	public void extract(File file, InputStream input) {
+		extractDefaultFile(file, input);
 	}
 	
 	public static GiantShop getPlugin() {
@@ -254,27 +264,65 @@ public class GiantShop extends JavaPlugin {
 					}
 
 					log.log(Level.INFO, "[" + name + "] copied default file: " + file);
+					output.close();
 				} catch (Exception e) {
 					Server.getPluginManager().disablePlugin(this);
 					log.log(Level.SEVERE, "[" + name + "] AAAAAAH!!! Can't extract the requested file!!", e);
-					return;
 				} finally {
 					try {
-						if (input != null) {
-							input.close();
-						}
+						input.close();
 					} catch (Exception e) {
 						Server.getPluginManager().disablePlugin(this);
 						log.log(Level.SEVERE, "[" + name + "] AAAAAAH!!! Severe error!!", e);	
 					}
 					try {
-						if (output != null) {
-							output.close();
-						}
+						output.close();
 					} catch (Exception e) {
 						Server.getPluginManager().disablePlugin(this);
 						log.log(Level.SEVERE, "[" + name + "] AAAAAAH!!! Severe error!!", e);
 					}
+				}
+			}
+		}
+	}
+	
+	private void extractDefaultFile(File file, InputStream input) {
+		if (!file.exists()) {
+			try {
+			 file.createNewFile();
+			}catch(IOException e) {
+				log.log(Level.SEVERE, "[" + name + "] Can't extract the requested file!!", e);
+			}
+		}
+		if (input != null) {
+			FileOutputStream output = null;
+
+			try {
+				output = new FileOutputStream(file);
+				byte[] buf = new byte[8192];
+				int length = 0;
+
+				while ((length = input.read(buf)) > 0) {
+					output.write(buf, 0, length);
+				}
+
+				log.log(Level.INFO, "[" + name + "] copied default file: " + file);
+				output.close();
+			} catch (Exception e) {
+				Server.getPluginManager().disablePlugin(this);
+				log.log(Level.SEVERE, "[" + name + "] AAAAAAH!!! Can't extract the requested file!!", e);
+			} finally {
+				try {
+					input.close();
+				} catch (Exception e) {
+					Server.getPluginManager().disablePlugin(this);
+					log.log(Level.SEVERE, "[" + name + "] AAAAAAH!!! Severe error!!", e);	
+				}
+				try {
+					output.close();
+				} catch (Exception e) {
+					Server.getPluginManager().disablePlugin(this);
+					log.log(Level.SEVERE, "[" + name + "] AAAAAAH!!! Severe error!!", e);
 				}
 			}
 		}
