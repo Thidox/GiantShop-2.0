@@ -84,6 +84,7 @@ public class GiantShop extends JavaPlugin {
 		
 		config conf = config.Obtain(this);
 		try {
+			this.updater = new Updater(this); // Dirty fix for NPE
 			conf.loadConfig(configFile);
 			HashMap<String, String> db = (HashMap<String, String>) conf.getMap(this.name + ".db");
 			db.put("debug", conf.getString(this.name + ".global.debug"));
