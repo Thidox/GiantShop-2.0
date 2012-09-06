@@ -71,14 +71,12 @@ public class help {
 		int pages = ((int)Math.ceil((double)uEntries.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)uEntries.size() / (double)perPage);
 		int start = (curPag * perPage) - perPage;
 		
-		Heraut.savePlayer(player);
-		
 		if(uEntries.size() <= 0) {
-			Heraut.say("&e[&3" + name + "&e]&c Sorry no help entries yet :(");
+			Heraut.say(player, "&e[&3" + name + "&e]&c Sorry no help entries yet :(");
 		}else if(curPag > pages) {
-			Heraut.say("&e[&3" + name + "&e]&c My help list only has &e" + pages + " &cpages!!");
+			Heraut.say(player, "&e[&3" + name + "&e]&c My help list only has &e" + pages + " &cpages!!");
 		}else{
-			Heraut.say("&e[&3" + name + "&e]&f Help. Page: &e" + curPag + "&f/&e" + pages);
+			Heraut.say(player, "&e[&3" + name + "&e]&f Help. Page: &e" + curPag + "&f/&e" + pages);
 
 			for(int i = start; i < (((start + perPage) > uEntries.size()) ? uEntries.size() : (start + perPage)); i++) {
 				String[] data = uEntries.get(i);
@@ -91,7 +89,7 @@ public class help {
 				params.put("command", helpEntry);
 				params.put("description", description);
 				
-				Heraut.say(msg.getMsg(Messages.msgType.MAIN, "helpCommand", params));
+				Heraut.say(player, msg.getMsg(Messages.msgType.MAIN, "helpCommand", params));
 			}
 		}
 	}
