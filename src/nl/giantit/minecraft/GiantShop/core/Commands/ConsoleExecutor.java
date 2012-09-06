@@ -1,8 +1,8 @@
-package nl.giantit.minecraft.GiantShop.Executors;
+package nl.giantit.minecraft.GiantShop.core.Commands;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.core.Commands.console.*;
+import nl.giantit.minecraft.GiantShop.core.Commands.Console.*;
 
 import org.bukkit.command.CommandSender;
 
@@ -10,11 +10,11 @@ import org.bukkit.command.CommandSender;
  *
  * @author Giant
  */
-public class console {
+public class ConsoleExecutor {
 	
 	private GiantShop plugin;
 	
-	public console(GiantShop plugin) {
+	public ConsoleExecutor(GiantShop plugin) {
 		this.plugin = plugin;
 	}
 

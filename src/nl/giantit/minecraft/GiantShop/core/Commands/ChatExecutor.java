@@ -1,9 +1,9 @@
-package nl.giantit.minecraft.GiantShop.Executors;
+package nl.giantit.minecraft.GiantShop.core.Commands;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.core.Commands.chat.*;
+import nl.giantit.minecraft.GiantShop.core.Commands.Chat.*;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -12,11 +12,11 @@ import org.bukkit.entity.Player;
  *
  * @author Giant
  */
-public class chat {
+public class ChatExecutor {
 	
 	private GiantShop plugin;
 	
-	public chat(GiantShop plugin) {
+	public ChatExecutor(GiantShop plugin) {
 		this.plugin = plugin;
 	}
 
