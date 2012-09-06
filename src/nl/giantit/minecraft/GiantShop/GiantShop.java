@@ -1,11 +1,11 @@
 package nl.giantit.minecraft.GiantShop;
 
-import nl.giantit.minecraft.GiantShop.Executors.chat;
-import nl.giantit.minecraft.GiantShop.Executors.console;
 import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.config;
+import nl.giantit.minecraft.GiantShop.core.Commands.ChatExecutor;
+import nl.giantit.minecraft.GiantShop.core.Commands.ConsoleExecutor;
 import nl.giantit.minecraft.GiantShop.core.Database.Database;
 import nl.giantit.minecraft.GiantShop.core.Eco.Eco;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
@@ -42,8 +42,8 @@ public class GiantShop extends JavaPlugin {
 	private static Server Server;
 	private Database db;
 	private PermHandler permHandler;
-	private chat chat;
-	private console console;
+	private ChatExecutor chat;
+	private ConsoleExecutor console;
 	private Items itemHandler;
 	private Eco econHandler;
 	private Messages msgHandler;
@@ -115,8 +115,8 @@ public class GiantShop extends JavaPlugin {
 			this.updater = new Updater(this);
 			
 			pubName = conf.getString(this.name + ".global.name");
-			chat = new chat(this);
-			console = new console(this);
+			chat = new ChatExecutor(this);
+			console = new ConsoleExecutor(this);
 			itemHandler = new Items(this);
 			econHandler = new Eco(this);
 			msgHandler = new Messages(this);
