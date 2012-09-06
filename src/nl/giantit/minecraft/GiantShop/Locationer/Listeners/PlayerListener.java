@@ -14,8 +14,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -25,7 +26,7 @@ public class PlayerListener implements Listener {
 	
 	private GiantShop plugin;
 	private Locationer lH;
-	private ArrayList<Player> inShop = new ArrayList<Player>();
+	private Set<String> inShop = new HashSet<String>();
 	
 	public PlayerListener(GiantShop plugin) {
 		this.plugin = plugin;
@@ -35,15 +36,14 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
 		Player player = event.getPlayer();
-		Heraut.savePlayer(player);
 		
-		if(!inShop.contains(player) && plugin.getLocHandler().inShop(player.getLocation())) {
-			inShop.add(player);
-			Heraut.say("&3You have just entered a shop &e(&f" + plugin.getLocHandler().getShopName(player.getLocation()).toString() + "&e)&3!");
+		if(!inShop.contains(player.getName()) && plugin.getLocHandler().inShop(player.getLocation())) {
+			inShop.add(player.getName());
+			Heraut.say(player, "&3You have just entered a shop &e(&f" + plugin.getLocHandler().getShopName(player.getLocation()).toString() + "&e)&3!");
 			return;
-		}else if(inShop.contains(player) && !plugin.getLocHandler().inShop(player.getLocation())) {
-			inShop.remove(player);
-			Heraut.say("&3You have just left a shop!");
+		}else if(inShop.contains(player.getName()) && !plugin.getLocHandler().inShop(player.getLocation())) {
+			inShop.remove(player.getName());
+			Heraut.say(player, "&3You have just left a shop!");
 			return;
 		}
 	}
