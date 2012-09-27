@@ -42,8 +42,8 @@ public class itemStock {
 		if(resSet.size() >= 1) {
 			HashMap<String, String> res = resSet.get(0);
 			stock = Integer.parseInt(res.get("stock"));
-			maxStock = Integer.parseInt(res.get("maxStock"));
-			perStack = Integer.parseInt(res.get("perStack"));
+			maxStock = Integer.parseInt(res.get("maxstock"));
+			perStack = Integer.parseInt(res.get("perstack"));
 		}else{
 			throw new ItemNotFoundException();
 		}
