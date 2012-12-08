@@ -8,8 +8,8 @@ GiantShopWeb:
         GiantShopWeb:
             enabled: false
             useHTTPS: false 
-            host: "gsw.local.giantit.nl"
+            host: "path.to.gsw"
             port: 80
             requestPath: "api/request/"
-            activationPath: "user/activate"
+            activationPath: "user/activate/key/%key/"
             debug: true
