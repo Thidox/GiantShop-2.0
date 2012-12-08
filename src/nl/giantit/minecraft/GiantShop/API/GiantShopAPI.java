@@ -3,7 +3,9 @@ package nl.giantit.minecraft.GiantShop.API;
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.API.stock.stockAPI;
 import nl.giantit.minecraft.GiantShop.API.GSL.GSLAPI;
+import nl.giantit.minecraft.GiantShop.API.GSW.GSWAPI;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
+import nl.giantit.minecraft.GiantShop.core.config;
 
 /**
  *
@@ -17,17 +19,39 @@ public class GiantShopAPI {
 	
 	private stockAPI sAPI;
 	private GSLAPI gAPI;
+	private GSWAPI gwAPI;
 	
 	private void setInstance() {
-		instance = this;
+		GiantShopAPI.instance = this;
 	}
 	
 	private GiantShopAPI(GiantShop plugin) {
 		this.plugin = plugin;
 		this.setInstance();
-		this.sAPI = new stockAPI(plugin);
-		this.gAPI = new GSLAPI(plugin);
-		this.iH = plugin.getItemHandler();
+		config c = config.Obtain();
+		if(!c.isLoaded()) {
+			return;
+		}
+		
+		if(c.getBoolean("GiantShop.API.useStockAPI")) {
+			this.sAPI = new stockAPI(plugin);
+		}
+		
+		if(c.getBoolean("GiantShop.API.useGSLAPI")) {
+			this.gAPI = new GSLAPI(plugin);
+		}
+		
+		if(c.getBoolean("GiantShop.API.useGSWAPI")) {
+			this.gwAPI = new GSWAPI(plugin);
+		}
+		
+		GiantShopAPI.iH = plugin.getItemHandler();
+	}
+	
+	public void stop() {
+		if(null != this.gwAPI) {
+			this.gwAPI.shutdown();
+		}
 	}
 	
 	public stockAPI getStockAPI() {
@@ -36,6 +60,10 @@ public class GiantShopAPI {
 	
 	public GSLAPI getGSLAPI() {
 		return this.gAPI;
+	}
+	
+	public GSWAPI getGSWAPI() {
+		return this.gwAPI;
 	}
 	
 	public Items getItemHandlerAPI() {
