@@ -20,6 +20,7 @@ public class help {
 	private static ArrayList<String[]> entries = new ArrayList<String[]>();
 	private static config conf = config.Obtain();
 	private static Permission perms = GiantShop.getPlugin().getPermHandler().getEngine();
+	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	
 	private static void init() {
 		entries = new ArrayList<String[]>();
@@ -86,23 +87,26 @@ public class help {
 		int start = (curPag * perPage) - perPage;
 		
 		if(uEntries.size() <= 0) {
-			Heraut.say(player, "&e[&3" + name + "&e]&c Sorry no help entries yet :(");
+			Heraut.say(player, "&e[&3" + name + "&e]" + mH.getMsg(Messages.msgType.ERROR, "noHelpEntries"));
 		}else if(curPag > pages) {
-			Heraut.say(player, "&e[&3" + name + "&e]&c My help list only has &e" + pages + " &cpages!!");
+			HashMap<String, String> d = new HashMap<String, String>();
+			d.put("list", "help");
+			d.put("pages", String.valueOf(pages));
+			Heraut.say(player, "&e[&3" + name + "&e]" + mH.getMsg(Messages.msgType.ERROR, "pageOverMax", d));
 		}else{
-			Heraut.say(player, "&e[&3" + name + "&e]&f Help. Page: &e" + curPag + "&f/&e" + pages);
+			HashMap<String, String> d = new HashMap<String, String>();
+			d.put("page", String.valueOf(curPag));
+			d.put("pages", String.valueOf(pages));
+			Heraut.say(player, "&e[&3" + name + "&e]" + mH.getMsg(Messages.msgType.MAIN, "helpPageHead", d));
 
 			for(int i = start; i < (((start + perPage) > uEntries.size()) ? uEntries.size() : (start + perPage)); i++) {
 				String[] data = uEntries.get(i);
 
-				String helpEntry = data[0];
-				String description = data[1];
-				Messages msg = GiantShop.getPlugin().getMsgHandler();
 				HashMap<String, String> params = new HashMap<String, String>();
-				params.put("command", helpEntry);
-				params.put("description", description);
+				params.put("command", data[0]);
+				params.put("description", data[1]);
 				
-				Heraut.say(player, msg.getMsg(Messages.msgType.MAIN, "helpCommand", params));
+				Heraut.say(player, mH.getMsg(Messages.msgType.MAIN, "helpCommand", params));
 			}
 		}
 	}
@@ -154,31 +158,39 @@ public class help {
 				int start = (curPag * perPage) - perPage;
 
 				if(uEntries.size() <= 0) {
-					Heraut.say(player, "&e[&3" + name + "&e]&c Sorry no help entries yet :(");
+					Heraut.say(player, "&e[&3" + name + "&e]" + mH.getMsg(Messages.msgType.ERROR, "noHelpEntries"));
 					return;
 				}else if(curPag > pages) {
 					Heraut.say(player, "&e[&3" + name + "&e]&c My help list for player " + usr + " only has &e" + pages + " &cpages!!");
 					return;
 				}else{
 					if(!perms.has(player, "giantshop.admin.sendhelp")) {
-						Heraut.say(player, "&cYou have no access to that command!");
+						HashMap<String, String> data = new HashMap<String, String>();
+						data.put("command", "sendhelp");
+						
+						Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noPermissions", data));
 						return;
 					}
+					
 					Heraut.say(player, "&e[&3" + name + "&e]&f Sending help page &e" + curPag + "&f to player &e" + usr);
 					Heraut.say(receiver, "&e[&3" + name + "&e]&f You were sent help by " + player.getDisplayName() + "!");
-					Heraut.say(receiver, "&e[&3" + name + "&e]&f Help. Page: &e" + curPag + "&f/&e" + pages);
+					HashMap<String, String> d = new HashMap<String, String>();
+					d.put("page", String.valueOf(curPag));
+					d.put("pages", String.valueOf(pages));
+					Heraut.say(receiver, "&e[&3" + name + "&e]" + mH.getMsg(Messages.msgType.MAIN, "helpPageHead", d));
 
 					for(int i = start; i < (((start + perPage) > uEntries.size()) ? uEntries.size() : (start + perPage)); i++) {
 						String[] data = uEntries.get(i);
 
-						String helpEntry = data[0];
-						String description = data[1];
+						HashMap<String, String> params = new HashMap<String, String>();
+						params.put("command", data[0]);
+						params.put("description", data[1]);
 
-						Heraut.say(receiver, "&c/" + helpEntry + " &e-&f " + description);
+						Heraut.say(player, mH.getMsg(Messages.msgType.MAIN, "helpCommand", params));
 					}
 				}
 			}else{
-				Heraut.say(player, "&e[&3" + name + "&e]&c The requested player does not to be offline or even not existing! :(");
+				Heraut.say(player, "&e[&3" + name + "&e]&c The requested player does not seem to be offline or even not existing! :(");
 			}
 		}else{
 			help.showHelp(player, args);
