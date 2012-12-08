@@ -43,12 +43,32 @@ public class Misc {
 	public static boolean isEither(String target, String is, String either) {
 		if(target.equals(is) || target.equals(either))
 			return true;
+		
 		return false;
 	}
 	
 	public static boolean isEitherIgnoreCase(String target, String is, String either) {
 		if(target.equalsIgnoreCase(is) || target.equalsIgnoreCase(either))
 			return true;
+		
+		return false;
+	}
+	
+	public static boolean isAny(String target, String... arr) {
+		for(String is : arr) {
+			if(target.equals(is))
+				return true;
+		}
+		
+		return false;
+	}
+	
+	public static boolean isAnyIgnoreCase(String target, String... arr) {
+		for(String is : arr) {
+			if(target.equalsIgnoreCase(is))
+				return true;
+		}
+		
 		return false;
 	}
 	
