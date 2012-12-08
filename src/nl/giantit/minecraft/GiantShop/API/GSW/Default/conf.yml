@@ -1,0 +1,14 @@
+GiantShopWeb:
+    Global:
+        version: 0.1
+    Server:
+        ip: 0.0.0.0
+        port: 8698
+    Trusted:
+        GiantShopWeb:
+            enabled: false
+            useHTTPS: false 
+            host: "gsw.local.giantit.nl"
+            port: 80
+            requestPath: "api/request/"
+            debug: true
