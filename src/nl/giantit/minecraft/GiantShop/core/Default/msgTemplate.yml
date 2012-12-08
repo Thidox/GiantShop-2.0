@@ -1,4 +1,4 @@
-version: 1.3
+version: 1.4
 main:
     broadcastBuy: C_YELLOW%player C_WHITEbought some C_YELLOW%item 
     broadcastSell: C_YELLOW%player C_WHITEsold some C_YELLOW%item  
@@ -10,7 +10,9 @@ main:
     helpCommand: C_RED/%command C_YELLOW-C_WHITE %description
     itemListEntry: ID C_YELLOW%id C_WHITEType C_YELLOW%type C_WHITEName C_YELLOW%name C_WHITEAmount C_YELLOW%perStack C_WHITESell for C_YELLOW%sellFor C_WHITEBuy for C_YELLOW%buyFor C_WHITEStock C_YELLOW%stock
     newBalance: Your new balance is%colon C_YELLOW%balance
-    discountEntry: C_YELLOW%discount% C_WHITEon C_YELLOW%item 
+    discountEntry: C_YELLOW%discount% C_WHITEon C_YELLOW%item
+    helpPageHead: C_YELLOW Help page C_WHITE%pageC_YELLOW/C_WHITE%pages
+    gswAPIRegKey: C_YELLOWSuccessfully registered at C_WHITE%appC_YELLOW. Your activation key is%colon C_WHITE%keyC_YELLOW!
 admin:
     add: You just added item C_YELLOW%item C_WHITEwith quantity C_YELLOW%amount sold for C_YELLOW%sellFor bought for C_YELLOW%buyFor with stock C_YELLOW%stock!
     addStock: You have successfully added C_YELLOW%amount C_WHITEto the stock of item C_YELLOW%item!
@@ -55,3 +57,11 @@ errors:
     discountDupe: C_REDA discount that is exactly the same already exists!
     discountNotFound: C_REDWe are sorry but the requested discount does not seem to exist!
     playerNotFound: C_REDWe are sorry but the player %player does not seem to exist!
+    noHelpEntries: C_REDSorry no help entries yet :(
+    pageOverMax: C_REDMy %list list only has C_WHITE%pages C_REDpages!
+    noWebAppSpecified: C_REDPlease specify atleast 1 web app to register to!
+    noWebApps: C_REDWe are sorry but it seems there are no known web apps yet!
+    webAppNotTrusted: C_REDWe are sorry but it seems that the web app C_WHITE%app C_REDis not trusted!
+    gswAPIWriteError: C_REDAn error occured whilst writing to C_WHITE%appC_RED!
+    gswAPIWriteError: C_REDAn error occured whilst writing to C_WHITE%appC_RED!
+    error: C_REDError%colon C_WHITE%errorC_RED!
