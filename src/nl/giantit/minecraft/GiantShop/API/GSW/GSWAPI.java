@@ -151,7 +151,8 @@ public class GSWAPI {
 																cS.getBoolean(key + ".useHTTPS", false), 
 																cS.getString(key + ".host", ""), 
 																cS.getInt(key + ".port", 80), 
-																cS.getString(key + ".requestPath", ""),
+																cS.getString(key + ".requestPath", ""), 
+																cS.getString(key + ".activationPath", ""), 
 																ident,
 																cS.getBoolean(key + ".debug", false)
 															);

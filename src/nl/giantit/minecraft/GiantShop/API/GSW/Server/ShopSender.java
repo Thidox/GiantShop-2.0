@@ -36,6 +36,8 @@ public class ShopSender {
 	private String host;
 	private int port;
 	private String requestPath;
+	private String activPath;
+	private String activURI;
 	private String u;
 	private String ident;
 	private boolean dbg = false;
@@ -52,7 +54,7 @@ public class ShopSender {
 	
 	private boolean finished = false;
 	
-	public ShopSender(final GiantShop p, final GSWAPI a, String appName, boolean useHTTPS, String host, int port, String requestPath, String ident, boolean dbg) {
+	public ShopSender(final GiantShop p, final GSWAPI a, String appName, boolean useHTTPS, String host, int port, String requestPath, String activPath, String ident, boolean dbg) {
 		this.p = p;
 		this.a = a;
 		this.appName = appName;
@@ -60,6 +62,7 @@ public class ShopSender {
 		this.host = host;
 		this.port = port;
 		this.requestPath = requestPath;
+		this.activPath = activPath;
 		this.ident = ident;
 		this.dbg = dbg;
 		
@@ -70,14 +73,18 @@ public class ShopSender {
 		if(this.useHTTPS) {
 			if(this.port != 443) {
 				this.u = "https://" + this.host + ":" + this.port + "/" + requestPath;
+				this.activURI = "https://" + this.host + ":" + this.port + "/" + activPath;
 			}else{
 				this.u = "https://" + this.host + "/" + requestPath;
+				this.activURI = "https://" + this.host + "/" + activPath;
 			}
 		}else{
 			if(this.port != 80) {
 				this.u = "http://" + this.host + ":" + this.port + "/" + requestPath;
+				this.activURI = "http://" + this.host + ":" + this.port + "/" + activPath;
 			}else{
 				this.u = "http://" + this.host + "/" + requestPath;
+				this.activURI = "http://" + this.host + "/" + activPath;
 			}
 		}
 	}
@@ -96,6 +103,14 @@ public class ShopSender {
 	
 	public String getRequestPath() {
 		return this.requestPath;
+	}
+	
+	public String getActivationPath() {
+		return this.activPath;
+	}
+	
+	public String getActivationURI() {
+		return this.activURI;
 	}
 	
 	public void getPublicKey() {
