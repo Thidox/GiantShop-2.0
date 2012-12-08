@@ -1,4 +1,4 @@
-version: 0.6
+version: 0.7
 names:
     item0: 
     - Air
@@ -269,9 +269,16 @@ names:
     item134: Spruce Wood Stairs
     item135: Birch Wood Stairs
     item136: Jungle Wood Stairs
+    item137: Command Block
     item138: 
     - Beacon Block
     - Beacon
+    item139: Cobblestone Wall
+    item140: Flower Pot Block
+    item141: Carrots
+    item142: Potatoes
+    item143: Wooden Button
+    item145: Anvil
     item256: Iron Shovel
     item257: 
     - Iron Pickaxe
@@ -546,8 +553,20 @@ names:
     item384: Bottle o' Enchanting
     item385: Fire Charge
     item386: Book and Quill
-    item387: Written Book
     item388: Emerald
+    item389: Item Frame
+    item390: Flower Pot
+    item391: Carrot
+    item392: Potato
+    item393: Baked Potato
+    item394: Poisonous Potato
+    item395: Empty Map
+    item396: Golden Carrot
+    item398: Carrot on a Stick
+    item399: Nether Star
+    item400: Pumpkin Pie
+#    item401: Firework Rocket
+#    item402: Firework Star
     item2256: 13 Disc
     item2257: Cat Disc
     item2258: blocks Disc
@@ -559,6 +578,7 @@ names:
     item2264: strad Disc
     item2265: ward Disc
     item2266: 11 Disc
+    item2267: wait Disc
 types:
     item5:
         type0:
