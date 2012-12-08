@@ -22,15 +22,18 @@ import java.util.logging.Level;
 public class config {
 	
 	private static config instance = null;
-	private HashMap<String, Object> conf = new HashMap<String, Object>();
 
 	private GiantShop plugin;
 	private YamlConfiguration c;
 	private File file;
-	private double version = 1.0;
+	private double version = 1.1;
 
 	private config(GiantShop p) {
 		this.plugin = p;
+	}
+	
+	public boolean isLoaded() {
+		return null != c;
 	}
 	
 	public void loadConfig(File file) {

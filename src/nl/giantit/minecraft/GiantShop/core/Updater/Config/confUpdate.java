@@ -9,6 +9,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 
 public class confUpdate implements iUpdater {
@@ -20,13 +22,19 @@ public class confUpdate implements iUpdater {
 		}catch(UnsupportedEncodingException e) {
 			GiantShop.getPlugin().getLogger().severe("Failed to update config file!");
 			if(c.getBoolean("GiantShop.global.debug", true) == true) {
-				e.printStackTrace();
+				GiantShop.getPlugin().getLogger().log(Level.INFO, e.getMessage(), e);
 			}
 		}
 	}
 
 	private void update1_1(FileConfiguration c) {
+		Map<String, Boolean> section = new HashMap<String, Boolean>();
+		section.put("useGSWAPI", true);
+		section.put("useGSLAPI", true);
+		section.put("useStockAPI", true);
+		c.createSection("GiantShop.API", section);
 		
+		c.set("GiantShop.global.version", 1.1);
 		this.export(new File(GiantShop.getPlugin().getDir(), "conf.yml"), c);
 	}
 	
