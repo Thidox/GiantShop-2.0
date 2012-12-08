@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
 
 /**
  *
@@ -80,12 +81,23 @@ public class GiantShop extends JavaPlugin {
 			getDataFolder().setExecutable(true);
 			
 			extractDefaultFile("conf.yml");
+			if(!configFile.exists()) {
+				getLogger().severe("Failed to extract configuration file!");
+				this.getPluginLoader().disablePlugin(this);
+				return;
+			}
 		}
 		
 		config conf = config.Obtain(this);
 		try {
 			this.updater = new Updater(this); // Dirty fix for NPE
 			conf.loadConfig(configFile);
+			if(!conf.isLoaded()) {
+				getLogger().severe("Failed to load configuration file!");
+				this.getPluginLoader().disablePlugin(this);
+				return;
+			}
+			
 			HashMap<String, String> db = (HashMap<String, String>) conf.getMap(this.name + ".db");
 			db.put("debug", conf.getString(this.name + ".global.debug"));
 			
@@ -133,11 +145,12 @@ public class GiantShop extends JavaPlugin {
 			if(conf.getBoolean(this.name + ".metrics.useMetrics")) {
 				this.metrics = new MetricsHandler(this);
 			}
+			
+			GiantShopAPI.Obtain();
 		}catch(Exception e) {
 			log.log(Level.SEVERE, "[" + this.name + "](" + this.bName + ") Failed to load!");
 			if(conf.getBoolean(this.name + ".global.debug")) {
-				log.log(Level.INFO, "" + e);
-				e.printStackTrace();
+				log.log(Level.INFO, e.getMessage(), e);
 			}
 			Server.getPluginManager().disablePlugin(this);
 		}
@@ -148,9 +161,13 @@ public class GiantShop extends JavaPlugin {
 		if(null != this.updater)
 			this.updater.stop();
 		
-		this.db.getEngine().close();
+		GiantShopAPI.Obtain().stop();
 		
-		log.log(Level.INFO, "[" + this.name + "] Was successfully dissabled!");
+		if(null != this.db) {
+			this.db.getEngine().close();
+		}
+		
+		log.log(Level.INFO, "[" + this.name + "] Was successfully disabled!");
 	}
 	
 	@Override
@@ -194,6 +211,10 @@ public class GiantShop extends JavaPlugin {
 	
 	public Boolean useLocation() {
 		return this.useLoc;
+	}
+	
+	public String getVersion() {
+		return this.getVersion();
 	}
 	
 	public String getNewVersion() {
@@ -240,6 +261,10 @@ public class GiantShop extends JavaPlugin {
 		extractDefaultFile(file);
 	}
 	
+	public void extract(File file, String sourceFile, String resPath) {
+		extractDefaultFile(file, sourceFile, resPath);
+	}
+	
 	public void extract(File file, InputStream input) {
 		extractDefaultFile(file, input);
 	}
@@ -249,14 +274,19 @@ public class GiantShop extends JavaPlugin {
 	}
 	
 	private void extractDefaultFile(String file) {
-		File configFile = new File(getDataFolder(), file);
-		if (!configFile.exists()) {
-			InputStream input = this.getClass().getResourceAsStream("/nl/giantit/minecraft/" + name + "/core/Default/" + file);
+		this.extractDefaultFile(new File(getDataFolder(), file), file, "/core/Default/");
+	}
+	
+	private void extractDefaultFile(File file, String sourceFile, String resPath) {
+		if (!file.exists()) {
+			String path = resPath + sourceFile;
+			InputStream input = this.getClass().getResourceAsStream("/nl/giantit/minecraft/" + name + path);
+			
 			if (input != null) {
 				FileOutputStream output = null;
 
 				try {
-					output = new FileOutputStream(configFile);
+					output = new FileOutputStream(file);
 					byte[] buf = new byte[8192];
 					int length = 0;
 
@@ -264,7 +294,7 @@ public class GiantShop extends JavaPlugin {
 						output.write(buf, 0, length);
 					}
 
-					log.log(Level.INFO, "[" + name + "] copied default file: " + file);
+					log.log(Level.INFO, "[" + name + "] copied default file: " + sourceFile);
 					output.close();
 				} catch (Exception e) {
 					Server.getPluginManager().disablePlugin(this);
