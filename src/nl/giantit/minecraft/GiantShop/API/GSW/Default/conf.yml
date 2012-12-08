@@ -11,4 +11,5 @@ GiantShopWeb:
             host: "gsw.local.giantit.nl"
             port: 80
             requestPath: "api/request/"
+            activationPath: "user/activate"
             debug: true
