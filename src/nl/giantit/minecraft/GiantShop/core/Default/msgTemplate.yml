@@ -13,6 +13,7 @@ main:
     discountEntry: C_YELLOW%discount% C_WHITEon C_YELLOW%item
     helpPageHead: C_YELLOW Help page C_WHITE%pageC_YELLOW/C_WHITE%pages
     gswAPIRegKey: C_YELLOWSuccessfully registered at C_WHITE%appC_YELLOW. Your activation key is%colon C_WHITE%keyC_YELLOW!
+    gswAPIRegURI: C_YELLOWActivate%colon C_BLUE%uri C_YELLOW!
 admin:
     add: You just added item C_YELLOW%item C_WHITEwith quantity C_YELLOW%amount sold for C_YELLOW%sellFor bought for C_YELLOW%buyFor with stock C_YELLOW%stock!
     addStock: You have successfully added C_YELLOW%amount C_WHITEto the stock of item C_YELLOW%item!
