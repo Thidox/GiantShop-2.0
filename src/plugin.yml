@@ -11,6 +11,10 @@ commands:
         description: This will enable you to make shop locations!
         aliases: [shoploc, l, sl]
         usage: /loc [params]
+    gsw:
+        description: This will enable you to make shop locations!
+        aliases: [gswapi, gsapi]
+        usage: /gsw [params]
 permissions:
     giantshop.*:
         description: Gives access to all GiantShop permissions
@@ -35,6 +39,8 @@ permissions:
             giantshop.location.create: true
             giantshop.location.remove: true
             giantshop.location.list: true
+            giantshop.api.web.list: true
+            giantshop.api.web.register: true
     giantshop.shop.*:
         description: Gives access to the GiantShop payout
         children:
@@ -64,6 +70,11 @@ permissions:
             giantshop.location.create: true
             giantshop.location.remove: true
             giantshop.location.list: true
+    giantshop.api.*:
+        description: Gives access to all GiantShop API commands
+        children:
+            giantshop.api.web.register: true
+            giantshop.api.web.list: true
     giantshop.shop.buy:
         description: Gives access to the buying feature
         default: false
@@ -124,3 +135,9 @@ permissions:
     giantshop.location.list:
         description: Enables admin to list available shops
         default: false
+    giantshop.api.web.list:
+        description: Allows users to list all trusted webapi apps
+        default: true
+    giantshop.api.web.register:
+        description: Allows users to register to a trusted webapi app
+        default: true
