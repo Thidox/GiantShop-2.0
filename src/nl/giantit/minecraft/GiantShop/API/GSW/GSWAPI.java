@@ -16,6 +16,7 @@ import nl.giantit.minecraft.GiantShop.API.GSW.Exceptions.RSAKeyLoadException;
 import nl.giantit.minecraft.GiantShop.API.GSW.Exceptions.RSAKeySaveException;
 import nl.giantit.minecraft.GiantShop.API.GSW.Server.ShopReceiver;
 import nl.giantit.minecraft.GiantShop.API.GSW.Server.ShopSender;
+import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
 import nl.giantit.minecraft.GiantShop.API.conf;
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import org.bukkit.configuration.ConfigurationSection;
@@ -37,6 +38,7 @@ public class GSWAPI {
 	private String d;
 	private KeyPair kp;
 	
+	private boolean loaded = false;
 	
 	private void init() {
 		File dir = new File(this.d + "/rsa");
@@ -71,6 +73,12 @@ public class GSWAPI {
 	}
 	
 	public GSWAPI(GiantShop p) {
+		if(null == GiantShopAPI.Obtain().getStockAPI()) {
+			p.getLogger().severe("[GSWAPI] ItemStockAPI disabled! GiantShopWebAPI depends on this!");
+			p.getLogger().warning("[GSWAPI] GiantShopWebAPI will not be functional! More errors might follow!");
+			return;
+		}
+		
 		this.p = p;
 		this.d = p.getDir() + "/API/gsw/";
 		File dir = new File(this.d + "/conf");
@@ -162,6 +170,8 @@ public class GSWAPI {
 				}
 			}
 		}
+		
+		loaded = true;
 	}
 	
 	public void shutdown() {
@@ -169,25 +179,37 @@ public class GSWAPI {
 	}
 	
 	public ShopSender getTrustedApp(String appName) {
-		if(this.ss.containsKey(appName))
+		if(loaded && this.ss.containsKey(appName))
 			return this.ss.get(appName);
 		
 		return null;
 	}
 	
 	public void removeTrustedApp(String appName) {
-		if(this.ss.containsKey(appName)) {
+		if(loaded && this.ss.containsKey(appName)) {
 			this.p.getLogger().info("[GSWAPI] Removing trusted app " + appName);
 			this.ss.remove(appName);
 		}
 	}
 	
 	public boolean isTrustedApp(String appName) {
-		return this.ss.containsKey(appName);
+		return loaded && this.ss.containsKey(appName);
 	}
 	
 	public Set<String> getTrustedApps() {
-		return this.ss.keySet();
+		if(loaded) {
+			return this.ss.keySet();
+		}
+		
+		return null;
+	}
+	
+	public Map<String, ShopSender> getTrustedAppsMap() {
+		if(loaded) {
+			return this.ss;
+		}
+		
+		return null;
 	}
 	
 	public String getGSVersion() {
@@ -199,7 +221,11 @@ public class GSWAPI {
 	}
 	
 	public KeyPair getKeyPair() {
-		return this.kp;
+		if(loaded) {
+			return this.kp;
+		}
+		
+		return null;
 	}
 	
 	public static GSWAPI getInstance() {
