@@ -14,6 +14,8 @@ main:
     helpPageHead: C_YELLOW Help page C_WHITE%pageC_YELLOW/C_WHITE%pages
     gswAPIRegKey: C_YELLOWSuccessfully registered at C_WHITE%appC_YELLOW. Your activation key is%colon C_WHITE%keyC_YELLOW!
     gswAPIRegURI: C_YELLOWActivate%colon C_BLUE%uri C_YELLOW!
+    TrustedAppPageHead: C_YELLOWAvailable trusted apps #C_WHITE%pageC_YELLOW/C_WHITE%pages
+    TrustedAppListEntry: C_WHITE%appNameC_YELLOW%colon C_BLUE%appURI
 admin:
     add: You just added item C_YELLOW%item C_WHITEwith quantity C_YELLOW%amount sold for C_YELLOW%sellFor bought for C_YELLOW%buyFor with stock C_YELLOW%stock!
     addStock: You have successfully added C_YELLOW%amount C_WHITEto the stock of item C_YELLOW%item!
@@ -61,7 +63,7 @@ errors:
     noHelpEntries: C_REDSorry no help entries yet :(
     pageOverMax: C_REDMy %list list only has C_WHITE%pages C_REDpages!
     noWebAppSpecified: C_REDPlease specify atleast 1 web app to register to!
-    noWebApps: C_REDWe are sorry but it seems there are no known web apps yet!
+    noWebApps: C_REDWe are sorry but it seems there are no known trusted web apps yet!
     webAppNotTrusted: C_REDWe are sorry but it seems that the web app C_WHITE%app C_REDis not trusted!
     gswAPIWriteError: C_REDAn error occured whilst writing to C_WHITE%appC_RED!
     gswAPIWriteError: C_REDAn error occured whilst writing to C_WHITE%appC_RED!
