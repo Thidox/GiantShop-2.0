@@ -123,7 +123,8 @@ public class sell {
 					ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where).execQuery();
 					if(resSet.size() == 1) {
 						HashMap<String, String> res = resSet.get(0);
-						if(!res.get("buyfor").equals("-1.0")) {
+						if(!res.get("buyfor").equals("-1.0") && !res.get("buyfor").equals("-1")) {
+							Heraut.say(player, res.get("buyfor"));
 							String name = iH.getItemNameByID(itemID, iT);
 
 							int perStack = Integer.parseInt(res.get("perstack"));
@@ -141,7 +142,7 @@ public class sell {
 									int atmi = conf.getInt("GiantShop.stock.amountTillMaxInflation");
 									int atmd = conf.getInt("GiantShop.stock.amountTillMaxDeflation");
 									double split = Math.round((atmi + atmd) / 2);
-									if(maxStock <= atmi + atmd); {
+									if(maxStock <= atmi + atmd) {
 										split = maxStock / 2;
 										atmi = 0;
 										atmd = maxStock;
@@ -216,7 +217,12 @@ public class sell {
 										try {
 											StockUpdateEvent event = new StockUpdateEvent(player, GiantShopAPI.Obtain().getStockAPI().getItemStock(itemID, itemType), StockUpdateEvent.StockUpdateType.INCREASE);
 											GiantShop.getPlugin().getSrvr().getPluginManager().callEvent(event);
-										}catch(ItemNotFoundException e) {}
+										}catch(ItemNotFoundException e) {
+											// Won't ever occur.
+										}catch(NullPointerException e) {
+											// StockAPI isn't loaded!
+										}
+										
 									}
 								}else{
 									HashMap<String, String> data = new HashMap<String, String>();
