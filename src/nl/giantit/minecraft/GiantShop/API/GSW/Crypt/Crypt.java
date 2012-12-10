@@ -25,10 +25,16 @@ public class Crypt {
 		return cipher.doFinal(data);
 	}
 	
-	public static byte[] decryptAES(byte[] data, byte[] key) throws Exception {
-		
+	public static byte[] encryptAES(byte[] data, byte[] key) throws Exception {
 		IvParameterSpec iv = new IvParameterSpec(key);
-		
+		SecretKeySpec k = new SecretKeySpec(key, "AES");
+		Cipher cipher = Cipher.getInstance("AES/CBC/noPadding");
+		cipher.init(Cipher.ENCRYPT_MODE, k, iv);
+		return cipher.doFinal(data);
+	}
+	
+	public static byte[] decryptAES(byte[] data, byte[] key) throws Exception {
+		IvParameterSpec iv = new IvParameterSpec(key);
 		SecretKeySpec k = new SecretKeySpec(key, "AES");
 		Cipher cipher = Cipher.getInstance("AES/CBC/noPadding");
 		cipher.init(Cipher.DECRYPT_MODE, k, iv);
