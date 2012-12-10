@@ -113,6 +113,22 @@ public class ShopSender {
 		return this.activURI;
 	}
 	
+	public String getHostURI() {
+		if(this.useHTTPS) {
+			if(this.port != 443) {
+				return "https://" + this.host + ":" + this.port + "/";
+			}else{
+				return "https://" + this.host + "/";
+			}
+		}else{
+			if(this.port != 80) {
+				return "http://" + this.host + ":" + this.port + "/";
+			}else{
+				return "http://" + this.host + "/";
+			}
+		}
+	}
+	
 	public void getPublicKey() {
 		//this.p.getLogger().severe(this.ident);
 		this.data = ("ident=" + this.ident + "&data=getPubKey").getBytes();
@@ -129,10 +145,38 @@ public class ShopSender {
 	public void write(String write, ResultHandler h) throws Exception {
 		write = this.ident + "\n" + write;
 		byte[] enc;
-		try {
-			enc = URLEncoder.encode(new String(Base64.encodeBase64(Crypt.encrypt(write.getBytes(), this.pk))), "UTF-8").getBytes();
-		}catch(UnsupportedEncodingException e) {
-			enc = new String(Base64.encodeBase64(Crypt.encrypt(write.getBytes(), this.pk))).getBytes();
+		if(write.getBytes().length > 256) {
+			// Data longer then 256 bytes!
+			// Encrypt using AES!
+			String key = org.apache.commons.lang.RandomStringUtils.randomAlphanumeric(16);
+			String raw;
+			try {
+				raw = "{\"aesEnc\":"
+					+ "\"" + URLEncoder.encode(new String(Base64.encodeBase64(Crypt.encryptAES(write.getBytes(), key.getBytes()))), "UTF-8").getBytes() + "\""
+					+"\"aesKey\":"
+					+ "\"" + URLEncoder.encode(new String(Base64.encodeBase64(Crypt.encrypt(key.getBytes(), this.pk))), "UTF-8").getBytes() + "\""
+					+ "}";
+			}catch(UnsupportedEncodingException e) {
+				// This should hopefully never happen!
+				p.getLogger().warning("[GSWAPI] Failed to use UTF-8 encoding! This is most likely not a good thing!");
+				p.getLogger().warning("[GSWAPI] Falling back to unencoded msgs! This most likely WILL fail!");
+				raw = "{\"aesEnc\":"
+					+ "\""+ new String(Base64.encodeBase64(Crypt.encryptAES(write.getBytes(), key.getBytes()))).getBytes() + "\""
+					+"\"aesKey\":"
+					+ "\"" + new String(Base64.encodeBase64(Crypt.encrypt(key.getBytes(), this.pk))).getBytes() + "\""
+					+ "}";
+			}
+			
+			enc = raw.getBytes();
+		}else{
+			try {
+				enc = URLEncoder.encode(new String(Base64.encodeBase64(Crypt.encrypt(write.getBytes(), this.pk))), "UTF-8").getBytes();
+			}catch(UnsupportedEncodingException e) {
+				// This should hopefully never happen!
+				p.getLogger().warning("[GSWAPI] Failed to use UTF-8 encoding! This is most likely not a good thing!");
+				p.getLogger().warning("[GSWAPI] Falling back to unencoded msgs! This most likely WILL fail!");
+				enc = new String(Base64.encodeBase64(Crypt.encrypt(write.getBytes(), this.pk))).getBytes();
+			}
 		}
 
 		byte[] param = ("ident=" + this.ident + "&data=").getBytes();
@@ -307,7 +351,7 @@ public class ShopSender {
 				p.getLogger().severe("[GSWAPI] It might not be a trustable source!");
 				//p.getLogger().severe(e.getMsg());
 				GSWAPI.getInstance().removeTrustedApp(appName);
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 
 			this.cancel();
