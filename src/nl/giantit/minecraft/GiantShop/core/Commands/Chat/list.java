@@ -91,7 +91,7 @@ public class list {
 						int atmi = conf.getInt("GiantShop.stock.amountTillMaxInflation");
 						int atmd = conf.getInt("GiantShop.stock.amountTillMaxDeflation");
 						double split = Math.round((atmi + atmd) / 2);
-						if(maxStock <= atmi + atmd); {
+						if(maxStock <= atmi + atmd) {
 							split = maxStock / 2;
 							atmi = 0;
 							atmd = maxStock;
