@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
+import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
+import nl.giantit.minecraft.GiantShop.API.stock.Events.StockUpdateEvent;
+import nl.giantit.minecraft.GiantShop.API.stock.ItemNotFoundException;
 
 /**
  *
@@ -119,7 +122,7 @@ public class buy {
 					ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where).execQuery();
 					if(resSet.size() == 1) {
 						HashMap<String, String> res = resSet.get(0);
-						if(!res.get("sellfor").equals("-1.0")) {
+						if(!res.get("sellfor").equals("-1.0") && !res.get("sellfor").equals("-1")) {
 							String name = iH.getItemNameByID(itemID, iT);
 
 							int perStack = Integer.parseInt(res.get("perstack"));
@@ -212,6 +215,15 @@ public class buy {
 											t.put("stock", String.valueOf((stock - amount)));
 
 											DB.update("#__items").set(t).where(where).updateQuery();
+											
+											try {
+												StockUpdateEvent event = new StockUpdateEvent(player, GiantShopAPI.Obtain().getStockAPI().getItemStock(itemID, itemType), StockUpdateEvent.StockUpdateType.DECREASE);
+												GiantShop.getPlugin().getSrvr().getPluginManager().callEvent(event);
+											}catch(ItemNotFoundException e) {
+												// Won't ever occur.
+											}catch(NullPointerException e) {
+												// StockAPI isn't loaded!
+											}
 										}
 
 										if(!left.isEmpty()) {
@@ -348,7 +360,7 @@ public class buy {
 						ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where).execQuery();
 						if(resSet.size() == 1) {
 							HashMap<String, String> res = resSet.get(0);
-							if(!res.get("sellfor").equals("-1.0")) {
+							if(!res.get("sellfor").equals("-1.0") && !res.get("sellfor").equals("-1")) {
 								String name = iH.getItemNameByID(itemID, iT);
 
 								int perStack = Integer.parseInt(res.get("perstack"));
@@ -410,6 +422,15 @@ public class buy {
 												t.put("stock", String.valueOf((stock - amount)));
 
 												DB.update("#__items").set(t).where(where).updateQuery();
+												
+												try {
+													StockUpdateEvent event = new StockUpdateEvent(player, GiantShopAPI.Obtain().getStockAPI().getItemStock(itemID, itemType), StockUpdateEvent.StockUpdateType.DECREASE);
+													GiantShop.getPlugin().getSrvr().getPluginManager().callEvent(event);
+												}catch(ItemNotFoundException e) {
+													// Won't ever occur.
+												}catch(NullPointerException e) {
+													// StockAPI isn't loaded!
+												}
 											}
 
 											if(!left.isEmpty()) {
