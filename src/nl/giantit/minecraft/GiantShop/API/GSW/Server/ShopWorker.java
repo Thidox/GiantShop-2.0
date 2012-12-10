@@ -87,7 +87,7 @@ public class ShopWorker extends BukkitRunnable {
 			// Not enough quantity available for item
 			try {
 				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"005\", \"Error\":\"Requested item does not have enough stock!\"}");
-			}catch(Exception ex) {
+			}catch(Exception e) {
 				GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
 			}
 			
@@ -98,7 +98,7 @@ public class ShopWorker extends BukkitRunnable {
 			// Player has not enough money!
 			try {
 				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"006\", \"Error\":\"Not enough money!\"}");
-			}catch(Exception ex) {
+			}catch(Exception e) {
 				GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
 			}
 			
@@ -107,6 +107,21 @@ public class ShopWorker extends BukkitRunnable {
 		
 		if(iS.getStock() != -1) {
 			iS.setStock(iS.getStock() - amount);
+		}
+		
+		try {
+			// Purchase is valid, pass success status!
+			// Purchase may still fail on bad database connection!
+			ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Success\", \"statusCode\":\"007\"}");
+		}catch(Exception e) {
+			GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
+		}
+		
+		// Add purchase to database and take money
+			
+		if(null != p.getSrvr().getPlayerExact(data[2])) {
+			// Player is online! Bug him about his new purchase now!
+
 		}
 	}
 }
