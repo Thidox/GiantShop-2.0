@@ -97,6 +97,7 @@ public class ShopWorker extends BukkitRunnable {
 		
 		if(eH.getBalance(data[2]) < iS.getCost(amount)) {
 			// Player has not enough money!
+			// Might also occur if economy engine does not support offline players!
 			try {
 				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"006\", \"Error\":\"Not enough money!\"}");
 			}catch(Exception e) {
@@ -118,17 +119,13 @@ public class ShopWorker extends BukkitRunnable {
 			GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
 		}
 		
+		eH.withdraw(data[2], iS.getCost(amount));
 		PickupQueue pQ = GSWAPI.getInstance().getPickupQueue();
 		// Probably won't make 2 transactions merge into 1.
 		//if(pQ.inQueue(data[2])) {
-			pQ.addToQueue(data[4], data[2], amount, id, type);
+		pQ.addToQueue(data[4], data[2], amount, id, type);
 		//}else{
 		//	pQ.updateInQueue(data[2], amount, id, type);
 		//}
-		
-		if(null != p.getSrvr().getPlayerExact(data[2])) {
-			// Player is online! Bug him about his new purchase now!
-			
-		}
 	}
 }
