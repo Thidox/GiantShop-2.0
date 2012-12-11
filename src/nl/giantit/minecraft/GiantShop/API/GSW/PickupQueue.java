@@ -48,15 +48,17 @@ public class PickupQueue {
 		for(String field : fields) {
 			HashMap<String, String> temp = new HashMap<String, String>();
 			if(field.equals("transactionID")) {
-				temp.put("data", "'" + transactionID + "'");
+				temp.put("data", transactionID);
 				values.put(i, temp);
 			}else if(field.equals("player")) {
 				temp.put("data", player);
 				values.put(i, temp);
 			}else if(field.equals("amount")) {
+				temp.put("kind", "INT");
 				temp.put("data", "" + amount);
 				values.put(i, temp);
 			}else if(field.equals("itemID")) {
+				temp.put("kind", "INT");
 				temp.put("data", "" + id);
 				values.put(i, temp);
 			}else if(field.equals("itemType")) {
