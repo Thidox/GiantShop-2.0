@@ -12,7 +12,7 @@ import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 public class PickupQueue {
 	
 	private GiantShop p;
-	private HashMap<String, Queued> queue = new HashMap<String, Queued>();
+	private HashMap<String, ArrayList<Queued>> queue = new HashMap<String, ArrayList<Queued>>();
 	
 	public PickupQueue(GiantShop p) {
 		this.p = p;
