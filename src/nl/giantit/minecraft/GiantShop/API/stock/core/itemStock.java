@@ -46,7 +46,7 @@ public class itemStock {
 			stock = Integer.parseInt(res.get("stock"));
 			maxStock = Integer.parseInt(res.get("maxstock"));
 			perStack = Integer.parseInt(res.get("perstack"));
-			sellFor = Double.parseDouble(res.get("sellFor"));
+			sellFor = Double.parseDouble(res.get("sellfor"));
 		}else{
 			throw new ItemNotFoundException();
 		}
