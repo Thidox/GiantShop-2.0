@@ -2,6 +2,7 @@ package nl.giantit.minecraft.GiantShop.API.GSW;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import nl.giantit.minecraft.GiantShop.API.conf;
 import nl.giantit.minecraft.GiantShop.GiantShop;
@@ -87,9 +88,22 @@ public class PickupQueue {
 		this.stalkUser(player);
 	}
 	
+	public void removeFromQueue(String player, String transactionID) {
+		if(this.inQueue(player)) {
+			ArrayList<Queued> qList = this.queue.get(player);
+			Iterator<Queued> qItr = qList.iterator();
+			while(qItr.hasNext()) {
+				Queued q = qItr.next();
+				if(q.getTransactionID().equals(transactionID)) {
+					qItr.remove();
+					break;
+				}
+			}
+		}
+	}
+	
 	public boolean inQueue(String player) {
-		
-		return false;
+		return this.queue.containsKey(player);
 	}
 	
 	public void stalkUser(String player) {
@@ -107,37 +121,41 @@ public class PickupQueue {
 	}
 	
 	public void deliver(Player player) {
-		Inventory inv = player.getInventory();
-		ArrayList<Queued> qList = this.queue.get(player.getName());
+		ArrayList<Queued> qList = this.queue.remove(player.getName());
 		for(Queued q : qList) {
-			HashMap<String, String> data = new HashMap<String, String>();
-			data.put("transactionID", q.getTransactionID());
-			data.put("itemID", String.valueOf(q.getItemID()));
-			data.put("itemType", String.valueOf(q.getItemType()));
-			data.put("itemName", q.getItemName());
-			data.put("amount", String.valueOf(q.getAmount()));
-			
-			Heraut.say(player, mH.getMsg(Messages.msgType.MAIN, "itemDelivery", data));
-			
-			ItemStack iStack;
-			if(q.getItemType() != -1 && q.getItemType() != 0) {
-				if(q.getItemID() != 373)
-					iStack = new MaterialData(q.getItemID(), (byte) ((int) q.getItemType())).toItemStack(q.getAmount());
-				else
-					iStack = new ItemStack(q.getItemID(), q.getAmount(), (short) ((int) q.getItemType()));
-			}else{
-				iStack = new ItemStack(q.getItemID(), q.getAmount());
-			}
-			
-			HashMap<Integer, ItemStack> left = inv.addItem(iStack);
-			if(!left.isEmpty()) {
-				Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "infFull"));
-				for(Map.Entry<Integer, ItemStack> stack : left.entrySet()) {
-					player.getWorld().dropItem(player.getLocation(), stack.getValue());
-				}
-			}
+			this.deliver(player, q);
 		}
 		
 		Heraut.say(player, mH.getMsg(Messages.msgType.MAIN, "itemsDelivered"));
+	}
+	
+	public void deliver(Player pl, Queued q) {
+		Inventory inv = pl.getInventory();
+		HashMap<String, String> data = new HashMap<String, String>();
+		data.put("transactionID", q.getTransactionID());
+		data.put("itemID", String.valueOf(q.getItemID()));
+		data.put("itemType", String.valueOf(q.getItemType()));
+		data.put("itemName", q.getItemName());
+		data.put("amount", String.valueOf(q.getAmount()));
+
+		Heraut.say(pl, mH.getMsg(Messages.msgType.MAIN, "itemDelivery", data));
+
+		ItemStack iStack;
+		if(q.getItemType() != -1 && q.getItemType() != 0) {
+			if(q.getItemID() != 373)
+				iStack = new MaterialData(q.getItemID(), (byte) ((int) q.getItemType())).toItemStack(q.getAmount());
+			else
+				iStack = new ItemStack(q.getItemID(), q.getAmount(), (short) ((int) q.getItemType()));
+		}else{
+			iStack = new ItemStack(q.getItemID(), q.getAmount());
+		}
+
+		HashMap<Integer, ItemStack> left = inv.addItem(iStack);
+		if(!left.isEmpty()) {
+			Heraut.say(pl, mH.getMsg(Messages.msgType.ERROR, "infFull"));
+			for(Map.Entry<Integer, ItemStack> stack : left.entrySet()) {
+				pl.getWorld().dropItem(pl.getLocation(), stack.getValue());
+			}
+		}
 	}
 }
