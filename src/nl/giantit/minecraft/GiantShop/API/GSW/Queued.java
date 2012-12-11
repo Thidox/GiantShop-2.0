@@ -30,7 +30,11 @@ public class Queued {
 	}
 	
 	public ItemID getItemIDOBJ() {
-		return GiantShop.getPlugin().getItemHandler().getItemIDByName(GiantShop.getPlugin().getItemHandler().getItemNameByID(id, type));
+		return GiantShop.getPlugin().getItemHandler().getItemIDByName(GiantShop.getPlugin().getItemHandler().getItemNameByID(this.id, this.type));
+	}
+	
+	public String getItemName() {
+		return GiantShop.getPlugin().getItemHandler().getItemNameByID(this.id, this.type);
 	}
 	
 	public int getAmount() {
