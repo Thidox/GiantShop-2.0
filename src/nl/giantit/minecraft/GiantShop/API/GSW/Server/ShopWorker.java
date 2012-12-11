@@ -1,6 +1,7 @@
 package nl.giantit.minecraft.GiantShop.API.GSW.Server;
 
 import nl.giantit.minecraft.GiantShop.API.GSW.GSWAPI;
+import nl.giantit.minecraft.GiantShop.API.GSW.PickupQueue;
 import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
 import nl.giantit.minecraft.GiantShop.API.stock.ItemNotFoundException;
 import nl.giantit.minecraft.GiantShop.API.stock.core.itemStock;
@@ -117,11 +118,17 @@ public class ShopWorker extends BukkitRunnable {
 			GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
 		}
 		
-		// Add purchase to database and take money
-			
+		PickupQueue pQ = GSWAPI.getInstance().getPickupQueue();
+		// Probably won't make 2 transactions merge into 1.
+		//if(pQ.inQueue(data[2])) {
+			pQ.addToQueue(data[4], data[2], amount, id, type);
+		//}else{
+		//	pQ.updateInQueue(data[2], amount, id, type);
+		//}
+		
 		if(null != p.getSrvr().getPlayerExact(data[2])) {
 			// Player is online! Bug him about his new purchase now!
-
+			
 		}
 	}
 }
