@@ -54,10 +54,16 @@ public class ShopWorker extends BukkitRunnable {
 		}
 		
 		String[] purchaseData = data[3].split(":");
-		int id, type, amount;
+		int id;
+		Integer type;
+		int amount;
 		try {
 			id = Integer.parseInt(purchaseData[0]);
 			type = Integer.parseInt(purchaseData[1]);
+			if(type == 0 || type == -1) {
+				type = null;
+			}
+			
 			amount = Integer.parseInt(purchaseData[2]);
 		}catch(NumberFormatException e) {
 			// How did non integers even go through?!
@@ -75,6 +81,16 @@ public class ShopWorker extends BukkitRunnable {
 			iS = sA.getItemStock(id, type);
 		}catch(ItemNotFoundException e) {
 			// How did non integers even go through?!
+			try {
+				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"004\", \"Error\":\"Requested item does not exist!\"}");
+			}catch(Exception ex) {
+				GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
+			}
+			
+			return;
+		}
+		
+		if(null == iS) {
 			try {
 				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"004\", \"Error\":\"Requested item does not exist!\"}");
 			}catch(Exception ex) {
@@ -123,7 +139,7 @@ public class ShopWorker extends BukkitRunnable {
 		PickupQueue pQ = GSWAPI.getInstance().getPickupQueue();
 		// Probably won't make 2 transactions merge into 1.
 		//if(pQ.inQueue(data[2])) {
-		pQ.addToQueue(data[4], data[2], amount, id, type);
+		pQ.addToQueue(data[4], data[2], amount, id, (null == type) ? -1 : type);
 		//}else{
 		//	pQ.updateInQueue(data[2], amount, id, type);
 		//}
