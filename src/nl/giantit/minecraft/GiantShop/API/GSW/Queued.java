@@ -1,5 +1,8 @@
 package nl.giantit.minecraft.GiantShop.API.GSW;
 
+import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
+
 /**
  *
  * @author Giant
@@ -20,6 +23,22 @@ public class Queued {
 	
 	public int getItemID() {
 		return this.id;
+	}
+	
+	public int getItemType() {
+		return this.type;
+	}
+	
+	public ItemID getItemIDOBJ() {
+		return GiantShop.getPlugin().getItemHandler().getItemIDByName(GiantShop.getPlugin().getItemHandler().getItemNameByID(id, type));
+	}
+	
+	public int getAmount() {
+		return this.amount;
+	}
+	
+	public String getTransactionID() {
+		return this.transactionID;
 	}
 	
 }
