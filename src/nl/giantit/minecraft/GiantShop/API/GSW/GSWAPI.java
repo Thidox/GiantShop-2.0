@@ -37,6 +37,7 @@ public class GSWAPI {
 	
 	private String d;
 	private KeyPair kp;
+	private PickupQueue pQ;
 	
 	private boolean loaded = false;
 	
@@ -171,7 +172,10 @@ public class GSWAPI {
 			}
 		}
 		
-		loaded = true;
+		InitDB.init();
+		this.pQ = new PickupQueue(p);
+		
+		this.loaded = true;
 	}
 	
 	public void shutdown() {
@@ -218,6 +222,14 @@ public class GSWAPI {
 	
 	public String getAPIVersion() {
 		return this.APIVersion;
+	}
+	
+	public PickupQueue getPickupQueue() {
+		if(loaded) {
+			return this.pQ;
+		}
+		
+		return null;
 	}
 	
 	public KeyPair getKeyPair() {
