@@ -791,6 +791,17 @@ types:
         type4:
         - Jungle Wood Slabs
         - Jungle Wooden Slabs
+    item322:
+        type0:
+        - Golden Apple
+        - Gold Apple
+        - Golden Fruit
+        - Gold Fruit
+        type1:
+        - Enchanted Golden Apple
+        - Enchanted Gold Apple
+        - Enchanted Golden Fruit
+        - Enchanted Gold Fruit
     item263:
         type0:
         - Coal
@@ -866,6 +877,8 @@ types:
         - Poison Potion (0:45)
         type8197:
         - Healing Potion
+        type8198:
+        - Night Vision Potion (3:00)
         type8200:
         - Weakness Potion (1:30)
         type8201:
@@ -874,6 +887,8 @@ types:
         - Slowness Potion (1:30)
         type8204:
         - Potion of Harming
+        type8206:
+        - Potion of Invisiblity (3:00)
         type8225:
         - Regeneration Potion II (0:22)
         type8226:
@@ -894,12 +909,16 @@ types:
         - Fire Resistance Potion (8:00)
         type8260:
         - Poison Potion (2:00)
+        type8262:
+        - Night Vision Potion (8:00)
         type8264:
         - Weakness Potion (4:00)
         type8265:
         - Strength Potion (8:00)
         type8266:
         - Slowness Potion (4:00)
+        type8270:
+        - Invisibility Potion (8:00)
         type16385:
         - Regeneration Splash (0:33)
         type16386:
@@ -910,6 +929,8 @@ types:
         - Poison Splash (0:33)
         type16389:
         - Healing Splash
+        type16390:
+        - Night Vision Splash (2:15)
         type16392:
         - Weakness Splash (1:07)
         type16393:
@@ -918,6 +939,8 @@ types:
         - Slowness Splash (1:07)
         type16396:
         - Harming Splash
+        type16398:
+        - Invisibility Splash (2:15)
         type16418:
         - Swiftness Splash II (1:07)
         type16420:
@@ -936,6 +959,8 @@ types:
         - Fire Resistance Splash (6:00)
         type16452:
         - Poison Splash (1:30)
+        type16454:
+        - Night Vision Splash (6:00)
         type16456:
         - Weakness Splash (3:00) 
         type16457:
@@ -944,6 +969,8 @@ types:
         - Slowness Splash (3:00)
         type16471:
         - Regeneration Splash II (0:16)
+        type16472:
+        - Invisibility Splash (6:00)
     item383:
         type50:
         - Creeper Egg
@@ -969,6 +996,10 @@ types:
         - Blaze Egg
         type62:
         - Magma Cube Egg
+        type65:
+        - Bat Egg
+        type66:
+        - Witch Egg
         type90:
         - Pig Egg
         type91:
