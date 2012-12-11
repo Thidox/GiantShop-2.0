@@ -16,6 +16,10 @@ main:
     gswAPIRegURI: C_YELLOWActivate%colon C_BLUE%uri C_YELLOW!
     TrustedAppPageHead: C_YELLOWAvailable trusted apps #C_WHITE%pageC_YELLOW/C_WHITE%pages
     TrustedAppListEntry: C_WHITE%appNameC_YELLOW%colon C_BLUE%appURI
+    itemWaitingForPickup: C_YELLOWThere are 1 one multiple ordered transactions ready for pickup!
+    itemPickupHelp: C_YELLOWType in C_WHITE/gsw pickup (transactionID) C_YELLOWor C_WHITE/gsw pickup list (page) C_YELLOWto pick your order up!
+    itemDelivery: C_YELLOWWe are currently delivering transaction%colon C_WHITE%transactionIDC_YELLOW!
+    itemsDelivered: C_YELLOWAll items have been delivered!
 admin:
     add: You just added item C_YELLOW%item C_WHITEwith quantity C_YELLOW%amount sold for C_YELLOW%sellFor bought for C_YELLOW%buyFor with stock C_YELLOW%stock!
     addStock: You have successfully added C_YELLOW%amount C_WHITEto the stock of item C_YELLOW%item!
