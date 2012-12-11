@@ -69,20 +69,19 @@ public class ShopReceiver extends Thread {
 				BufferedWriter bW = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
 				InputStream iS = sock.getInputStream();
 				
-				StringBuilder rawInput = new StringBuilder();
+				String rawInput = "";
 				byte[] buffer = new byte[256];
 				
 				int curRead;
-				while((curRead = iS.read(buffer)) >= 0) {
-					rawInput.append((char) curRead);
+				while((curRead = iS.read(buffer)) != -1) {
+					rawInput += new String(buffer);
 				}
 				
-				String input = rawInput.toString();
 				String decrypted;
 				
 				if(rawInput.toString().startsWith("{")) {
 					// Data encrypted had to probably be longer then 256 bytes!
-					AESEncJSON json = (new Gson()).fromJson(input, AESEncJSON.class);
+					AESEncJSON json = (new Gson()).fromJson(rawInput, AESEncJSON.class);
 					
 					if(!json.hasAesKey() || !json.hasAesEnc()) {
 						bW.write("Invalid JSON data passed!");
@@ -95,7 +94,7 @@ public class ShopReceiver extends Thread {
 					byte[] aesKey = Crypt.decrypt(json.getAesKeyBase64Decoded(), GSWAPI.getInstance().getKeyPair().getPrivate());
 					decrypted = new String(Crypt.decryptAES(json.getAesEncBase64Decoded(), aesKey));
 				}else{
-					byte[] rawBytes = input.getBytes();
+					byte[] rawBytes = rawInput.getBytes();
 					decrypted = new String(Crypt.decrypt(Base64.decodeBase64(rawBytes), GSWAPI.getInstance().getKeyPair().getPrivate()));
 				}
 				
@@ -159,11 +158,11 @@ public class ShopReceiver extends Thread {
 				iS.close();
 				sock.close();
 			}catch(SocketException e) {
-				
+				//e.printStackTrace();
 			}catch(IOException e) {
-				
+				//e.printStackTrace();
 			}catch(Exception e) {
-				
+				//e.printStackTrace();
 			}
 		}
 	}
