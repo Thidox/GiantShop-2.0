@@ -35,6 +35,7 @@ public class GSWAPI {
 	private ShopReceiver sr;
 	private Map<String, ShopSender> ss = new HashMap<String, ShopSender>();
 	
+	private conf c;
 	private String d;
 	private KeyPair kp;
 	private PickupQueue pQ;
@@ -172,14 +173,27 @@ public class GSWAPI {
 			}
 		}
 		
+		this.c = c;
 		InitDB.init();
 		this.pQ = new PickupQueue(p);
+		this.startReceiver();
 		
 		this.loaded = true;
 	}
 	
+	public final void startReceiver() {
+		sr = new ShopReceiver(p, c.getString("GiantShopWeb.Server.ip"), c.getInt("GiantShopWeb.Server.port"));
+		sr.start();
+	}
+	
 	public void shutdown() {
-		
+		if(null != sr) {
+			sr.disable();
+		}
+	}
+	
+	public conf getConfig() {
+		return this.c;
 	}
 	
 	public ShopSender getTrustedApp(String appName) {
