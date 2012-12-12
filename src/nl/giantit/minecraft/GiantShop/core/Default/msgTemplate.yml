@@ -11,11 +11,13 @@ main:
     itemListEntry: ID C_YELLOW%id C_WHITEType C_YELLOW%type C_WHITEName C_YELLOW%name C_WHITEAmount C_YELLOW%perStack C_WHITESell for C_YELLOW%sellFor C_WHITEBuy for C_YELLOW%buyFor C_WHITEStock C_YELLOW%stock
     newBalance: Your new balance is%colon C_YELLOW%balance
     discountEntry: C_YELLOW%discount% C_WHITEon C_YELLOW%item
-    helpPageHead: C_YELLOW Help page C_WHITE%pageC_YELLOW/C_WHITE%pages
+    helpPageHead: C_YELLOW Help page C_WHITE%pageC_YELLOW/C_WHITE%maxPages
     gswAPIRegKey: C_YELLOWSuccessfully registered at C_WHITE%appC_YELLOW. Your activation key is%colon C_WHITE%keyC_YELLOW!
     gswAPIRegURI: C_YELLOWActivate%colon C_BLUE%uri C_YELLOW!
-    TrustedAppPageHead: C_YELLOWAvailable trusted apps #C_WHITE%pageC_YELLOW/C_WHITE%pages
+    TrustedAppPageHead: C_YELLOWAvailable trusted apps #C_WHITE%pageC_YELLOW/C_WHITE%maxPages
     TrustedAppListEntry: C_WHITE%appNameC_YELLOW%colon C_BLUE%appURI
+    PickupListPageHead: C_YELLOWAvailable items for pickup #C_WHITE%pageC_YELLOW/C_WHITE%maxPages
+    PickupListEntry: C_WHITE%transactionIDC_YELLOW%colon C_BLUE%amount %itemName
     itemWaitingForPickup: C_YELLOWThere are 1 one multiple ordered transactions ready for pickup!
     itemPickupHelp: C_YELLOWType in C_WHITE/gsw pickup (transactionID) C_YELLOWor C_WHITE/gsw pickup list (page) C_YELLOWto pick your order up!
     itemDelivery: C_YELLOWWe are currently delivering transaction%colon C_WHITE%transactionIDC_YELLOW!
@@ -72,3 +74,5 @@ errors:
     gswAPIWriteError: C_REDAn error occured whilst writing to C_WHITE%appC_RED!
     gswAPIWriteError: C_REDAn error occured whilst writing to C_WHITE%appC_RED!
     error: C_REDError%colon C_WHITE%errorC_RED!
+    noTransaction: C_REDWe are sorry but it seems your requested transaction does not exist!
+    noTransactionForID: C_REDWe are sorry but it seems there is no transaction with id%colon C_WHITE%transactionIDC_RED!
