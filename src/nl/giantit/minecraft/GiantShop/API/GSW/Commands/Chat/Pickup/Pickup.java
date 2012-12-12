@@ -22,6 +22,7 @@ public class Pickup {
 			PickupQueue pQ = GSWAPI.getInstance().getPickupQueue();
 			if(pQ.inQueue(player.getName(), transactionID)) {
 				pQ.deliver(player, pQ.get(player.getName(), transactionID));
+				pQ.removeFromQueue(player.getName(), transactionID);
 			}else{
 				HashMap<String, String> data = new HashMap<String, String>();
 				data.put("transactionID", transactionID);
