@@ -26,7 +26,10 @@ public class Help {
 		entries.add(new String[] {"gsw help|h|? (page)", "Show GiantShopWeb API page x", "null"});
 		entries.add(new String[] {"gsw sendhelp|sh [receiver] (page)", "Send Show GiantShopWeb API help page x to player y", "giantshop.admin.sendhelp"});
 		entries.add(new String[] {"gsw list|l (page)", "Show all trusted web apps", "giantshop.api.web.list"});
-		entries.add(new String[] {"gsw register|reg [app]( [app]...)", "Register at given web apps.", "giantshop.api.web.register"});	
+		entries.add(new String[] {"gsw register|reg [app]( [app]...)", "Register at given web apps.", "giantshop.api.web.register"});
+		entries.add(new String[] {"gsw pickup|p", "Pickup all available transactions", "giantshop.api.web.pickup.all"});
+		entries.add(new String[] {"gsw pickup|p [transactionID]", "Pickup transaction with given ID", "giantshop.api.web.pickup.pickup"});
+		entries.add(new String[] {"gsw pickup|p list (page)", "Show page x of available transaction list", "giantshop.api.web.pickup.list"});
 	}
 	
 	public static void showHelp(Player player, String[] args) {
@@ -73,7 +76,7 @@ public class Help {
 		}else{
 			HashMap<String, String> d = new HashMap<String, String>();
 			d.put("page", String.valueOf(curPag));
-			d.put("pages", String.valueOf(pages));
+			d.put("maxPages", String.valueOf(pages));
 			Heraut.say(player, "&e[&3" + name + "&e]" + mH.getMsg(Messages.msgType.MAIN, "helpPageHead", d));
 
 			for(int i = start; i < (((start + perPage) > uEntries.size()) ? uEntries.size() : (start + perPage)); i++) {
