@@ -41,6 +41,9 @@ permissions:
             giantshop.location.list: true
             giantshop.api.web.list: true
             giantshop.api.web.register: true
+            giantshop.api.web.pickup.list: true
+            giantshop.api.web.pickup.pickup: true
+            giantshop.api.web.pickup.all: true
     giantshop.shop.*:
         description: Gives access to the GiantShop payout
         children:
@@ -75,6 +78,17 @@ permissions:
         children:
             giantshop.api.web.register: true
             giantshop.api.web.list: true
+            giantshop.api.web.pickup.list: true
+            giantshop.api.web.pickup.pickup: true
+            giantshop.api.web.pickup.all: true
+    giantshop.api.web.*:
+        description: Gives access to all GiantShopWeb API commands
+        children:
+            giantshop.api.web.register: true
+            giantshop.api.web.list: true
+            giantshop.api.web.pickup.list: true
+            giantshop.api.web.pickup.pickup: true
+            giantshop.api.web.pickup.all: true
     giantshop.shop.buy:
         description: Gives access to the buying feature
         default: false
@@ -141,3 +155,12 @@ permissions:
     giantshop.api.web.register:
         description: Allows users to register to a trusted webapi app
         default: true
+    giantshop.api.web.pickup.list:
+        description: Allows users to use delivery list
+        default: true
+    giantshop.api.web.pickup.pickup:
+        description: Allows users to pickup a delivery
+        default: true
+    giantshop.api.web.pickup.all:
+        description: Allows users to pickup all deliveries
+        default: false
