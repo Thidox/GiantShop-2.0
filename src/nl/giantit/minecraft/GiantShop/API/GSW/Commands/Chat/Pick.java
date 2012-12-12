@@ -17,7 +17,7 @@ public class Pick {
 			String cmd = args[0];
 			args = Arrays.copyOfRange(args, 1, args.length);
 			
-			if(Misc.isAnyIgnoreCase(cmd, args)) {
+			if(Misc.isAnyIgnoreCase(cmd, "list", "lis", "li", "l")) {
 				List.exec(player, args);
 			}else{
 				Pickup.exec(player, cmd);
