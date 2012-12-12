@@ -39,7 +39,10 @@ public class PickupQueue {
 		ArrayList<Queued> qList = new ArrayList<Queued>();
 		for(HashMap<String, String> res : resSet) {
 			if(!res.get("player").equals(lP)) {
-				this.queue.put(lP, qList);
+				if(!lP.isEmpty()) {
+					this.queue.put(lP, qList);
+				}
+				
 				lP = res.get("player");
 				qList = new ArrayList<Queued>();
 			}
@@ -51,13 +54,18 @@ public class PickupQueue {
 				id = Integer.parseInt(res.get("itemid"));
 				type = Integer.parseInt(res.get("itemtype"));
 				amount = Integer.parseInt(res.get("amount"));
-				qList.add(new Queued(id, type, amount, res.get("transactionid")));
+				Queued q = new Queued(id, type, amount, res.get("transactionid"));
+				qList.add(q);
+				//p.getLogger().severe("Player: " + lP + "; Queued: " + q.toString());
 			}catch(NumberFormatException e) {
 				p.getLogger().warning("[GSWAPI][PickupQueue] Transaction " + res.get("transactionid") + " for player " + lP + " is corrupt!");
 				continue;
 			}
 		}
 		
+		// Last player's data never gets added in the loop...
+		// So we do it here! :)
+		this.queue.put(lP, qList);
 	}
 	
 	public PickupQueue(GiantShop p) {
@@ -151,6 +159,19 @@ public class PickupQueue {
 	
 	public boolean inQueue(String player) {
 		return this.queue.containsKey(player);
+	}
+	
+	public boolean inQueue(String player, String transactionID) {
+		if(this.inQueue(player)) {
+			ArrayList<Queued> qList = this.queue.get(player);
+			for(Queued q : qList) {
+				if(q.getTransactionID().equals(transactionID)) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 	
 	public void stalkUser(String player) {
