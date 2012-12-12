@@ -76,3 +76,4 @@ errors:
     error: C_REDError%colon C_WHITE%errorC_RED!
     noTransaction: C_REDWe are sorry but it seems your requested transaction does not exist!
     noTransactionForID: C_REDWe are sorry but it seems there is no transaction with id%colon C_WHITE%transactionIDC_RED!
+    emptyQueue: C_REDWe are sorry, but you do not seem to have any transactions waiting for pickup yet!
