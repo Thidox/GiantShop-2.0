@@ -188,6 +188,27 @@ public class PickupQueue {
 		}
 	}
 	
+	public Queued get(String player, String transactionID) {
+		if(this.inQueue(player)) {
+			ArrayList<Queued> qList = this.queue.get(player);
+			for(Queued q : qList) {
+				if(q.getTransactionID().equals(transactionID)) {
+					return q;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	public ArrayList<Queued> getAll(String player) {
+		if(this.inQueue(player)) {
+			return this.queue.get(player);
+		}
+		
+		return null;
+	}
+	
 	public void deliver(Player player) {
 		ArrayList<Queued> qList = this.queue.remove(player.getName());
 		for(Queued q : qList) {
@@ -199,6 +220,11 @@ public class PickupQueue {
 	}
 	
 	public void deliver(Player pl, Queued q) {
+		if(null == q) {
+			Heraut.say(pl, mH.getMsg(Messages.msgType.ERROR, "noTransaction"));
+			return;
+		}
+		
 		Inventory inv = pl.getInventory();
 		HashMap<String, String> data = new HashMap<String, String>();
 		data.put("transactionID", q.getTransactionID());
