@@ -19,6 +19,8 @@ public class Pick {
 			
 			if(Misc.isAnyIgnoreCase(cmd, "list", "lis", "li", "l")) {
 				List.exec(player, args);
+			}else if(Misc.isAnyIgnoreCase(cmd, "all", "al", "a")) {
+				Pickup.getAll(player);
 			}else{
 				Pickup.exec(player, cmd);
 			}
