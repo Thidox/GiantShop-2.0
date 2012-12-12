@@ -14,9 +14,9 @@ main:
     helpPageHead: C_YELLOW Help page C_WHITE%pageC_YELLOW/C_WHITE%maxPages
     gswAPIRegKey: C_YELLOWSuccessfully registered at C_WHITE%appC_YELLOW. Your activation key is%colon C_WHITE%keyC_YELLOW!
     gswAPIRegURI: C_YELLOWActivate%colon C_BLUE%uri C_YELLOW!
-    TrustedAppPageHead: C_YELLOWAvailable trusted apps #C_WHITE%pageC_YELLOW/C_WHITE%maxPages
+    TrustedAppPageHead: C_YELLOWAvailable trusted apps %sharpC_WHITE%pageC_YELLOW/C_WHITE%maxPages
     TrustedAppListEntry: C_WHITE%appNameC_YELLOW%colon C_BLUE%appURI
-    PickupListPageHead: C_YELLOWAvailable items for pickup #C_WHITE%pageC_YELLOW/C_WHITE%maxPages
+    PickupListPageHead: C_YELLOWAvailable items for pickup %sharpC_WHITE%pageC_YELLOW/C_WHITE%maxPages
     PickupListEntry: C_WHITE%transactionIDC_YELLOW%colon C_BLUE%amount %itemName
     itemWaitingForPickup: C_YELLOWThere are 1 one multiple ordered transactions ready for pickup!
     itemPickupHelp: C_YELLOWType in C_WHITE/gsw pickup (transactionID) C_YELLOWor C_WHITE/gsw pickup list (page) C_YELLOWto pick your order up!
