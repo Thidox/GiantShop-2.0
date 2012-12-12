@@ -11,7 +11,7 @@ import java.security.PublicKey;
 import java.util.Arrays;
 
 import org.apache.commons.codec.binary.Base64;
-import org.bukkit.craftbukkit.libs.com.google.gson.Gson;
+import com.google.gson.Gson;
 
 import nl.giantit.minecraft.GiantShop.API.GSW.Crypt.Crypt;
 import nl.giantit.minecraft.GiantShop.API.GSW.Crypt.RSAMan;

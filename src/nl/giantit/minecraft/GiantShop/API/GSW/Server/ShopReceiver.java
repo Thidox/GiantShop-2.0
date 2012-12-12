@@ -15,7 +15,7 @@ import nl.giantit.minecraft.GiantShop.GiantShop;
 import org.apache.commons.codec.binary.Base64;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.craftbukkit.libs.com.google.gson.Gson;
+import com.google.gson.Gson;
 
 /**
  *
