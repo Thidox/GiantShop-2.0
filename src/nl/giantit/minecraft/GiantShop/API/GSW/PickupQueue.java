@@ -23,11 +23,48 @@ public class PickupQueue {
 	private GiantShop p;
 	private Messages mH;
 	
-	private HashMap<String, ArrayList<Queued>> queue = new HashMap<String, ArrayList<Queued>>();
+	private HashMap<String, ArrayList<Queued>> queue;
+	
+	private void loadQueue() {
+		iDriver db = p.getDB().getEngine();
+		this.queue = new HashMap<String, ArrayList<Queued>>();
+		
+		HashMap<String, String> order = new HashMap<String, String>();
+		order.put("player", "ASC");
+		order.put("transactionID", "ASC");
+		
+		db.select("player", "transactionID", "itemID", "itemType", "amount").from("#__api_gsw_pickups").orderBy(order);
+		ArrayList<HashMap<String, String>> resSet = db.execQuery();
+		String lP = "";
+		ArrayList<Queued> qList = new ArrayList<Queued>();
+		for(HashMap<String, String> res : resSet) {
+			if(!res.get("player").equals(lP)) {
+				this.queue.put(lP, qList);
+				lP = res.get("player");
+				qList = new ArrayList<Queued>();
+			}
+			
+			int id;
+			int type;
+			int amount;
+			try {
+				id = Integer.parseInt(res.get("itemid"));
+				type = Integer.parseInt(res.get("itemtype"));
+				amount = Integer.parseInt(res.get("amount"));
+				qList.add(new Queued(id, type, amount, res.get("transactionid")));
+			}catch(NumberFormatException e) {
+				p.getLogger().warning("[GSWAPI][PickupQueue] Transaction " + res.get("transactionid") + " for player " + lP + " is corrupt!");
+				continue;
+			}
+		}
+		
+	}
 	
 	public PickupQueue(GiantShop p) {
 		this.p = p;
 		this.mH = p.getMsgHandler();
+		
+		this.loadQueue();
 	}
 	
 	public void addToQueue(String transactionID, String player, int amount, int id, int type) {
@@ -88,6 +125,15 @@ public class PickupQueue {
 		this.stalkUser(player);
 	}
 	
+	// Seperate method because delivery should not call remove from Queue.
+	public void removeFromDB(String player, String transactionID) {
+		iDriver db = p.getDB().getEngine();
+		HashMap<String, String> where = new HashMap<String, String>();
+		where.put("player", player);
+		where.put("transactionID", transactionID);
+		db.delete("#__api_gsw_pickups").where(where).updateQuery();
+	}
+	
 	public void removeFromQueue(String player, String transactionID) {
 		if(this.inQueue(player)) {
 			ArrayList<Queued> qList = this.queue.get(player);
@@ -95,6 +141,7 @@ public class PickupQueue {
 			while(qItr.hasNext()) {
 				Queued q = qItr.next();
 				if(q.getTransactionID().equals(transactionID)) {
+					this.removeFromDB(player, transactionID);
 					qItr.remove();
 					break;
 				}
@@ -123,6 +170,7 @@ public class PickupQueue {
 	public void deliver(Player player) {
 		ArrayList<Queued> qList = this.queue.remove(player.getName());
 		for(Queued q : qList) {
+			this.removeFromDB(player.getName(), q.getTransactionID());
 			this.deliver(player, q);
 		}
 		
