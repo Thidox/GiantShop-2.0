@@ -2,11 +2,9 @@ package nl.giantit.minecraft.GiantShop.API.GSW.Commands.Chat.Pickup;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import nl.giantit.minecraft.GiantShop.API.GSW.GSWAPI;
 import nl.giantit.minecraft.GiantShop.API.GSW.PickupQueue;
 import nl.giantit.minecraft.GiantShop.API.GSW.Queued;
-import nl.giantit.minecraft.GiantShop.API.GSW.Server.ShopSender;
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
@@ -67,12 +65,16 @@ public class List {
 						}
 					}
 				}else{
-					Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noWebApps"));
+					Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "emptyQueue"));
 				}
 			}else{
 				Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "emptyQueue"));
 			}
+		}else{
+			HashMap<String, String> data = new HashMap<String, String>();
+			data.put("command", "gsw pickup list");
+
+			Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noPermissions", data));
 		}
-		
 	}
 }

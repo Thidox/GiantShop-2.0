@@ -64,6 +64,11 @@ public class List {
 			}else{
 				Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noWebApps"));
 			}
+		}else{
+			HashMap<String, String> data = new HashMap<String, String>();
+			data.put("command", "gsw list");
+
+			Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noPermissions", data));
 		}
 	}
 }

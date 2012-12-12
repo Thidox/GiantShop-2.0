@@ -29,6 +29,11 @@ public class Pickup {
 
 				Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noTransactionForID", data));
 			}
+		}else{
+			HashMap<String, String> data = new HashMap<String, String>();
+			data.put("command", "gsw pickup");
+
+			Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noPermissions", data));
 		}
 	}
 	
@@ -42,6 +47,11 @@ public class Pickup {
 			}else{
 				Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "emptyQueue"));
 			}
+		}else{
+			HashMap<String, String> data = new HashMap<String, String>();
+			data.put("command", "gsw pickup all");
+
+			Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "noPermissions", data));
 		}
 	}
 }
