@@ -13,7 +13,7 @@ commands:
         usage: /loc [params]
     gsw:
         description: This will enable you to make shop locations!
-        aliases: [gswapi, gsapi]
+        aliases: [gswapi, gsapi, g, gs, gswa]
         usage: /gsw [params]
 permissions:
     giantshop.*:
