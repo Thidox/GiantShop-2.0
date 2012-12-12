@@ -127,21 +127,27 @@ public class ShopWorker extends BukkitRunnable {
 			iS.setStock(iS.getStock() - amount);
 		}
 		
-		try {
-			// Purchase is valid, pass success status!
-			// Purchase may still fail on bad database connection!
-			ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Success\", \"statusCode\":\"007\"}");
-		}catch(Exception e) {
-			GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
-		}
-		
-		eH.withdraw(data[2], iS.getCost(amount));
 		PickupQueue pQ = GSWAPI.getInstance().getPickupQueue();
-		// Probably won't make 2 transactions merge into 1.
-		//if(pQ.inQueue(data[2])) {
-		pQ.addToQueue(data[4], data[2], amount, id, (null == type) ? -1 : type);
-		//}else{
-		//	pQ.updateInQueue(data[2], amount, id, type);
-		//}
+		// System does not accept 2 transactions with same ID!
+		if(!pQ.inQueue(data[2], data[4])) {
+			eH.withdraw(data[2], iS.getCost(amount));
+			pQ.addToQueue(data[4], data[2], amount, id, (null == type) ? -1 : type);
+		
+			try {
+				// Purchase is valid, pass success status!
+				// Purchase may still fail on bad database connection!
+				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Success\", \"statusCode\":\"007\"}");
+			}catch(Exception e) {
+				GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
+			}
+		}else{
+			try {
+				// Purchase is valid, pass success status!
+				// Purchase may still fail on bad database connection!
+				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"008\", \"Error\":\"A transaction with the same ID already exists!\"}");
+			}catch(Exception e) {
+				GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
+			}
+		}
 	}
 }
