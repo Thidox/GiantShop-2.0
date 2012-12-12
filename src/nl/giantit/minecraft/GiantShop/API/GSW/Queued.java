@@ -45,4 +45,9 @@ public class Queued {
 		return this.transactionID;
 	}
 	
+	@Override
+	public String toString() {
+		return "{transaction: " + this.transactionID + ", itemID: " + this.id + ", itemType: " + this.type + ", amount: " + this.amount + "}";
+	}
+	
 }
