@@ -85,6 +85,8 @@ public class ShopReceiver extends Thread {
 					
 					if(!json.hasAesKey() || !json.hasAesEnc()) {
 						bW.write("Invalid JSON data passed!");
+						bW.newLine();
+						bW.flush();
 						bW.close();
 						iS.close();
 						sock.close();
@@ -102,11 +104,23 @@ public class ShopReceiver extends Thread {
 
 				if(data.length < 2) {
 					// Most likely the data got malformed somewhere...
+					bW.write("Data malformed!");
+					bW.newLine();
+					bW.flush();
+					bW.close();
+					iS.close();
+					sock.close();
 					throw new Exception("Invalid data received!");
 				}
 
 				if(!GSWAPI.getInstance().isTrustedApp(data[0])) {
 					// We don't even know this guy!
+					bW.write("Invalid JSON data passed!");
+					bW.newLine();
+					bW.flush();
+					bW.close();
+					iS.close();
+					sock.close();
 					throw new Exception("Received signal from untrusted app!");
 				}
 
