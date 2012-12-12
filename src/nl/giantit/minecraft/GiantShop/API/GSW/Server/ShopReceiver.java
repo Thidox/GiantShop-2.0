@@ -72,8 +72,7 @@ public class ShopReceiver extends Thread {
 				String rawInput = "";
 				byte[] buffer = new byte[256];
 				
-				int curRead;
-				while((curRead = iS.read(buffer)) != -1) {
+				while(iS.read(buffer) != -1) {
 					rawInput += new String(buffer);
 				}
 				
