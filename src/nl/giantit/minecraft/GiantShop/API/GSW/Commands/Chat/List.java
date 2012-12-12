@@ -51,12 +51,10 @@ public class List {
 				}else{
 					HashMap<String, String> d = new HashMap<String, String>();
 					d.put("page", String.valueOf(curPag));
-					d.put("pages", String.valueOf(pages));
+					d.put("maxPages", String.valueOf(pages));
 					Heraut.say(player, mH.getMsg(Messages.msgType.MAIN, "TrustedAppPageHead", d));
 					for(Map.Entry<String, ShopSender> app : tA.entrySet()) {
 						d = new HashMap<String, String>();
-						d.put("page", String.valueOf(curPag));
-						d.put("pages", String.valueOf(pages));
 						d.put("appName", app.getKey());
 						d.put("appURI", app.getValue().getHostURI());
 						

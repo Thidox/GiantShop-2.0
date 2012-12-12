@@ -96,7 +96,7 @@ public class help {
 		}else{
 			HashMap<String, String> d = new HashMap<String, String>();
 			d.put("page", String.valueOf(curPag));
-			d.put("pages", String.valueOf(pages));
+			d.put("maxPages", String.valueOf(pages));
 			Heraut.say(player, "&e[&3" + name + "&e]" + mH.getMsg(Messages.msgType.MAIN, "helpPageHead", d));
 
 			for(int i = start; i < (((start + perPage) > uEntries.size()) ? uEntries.size() : (start + perPage)); i++) {
@@ -176,7 +176,7 @@ public class help {
 					Heraut.say(receiver, "&e[&3" + name + "&e]&f You were sent help by " + player.getDisplayName() + "!");
 					HashMap<String, String> d = new HashMap<String, String>();
 					d.put("page", String.valueOf(curPag));
-					d.put("pages", String.valueOf(pages));
+					d.put("maxPages", String.valueOf(pages));
 					Heraut.say(receiver, "&e[&3" + name + "&e]" + mH.getMsg(Messages.msgType.MAIN, "helpPageHead", d));
 
 					for(int i = start; i < (((start + perPage) > uEntries.size()) ? uEntries.size() : (start + perPage)); i++) {
