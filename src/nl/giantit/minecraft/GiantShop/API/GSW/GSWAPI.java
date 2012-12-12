@@ -14,6 +14,7 @@ import nl.giantit.minecraft.GiantShop.API.GSW.Crypt.RSAMan;
 import nl.giantit.minecraft.GiantShop.API.GSW.Exceptions.RSAKeyGenException;
 import nl.giantit.minecraft.GiantShop.API.GSW.Exceptions.RSAKeyLoadException;
 import nl.giantit.minecraft.GiantShop.API.GSW.Exceptions.RSAKeySaveException;
+import nl.giantit.minecraft.GiantShop.API.GSW.Listeners.PlayerListener;
 import nl.giantit.minecraft.GiantShop.API.GSW.Server.ShopReceiver;
 import nl.giantit.minecraft.GiantShop.API.GSW.Server.ShopSender;
 import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
@@ -177,6 +178,7 @@ public class GSWAPI {
 		InitDB.init();
 		this.pQ = new PickupQueue(p);
 		this.startReceiver();
+		p.getServer().getPluginManager().registerEvents(new PlayerListener(this), p);
 		
 		this.loaded = true;
 	}
