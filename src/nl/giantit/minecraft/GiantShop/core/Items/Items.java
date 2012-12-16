@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -146,6 +147,21 @@ public class Items {
 				}
 			}
 		}
+	}
+	
+	public ArrayList<ItemID> getItemIDsByPart(String part) {
+		ArrayList<ItemID> iList = new ArrayList<ItemID>();
+		
+		Pattern p = Pattern.compile("^(.*?)" + part + "(.*?)$", Pattern.CASE_INSENSITIVE);
+		
+		for(Map.Entry<String, ItemID> e : this.itemsByName.entrySet()) {
+			if(p.matcher(e.getKey()).matches()) {
+				// Item name matches search pattern
+				iList.add(e.getValue());
+			}
+		}
+		
+		return iList;
 	}
 	
 	public ItemID getItemIDByName(String item) {
