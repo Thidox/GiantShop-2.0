@@ -47,8 +47,12 @@ public class ChatExecutor {
 					check.check(player, args);
 			}else
 				check.check(player, args);
-		}else if(args[0].equalsIgnoreCase("search")) {
-			//futuristic ideas! :D
+		}else if(Misc.isEitherIgnoreCase(args[0], "search", "-s")) {
+			if(plugin.useLocation() && plugin.cmds.contains("search")) {
+				if(plugin.getLocHandler().canUse(player))
+					search.exec(player, args);
+			}else
+				search.exec(player, args);
 		}else if(Misc.isEitherIgnoreCase(args[0], "buy", "b")) {
 			if(plugin.useLocation() && plugin.cmds.contains("buy")) {
 				if(plugin.getLocHandler().canUse(player))
