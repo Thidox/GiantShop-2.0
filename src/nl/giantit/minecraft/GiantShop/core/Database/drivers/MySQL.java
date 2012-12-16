@@ -415,7 +415,7 @@ public class MySQL implements iDriver {
 				
 				SQL += (field.getValue().containsKey("group") && field.getValue().get("group").equalsIgnoreCase("START")) ? "(" : "";
 				
-				if(field.getValue().containsKey("kind") && field.getValue().get("kind").equals("int")) {
+				if(field.getValue().containsKey("kind") && field.getValue().get("kind").equalsIgnoreCase("INT")) {
 					SQL += field.getKey() + "=" + field.getValue().get("data");
 				}else if(field.getValue().containsKey("kind") && field.getValue().get("kind").equalsIgnoreCase("NULL")) {
 					SQL += field.getKey() + " IS NULL";
