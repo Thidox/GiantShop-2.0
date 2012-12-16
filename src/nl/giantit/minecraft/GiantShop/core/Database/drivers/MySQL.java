@@ -409,7 +409,6 @@ public class MySQL implements iDriver {
 			for(Map.Entry<String, HashMap<String, String>> field : fields.entrySet()) {
 				String type = (field.getValue().containsKey("type") && field.getValue().get("type").equalsIgnoreCase("OR")) ? "OR" : "AND";
 				
-				SQL += (field.getValue().containsKey("group") && field.getValue().get("group").equalsIgnoreCase("END")) ? ")" : "";
 				if(i > 0)
 					SQL += " " + type + " ";
 				
@@ -425,6 +424,8 @@ public class MySQL implements iDriver {
 					SQL += field.getKey() + "!='" + field.getValue().get("data")+"'";
 				}else
 					SQL += field.getKey() + "='" + field.getValue().get("data")+"'";
+				
+				SQL += (field.getValue().containsKey("group") && field.getValue().get("group").equalsIgnoreCase("END")) ? ")" : "";
 				
 				i++;
 			}
