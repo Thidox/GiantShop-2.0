@@ -146,8 +146,8 @@ public class list {
 					params.put("type", (!entry.get("type").equals("-1") ? entry.get("type") : "0"));
 					params.put("name", iH.getItemNameByID(Integer.parseInt(entry.get("itemid")), type));
 					params.put("perStack", entry.get("perstack"));
-					params.put("sellFor", (!sf.equals("-1.0") ? sf : "Not for sale!"));
-					params.put("buyFor", (!bf.equals("-1.0") ? bf : "No returns!"));
+					params.put("sellFor", (!sf.equals("-1.0") && !sf.equals("-1") ? sf : "Not for sale!"));
+					params.put("buyFor", (!bf.equals("-1.0") && !sf.equals("-1") ? bf : "No returns!"));
 					
 					if(conf.getBoolean("GiantShop.stock.useStock") == true) {
 						params.put("stock", (!entry.get("stock").equals("-1") ? entry.get("stock") : "unlimited"));
