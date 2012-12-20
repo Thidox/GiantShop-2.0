@@ -22,6 +22,8 @@ main:
     itemPickupHelp: C_YELLOWType in C_WHITE/gsw pickup (transactionID) C_YELLOWor C_WHITE/gsw pickup list (page) C_YELLOWto pick your order up!
     itemDelivery: C_YELLOWWe are currently delivering transaction%colon C_WHITE%transactionIDC_YELLOW!
     itemsDelivered: C_YELLOWAll items have been delivered!
+    searchListHead: C_YELLOWSearch results for %itemName %sharpC_WHITE%pageC_YELLOW/C_WHITE%maxPages
+    searchListEntry: ID C_YELLOW%idC_WHITE%colonC_YELLOW%type %name C_WHITEAmount C_YELLOW%perStack C_WHITEStock C_YELLOW%stock
 admin:
     add: You just added item C_YELLOW%item C_WHITEwith quantity C_YELLOW%amount sold for C_YELLOW%sellFor bought for C_YELLOW%buyFor with stock C_YELLOW%stock!
     addStock: You have successfully added C_YELLOW%amount C_WHITEto the stock of item C_YELLOW%item!
