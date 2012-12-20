@@ -131,7 +131,7 @@ public class ShopSender {
 	
 	public void getPublicKey() {
 		//this.p.getLogger().severe(this.ident);
-		this.data = ("ident=" + this.ident + "&data=getPubKey").getBytes();
+		this.data = ("version=" + GSWAPI.getInstance().getAPIVersion() + "&ident=" + this.ident + "&data=getPubKey").getBytes();
 		this.requirePK = false;
 		
 		Sender s = new Sender(null);
@@ -179,7 +179,7 @@ public class ShopSender {
 			}
 		}
 
-		byte[] param = ("ident=" + this.ident + "&data=").getBytes();
+		byte[] param = ("version=" + GSWAPI.getInstance().getAPIVersion() + "&ident=" + this.ident + "&data=").getBytes();
 		byte[] d = new byte[(param.length + enc.length)];
 		
 		for(int i = 0; i < d.length; ++i) {
