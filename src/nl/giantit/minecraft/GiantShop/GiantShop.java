@@ -52,7 +52,6 @@ public class GiantShop extends JavaPlugin {
 	private Updater updater;
 	private Discounter discounter;
 	private MetricsHandler metrics;
-	private int tID;
 	private String name, dir, pubName;
 	private String bName = "Forniphilia";
 	
@@ -212,9 +211,9 @@ public class GiantShop extends JavaPlugin {
 	public Boolean useLocation() {
 		return this.useLoc;
 	}
-	
+
 	public String getVersion() {
-		return this.getVersion();
+		return getDescription().getVersion();
 	}
 	
 	public String getNewVersion() {
