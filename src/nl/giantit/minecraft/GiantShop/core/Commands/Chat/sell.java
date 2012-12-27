@@ -124,7 +124,6 @@ public class sell {
 					if(resSet.size() == 1) {
 						HashMap<String, String> res = resSet.get(0);
 						if(!res.get("buyfor").equals("-1.0") && !res.get("buyfor").equals("-1")) {
-							Heraut.say(player, res.get("buyfor"));
 							String name = iH.getItemNameByID(itemID, iT);
 
 							int perStack = Integer.parseInt(res.get("perstack"));
