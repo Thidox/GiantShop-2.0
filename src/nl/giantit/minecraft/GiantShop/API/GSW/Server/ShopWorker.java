@@ -9,6 +9,7 @@ import nl.giantit.minecraft.GiantShop.API.stock.stockAPI;
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.core.Eco.iEco;
 import org.bukkit.scheduler.BukkitRunnable;
+//import com.google.gson.Gson;
 
 /**
  *
@@ -52,6 +53,14 @@ public class ShopWorker extends BukkitRunnable {
 			
 			return;
 		}
+		
+		/*String[] items = null;
+		if(data[3].startsWith("[")) {
+			items = (new Gson()).fromJson(data[3], String[].class);
+		}else{
+			items = new String[1];
+			items[0] = data[3];
+		}*/
 		
 		String[] purchaseData = data[3].split(":");
 		int id;
