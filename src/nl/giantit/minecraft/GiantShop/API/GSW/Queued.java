@@ -1,7 +1,10 @@
 package nl.giantit.minecraft.GiantShop.API.GSW;
 
+import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
+import nl.giantit.minecraft.GiantShop.API.stock.ItemNotFoundException;
+import nl.giantit.minecraft.GiantShop.API.stock.stockAPI;
 
 /**
  *
@@ -13,6 +16,7 @@ public class Queued {
 	private int type;
 	private Integer itemType;
 	private int amount;
+	private int perStack;
 	private String transactionID;
 	
 	public Queued(int id, int type, int amount, String transactionID) {
@@ -21,6 +25,17 @@ public class Queued {
 		this.itemType = (type <= 0) ? null : type;
 		this.amount = amount;
 		this.transactionID = transactionID;
+		
+		stockAPI sA = GiantShopAPI.Obtain().getStockAPI();
+		try {
+			this.perStack = sA.getItemStock(id, this.itemType).getPerStack();
+		}catch(ItemNotFoundException e) {
+			this.perStack = 1;
+		}catch(NullPointerException e) {
+			this.perStack = 1;
+		}
+		
+		this.perStack = this.perStack < 1 ? 1 : this.perStack;
 	}
 	
 	public int getItemID() {
@@ -41,6 +56,10 @@ public class Queued {
 	
 	public int getAmount() {
 		return this.amount;
+	}
+	
+	public int getStackAmount() {
+		return this.amount * this.perStack;
 	}
 	
 	public String getTransactionID() {

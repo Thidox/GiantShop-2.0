@@ -109,7 +109,7 @@ public class ShopWorker extends BukkitRunnable {
 			return;
 		}
 		
-		if(iS.getStock() != -1 && iS.getStock() < amount) {
+		if(iS.getStock() != -1 && iS.getStock() < (amount * iS.getPerStack())) {
 			// Not enough quantity available for item
 			try {
 				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"005\", \"Error\":\"Requested item does not have enough stock!\"}");
@@ -133,7 +133,7 @@ public class ShopWorker extends BukkitRunnable {
 		}
 		
 		if(iS.getStock() != -1) {
-			iS.setStock(iS.getStock() - amount);
+			iS.setStock(iS.getStock() - (amount * iS.getPerStack()));
 		}
 		
 		PickupQueue pQ = GSWAPI.getInstance().getPickupQueue();

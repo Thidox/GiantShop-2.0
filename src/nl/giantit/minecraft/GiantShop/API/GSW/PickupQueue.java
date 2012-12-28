@@ -238,11 +238,11 @@ public class PickupQueue {
 		ItemStack iStack;
 		if(q.getItemType() != -1 && q.getItemType() != 0) {
 			if(q.getItemID() != 373)
-				iStack = new MaterialData(q.getItemID(), (byte) ((int) q.getItemType())).toItemStack(q.getAmount());
+				iStack = new MaterialData(q.getItemID(), (byte) ((int) q.getItemType())).toItemStack(q.getStackAmount());
 			else
 				iStack = new ItemStack(q.getItemID(), q.getAmount(), (short) ((int) q.getItemType()));
 		}else{
-			iStack = new ItemStack(q.getItemID(), q.getAmount());
+			iStack = new ItemStack(q.getItemID(), q.getStackAmount());
 		}
 
 		HashMap<Integer, ItemStack> left = inv.addItem(iStack);
