@@ -186,7 +186,7 @@ public class help {
 						params.put("command", data[0]);
 						params.put("description", data[1]);
 
-						Heraut.say(player, mH.getMsg(Messages.msgType.MAIN, "helpCommand", params));
+						Heraut.say(receiver, mH.getMsg(Messages.msgType.MAIN, "helpCommand", params));
 					}
 				}
 			}else{
