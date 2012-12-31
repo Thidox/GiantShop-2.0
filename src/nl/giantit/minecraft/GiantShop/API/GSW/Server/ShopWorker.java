@@ -35,7 +35,7 @@ public class ShopWorker extends BukkitRunnable {
 		if(eH == null) {
 			// Economy engine isn't loaded! Error out now!
 			try {
-				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"001\", \"Error\":\"Economy engine not loaded!\"}");
+				ss.write("STATUS {\"action\":\"SHOP\", \"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"001\", \"Error\":\"Economy engine not loaded!\"}");
 			}catch(Exception e) {
 				GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
 			}
@@ -46,7 +46,7 @@ public class ShopWorker extends BukkitRunnable {
 		if(!data[3].matches("[0-9]+:[0-9]+:[0-9]+")) {
 			// invalid item format passed!
 			try {
-				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"002\", \"Error\":\"Can not understand purchase!\"}");
+				ss.write("STATUS {\"action\":\"SHOP\", \"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"002\", \"Error\":\"Can not understand purchase!\"}");
 			}catch(Exception e) {
 				GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
 			}
@@ -77,7 +77,7 @@ public class ShopWorker extends BukkitRunnable {
 		}catch(NumberFormatException e) {
 			// How did non integers even go through?!
 			try {
-				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"003\", \"Error\":\"Somehow we failed parsing your integers into integers!\"}");
+				ss.write("STATUS {\"action\":\"SHOP\", \"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"003\", \"Error\":\"Somehow we failed parsing your integers into integers!\"}");
 			}catch(Exception ex) {
 				GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
 			}
@@ -91,7 +91,7 @@ public class ShopWorker extends BukkitRunnable {
 		}catch(ItemNotFoundException e) {
 			// How did non integers even go through?!
 			try {
-				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"004\", \"Error\":\"Requested item does not exist!\"}");
+				ss.write("STATUS {\"action\":\"SHOP\", \"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"004\", \"Error\":\"Requested item does not exist!\"}");
 			}catch(Exception ex) {
 				GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
 			}
@@ -101,7 +101,7 @@ public class ShopWorker extends BukkitRunnable {
 		
 		if(null == iS) {
 			try {
-				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"004\", \"Error\":\"Requested item does not exist!\"}");
+				ss.write("STATUS {\"action\":\"SHOP\", \"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"004\", \"Error\":\"Requested item does not exist!\"}");
 			}catch(Exception ex) {
 				GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
 			}
@@ -112,7 +112,7 @@ public class ShopWorker extends BukkitRunnable {
 		if(iS.getStock() != -1 && iS.getStock() < (amount * iS.getPerStack())) {
 			// Not enough quantity available for item
 			try {
-				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"005\", \"Error\":\"Requested item does not have enough stock!\"}");
+				ss.write("STATUS {\"action\":\"SHOP\", \"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"005\", \"Error\":\"Requested item does not have enough stock!\"}");
 			}catch(Exception e) {
 				GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
 			}
@@ -124,7 +124,7 @@ public class ShopWorker extends BukkitRunnable {
 			// Player has not enough money!
 			// Might also occur if economy engine does not support offline players!
 			try {
-				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"006\", \"Error\":\"Not enough money!\"}");
+				ss.write("STATUS {\"action\":\"SHOP\", \"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"006\", \"Error\":\"Not enough money!\"}");
 			}catch(Exception e) {
 				GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
 			}
@@ -145,7 +145,7 @@ public class ShopWorker extends BukkitRunnable {
 			try {
 				// Purchase is valid, pass success status!
 				// Purchase may still fail on bad database connection!
-				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Success\", \"statusCode\":\"007\"}");
+				ss.write("STATUS {\"action\":\"SHOP\", \"transactionID\":\"" + data[4] + "\", \"status\":\"Success\", \"statusCode\":\"007\"}");
 			}catch(Exception e) {
 				GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
 			}
@@ -153,7 +153,7 @@ public class ShopWorker extends BukkitRunnable {
 			try {
 				// Purchase is valid, pass success status!
 				// Purchase may still fail on bad database connection!
-				ss.write("STATUS {\"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"008\", \"Error\":\"A transaction with the same ID already exists!\"}");
+				ss.write("STATUS {\"action\":\"SHOP\", \"transactionID\":\"" + data[4] + "\", \"status\":\"Failed\", \"statusCode\":\"008\", \"Error\":\"A transaction with the same ID already exists!\"}");
 			}catch(Exception e) {
 				GiantShop.getPlugin().getLogger().severe("[GSWAPI] Error occured whilst attempting to write data to web app " + data[0]);
 			}
