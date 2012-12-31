@@ -53,7 +53,8 @@ public class List {
 						d.put("page", String.valueOf(curPag));
 						d.put("maxPages", String.valueOf(pages));
 						Heraut.say(player, mH.getMsg(Messages.msgType.MAIN, "PickupListPageHead", d));
-						for(Queued q : qList) {
+						for(int i = start; i < (((start + perPage) > qList.size()) ? qList.size() : (start + perPage)); i++) {
+							Queued q = qList.get(i);
 							d = new HashMap<String, String>();
 							d.put("transactionID", q.getTransactionID());
 							d.put("itemID", String.valueOf(q.getItemID()));
