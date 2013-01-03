@@ -44,22 +44,22 @@ public class List {
 				HashMap<String, String> d = new HashMap<String, String>();
 				d.put("list", "trusted app");
 				d.put("pages", String.valueOf(pages));
-				Heraut.say(sender, mH.getMsg(Messages.msgType.ERROR, "pageOverMax", d));
+				Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "pageOverMax", d));
 			}else{
 				HashMap<String, String> d = new HashMap<String, String>();
 				d.put("page", String.valueOf(curPag));
 				d.put("maxPages", String.valueOf(pages));
-				Heraut.say(sender, mH.getMsg(Messages.msgType.MAIN, "TrustedAppPageHead", d));
+				Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.MAIN, "TrustedAppPageHead", d));
 				for(Map.Entry<String, ShopSender> app : tA.entrySet()) {
 					d = new HashMap<String, String>();
 					d.put("appName", app.getKey());
 					d.put("appURI", app.getValue().getHostURI());
 
-					Heraut.say(sender, mH.getMsg(Messages.msgType.MAIN, "TrustedAppListEntry", d));
+					Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.MAIN, "TrustedAppListEntry", d));
 				}
 			}
 		}else{
-			Heraut.say(sender, mH.getMsg(Messages.msgType.ERROR, "noWebApps"));
+			Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "noWebApps"));
 		}
 	}
 }

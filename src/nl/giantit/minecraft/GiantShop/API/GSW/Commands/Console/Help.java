@@ -48,29 +48,28 @@ public class Help {
 		int start = (curPag * perPage) - perPage;
 		
 		if(entries.size() <= 0) {
-			Heraut.say(sender, "&e[&3" + name + "&e]" + mH.getMsg(Messages.msgType.ERROR, "noHelpEntries"));
+			Heraut.say(sender, "&e[&3" + name + "&e]" + mH.getConsoleMsg(Messages.msgType.ERROR, "noHelpEntries"));
 		}else if(curPag > pages) {
 			HashMap<String, String> d = new HashMap<String, String>();
 			d.put("list", "help");
 			d.put("pages", String.valueOf(pages));
-			Heraut.say(sender, "&e[&3" + name + "&e]" + mH.getMsg(Messages.msgType.ERROR, "pageOverMax", d));
+			Heraut.say(sender, "&e[&3" + name + "&e]" + mH.getConsoleMsg(Messages.msgType.ERROR, "pageOverMax", d));
 		}else{
 			HashMap<String, String> d = new HashMap<String, String>();
 			d.put("page", String.valueOf(curPag));
 			d.put("maxPages", String.valueOf(pages));
-			Heraut.say(sender, "&e[&3" + name + "&e]" + mH.getMsg(Messages.msgType.MAIN, "helpPageHead", d));
+			Heraut.say(sender, "&e[&3" + name + "&e]" + mH.getConsoleMsg(Messages.msgType.MAIN, "helpPageHead", d));
 
 			for(int i = start; i < (((start + perPage) > entries.size()) ? entries.size() : (start + perPage)); i++) {
 				String[] data = entries.get(i);
 
 				String helpEntry = data[0];
 				String description = data[1];
-				Messages msg = GiantShop.getPlugin().getMsgHandler();
 				HashMap<String, String> params = new HashMap<String, String>();
 				params.put("command", helpEntry);
 				params.put("description", description);
 				
-				Heraut.say(sender, msg.getMsg(Messages.msgType.MAIN, "helpCommand", params));
+				Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.MAIN, "helpCommand", params));
 			}
 		}
 	}
