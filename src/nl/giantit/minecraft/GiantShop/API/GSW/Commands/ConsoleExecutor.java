@@ -19,8 +19,10 @@ public class ConsoleExecutor {
 			
 			if(Misc.isAnyIgnoreCase(cmd, "help", "hel", "he", "h", "?")) {
 				Help.showHelp(sender, args);
-			}else if(Misc.isAnyIgnoreCase(cmd, "list", "li", "l")) {
+			}else if(Misc.isAnyIgnoreCase(cmd, "list", "lis", "li", "l")) {
 				List.exec(sender, args);
+			}else if(Misc.isAnyIgnoreCase(cmd, "reload", "reloa", "relo", "rel", "re", "r")) {
+				Reload.exec(sender, args);
 			}
 		}else{
 			Heraut.say(sender, "Ok, we have no friggin clue what you are on about, so what about we just send you our help page?");
