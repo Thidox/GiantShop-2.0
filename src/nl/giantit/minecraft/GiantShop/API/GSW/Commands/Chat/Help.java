@@ -84,12 +84,11 @@ public class Help {
 
 				String helpEntry = data[0];
 				String description = data[1];
-				Messages msg = GiantShop.getPlugin().getMsgHandler();
 				HashMap<String, String> params = new HashMap<String, String>();
 				params.put("command", helpEntry);
 				params.put("description", description);
 				
-				Heraut.say(player, msg.getMsg(Messages.msgType.MAIN, "helpCommand", params));
+				Heraut.say(player, mH.getMsg(Messages.msgType.MAIN, "helpCommand", params));
 			}
 		}
 	}
