@@ -73,18 +73,34 @@ public class ShopSender {
 		if(this.useHTTPS) {
 			if(this.port != 443) {
 				this.u = "https://" + this.host + ":" + this.port + "/" + requestPath;
-				this.activURI = "https://" + this.host + ":" + this.port + "/" + activPath;
+				if(!activPath.startsWith("http://") && !activPath.startsWith("https://")) {
+					this.activURI = "https://" + this.host + ":" + this.port + "/" + activPath;
+				}else{
+					this.activURI = activPath;
+				}
 			}else{
 				this.u = "https://" + this.host + "/" + requestPath;
-				this.activURI = "https://" + this.host + "/" + activPath;
+				if(!activPath.startsWith("http://") && !activPath.startsWith("https://")) {
+					this.activURI = "https://" + this.host + "/" + activPath;
+				}else{
+					this.activURI = activPath;
+				}
 			}
 		}else{
 			if(this.port != 80) {
 				this.u = "http://" + this.host + ":" + this.port + "/" + requestPath;
-				this.activURI = "http://" + this.host + ":" + this.port + "/" + activPath;
+				if(!activPath.startsWith("http://") && !activPath.startsWith("https://")) {
+					this.activURI = "http//" + this.host + ":" + this.port +  "/" + activPath;
+				}else{
+					this.activURI = activPath;
+				}
 			}else{
 				this.u = "http://" + this.host + "/" + requestPath;
-				this.activURI = "http://" + this.host + "/" + activPath;
+				if(!activPath.startsWith("http://") && !activPath.startsWith("https://")) {
+					this.activURI = "http://" + this.host + "/" + activPath;
+				}else{
+					this.activURI = activPath;
+				}
 			}
 		}
 	}
