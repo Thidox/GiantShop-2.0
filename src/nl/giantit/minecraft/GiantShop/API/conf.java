@@ -32,6 +32,12 @@ public class conf {
 		return null != c;
 	}
 	
+	public void reload() {
+		if(this.f.exists()) {
+			this.c = YamlConfiguration.loadConfiguration(this.f);
+		}
+	}
+	
 	public void save() {
 		try {
 			InputStream iS = new ByteArrayInputStream(this.c.saveToString().replace("\n", "\r\n").replace("  ", "    ").getBytes("UTF-8"));
