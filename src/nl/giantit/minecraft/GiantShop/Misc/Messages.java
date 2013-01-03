@@ -232,6 +232,7 @@ public class Messages {
 			}
 			Template = Template.replace("%n", plugin.getPubName());
 			Template = Template.replace("%colon", ":");
+			Template = Template.replace("%sharp", "#");
 			
 			Template = this.deColourfy(Template);
 			return Template;
