@@ -83,7 +83,7 @@ public class GSWAPI {
 		}
 		
 		this.p = p;
-		this.d = p.getDir() + "/API/gsw/";
+		this.d = p.getDir() + "/API/gsw";
 		File dir = new File(this.d + "/conf");
 		File confFile = new File(dir, "conf.yml");
 		boolean firstTime = false;
@@ -147,26 +147,44 @@ public class GSWAPI {
 		}
 		
 		p.getCommand("gsw").setExecutor(new Executor());
-		String ident = c.getString("GiantShopWeb.Global.UUID");
 		
-		ConfigurationSection cS = c.getConfigurationSection("GiantShopWeb.Trusted");
+		this.c = c;
+		InitDB.init();
+		this.pQ = new PickupQueue(p);
+		
+		this.reload();
+		p.getServer().getPluginManager().registerEvents(new PlayerListener(this), p);
+		
+		this.loaded = true;
+	}
+	
+	public final void startReceiver() {
+		this.sr = new ShopReceiver(this.p, this.c.getString("GiantShopWeb.Server.ip"), this.c.getInt("GiantShopWeb.Server.port"));
+		sr.start();
+	}
+	
+	public final void reload() {
+		String ident = this.c.getString("GiantShopWeb.Global.UUID");
+		
+		ConfigurationSection cS = this.c.getConfigurationSection("GiantShopWeb.Trusted");
 		if(null != cS) {
+			this.ss = new HashMap<String, ShopSender>();
 			Set<String> keys = cS.getKeys(false);
 			for(String key : keys) {
 				if(cS.getBoolean(key + ".enabled", false)) {
 					if(!this.ss.containsKey(key)) {
 						ShopSender sender = new ShopSender(
-																p, 
-																this, 
-																key, 
-																cS.getBoolean(key + ".useHTTPS", false), 
-																cS.getString(key + ".host", ""), 
-																cS.getInt(key + ".port", 80), 
-																cS.getString(key + ".requestPath", ""), 
-																cS.getString(key + ".activationPath", ""), 
-																ident,
-																cS.getBoolean(key + ".debug", false)
-															);
+															this.p, 
+															this, 
+															key, 
+															cS.getBoolean(key + ".useHTTPS", false), 
+															cS.getString(key + ".host", ""), 
+															cS.getInt(key + ".port", 80), 
+															cS.getString(key + ".requestPath", ""), 
+															cS.getString(key + ".activationPath", ""), 
+															ident,
+															cS.getBoolean(key + ".debug", false)
+														  );
 						sender.getPublicKey();
 						this.ss.put(key, sender);
 					}
@@ -174,23 +192,14 @@ public class GSWAPI {
 			}
 		}
 		
-		this.c = c;
-		InitDB.init();
-		this.pQ = new PickupQueue(p);
-		this.startReceiver();
-		p.getServer().getPluginManager().registerEvents(new PlayerListener(this), p);
+		this.shutdown();
 		
-		this.loaded = true;
-	}
-	
-	public final void startReceiver() {
-		sr = new ShopReceiver(p, c.getString("GiantShopWeb.Server.ip"), c.getInt("GiantShopWeb.Server.port"));
-		sr.start();
+		this.startReceiver();
 	}
 	
 	public void shutdown() {
-		if(null != sr) {
-			sr.disable();
+		if(null != this.sr) {
+			this.sr.disable();
 		}
 	}
 	
