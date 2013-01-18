@@ -158,7 +158,11 @@ public class PickupQueue {
 	}
 	
 	public boolean inQueue(String player) {
-		return this.queue.containsKey(player);
+		if(this.queue.containsKey(player)) {
+			return this.queue.get(player).size() > 0;
+		}
+		
+		return false;
 	}
 	
 	public boolean inQueue(String player, String transactionID) {
