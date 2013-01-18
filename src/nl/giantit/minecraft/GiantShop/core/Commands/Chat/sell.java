@@ -196,14 +196,15 @@ public class sell {
 	
 									Heraut.say(player, mH.getMsg(msgType.MAIN, "sell", data));
 									Heraut.say(player, mH.getMsg(msgType.MAIN, "newBalance", data));
-									Logger.Log(LoggerType.SELL,
-												player, 
-												"{id: " + String.valueOf(itemID) + "; " +
-												"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + "; " +
-												"oS:" + String.valueOf(stock) + "; " +
-												"nS:" + String.valueOf((stock != -1 ? stock + amount : stock)) + "; " +
-												"amount:" + String.valueOf(amount) + ";" +
-												"total:" + String.valueOf(cost) + ";}");
+									
+									HashMap<String, String> d = new HashMap<String, String>();
+									d.put("id", String.valueOf(itemID));
+									d.put("type", String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType));
+									d.put("oS", String.valueOf(stock));
+									d.put("nS", String.valueOf((stock != -1 ? stock + amount : stock)));
+									d.put("amount", String.valueOf(amount));
+									d.put("total", String.valueOf(cost));
+									Logger.Log(LoggerType.SELL, player.getName(), d);
 									
 									InventoryHandler.removeItem(inv, iStack);
 									

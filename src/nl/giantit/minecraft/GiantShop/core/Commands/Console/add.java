@@ -168,16 +168,16 @@ public class add {
 					DB.insert("#__items", fields, values).updateQuery();
 
 					Heraut.say(sender, "The requested item (" + name + ") has been added to the shop!");
-					Logger.Log(LoggerType.ADD,
-								sender, 
-								"{id: " + String.valueOf(itemID) + "; " +
-								"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + "; " +
-								"sF:" + String.valueOf(sellFor) + "; " +
-								"bF:" + String.valueOf(buyFor) + "; " +
-								"pS: " + String.valueOf(perStack) + "; " +
-								"s:" + String.valueOf(stock) + "; " +
-								"mS:" + String.valueOf(maxStock) + "; " +
-								"shops:" + shops + ";}");
+					HashMap<String, String> d = new HashMap<String, String>();
+					d.put("id", String.valueOf(itemID));
+					d.put("type", String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType));
+					d.put("sF", String.valueOf(sellFor));
+					d.put("bF", String.valueOf(buyFor));
+					d.put("pS", String.valueOf(perStack));
+					d.put("s", String.valueOf(stock));
+					d.put("mS", String.valueOf(maxStock));
+					d.put("shops", shops);
+					Logger.Log(LoggerType.ADD, "Console", d);
 				}else{
 					Heraut.say(sender, msgs.getConsoleMsg(Messages.msgType.ERROR, "itemAlreadyFound"));
 				}

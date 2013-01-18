@@ -137,11 +137,12 @@ public class itemStock {
 		iDriver DB = Database.Obtain().getEngine();
 		DB.update("#__items").set(fields).where(where).updateQuery();
 		
-		Logger.Log(LoggerType.APISTOCKUPDATE, 
-					"{id: " + String.valueOf(this.id) + "; " +
-					"type:" + String.valueOf((this.type == null || this.type <= 0) ? -1 : this.type) + "; " +
-					"oS:" + String.valueOf(oS) + "; " +
-					"nS:" + String.valueOf(this.stock) + ";}");
+		HashMap<String, String> d = new HashMap<String, String>();
+		d.put("id", String.valueOf(this.id));
+		d.put("type", String.valueOf((this.type == null || this.type <= 0) ? -1 : this.type));
+		d.put("oS", String.valueOf(oS));
+		d.put("nS", String.valueOf(this.stock));
+		Logger.Log(LoggerType.APISTOCKUPDATE, "Unknown (API)", d);
 		
 		return stockResponse.STOCKUPDATED;
 	}
@@ -170,11 +171,12 @@ public class itemStock {
 		iDriver DB = Database.Obtain().getEngine();
 		DB.update("#__items").set(fields).where(where).updateQuery();
 		
-		Logger.Log(LoggerType.APIMAXSTOCKUPDATE, 
-				"{id: " + String.valueOf(this.id) + "; " +
-				"type:" + String.valueOf((this.type == null || this.type <= 0) ? -1 : this.type) + "; " +
-				"oS:" + String.valueOf(oS) + "; " +
-				"nS:" + String.valueOf(this.maxStock) + ";}");
+		HashMap<String, String> d = new HashMap<String, String>();
+		d.put("id", String.valueOf(this.id));
+		d.put("type", String.valueOf((this.type == null || this.type <= 0) ? -1 : this.type));
+		d.put("oS", String.valueOf(oS));
+		d.put("nS", String.valueOf(this.maxStock));
+		Logger.Log(LoggerType.APIMAXSTOCKUPDATE, "Unknown (API)", d);
 		
 		return stockResponse.MAXSTOCKUPDATED;
 	}

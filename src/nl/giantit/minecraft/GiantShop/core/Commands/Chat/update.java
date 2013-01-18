@@ -285,17 +285,17 @@ public class update {
 			
 			DB.update("#__items").set(tmp).where(data).updateQuery();
 			Heraut.say(player, "You have successfully updated " + name + "!");
-			Logger.Log(LoggerType.UPDATE,
-						player, 
-						"{id: " + String.valueOf(itemID) + "; " +
-						"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + "; " +
-						"pS:" + tmp.get("perStack") + "; " +
-						"sF:" + tmp.get("sellFor") + "; " +
-						"bF:" + tmp.get("buyFor") + "; " +
-						"oS:" + String.valueOf(oS) + "; " +
-						"nS:" + tmp.get("stock") + "; " +
-						"oMS:" + tmp.get("maxStock") + ";" +
-						"nMS:" + String.valueOf(omS) + ";}");
+			HashMap<String, String> d = new HashMap<String, String>();
+			d.put("id", String.valueOf(itemID));
+			d.put("type", String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType));
+			d.put("pS", tmp.get("perStack"));
+			d.put("sF", tmp.get("sellFor"));
+			d.put("bF", tmp.get("buyFor"));
+			d.put("oS", String.valueOf(oS));
+			d.put("nS", tmp.get("stock"));
+			d.put("oMS", tmp.get("maxStock"));
+			d.put("nMS", String.valueOf(omS));
+			Logger.Log(LoggerType.UPDATE, player.getName(), d);
 			
 			try {
 				StockUpdateEvent.StockUpdateType t = (oS < s) ? StockUpdateEvent.StockUpdateType.INCREASE : StockUpdateEvent.StockUpdateType.DECREASE;

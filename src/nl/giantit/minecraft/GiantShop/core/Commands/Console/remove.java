@@ -91,10 +91,10 @@ public class remove {
 				if(resSet.size() == 1) { 
 					DB.delete("#__items").where(data).updateQuery();
 					Heraut.say(sender, "Item " + name + " has been successfully removed from the store!");
-					Logger.Log(LoggerType.REMOVE,
-								sender, 
-								"{id: " + String.valueOf(itemID) + "; " +
-								"type:" + String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType) + ";}");
+					HashMap<String, String> d = new HashMap<String, String>();
+					d.put("id", String.valueOf(itemID));
+					d.put("type", String.valueOf((itemType == null || itemType <= 0) ? -1 : itemType));
+					Logger.Log(LoggerType.REMOVE, "Console", d);
 				}else{
 					Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "noneOrMoreResults"));
 				}
