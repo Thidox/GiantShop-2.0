@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class Logger {
 	
-	public void Log(LoggerType type, String playerName, HashMap<String, String> data) {
+	public static void Log(LoggerType type, String playerName, HashMap<String, String> data) {
 		config conf = config.Obtain();
 		if(conf.getBoolean("GiantShop.log.useLogging")) {
 			if(conf.getBoolean("GiantShop.log.log." + type.getName().toLowerCase())) {
