@@ -4,53 +4,30 @@ import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.Database.Database;
 import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Logger {
-
-	public static void Log(String data) {
-		Log("Unknown", data);
-	}
 	
-	public static void Log(String n, String data) {
-		Log(LoggerType.UNKNOWN, n, data);
-	}
-	
-	public static void Log(Player p, String data) {
-		Log(LoggerType.UNKNOWN, p, data);
-	}
-	
-	public static void Log(CommandSender s, String data) {
-		Log(LoggerType.UNKNOWN, s, data);
-	}
-	
-	public static void Log(LoggerType t, String data) {
-		Log(t, "Unknown", data);
-	}
-	
-	public static void Log(LoggerType t, CommandSender s, String data) {
-		if(s instanceof Player) {
-			Log(t, (Player) s, data);
-		}else{
-			Log(t, "Console", data);
-		}
-	}
-	
-	public static void Log(LoggerType t, Player p, String data) {
-		Log(t, p.getName(), data);
-	}
-	
-	public static void Log(LoggerType t, String n, String data) {
+	public void Log(LoggerType type, String playerName, HashMap<String, String> data) {
 		config conf = config.Obtain();
 		if(conf.getBoolean("GiantShop.log.useLogging")) {
-			if(conf.getBoolean("GiantShop.log.log." + t.getName().toLowerCase())) {
+			if(conf.getBoolean("GiantShop.log.log." + type.getName().toLowerCase())) {
+				String json = "{";
+				int i = 0;
+				for(Map.Entry<String, String> d : data.entrySet()) {
+					json += "\"" + d.getKey() + "\": \"" + d.getValue() + "\"";
+					if(i < data.size()) {
+						json += ",";
+						i++;
+					}
+				}
+				json += "}";
+				
 				iDriver DB = Database.Obtain().getEngine();
-				int type = t.getID();
+				int t = type.getID();
 				
 				ArrayList<String> fields = new ArrayList<String>();
 				ArrayList<HashMap<Integer, HashMap<String, String>>> values = new ArrayList<HashMap<Integer, HashMap<String, String>>>();
@@ -61,18 +38,18 @@ public class Logger {
 				fields.add("date");
 				
 				HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
-				int i = 0;
+				i = 0;
 				for(String field : fields) {
 					HashMap<String, String> temp = new HashMap<String, String>();
 					if(field.equalsIgnoreCase("type")) {
 						temp.put("kind", "INT");
-						temp.put("data", "" + type);
+						temp.put("data", "" + t);
 						tmp.put(i, temp);
 					}else if(field.equalsIgnoreCase("user")) {
-						temp.put("data", "" + n);
+						temp.put("data", "" + playerName);
 						tmp.put(i, temp);
 					}else if(field.equalsIgnoreCase("data")) {
-						temp.put("data", "" + data);
+						temp.put("data", "" + json);
 						tmp.put(i, temp);
 					}else if(field.equalsIgnoreCase("date")) {
 						temp.put("data", "" + (int) Logger.getTimestamp());
