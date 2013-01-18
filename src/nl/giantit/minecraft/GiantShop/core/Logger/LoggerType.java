@@ -9,6 +9,7 @@ public enum LoggerType {
 	REMOVE(6, "remove"),
 	APISTOCKUPDATE(7, "apistockupdate"),
 	APIMAXSTOCKUPDATE(8, "apimaxstockupdate"),
+	GSWAPITRANSACTION(9, "gswapitransaction"),
 	UNKNOWN(20, "unknown");
 	
 	private int id;
