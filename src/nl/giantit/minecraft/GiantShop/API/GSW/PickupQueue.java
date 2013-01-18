@@ -9,6 +9,8 @@ import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
+import nl.giantit.minecraft.GiantShop.core.Logger.Logger;
+import nl.giantit.minecraft.GiantShop.core.Logger.LoggerType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -238,6 +240,12 @@ public class PickupQueue {
 		data.put("amount", String.valueOf(q.getAmount()));
 
 		Heraut.say(pl, mH.getMsg(Messages.msgType.MAIN, "itemDelivery", data));
+		HashMap<String, String> d = new HashMap<String, String>();
+		d.put("id", String.valueOf(q.getItemID()));
+		d.put("type", String.valueOf(q.getItemType()));
+		d.put("amount", String.valueOf(q.getAmount()));
+		d.put("tID", q.getTransactionID());
+		Logger.Log(LoggerType.GSWAPITRANSACTION, pl.getName(), d);
 
 		ItemStack iStack;
 		if(q.getItemType() != -1 && q.getItemType() != 0) {
