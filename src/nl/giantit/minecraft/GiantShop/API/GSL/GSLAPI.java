@@ -19,18 +19,18 @@ public class GSLAPI {
 		this.loc = plugin.getLocHandler();
 	}
 	
-	public Boolean useLocation() {
+	public boolean useLocation() {
 		return this.plugin.useLocation();
 	}
 	
-	public Boolean inShop(Location loc) {
+	public boolean inShop(Location loc) {
 		if(!this.useLocation())
 			return true;
 		
 		return this.loc.inShop(loc);
 	}
 	
-	public Boolean inShop(Location loc, String filter) {
+	public boolean inShop(Location loc, String filter) {
 		if(!this.useLocation())
 			return true;
 		
@@ -44,14 +44,14 @@ public class GSLAPI {
 		return this.loc.inShop(loc, useless);
 	}
 	
-	public Boolean addShop(ArrayList<Location> loc, String name) {
+	public boolean addShop(ArrayList<Location> loc, String name) {
 		if(!this.useLocation())
 			return false;
 		
 		return this.loc.addShop(loc, name);
 	}
 	
-	public Boolean removeShop(String name, String World) {
+	public boolean removeShop(String name, String World) {
 		if(!this.useLocation())
 			return false;
 		
