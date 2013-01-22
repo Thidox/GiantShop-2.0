@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -27,6 +28,20 @@ public class confUpdate implements iUpdater {
 		}
 	}
 
+	private void update1_2(FileConfiguration c) {
+		List<String> com = c.getStringList("GiantShop.Location.protect.Commands");
+		com.add("search");
+		com.add("pickuplist");
+		com.add("pickupall");
+		com.add("pickupsingle");
+		c.set("GiantShop.Location.protect.Commands", com);
+		
+		c.set("GiantShop.log.log.gswapitransaction", true);
+		
+		c.set("GiantShop.global.version", 1.2);
+		this.export(new File(GiantShop.getPlugin().getDir(), "conf.yml"), c);
+	}
+
 	private void update1_1(FileConfiguration c) {
 		Map<String, Boolean> section = new HashMap<String, Boolean>();
 		section.put("useGSWAPI", true);
@@ -42,6 +57,11 @@ public class confUpdate implements iUpdater {
 		if(curV < 1.1) {
 			GiantShop.getPlugin().getLogger().log(Level.INFO, "Your conf.yml has ran out of date. Updating to 1.1 now!");
 			update1_1(c);
+		}
+		
+		if(curV < 1.2) {
+			GiantShop.getPlugin().getLogger().log(Level.INFO, "Your conf.yml has ran out of date. Updating to 1.2 now!");
+			update1_2(c);
 		}
 	}
 	

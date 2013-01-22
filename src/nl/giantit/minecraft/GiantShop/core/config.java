@@ -26,7 +26,7 @@ public class config {
 	private GiantShop plugin;
 	private YamlConfiguration c;
 	private File file;
-	private double version = 1.1;
+	private double version = 1.2;
 
 	private config(GiantShop p) {
 		this.plugin = p;
