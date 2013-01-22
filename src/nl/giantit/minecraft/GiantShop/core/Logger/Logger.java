@@ -18,10 +18,10 @@ public class Logger {
 				String json = "{";
 				int i = 0;
 				for(Map.Entry<String, String> d : data.entrySet()) {
+					i++;
 					json += "\"" + d.getKey() + "\": \"" + d.getValue() + "\"";
 					if(i < data.size()) {
 						json += ",";
-						i++;
 					}
 				}
 				json += "}";
@@ -52,7 +52,7 @@ public class Logger {
 						temp.put("data", "" + json);
 						tmp.put(i, temp);
 					}else if(field.equalsIgnoreCase("date")) {
-						temp.put("data", "" + (int) Logger.getTimestamp());
+						temp.put("data", "" + Logger.getTimestamp());
 						tmp.put(i, temp);
 					}
 					i++;
@@ -65,8 +65,6 @@ public class Logger {
 	}
 	
 	public static long getTimestamp() {
-		
-		Date d = new Date();
-		return d.getTime();
+		return System.currentTimeMillis() / 1000;
 	}
 }
