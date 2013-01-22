@@ -7,6 +7,7 @@ import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
 import org.bukkit.Location;
 
 import java.util.ArrayList;
+import org.bukkit.entity.Player;
 
 public class GSLAPI {
 
@@ -84,5 +85,13 @@ public class GSLAPI {
 		}
 		
 		return plugin.cmds.contains(cmd);
+	}
+	
+	public boolean canUse(Player p) {
+		if(!this.useLocation()) {
+			return false;
+		}
+		
+		return this.loc.canUse(p);
 	}
 }
