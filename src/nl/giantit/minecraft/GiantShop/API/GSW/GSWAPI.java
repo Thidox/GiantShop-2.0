@@ -82,6 +82,12 @@ public class GSWAPI {
 			return;
 		}
 		
+		if(null == GiantShopAPI.Obtain().getGSLAPI()) {
+			p.getLogger().severe("[GSWAPI] GiantShopLocationAPI disabled! GiantShopWebAPI depends on this!");
+			p.getLogger().warning("[GSWAPI] GiantShopWebAPI will not be functional! More errors might follow!");
+			return;
+		}
+		
 		this.p = p;
 		this.d = p.getDir() + "/API/gsw";
 		File dir = new File(this.d + "/conf");
