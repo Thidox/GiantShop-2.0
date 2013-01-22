@@ -77,4 +77,12 @@ public class GSLAPI {
 		
 		return this.loc.getShopName(loc);
 	}
+	
+	public boolean isProtectedCommand(String cmd) {
+		if(!this.useLocation()) {
+			return false;
+		}
+		
+		return plugin.cmds.contains(cmd);
+	}
 }
