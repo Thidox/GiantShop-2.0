@@ -1,7 +1,9 @@
 package nl.giantit.minecraft.GiantShop.API.GSW.Commands;
 
 import java.util.Arrays;
+import nl.giantit.minecraft.GiantShop.API.GSL.GSLAPI;
 import nl.giantit.minecraft.GiantShop.API.GSW.Commands.Chat.*;
+import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import org.bukkit.command.CommandSender;
@@ -14,6 +16,7 @@ import org.bukkit.entity.Player;
 public class ChatExecutor {
 	
 	public static boolean exec(CommandSender sender, String[] args) {
+		GSLAPI gsl = GiantShopAPI.Obtain().getGSLAPI();
 		Player player = (Player) sender;
 		
 		if(args.length >= 1) {
@@ -21,11 +24,29 @@ public class ChatExecutor {
 			args = Arrays.copyOfRange(args, 1, args.length);
 			
 			if(Misc.isAnyIgnoreCase(cmd, "help", "hel", "he", "h", "?")) {
-				Help.showHelp(player, args);
+				if(gsl.isProtectedCommand("gswhelp")) {
+					if(gsl.canUse(player)) {
+						Help.showHelp(player, args);
+					}
+				}else{
+					Help.showHelp(player, args);
+				}
 			}else if(Misc.isAnyIgnoreCase(cmd, "list", "li", "l")) {
-				List.exec(player, args);
+				if(gsl.isProtectedCommand("gswlist")) {
+					if(gsl.canUse(player)) {
+						List.exec(player, args);
+					}
+				}else{
+					List.exec(player, args);
+				}
 			}else if(Misc.isAnyIgnoreCase(cmd, "register", "reg", "r")) {
-				Register.exec(player, args);
+				if(gsl.isProtectedCommand("gswregister")) {
+					if(gsl.canUse(player)) {
+						Register.exec(player, args);
+					}
+				}else{
+					Register.exec(player, args);
+				}
 			}else if(Misc.isAnyIgnoreCase(cmd, "pickup", "pick", "pu", "p")) {
 				Pick.exec(player, args);
 			}else{

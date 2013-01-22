@@ -6,7 +6,6 @@ GiantShopWeb:
         port: 8698
     Items:
         PickupsRequireCommand: true
-        DeliverToShop: true
     Trusted:
         GiantShopWeb:
             enabled: false
