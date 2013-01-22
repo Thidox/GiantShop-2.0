@@ -1,6 +1,6 @@
 GiantShop:
     global:
-        version: 1.1
+        version: 1.2
         name: GiantShop
         debug: false
         perPage: 5
@@ -19,9 +19,9 @@ GiantShop:
             stock: true
             gsl: true
     API:
-        enableGSWAPI: true
-        enableGSLAPI: true
-        enableStockAPI: true
+        useGSWAPI: true
+        useGSLAPI: true
+        useStockAPI: true
     log:
         useLogging: true
         log:
@@ -33,6 +33,7 @@ GiantShop:
             remove: true
             apistockupdate: true
             apimaxstockupdate: true
+            gswapitransaction: true
             unknown: true
     broadcast:
         buy: true
@@ -85,3 +86,7 @@ GiantShop:
             - sell
             - list
             - check
+            - search
+            - pickuplist
+            - pickupall
+            - pickupsingle
