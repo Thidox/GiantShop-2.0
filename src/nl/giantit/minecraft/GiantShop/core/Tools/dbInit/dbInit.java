@@ -11,7 +11,7 @@ import java.util.logging.Level;
 public class dbInit {
 	
 	private iDriver dbDriver;
-	private double curS = 1.0, curI = 1.1, curD = 1.2;
+	private double curS = 1.0, curI = 1.1, curD = 1.2, curL = 1.1;
 
 	private void init() {
 		if(!this.dbDriver.tableExists("#__versions")) {
@@ -73,13 +73,13 @@ public class dbInit {
 			fields.put("user", data);
 			
 			data = new HashMap<String, String>();
-			data.put("TYPE", "VARCHAR");
-			data.put("LENGTH", "100");
+			data.put("TYPE", "TEXT");
+			data.put("LENGTH", null);
 			data.put("NULL", "true");
 			fields.put("data", data);
 			
 			data = new HashMap<String, String>();
-			data.put("TYPE", "INT");
+			data.put("TYPE", "BIGINT");
 			data.put("LENGTH", "50");
 			data.put("NULL", "false");
 			data.put("DEFAULT", "0");
@@ -316,6 +316,8 @@ public class dbInit {
 				Items.run(version);
 			}else if(table.equalsIgnoreCase("discounts") && version < curD) {
 				Discounts.run(version);
+			}else if(table.equalsIgnoreCase("log") && version < curL) {
+				Logs.run(version);
 			}	
 		}
 	}
