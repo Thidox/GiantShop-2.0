@@ -20,6 +20,7 @@ import nl.giantit.minecraft.GiantShop.API.GSW.Server.ShopSender;
 import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
 import nl.giantit.minecraft.GiantShop.API.conf;
 import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import org.bukkit.configuration.ConfigurationSection;
 
 /**
@@ -214,8 +215,8 @@ public class GSWAPI {
 	}
 	
 	public ShopSender getTrustedApp(String appName) {
-		if(loaded && this.ss.containsKey(appName))
-			return this.ss.get(appName);
+		if(loaded && this.isTrustedApp(appName))
+			return (ShopSender) Misc.getIgnoreCase(this.ss, appName);
 		
 		return null;
 	}
@@ -228,7 +229,7 @@ public class GSWAPI {
 	}
 	
 	public boolean isTrustedApp(String appName) {
-		return loaded && this.ss.containsKey(appName);
+		return loaded && Misc.constainsKeyIgnoreCase(this.ss.keySet(), appName);
 	}
 	
 	public Set<String> getTrustedApps() {

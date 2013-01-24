@@ -6,6 +6,8 @@ import org.bukkit.OfflinePlayer;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 /**
  *
  * @author Giant
@@ -121,5 +123,23 @@ public class Misc {
 			return players.get(name);
 		
 		return getOfflinePlayer(name);
+	}
+	
+	public static boolean constainsKeyIgnoreCase(Set<String> haystack, String needle) {
+		for(String straw : haystack) {
+			if(straw.equalsIgnoreCase(needle))
+				return true;
+		}
+		
+		return false;
+	}
+	
+	public static Object getIgnoreCase(Map<String, ?> haystack, String needle) {
+		for(String straw : haystack.keySet()) {
+			if(straw.equalsIgnoreCase(needle))
+				return haystack.get(straw);
+		}
+		
+		return null;
 	}
 }
