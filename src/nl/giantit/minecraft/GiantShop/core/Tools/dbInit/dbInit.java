@@ -45,7 +45,7 @@ public class dbInit {
 			d.put(0, data);
 			
 			data = new HashMap<String, String>();
-			data.put("data", "1.0");
+			data.put("data", "1.1");
 			d.put(1, data);
 			
 			this.dbDriver.insert("#__versions", field, d).Finalize();
