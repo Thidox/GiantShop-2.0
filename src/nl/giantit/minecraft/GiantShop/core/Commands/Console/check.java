@@ -14,6 +14,7 @@ import org.bukkit.command.CommandSender;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
+import nl.giantit.minecraft.GiantShop.Misc.Misc;
 
 /**
  *
@@ -102,46 +103,12 @@ public class check {
 				double sellFor = Double.parseDouble(res.get("sellfor"));
 				double buyFor = Double.parseDouble(res.get("buyfor"));
 				
-				if(conf.getBoolean("GiantShop.stock.useStock") && conf.getBoolean("GiantShop.stock.stockDefinesCost") && maxStock != -1 && stock != -1) {
-					double maxInfl = conf.getDouble("GiantShop.stock.maxInflation");
-					double maxDefl = conf.getDouble("GiantShop.stock.maxDeflation");
-					int atmi = conf.getInt("GiantShop.stock.amountTillMaxInflation");
-					int atmd = conf.getInt("GiantShop.stock.amountTillMaxDeflation");
-					double split = Math.round((atmi + atmd) / 2);
-					if(maxStock <= atmi + atmd) {
-						split = maxStock / 2;
-						atmi = 0;
-						atmd = maxStock;
-					}
-					
-					if(stock >= atmd) {
-						if(buyFor != -1)
-							buyFor = buyFor * (1.0 - maxDefl / 100.0);
-						
-						if(sellFor != -1)
-							sellFor = sellFor * (1.0 - maxDefl / 100.0); 
-					}else if(stock <= atmi) {
-						if(buyFor != -1)
-							buyFor = buyFor * (1.0 + maxDefl / 100.0);
-						
-						if(sellFor != -1)
-							sellFor = sellFor * (1.0 + maxDefl / 100.0);
-					}else{
-						if(stock < split) {
-							if(buyFor != -1)
-								buyFor = (double)Math.round((buyFor * (1.0 + (maxInfl / stock) / 100)) * 100.0) / 100.0;
-	
-							if(sellFor != -1)
-								sellFor = (double)Math.round((sellFor * (1.0 + (maxInfl / stock) / 100)) * 100.0) / 100.0;
-						}else if(stock > split) {
-							if(buyFor != -1)
-								buyFor = 2.0 + (double)Math.round((buyFor / (maxDefl * stock / 100)) * 100.0) / 100.0;
-	
-							if(sellFor != -1)
-								sellFor = 2.0 + (double)Math.round((sellFor / (maxDefl * stock / 100)) * 100.0) / 100.0;
-							
-						}
-					}
+				if(buyFor != -1) {
+					buyFor = Misc.getPrice(buyFor, stock, maxStock, 1);
+				}
+
+				if(sellFor != -1) {
+					sellFor = Misc.getPrice(sellFor, stock, maxStock, 1);
 				}
 				
 				String sf = String.valueOf(sellFor);
