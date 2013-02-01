@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import nl.giantit.minecraft.GiantShop.core.config;
 /**
  *
  * @author Giant
@@ -141,5 +142,39 @@ public class Misc {
 		}
 		
 		return null;
+	}
+	
+	public static double getPrice(double cost, int stock, int maxStock, int quantity) {
+		config conf = config.Obtain();
+		
+		if(conf.getBoolean("GiantShop.stock.useStock") && conf.getBoolean("GiantShop.stock.stockDefinesCost") && maxStock != -1 && stock != -1) {
+			double maxInfl = conf.getDouble("GiantShop.stock.maxInflation");
+			double maxDefl = conf.getDouble("GiantShop.stock.maxDeflation");
+			int atmi = conf.getInt("GiantShop.stock.amountTillMaxInflation");
+			int atmd = conf.getInt("GiantShop.stock.amountTillMaxDeflation");
+			double split = Math.round((atmi + atmd) / 2);
+			if(maxStock <= atmi + atmd) {
+				split = maxStock / 2;
+				atmi = 0;
+				atmd = maxStock;
+			}
+			
+			if(stock >= atmd) {
+				cost = (cost * (1.0 - maxDefl / 100.0)) * (double) quantity;
+			}else if(stock <= atmi) {
+				cost = (cost * (1.0 + maxInfl / 100.0)) * (double) quantity;
+			}else{
+				if(stock < split) {
+					cost = (double)Math.round(((cost * (1.0 + (maxInfl / stock) / 100)) * (double) quantity) * 100.0) / 100.0;
+				}else if(stock > split) {
+					maxDefl = maxDefl * (1.0 - ((100 - ((stock - split) / split * 100)) / 100));
+					cost = (double)Math.round((cost * (1.0 - maxDefl / 100.0)) * (double) quantity * 100.0) / 100.0;
+				}
+			}
+		}else{
+			cost = cost * quantity;
+		}
+		
+		return cost;
 	}
 }
