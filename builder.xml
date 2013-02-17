@@ -66,7 +66,7 @@
 		</tstamp>
 		
 		<echo>[${TSTAMP.buildNumber}] Bumping build number!</echo>
-		<propertyfile>
+		<propertyfile file="${prop}/project.properties">
 			<entry key="Application.buildnumber" value="1" type="int" operation="+"/>
 		</propertyfile>
 	</target>
