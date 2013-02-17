@@ -9,10 +9,6 @@
 	<property name="lib" location="lib" />
 	<property name="jar" value="${name}.jar" />
 	
-	<loadproperties>
-		<file file="${prop}/project.properties" />
-	</loadproperties>
-	
 	<path id="classpath">
 		<fileset dir="${lib}">
 	        <include name="*.jar" />
@@ -41,12 +37,13 @@
 			<fileset dir="${src}" excludes="**/*.java" />
 		</copy>
 
+		<property environment="env" />
 		<replace file="${build}/plugin.yml" token="$name" value="${name}" />
 		<replace file="${build}/plugin.yml" token="$version" value="${version}" />
-		<replace file="${build}/plugin.yml" token="$build" value="${Application.buildnumber}" />
+		<replace file="${build}/plugin.yml" token="$build" value="${env.BUILD_NUMBER}" />
 	</target>
 	
-	<target name="jar" depends="compile, -pre-jar">
+	<target name="jar" depends="compile">
 		<tstamp>
 			 <format property="TSTAMP.jar" pattern="HH:mm:ss" unit="hour"/>
 		</tstamp>
@@ -58,16 +55,5 @@
 			 <format property="TSTAMP.done" pattern="HH:mm:ss" unit="hour"/>
 		</tstamp>
 		<echo>[${TSTAMP.done}] Finished ${name} build! </echo>
-	</target>
-	
-	<target name="-pre-jar" description="Sets the buildversion for the current build">
-		<tstamp>
-			 <format property="TSTAMP.buildNumber" pattern="HH:mm:ss" unit="hour"/>
-		</tstamp>
-		
-		<echo>[${TSTAMP.buildNumber}] Bumping build number!</echo>
-		<propertyfile file="${prop}/project.properties">
-			<entry key="Application.buildnumber" value="1" type="int" operation="+"/>
-		</propertyfile>
 	</target>
 </project>
