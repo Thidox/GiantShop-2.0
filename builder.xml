@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="GiantShop 2.0" default="jar" basedir=".">
+	<property name="name" value="GiantShop" />
+	<property name="version" value="0.9.DEV" />
+	<property name="src" location="src" />
+	<property name="build" location="bin" />
+	<property name="dist" location="dist" />
+	<property name="lib" location="lib" />
+	<property name="jar" value="${name}.jar" />
+	
+	<path id="classpath">
+		<fileset dir="${lib}">
+	        <include name="*.jar" />
+	    </fileset>
+	</path>
+	
+	<target name="init">
+		<tstamp>
+			 <format property="TSTAMP.init" pattern="HH:mm:ss" unit="hour"/>
+		</tstamp>
+		<echo>[${TSTAMP.init}] Creating directory for compiled source!</echo>
+		<mkdir dir="${build}" />
+	</target>
+	
+	<target name="compile" depends="init">
+		<tstamp>
+			 <format property="TSTAMP.compile" pattern="HH:mm:ss" unit="hour"/>
+		</tstamp>
+		<echo>[${TSTAMP.compile}] Compiling source!</echo>
+
+		<javac srcdir="${src}" destdir="${build}" includeantruntime="false" debug="on" nowarn="on" source="1.6" target="1.6">
+			<classpath refid="classpath" />
+		</javac>
+
+		<copy todir="${build}" overwrite="true">
+			<fileset dir="${src}" excludes="**/*.java" />
+		</copy>
+
+		<replace file="${build}/plugin.yml" token="$name" value="${name}" />
+		<replace file="${build}/plugin.yml" token="$version" value="${version}" />
+		<replace file="${build}/plugin.yml" token="$build" value="0" />
+	</target>
+	
+	<target name="jar" depends="compile">
+		<tstamp>
+			 <format property="TSTAMP.jar" pattern="HH:mm:ss" unit="hour"/>
+		</tstamp>
+		<echo>[${TSTAMP.jar}] Creating ${jar}!</echo>
+		<mkdir dir="${dist}" />
+		<jar jarfile="${dist}/${jar}" basedir="${build}" whenmanifestonly="fail" update="false" />
+		
+		<tstamp>
+			 <format property="TSTAMP.done" pattern="HH:mm:ss" unit="hour"/>
+		</tstamp>
+		<echo>[${TSTAMP.done}] Finished ${name} build! </echo>
+	</target>
+</project>
