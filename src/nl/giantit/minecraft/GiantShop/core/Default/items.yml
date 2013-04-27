@@ -100,9 +100,6 @@ names:
     - Torch
     - Flame
     item51: Fire
-    item52:
-    - Spawner
-    - Mob Spawner
     item53: Wooden Stairs
     item54: Chest
     item55: Redstone Wire
@@ -275,10 +272,20 @@ names:
     - Beacon
     item139: Cobblestone Wall
     item140: Flower Pot Block
-    item141: Carrots
-    item142: Potatoes
     item143: Wooden Button
     item145: Anvil
+    item147: Weighted Pressure Plate (Light)
+    item147: Weighted Pressure Plate (Heavy)
+    item151: Daylight Sensor
+    item152: Block of Redstone
+    item153: Nether Quartz Ore
+    item154: Hopper
+    item155: 
+    - Block of Quartz
+    - Quartz Block
+    item156: Quartz Stairs
+    item157: Activator Rail
+    item158: Dropper
     item256: Iron Shovel
     item257: 
     - Iron Pickaxe
@@ -567,6 +574,18 @@ names:
     item400: Pumpkin Pie
 #    item401: Firework Rocket
 #    item402: Firework Star
+    item404: Redstone Comparator
+    item405: Nether Brick
+    item406: 
+    - Nether Quartz
+    - Quartz
+    item407: 
+    - Minecart with TNT
+    - TNT Cart
+    - Boomcart
+    item408:
+    - Minecart with Hopper
+    - Hopper Cart
     item2256: 13 Disc
     item2257: Cat Disc
     item2258: blocks Disc
@@ -714,44 +733,6 @@ types:
         - Brick Slabs
         type5:
         - Stone Brick Slabs
-    item52:
-        type0:
-        - Pig Mob Spawner
-        type1:
-        - Chicken Mob Spawner
-        - Duck Mob Spawner
-        type2:
-        - Cow Mob Spawner
-        type3:
-        - Sheep Mob Spawner
-        type4:
-        - Squid Mob Spawner
-        type5:
-        - Creeper Mob Spawner
-        type6:
-        - Ghast Mob Spawner
-        - Nether Squid Mob Spawner
-        type7:
-        - Pig Zombie Mob Spawner
-        - Zombie Pigman Mob Spawner
-        type8:
-        - Skeleton Mob Spawner
-        type9:
-        - Spider Mob Spawner
-        type10:
-        - Zombie Mob Spawner
-        type11:
-        - Slime Mob Spawner
-        type12:
-        - Giant Mob Spawner
-        - Giant Zombie Mob Spawner
-        - Zombie Giant Mob Spawner
-        - Big Zombie Mob Spawner
-        type13:
-        - Human Mob Spawner
-        - Monster Mob Spawner
-        type14:
-        - Enderman Mob Spawner
     item98:
         type0:
         - Normal
@@ -770,10 +751,10 @@ types:
         type1:
         - Spruce Wood Double Slabs
         - Spruce Wooden Double Slabs
-        type3:
+        type2:
         - Birch Wood Double Slabs
         - Birch Wooden Double Slabs
-        type4:
+        type3:
         - Jungle Wood Double Slabs
         - Jungle Wooden Double Slabs
     item126:
@@ -785,10 +766,10 @@ types:
         type1:
         - Spruce Wood Slabs
         - Spruce Wooden Slabs
-        type3:
+        type2:
         - Birch Wood Slabs
         - Birch Wooden Slabs
-        type4:
+        type3:
         - Jungle Wood Slabs
         - Jungle Wooden Slabs
     item322:
