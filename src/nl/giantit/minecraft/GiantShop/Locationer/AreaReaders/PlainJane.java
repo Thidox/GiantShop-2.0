@@ -18,6 +18,7 @@ public class PlainJane implements Indaface {
 	private ArrayList<Location> loc;
 	private String name;
 	private World world;
+	private String wName;
 	
 	public PlainJane(GiantShop plugin) {
 		this.plugin = plugin;
@@ -103,7 +104,11 @@ public class PlainJane implements Indaface {
 	
 	@Override
 	public String getWorldName() {
-		return this.world.getName();
+		if(this.world != null) {
+			return this.world.getName();
+		}else{
+			return "C_REDUnknown";
+		}
 	}
 	
 	@Override
