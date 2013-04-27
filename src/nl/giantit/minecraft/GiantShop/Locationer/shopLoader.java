@@ -1,15 +1,13 @@
 package nl.giantit.minecraft.GiantShop.Locationer;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
+import nl.giantit.minecraft.giantcore.Database.QueryResult;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
 
 import org.bukkit.Location;
 import org.bukkit.World;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.logging.Level;
 
 /**
  *
@@ -21,7 +19,7 @@ public class shopLoader {
 	private Locationer lH;
 	
 	private void loadShops() {
-		iDriver DB = Database.Obtain().getEngine();
+		iDriver DB = plugin.getDB().getEngine();
 		ArrayList<String> fields = new ArrayList<String>();
 		fields.add("name");
 		fields.add("world");
@@ -32,30 +30,25 @@ public class shopLoader {
 		fields.add("locMaxY");
 		fields.add("locMaxZ");
 		
-		ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__shops").execQuery();
-		if(resSet.size() > 0) {
-			for(HashMap<String, String> res : resSet) {
-				try {
-					String name = res.get("name");
-					World world = plugin.getSrvr().getWorld(res.get("world"));
-					double minX = Double.valueOf(res.get("locminx"));
-					double minY = Double.valueOf(res.get("locminy"));
-					double minZ = Double.valueOf(res.get("locminz"));
-					double maxX = Double.valueOf(res.get("locmaxx"));
-					double maxY = Double.valueOf(res.get("locmaxy"));
-					double maxZ = Double.valueOf(res.get("locmaxz"));
+		QueryResult QRes = DB.select(fields).from("#__shops").execQuery();
+		QueryResult.QueryRow QR;
+		while(null != (QR = QRes.getRow())) {
+			String name = QR.getString("name");
+			World world = plugin.getSrvr().getWorld(QR.getString("world"));
+			double minX = QR.getDouble("locminx");
+			double minY = QR.getDouble("locminy");
+			double minZ = QR.getDouble("locminz");
+			double maxX = QR.getDouble("locmaxx");
+			double maxY = QR.getDouble("locmaxy");
+			double maxZ = QR.getDouble("locmaxz");
 
-					Location min = new Location(world, minX, minY, minZ);
-					Location max = new Location(world, maxX, maxY, maxZ);
-					ArrayList<Location> locs = new ArrayList<Location>();
-					locs.add(min);
-					locs.add(max);
+			Location min = new Location(world, minX, minY, minZ);
+			Location max = new Location(world, maxX, maxY, maxZ);
+			ArrayList<Location> locs = new ArrayList<Location>();
+			locs.add(min);
+			locs.add(max);
 
-					lH.addShop(locs, name);
-				}catch(NumberFormatException e) {
-					GiantShop.log.log(Level.WARNING, "[GiantShopLocation] Invalid shop passed during load!");
-				}
-			}
+			lH.addShop(locs, name);
 		}
 	}
 	

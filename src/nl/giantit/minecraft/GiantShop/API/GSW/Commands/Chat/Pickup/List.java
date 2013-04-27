@@ -9,7 +9,7 @@ import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.perms.Permission;
+import nl.giantit.minecraft.giantcore.perms.Permission;
 import org.bukkit.entity.Player;
 
 /**

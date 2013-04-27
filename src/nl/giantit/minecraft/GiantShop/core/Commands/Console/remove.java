@@ -4,12 +4,12 @@ import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Logger.Logger;
 import nl.giantit.minecraft.GiantShop.core.Logger.LoggerType;
+import nl.giantit.minecraft.giantcore.Database.QueryResult;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
 
 import org.bukkit.command.CommandSender;
 
@@ -24,7 +24,7 @@ import java.util.logging.Level;
 public class remove {
 	
 	private static config conf = config.Obtain();
-	private static iDriver DB = Database.Obtain().getEngine();
+	private static iDriver DB = GiantShop.getPlugin().getDB().getEngine();
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	private static Items iH = GiantShop.getPlugin().getItemHandler();
 	
@@ -87,7 +87,7 @@ public class remove {
 				data.put("type", "" + ((itemType == null) ? -1 : itemType));
 
 				DB.select(fields).from("#__items").where(data);
-				ArrayList<HashMap<String, String>> resSet = DB.execQuery();
+				QueryResult resSet = DB.execQuery();
 				if(resSet.size() == 1) { 
 					DB.delete("#__items").where(data).updateQuery();
 					Heraut.say(sender, "Item " + name + " has been successfully removed from the store!");

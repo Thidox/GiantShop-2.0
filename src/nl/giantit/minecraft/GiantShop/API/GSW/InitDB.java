@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
 
 /**
  *
@@ -14,7 +13,7 @@ import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 public class InitDB {
 	
 	public static void init() {
-		iDriver db = Database.Obtain().getEngine();
+		iDriver db = GiantShop.getPlugin().getDB().getEngine();
 		if(!db.tableExists("#__api_gsw_pickups")){
 			ArrayList<String> field = new ArrayList<String>();
 			field.add("tablename");

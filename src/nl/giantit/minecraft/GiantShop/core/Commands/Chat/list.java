@@ -5,11 +5,12 @@ import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discounter;
-import nl.giantit.minecraft.GiantShop.core.perms.Permission;
+import nl.giantit.minecraft.giantcore.Database.QueryResult;
+import nl.giantit.minecraft.giantcore.Database.QueryResult.QueryRow;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import org.bukkit.entity.Player;
 
@@ -44,7 +45,7 @@ public class list {
 
 			curPag = (curPag > 0) ? curPag : 1;
 		
-			iDriver DB = Database.Obtain().getEngine();
+			iDriver DB = GiantShop.getPlugin().getDB().getEngine();
 			ArrayList<String> fields = new ArrayList<String>();
 			fields.add("itemID");
 			fields.add("type");
@@ -66,24 +67,24 @@ public class list {
 			HashMap<String, String> order = new HashMap<String, String>();
 			order.put("itemID", "ASC");
 			order.put("type", "ASC");
-			ArrayList<HashMap<String, String>> data = DB.select(fields).from("#__items").where(where, true).orderBy(order).execQuery();
+			QueryResult QRes = DB.select(fields).from("#__items").where(where, true).orderBy(order).execQuery();
 			
-			int pages = ((int)Math.ceil((double)data.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)data.size() / (double)perPage);
+			int pages = ((int)Math.ceil((double)QRes.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)QRes.size() / (double)perPage);
 			int start = (curPag * perPage) - perPage;
-			if(data.size() <= 0) {
+			if(QRes.size() <= 0) {
 				Heraut.say(player, msgs.getMsg(Messages.msgType.ERROR, "noItems"));
 			}else if(curPag > pages) {
 				Heraut.say(player, "&e[&3" + name + "&e]&c My Item list only has &e" + pages + " &cpages!!");
 			}else{
 				Heraut.say(player, "&e[&3" + name + "&e]&f Item list. Page: &e" + curPag + "&f/&e" + pages);
 				
-				for(int i = start; i < (((start + perPage) > data.size()) ? data.size() : (start + perPage)); i++) {
-					HashMap<String, String> entry = data.get(i);
+				for(int i = start; i < (((start + perPage) > QRes.size()) ? QRes.size() : (start + perPage)); i++) {
+					QueryRow QR = QRes.getRow(i);
 
-					int stock = Integer.parseInt(entry.get("stock"));
-					int maxStock = Integer.parseInt(entry.get("maxstock"));
-					double sellFor = Double.parseDouble(entry.get("sellfor"));
-					double buyFor = Double.parseDouble(entry.get("buyfor"));
+					int stock = QR.getInt("stock");
+					int maxStock = QR.getInt("maxstock");
+					double sellFor = QR.getDouble("sellfor");
+					double buyFor = QR.getDouble("buyfor");
 					
 					if(buyFor != -1) {
 						buyFor = Misc.getPrice(buyFor, stock, maxStock, 1);
@@ -93,10 +94,10 @@ public class list {
 						sellFor = Misc.getPrice(sellFor, stock, maxStock, 1);
 					}
 					
-					Integer type = Integer.parseInt(entry.get("type"));
+					Integer type = QR.getInteger("type");
 					type = type <= 0 ? null : type;
 					
-					int discount = disc.getDiscount(iH.getItemIDByName(iH.getItemNameByID(Integer.parseInt(entry.get("itemid")), type)), player);
+					int discount = disc.getDiscount(iH.getItemIDByName(iH.getItemNameByID(QR.getInt("itemid"), type)), player);
 					if(discount > 0) {
 						double actualDiscount = (100 - discount) / 100D;
 						buyFor = Misc.Round(buyFor * actualDiscount, 2);
@@ -108,16 +109,16 @@ public class list {
 					String bf = String.valueOf(buyFor);
 					
 					HashMap<String, String> params = new HashMap<String, String>();
-					params.put("id", entry.get("itemid"));
-					params.put("type", (!entry.get("type").equals("-1") ? entry.get("type") : "0"));
-					params.put("name", iH.getItemNameByID(Integer.parseInt(entry.get("itemid")), type));
-					params.put("perStack", entry.get("perstack"));
+					params.put("id", QR.getString("itemid"));
+					params.put("type", (!QR.getString("type").equals("-1") ? QR.getString("type") : "0"));
+					params.put("name", iH.getItemNameByID(QR.getInt("itemid"), type));
+					params.put("perStack", QR.getString("perstack"));
 					params.put("sellFor", (!sf.equals("-1.0") && !sf.equals("-1") ? sf : "Not for sale!"));
 					params.put("buyFor", (!bf.equals("-1.0") && !sf.equals("-1") ? bf : "No returns!"));
 					
 					if(conf.getBoolean("GiantShop.stock.useStock") == true) {
-						params.put("stock", (!entry.get("stock").equals("-1") ? entry.get("stock") : "unlimited"));
-						params.put("maxStock", (!entry.get("maxstock").equals("-1") ? entry.get("maxstock") : "unlimited"));
+						params.put("stock", (!QR.getString("stock").equals("-1") ? QR.getString("stock") : "unlimited"));
+						params.put("maxStock", (!QR.getString("maxstock").equals("-1") ? QR.getString("maxstock") : "unlimited"));
 					}else{
 						params.put("stock", "unlimited");
 						params.put("maxStock", "unlimited");

@@ -6,7 +6,7 @@ import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
-import nl.giantit.minecraft.GiantShop.core.perms.Permission;
+import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import org.bukkit.entity.Player;
 

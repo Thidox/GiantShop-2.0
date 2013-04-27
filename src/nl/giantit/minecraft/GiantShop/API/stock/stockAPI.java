@@ -2,9 +2,9 @@ package nl.giantit.minecraft.GiantShop.API.stock;
 
 import nl.giantit.minecraft.GiantShop.API.stock.core.itemStock;
 import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Items.*;
+import nl.giantit.minecraft.giantcore.Database.QueryResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,17 +64,16 @@ public class stockAPI {
 	public final HashMap<String, itemStock> getItemStocks() throws ItemNotFoundException {
 		HashMap<String, itemStock> stocks = new HashMap<String, itemStock>();
 		
-		iDriver DB = Database.Obtain().getEngine();
+		iDriver DB = GiantShop.getPlugin().getDB().getEngine();
 		ArrayList<String> fields = new ArrayList<String>();
 		fields.add("itemID");
 		fields.add("type");
 		
-		ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").execQuery();
-		if(resSet.size() >= 1) {
-			for(HashMap<String, String> res : resSet) {
-				String name = iH.getItemNameByID(Integer.parseInt(res.get("itemid")), Integer.parseInt(res.get("type")));
-				stocks.put(name, new itemStock(Integer.parseInt(res.get("itemid")), Integer.parseInt(res.get("type"))));
-			}
+		QueryResult QRes = DB.select(fields).from("#__items").execQuery();
+		QueryResult.QueryRow QR;
+		while(null != (QR = QRes.getRow())) {
+			String name = iH.getItemNameByID(QR.getInt("itemid"), QR.getInt("type"));
+			stocks.put(name, new itemStock(QR.getInt("itemid"), QR.getInt("type")));
 		}
 		
 		return stocks;

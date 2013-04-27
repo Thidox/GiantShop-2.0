@@ -1,19 +1,21 @@
 package nl.giantit.minecraft.GiantShop;
 
+import nl.giantit.minecraft.giantcore.GiantCore;
+import nl.giantit.minecraft.giantcore.Database.Database;
+import nl.giantit.minecraft.giantcore.perms.PermHandler;
+
 import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.Commands.ChatExecutor;
 import nl.giantit.minecraft.GiantShop.core.Commands.ConsoleExecutor;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
 import nl.giantit.minecraft.GiantShop.core.Eco.Eco;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Metrics.MetricsHandler;
 import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discounter;
 import nl.giantit.minecraft.GiantShop.core.Tools.dbInit.dbInit;
 import nl.giantit.minecraft.GiantShop.core.Updater.Updater;
-import nl.giantit.minecraft.GiantShop.core.perms.PermHandler;
 
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -41,6 +43,8 @@ public class GiantShop extends JavaPlugin {
 	
 	private static GiantShop plugin;
 	private static Server Server;
+	
+	private GiantCore gc;
 	private Database db;
 	private PermHandler permHandler;
 	private ChatExecutor chat;
@@ -68,6 +72,13 @@ public class GiantShop extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
+		this.gc = GiantCore.getInstance();
+		if(this.gc == null) {
+			getLogger().severe("Failed to hook into required GiantCore!");
+			this.getPluginLoader().disablePlugin(this);
+			return;
+		}
+		
 		Server = this.getServer();
 		
 		this.name = getDescription().getName();
@@ -100,13 +111,13 @@ public class GiantShop extends JavaPlugin {
 			HashMap<String, String> db = (HashMap<String, String>) conf.getMap(this.name + ".db");
 			db.put("debug", conf.getString(this.name + ".global.debug"));
 			
-			this.db = Database.Obtain(this, null, db);
+			this.db = this.gc.getDB(this, null, db);
 			new dbInit(this);
 			
 			if(conf.getBoolean(this.name + ".permissions.usePermissions")) {
-				permHandler = new PermHandler(this, conf.getString(this.name + ".permissions.Engine"), conf.getBoolean(this.name + ".permissions.opHasPerms"));
+				permHandler = this.gc.getPermHandler(PermHandler.findEngine(conf.getString(this.name + ".permissions.Engine")), conf.getBoolean(this.name + ".permissions.opHasPerms"));
 			}else{
-				permHandler = new PermHandler(this, "NOPERM", true);
+				permHandler = this.gc.getPermHandler(PermHandler.findEngine("NOPERM"), true);
 			}
 			
 			if(conf.getBoolean(this.name + ".Location.useGiantShopLocation")) {
@@ -190,6 +201,10 @@ public class GiantShop extends JavaPlugin {
 	
 	public int scheduleAsyncRepeatingTask(final Runnable run, Long init, Long delay) {
 		return getServer().getScheduler().scheduleAsyncRepeatingTask(this, run, init, delay);
+	}
+	
+	public GiantCore getGiantCore() {
+		return this.gc;
 	}
 	
 	public String getPubName() {

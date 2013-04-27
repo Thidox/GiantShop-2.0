@@ -5,7 +5,7 @@ import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.Commands.Chat.Discount.*;
-import nl.giantit.minecraft.GiantShop.core.perms.Permission;
+import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import org.bukkit.entity.Player;
 

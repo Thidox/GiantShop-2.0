@@ -4,12 +4,11 @@ import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Logger.Logger;
 import nl.giantit.minecraft.GiantShop.core.Logger.LoggerType;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
 
 import org.bukkit.command.CommandSender;
 
@@ -85,7 +84,7 @@ public class add {
 
 			if(GiantShop.getPlugin().getItemHandler().isValidItem(itemID, itemType)) {
 				String name = iH.getItemNameByID(itemID, itemType);
-				iDriver DB = Database.Obtain().getEngine();
+				iDriver DB = GiantShop.getPlugin().getDB().getEngine();
 
 				ArrayList<String> fields = new ArrayList<String>();
 				fields.add("id");
@@ -94,7 +93,7 @@ public class add {
 				data.put("type", "" + ((itemType == null) ? -1 : itemType));
 
 				DB.select(fields).from("#__items").where(data);
-				if(DB.execQuery().isEmpty()) { 
+				if(DB.execQuery().size() == 0) { 
 					try {
 						perStack = Integer.parseInt(args[2]);
 						sellFor = Double.parseDouble(args[3]);

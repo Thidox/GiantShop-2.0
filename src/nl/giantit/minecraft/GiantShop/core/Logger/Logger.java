@@ -1,8 +1,8 @@
 package nl.giantit.minecraft.GiantShop.core.Logger;
 
+import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public class Logger {
 				}
 				json += "}";
 				
-				iDriver DB = Database.Obtain().getEngine();
+				iDriver DB = GiantShop.getPlugin().getDB().getEngine();
 				int t = type.getID();
 				
 				ArrayList<String> fields = new ArrayList<String>();

@@ -7,7 +7,7 @@ import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discount;
-import nl.giantit.minecraft.GiantShop.core.perms.Permission;
+import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import org.bukkit.entity.Player;
 

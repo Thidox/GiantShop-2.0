@@ -8,7 +8,9 @@ import nl.giantit.minecraft.GiantShop.API.conf;
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.Database.QueryResult;
+import nl.giantit.minecraft.giantcore.Database.QueryResult.QueryRow;
 import nl.giantit.minecraft.GiantShop.core.Logger.Logger;
 import nl.giantit.minecraft.GiantShop.core.Logger.LoggerType;
 import org.bukkit.entity.Player;
@@ -36,16 +38,18 @@ public class PickupQueue {
 		order.put("transactionID", "ASC");
 		
 		db.select("player", "transactionID", "itemID", "itemType", "amount").from("#__api_gsw_pickups").orderBy(order);
-		ArrayList<HashMap<String, String>> resSet = db.execQuery();
+		QueryResult QRes = db.execQuery();
+		//ArrayList<HashMap<String, String>> resSet = db.execQuery();
 		String lP = "";
 		ArrayList<Queued> qList = new ArrayList<Queued>();
-		for(HashMap<String, String> res : resSet) {
-			if(!res.get("player").equals(lP)) {
+		QueryRow QR;
+		while(null != (QR = QRes.getRow())) {
+			if(!QR.getString("player").equals(lP)) {
 				if(!lP.isEmpty()) {
 					this.queue.put(lP, qList);
 				}
 				
-				lP = res.get("player");
+				lP = QR.getString("player");
 				qList = new ArrayList<Queued>();
 			}
 			
@@ -53,14 +57,14 @@ public class PickupQueue {
 			int type;
 			int amount;
 			try {
-				id = Integer.parseInt(res.get("itemid"));
-				type = Integer.parseInt(res.get("itemtype"));
-				amount = Integer.parseInt(res.get("amount"));
-				Queued q = new Queued(id, type, amount, res.get("transactionid"));
+				id = QR.getInt("itemid");
+				type = QR.getInt("itemtype");
+				amount = QR.getInt("amount");
+				Queued q = new Queued(id, type, amount, QR.getString("transactionid"));
 				qList.add(q);
 				//p.getLogger().severe("Player: " + lP + "; Queued: " + q.toString());
 			}catch(NumberFormatException e) {
-				p.getLogger().warning("[GSWAPI][PickupQueue] Transaction " + res.get("transactionid") + " for player " + lP + " is corrupt!");
+				p.getLogger().warning("[GSWAPI][PickupQueue] Transaction " + QR.getString("transactionid") + " for player " + lP + " is corrupt!");
 				continue;
 			}
 		}

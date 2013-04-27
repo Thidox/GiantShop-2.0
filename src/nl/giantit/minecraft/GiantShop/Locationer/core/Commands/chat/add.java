@@ -5,9 +5,8 @@ import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
-import nl.giantit.minecraft.GiantShop.core.perms.Permission;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -64,7 +63,7 @@ public class add {
 			Location l2 = new Location(loc1.getWorld(), maxX, maxY, maxZ);
 			
 			if(!lH.inShop(l) && !lH.inShop(l2)) {
-				iDriver DB = Database.Obtain().getEngine();
+				iDriver DB = GiantShop.getPlugin().getDB().getEngine();
 
 				ArrayList<String> fields = new ArrayList<String>();
 				fields.add("id");
@@ -73,7 +72,7 @@ public class add {
 				data.put("world", loc1.getWorld().getName());
 
 				DB.select(fields).from("#__shops").where(data);
-				if(DB.execQuery().isEmpty()) {
+				if(DB.execQuery().size() == 0) {
 					fields = new ArrayList<String>();
 					fields.add("name");
 					fields.add("world");

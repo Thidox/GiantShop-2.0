@@ -5,12 +5,12 @@ import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discounter;
-import nl.giantit.minecraft.GiantShop.core.perms.Permission;
+import nl.giantit.minecraft.giantcore.Database.QueryResult;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import org.bukkit.entity.Player;
 
@@ -32,7 +32,7 @@ public class check {
 		Discounter disc = GiantShop.getPlugin().getDiscounter();
 		if(perms.has(player, "giantshop.shop.check")) {
 			if(args.length >= 2) {
-				iDriver DB = Database.Obtain().getEngine();
+				iDriver DB = GiantShop.getPlugin().getDB().getEngine();
 				int itemID;
 				Integer itemType = -1;
 				
@@ -93,19 +93,20 @@ public class check {
 				where.put("itemID", String.valueOf(itemID));
 				where.put("type", String.valueOf(itemType));
 				
-				ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where).execQuery();
-				if(resSet.size() == 1) {
+				QueryResult QRes = DB.select(fields).from("#__items").where(where).execQuery();
+				if(QRes.size() == 1) {
 					//Wait didn't we just do this the other way round?!
 					//Yea we did! Why? Because we can!
 					itemType = (itemType <= 0) ? null : itemType;
 					
-					String name = iH.getItemNameByID(itemID, itemType);
-					HashMap<String, String> res = resSet.get(0);
 					
-					int stock = Integer.parseInt(res.get("stock"));
-					int maxStock = Integer.parseInt(res.get("maxstock"));
-					double sellFor = Double.parseDouble(res.get("sellfor"));
-					double buyFor = Double.parseDouble(res.get("buyfor"));
+					String name = iH.getItemNameByID(itemID, itemType);
+					
+					QueryResult.QueryRow QR = QRes.getRow();
+					int stock = QR.getInt("stock");
+					int maxStock = QR.getInt("maxstock");
+					double sellFor = QR.getDouble("sellfor");
+					double buyFor = QR.getDouble("buyfor");
 					
 					if(buyFor != -1) {
 						buyFor = Misc.getPrice(buyFor, stock, maxStock, 1);
@@ -129,11 +130,11 @@ public class check {
 					Heraut.say(player, "Here's the result for " + name + "!");
 					Heraut.say(player, "ID: " + itemID);
 					Heraut.say(player, "Type: " + (itemType == null ? 0 : itemType));
-					Heraut.say(player, "Quantity per amount: " + res.get("perstack"));
+					Heraut.say(player, "Quantity per amount: " + QR.getString("perstack"));
 					Heraut.say(player, "Leaves shop for: " + (!sf.equals("-1.0") ? sf : "Not for sale!"));
 					Heraut.say(player, "Returns to shop for: " + (!bf.equals("-1.0") ? bf : "No returns!"));
-					Heraut.say(player, "Amount of items in the shop: " + (!res.get("stock").equals("-1") ? res.get("stock") : "unlimited"));
-					Heraut.say(player, "Maximum amount of items in the shop: " + (!res.get("maxstock").equals("-1") ? res.get("maxstock") : "unlimited"));
+					Heraut.say(player, "Amount of items in the shop: " + (!QR.getString("stock").equals("-1") ? QR.getString("stock") : "unlimited"));
+					Heraut.say(player, "Maximum amount of items in the shop: " + (!QR.getString("maxstock").equals("-1") ? QR.getString("maxstock") : "unlimited"));
 					//More future stuff
 					/*if(conf.getBoolean("GiantShop.Location.useGiantShopLocation") == true) {
 					 *		ArrayList<Indaface> shops = GiantShop.getPlugin().getLocationHandler().parseShops(res.get("shops"));

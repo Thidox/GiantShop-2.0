@@ -2,9 +2,11 @@ package nl.giantit.minecraft.GiantShop.core.Tools.Discount;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
-import nl.giantit.minecraft.GiantShop.core.perms.Permission;
+import nl.giantit.minecraft.giantcore.Database.QueryResult;
+import nl.giantit.minecraft.giantcore.Database.QueryResult.QueryRow;
+import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import org.bukkit.entity.Player;
 
@@ -27,19 +29,20 @@ public class Discounter {
 		order.put("type", "ASC");
 		order.put("id", "ASC");
 		
-		ArrayList<HashMap<String, String>> resSet = db.select("*").from("#__discounts").orderBy(order).execQuery();
-		for(HashMap<String, String> res : resSet) {
-			int id = Integer.parseInt(res.get("id"));
-			int itemId = Integer.parseInt(res.get("itemid"));
-			int type = Integer.parseInt(res.get("type"));
+		QueryResult QRes = db.select("*").from("#__discounts").orderBy(order).execQuery();
+		QueryResult.QueryRow QR;
+		while(null != (QR = QRes.getRow())) {
+			int id = QR.getInt("id");
+			int itemId = QR.getInt("itemid");
+			int type = QR.getInt("type");
 			type = (type <= 0) ? 0 : type;
 			
-			int discount = Integer.parseInt(res.get("discount"));
+			int discount = QR.getInt("discount");
 			
-			if(res.get("grp") == null || res.get("grp").equalsIgnoreCase("") || res.get("grp").equalsIgnoreCase("null")) {
-				discounts.add(new Discount(plugin, id, itemId, type, discount, res.get("user"), false));
+			if(QR.getString("grp") == null || QR.getString("grp").equalsIgnoreCase("") || QR.getString("grp").equalsIgnoreCase("null")) {
+				discounts.add(new Discount(plugin, id, itemId, type, discount, QR.getString("user"), false));
 			}else{
-				discounts.add(new Discount(plugin, id, itemId, type, discount, res.get("grp"), true));
+				discounts.add(new Discount(plugin, id, itemId, type, discount, QR.getString("grp"), true));
 			}
 		}
 	}
@@ -122,8 +125,9 @@ public class Discounter {
 			where.put("itemID", "" + iID.getId());
 			where.put("type", "" + ((iID.getType() == null) ? -1 : iID.getType()));
 			
-			ArrayList<HashMap<String, String>> resSet = db.select("id").from("#__discounts").where(where).execQuery();
-			int id = Integer.parseInt(resSet.get(0).get("id"));
+			QueryResult QRes = db.select("id").from("#__discounts").where(where).execQuery();
+			QueryRow QR = QRes.getRow();
+			int id = QR.getInt("id");
 			if(group) {
 				this.discounts.add(new Discount(plugin, id, iID.getId(), ((iID.getType() == null) ? 0 : iID.getType()), disc, data, true));
 				return 0;

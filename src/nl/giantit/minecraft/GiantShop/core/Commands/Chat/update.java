@@ -8,13 +8,14 @@ import nl.giantit.minecraft.GiantShop.API.stock.Events.StockUpdateEvent;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Logger.Logger;
 import nl.giantit.minecraft.GiantShop.core.Logger.LoggerType;
-import nl.giantit.minecraft.GiantShop.core.perms.Permission;
+import nl.giantit.minecraft.giantcore.Database.QueryResult;
+import nl.giantit.minecraft.giantcore.Database.QueryResult.QueryRow;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import org.bukkit.entity.Player;
 
@@ -29,7 +30,7 @@ import java.util.logging.Level;
 public class update {
 	
 	private static config conf = config.Obtain();
-	private static iDriver DB = Database.Obtain().getEngine();
+	private static iDriver DB = GiantShop.getPlugin().getDB().getEngine();
 	private static Permission perms = GiantShop.getPlugin().getPermHandler().getEngine();
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	private static Items iH = GiantShop.getPlugin().getItemHandler();
@@ -98,27 +99,27 @@ public class update {
 			data.put("type", "" + ((itemType == null) ? -1 : itemType));
 
 			DB.select(fields).from("#__items").where(data);
-			ArrayList<HashMap<String, String>> resSet = DB.execQuery();
-			if(resSet.size() == 1) {
-				HashMap<String, String> res = resSet.get(0);
+			QueryResult QRes = DB.execQuery();
+			if(QRes.size() == 1) {
+				QueryRow QR = QRes.getRow();
 				HashMap<String, String> tmp = new HashMap<String, String>();
 				tmp.put("itemID", String.valueOf(itemID));
 				tmp.put("itemType", String.valueOf(itemType));
-				tmp.put("sellFor", res.get("sellfor"));
-				tmp.put("buyFor", res.get("buyfor"));
-				tmp.put("stock", res.get("stock"));
-				tmp.put("maxStock", res.get("maxstock"));
-				tmp.put("ostock", res.get("stock"));
-				tmp.put("omaxStock", res.get("maxstock"));
-				tmp.put("perStack", res.get("perstack"));
-				tmp.put("shops", res.get("shops"));
+				tmp.put("sellFor", QR.getString("sellfor"));
+				tmp.put("buyFor", QR.getString("buyfor"));
+				tmp.put("stock", QR.getString("stock"));
+				tmp.put("maxStock", QR.getString("maxstock"));
+				tmp.put("ostock", QR.getString("stock"));
+				tmp.put("omaxStock", QR.getString("maxstock"));
+				tmp.put("perStack", QR.getString("perstack"));
+				tmp.put("shops", QR.getString("shops"));
 				stored.put(player, tmp);
 				
 				Heraut.say(player, "Successfully selected " + name + " for updating!");
 			}else{
 				HashMap<String, String> params = new HashMap<String, String>();
 				params.put("item", name);
-				if(resSet.isEmpty()) {
+				if(QRes.size() == 0) {
 					Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "itemNotInShop", params));
 				}else{
 					Heraut.say(player, mH.getMsg(Messages.msgType.ERROR, "itemNotUnique", params));

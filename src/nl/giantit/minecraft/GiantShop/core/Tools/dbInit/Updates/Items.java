@@ -1,8 +1,7 @@
 package nl.giantit.minecraft.GiantShop.core.Tools.dbInit.Updates;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
 
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -10,7 +9,7 @@ import java.util.logging.Level;
 public class Items {  
 	
 	private static void update1_1() {
-		iDriver db = Database.Obtain().getEngine();
+		iDriver db = GiantShop.getPlugin().getDB().getEngine();
 		
 		HashMap<String, HashMap<String, String>> fields = new HashMap<String, HashMap<String, String>>();
 		HashMap<String, String> data = new HashMap<String, String>();

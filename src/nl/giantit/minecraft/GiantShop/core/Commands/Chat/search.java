@@ -6,13 +6,14 @@ import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discounter;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.perms.Permission;
+import nl.giantit.minecraft.giantcore.Database.QueryResult;
+import nl.giantit.minecraft.giantcore.Database.QueryResult.QueryRow;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.perms.Permission;
 import org.bukkit.entity.Player;
 
 /**
@@ -56,7 +57,7 @@ public class search {
 
 			curPag = (curPag > 0) ? curPag : 1;
 		
-			iDriver DB = Database.Obtain().getEngine();
+			iDriver DB = GiantShop.getPlugin().getDB().getEngine();
 			ArrayList<String> fields = new ArrayList<String>();
 			fields.add("itemID");
 			fields.add("type");
@@ -98,12 +99,12 @@ public class search {
 			HashMap<String, String> order = new HashMap<String, String>();
 			order.put("itemID", "ASC");
 			order.put("type", "ASC");
-			ArrayList<HashMap<String, String>> data = DB.orderBy(order).execQuery();
+			QueryResult QRes = DB.select(fields).from("#__items").where(where, true).execQuery();
 			
-			int pages = ((int)Math.ceil((double)data.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)data.size() / (double)perPage);
+			int pages = ((int)Math.ceil((double)QRes.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)QRes.size() / (double)perPage);
 			int start = (curPag * perPage) - perPage;
 			
-			if(data.size() <= 0) {
+			if(QRes.size() <= 0) {
 				Heraut.say(player, "&e[&3" + name + "&e] " + mH.getMsg(Messages.msgType.ERROR, "itemNotInShop"));
 			}else if(curPag > pages) {
 				HashMap<String, String> d = new HashMap<String, String>();
@@ -118,62 +119,28 @@ public class search {
 
 				Heraut.say(player, "&e[&3" + name + "&e] " + mH.getMsg(Messages.msgType.MAIN, "searchListHead", d));
 
-				for(int i = start; i < (((start + perPage) > data.size()) ? data.size() : (start + perPage)); i++) {
+				for(int i = start; i < (((start + perPage) > QRes.size()) ? QRes.size() : (start + perPage)); i++) {
 					// This area most defenitally requires clean-up!
 					HashMap<String, String> params = new HashMap<String, String>();
-					HashMap<String, String> entry = data.get(i);
+					QueryRow QR = QRes.getRow(i);
 
-					int stock = Integer.parseInt(entry.get("stock"));
-					int maxStock = Integer.parseInt(entry.get("maxstock"));
-					double sellFor = Double.parseDouble(entry.get("sellfor"));
-					double buyFor = Double.parseDouble(entry.get("buyfor"));
+					int stock = QR.getInt("stock");
+					int maxStock = QR.getInt("maxstock");
+					double sellFor = QR.getDouble("sellfor");
+					double buyFor = QR.getDouble("buyfor");
 
-					if(conf.getBoolean("GiantShop.stock.useStock") && conf.getBoolean("GiantShop.stock.stockDefinesCost") && maxStock != -1 && stock != -1) {
-						double maxInfl = conf.getDouble("GiantShop.stock.maxInflation");
-						double maxDefl = conf.getDouble("GiantShop.stock.maxDeflation");
-						int atmi = conf.getInt("GiantShop.stock.amountTillMaxInflation");
-						int atmd = conf.getInt("GiantShop.stock.amountTillMaxDeflation");
-						double split = Math.round((atmi + atmd) / 2);
-						if(maxStock <= atmi + atmd) {
-							split = maxStock / 2;
-							atmi = 0;
-							atmd = maxStock;
-						}
-
-						if(stock >= atmd) {
-							if(buyFor != -1)
-								buyFor = buyFor * (1.0 - maxDefl / 100.0);
-
-							if(sellFor != -1)
-								sellFor = sellFor * (1.0 - maxDefl / 100.0); 
-						}else if(stock <= atmi) {
-							if(buyFor != -1)
-								buyFor = buyFor * (1.0 + maxDefl / 100.0);
-
-							if(sellFor != -1)
-								sellFor = sellFor * (1.0 + maxDefl / 100.0);
-						}else{
-							if(stock < split) {
-								if(buyFor != -1)
-									buyFor = (double)Math.round((buyFor * (1.0 + (maxInfl / stock) / 100)) * 100.0) / 100.0;
-
-								if(sellFor != -1)
-									sellFor = (double)Math.round((sellFor * (1.0 + (maxInfl / stock) / 100)) * 100.0) / 100.0;
-							}else if(stock > split) {
-								if(buyFor != -1)
-									buyFor = 2.0 + (double)Math.round((buyFor / (maxDefl * stock / 100)) * 100.0) / 100.0;
-
-								if(sellFor != -1)
-									sellFor = 2.0 + (double)Math.round((sellFor / (maxDefl * stock / 100)) * 100.0) / 100.0;
-
-							}
-						}
+					if(buyFor != -1) {
+						buyFor = Misc.getPrice(buyFor, stock, maxStock, 1);
 					}
 
-					Integer type = Integer.parseInt(entry.get("type"));
+					if(sellFor != -1) {
+						sellFor = Misc.getPrice(sellFor, stock, maxStock, 1);
+					}
+
+					Integer type = QR.getInteger("type");
 					type = type <= 0 ? null : type;
 
-					int discount = disc.getDiscount(iH.getItemIDByName(iH.getItemNameByID(Integer.parseInt(entry.get("itemid")), type)), player);
+					int discount = disc.getDiscount(iH.getItemIDByName(iH.getItemNameByID(QR.getInt("itemid"), type)), player);
 					if(discount > 0) {
 						double actualDiscount = (100 - discount) / 100D;
 						buyFor = Misc.Round(buyFor * actualDiscount, 2);
@@ -184,16 +151,16 @@ public class search {
 					String sf = String.valueOf(sellFor);
 					String bf = String.valueOf(buyFor);
 
-					params.put("id", entry.get("itemid"));
-					params.put("type", (!entry.get("type").equals("-1") ? entry.get("type") : "0"));
-					params.put("name", iH.getItemNameByID(Integer.parseInt(entry.get("itemid")), type));
-					params.put("perStack", entry.get("perstack"));
+					params.put("id", QR.getString("itemid"));
+					params.put("type", (!QR.getString("type").equals("-1") ? QR.getString("type") : "0"));
+					params.put("name", iH.getItemNameByID(QR.getInt("itemid"), type));
+					params.put("perStack", QR.getString("perstack"));
 					params.put("sellFor", (!sf.equals("-1.0") && !sf.equals("-1") ? sf : "Not for sale!"));
 					params.put("buyFor", (!bf.equals("-1.0") && !sf.equals("-1") ? bf : "No returns!"));
 
 					if(conf.getBoolean("GiantShop.stock.useStock") == true) {
-						params.put("stock", (!entry.get("stock").equals("-1") ? entry.get("stock") : "unlimited"));
-						params.put("maxStock", (!entry.get("maxstock").equals("-1") ? entry.get("maxstock") : "unlimited"));
+						params.put("stock", (!QR.getString("stock").equals("-1") ? QR.getString("stock") : "unlimited"));
+						params.put("maxStock", (!QR.getString("maxstock").equals("-1") ? QR.getString("maxstock") : "unlimited"));
 					}else{
 						params.put("stock", "unlimited");
 						params.put("maxStock", "unlimited");

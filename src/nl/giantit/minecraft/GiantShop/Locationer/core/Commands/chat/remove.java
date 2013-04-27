@@ -5,9 +5,8 @@ import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
-import nl.giantit.minecraft.GiantShop.core.perms.Permission;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import org.bukkit.entity.Player;
 
@@ -44,7 +43,7 @@ public class remove {
 				if(world == null)
 					world = player.getWorld().getName();
 				
-				iDriver DB = Database.Obtain().getEngine();
+				iDriver DB = GiantShop.getPlugin().getDB().getEngine();
 
 				ArrayList<String> fields = new ArrayList<String>();
 				fields.add("id");
@@ -53,7 +52,7 @@ public class remove {
 				data.put("world", world);
 
 				DB.select(fields).from("#__shops").where(data);
-				if(!DB.execQuery().isEmpty()) {
+				if(DB.execQuery().size() != 0) {
 					DB.delete("#__shops").where(data).updateQuery();
 					
 					lH.removeShop(name, world);

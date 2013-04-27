@@ -1,8 +1,9 @@
 package nl.giantit.minecraft.GiantShop.core.Tools.dbInit;
 
 import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Tools.dbInit.Updates.*;
+import nl.giantit.minecraft.giantcore.Database.QueryResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -303,12 +304,12 @@ public class dbInit {
 	}
 	
 	private void checkUpdate() {
-		ArrayList<HashMap<String, String>> resSet = this.dbDriver.select("tablename", "version").from("#__versions").execQuery();
+		QueryResult QRes = this.dbDriver.select("tablename", "version").from("#__versions").execQuery();
 		
-		for(int i = 0; i < resSet.size(); i++) {
-			HashMap<String, String> res = resSet.get(i);
-			String table = res.get("tablename");
-			Double version = Double.parseDouble(res.get("version"));
+		QueryResult.QueryRow QR;
+		while(null != (QR = QRes.getRow())) {
+			String table = QR.getString("tablename");
+			Double version = QR.getDouble("version");
 			
 			if(table.equalsIgnoreCase("shops") && version < curS) {
 				Shops.run(version);

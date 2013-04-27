@@ -6,9 +6,10 @@ import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
-import nl.giantit.minecraft.GiantShop.core.perms.Permission;
+import nl.giantit.minecraft.giantcore.Database.QueryResult;
+import nl.giantit.minecraft.giantcore.Database.QueryResult.QueryRow;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -23,7 +24,7 @@ import java.util.HashMap;
 public class update {
 	
 	private static config conf = config.Obtain();
-	private static iDriver DB = Database.Obtain().getEngine();
+	private static iDriver DB = GiantShop.getPlugin().getDB().getEngine();
 	private static Permission perms = GiantShop.getPlugin().getPermHandler().getEngine();
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	private static Locationer lH = GiantShop.getPlugin().getLocHandler();
@@ -59,13 +60,20 @@ public class update {
 			data.put("name", name);
 			data.put("world", world);
 
-			ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__shops").where(data).execQuery();
-			if(!resSet.isEmpty()) {
-				HashMap<String, String> res = resSet.get(0);
+			QueryResult QRes = DB.select(fields).from("#__shops").where(data).execQuery();
+			if(QRes.size() > 0) {
+				QueryRow QR = QRes.getRow();
+				HashMap<String, String> res = new HashMap<String, String>();
 				res.put("name", name);
 				res.put("world", world);
 				res.put("oname", name);
 				res.put("oworld", world);
+				res.put("locMinX", QR.getString("locMinX"));
+				res.put("locMinY", QR.getString("locMinY"));
+				res.put("locMinZ", QR.getString("locMinZ"));
+				res.put("locMaxX", QR.getString("locMaxX"));
+				res.put("locMaxY", QR.getString("locMaxY"));
+				res.put("locMaxZ", QR.getString("locMaxZ"));
 				
 				stored.put(player, res);
 				
@@ -112,7 +120,7 @@ public class update {
 				data.put("world", stored.get(player).get("world"));
 
 				DB.select(fields).from("#__shops").where(data);
-				if(DB.execQuery().isEmpty()) {
+				if(DB.execQuery().size() == 0) {
 					HashMap<String, String> p = stored.get(player);
 				
 					p.put("name", name);

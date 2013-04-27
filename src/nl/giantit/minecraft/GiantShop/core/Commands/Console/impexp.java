@@ -4,9 +4,10 @@ import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
+import nl.giantit.minecraft.giantcore.Database.Database;
+import nl.giantit.minecraft.giantcore.Database.QueryResult;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
 
 import org.bukkit.command.CommandSender;
 
@@ -21,7 +22,7 @@ import java.util.logging.Level;
  */
 public class impexp {
 	
-	private static iDriver DB = Database.Obtain().getEngine();
+	private static iDriver DB = GiantShop.getPlugin().getDB().getEngine();
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	private static Items iH = GiantShop.getPlugin().getItemHandler();
 	
@@ -580,7 +581,8 @@ public class impexp {
 			fields.add("*");
 			if(Misc.isEitherIgnoreCase(args[1], "items", "i")) {
 				DB.select(fields).from("#__items");
-				ArrayList<HashMap<String, String>> iResSet = DB.execQuery();
+				QueryResult QRes = DB.execQuery();
+				ArrayList<HashMap<String, String>> iResSet = QRes.getRawData();
 				Heraut.say(sender, "Found " + iResSet.size() + " items to export!");
 				
 				if(iResSet.size() > 0) {
@@ -593,7 +595,8 @@ public class impexp {
 				}
 			}else if(Misc.isEitherIgnoreCase(args[1], "shops", "s") || args[1].equalsIgnoreCase("x")) {
 				DB.select(fields).from("#__shops");
-				ArrayList<HashMap<String, String>> sResSet = DB.execQuery();
+				QueryResult QRes = DB.execQuery();
+				ArrayList<HashMap<String, String>> sResSet = QRes.getRawData();
 				Heraut.say(sender, "Found " + sResSet.size() + " shops to export!");
 
 				if(sResSet.size() > 0) {
@@ -606,7 +609,8 @@ public class impexp {
 				}
 			}else if(Misc.isEitherIgnoreCase(args[1], "discounts", "d")) {
 				DB.select(fields).from("#__discounts");
-				ArrayList<HashMap<String, String>> dResSet = DB.execQuery();
+				QueryResult QRes = DB.execQuery();
+				ArrayList<HashMap<String, String>> dResSet = QRes.getRawData();
 				Heraut.say(sender, "Found " + dResSet.size() + " discounts to export!");
 
 				if(dResSet.size() > 0) {
@@ -629,20 +633,24 @@ public class impexp {
 			fields.add("*");
 
 			DB.select(fields).from("#__items");
-			ArrayList<HashMap<String, String>> iResSet = DB.execQuery();
+			QueryResult iResSet = DB.execQuery();
 			Heraut.say(sender, "Found " + iResSet.size() + " items to export!");
 
 			DB.select(fields).from("#__shops");
-			ArrayList<HashMap<String, String>> sResSet = DB.execQuery();
+			QueryResult sResSet = DB.execQuery();
 			Heraut.say(sender, "Found " + sResSet.size() + " shops to export!");
 
 			DB.select(fields).from("#__discounts");
-			ArrayList<HashMap<String, String>> dResSet = DB.execQuery();
+			QueryResult dResSet = DB.execQuery();
 			Heraut.say(sender, "Found " + dResSet.size() + " discounts to export!");
+			
+			ArrayList<HashMap<String, String>> iRS = iResSet.getRawData();
+			ArrayList<HashMap<String, String>> sRS = sResSet.getRawData();
+			ArrayList<HashMap<String, String>> dRS = dResSet.getRawData();
 
 			if(iResSet.size() > 0) {
 				Heraut.say(sender, "Starting item export...");
-				if(!impexp.expItem(iResSet, GiantShop.getPlugin().getDir() + File.separator + "csvs", "items.csv")){
+				if(!impexp.expItem(iRS, GiantShop.getPlugin().getDir() + File.separator + "csvs", "items.csv")){
 					Heraut.say(sender, "Failed item export!");
 				}else{
 					Heraut.say(sender, "Finished item export!");
@@ -651,7 +659,7 @@ public class impexp {
 
 			if(sResSet.size() > 0) {
 				Heraut.say(sender, "Starting shops export...");
-				if(!impexp.expShop(sResSet, GiantShop.getPlugin().getDir() + File.separator + "csvs", "shops.csv")){
+				if(!impexp.expShop(sRS, GiantShop.getPlugin().getDir() + File.separator + "csvs", "shops.csv")){
 					Heraut.say(sender, "Failed shops export!");
 				}else{
 					Heraut.say(sender, "Finished shops export!");
@@ -660,7 +668,7 @@ public class impexp {
 
 			if(dResSet.size() > 0) {
 				Heraut.say(sender, "Starting discounts export...");
-				if(!impexp.expDiscount(dResSet, GiantShop.getPlugin().getDir() + File.separator + "csvs", "discounts.csv")){
+				if(!impexp.expDiscount(dRS, GiantShop.getPlugin().getDir() + File.separator + "csvs", "discounts.csv")){
 					Heraut.say(sender, "Failed discounts export!");
 				}else{
 					Heraut.say(sender, "Finished discounts export!");

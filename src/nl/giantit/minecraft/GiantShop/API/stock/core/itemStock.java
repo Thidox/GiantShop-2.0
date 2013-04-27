@@ -3,9 +3,9 @@ package nl.giantit.minecraft.GiantShop.API.stock.core;
 import nl.giantit.minecraft.GiantShop.API.stock.Events.*;
 import nl.giantit.minecraft.GiantShop.API.stock.stockResponse;
 import nl.giantit.minecraft.GiantShop.API.stock.ItemNotFoundException;
+import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Database.Database;
-import nl.giantit.minecraft.GiantShop.core.Database.drivers.iDriver;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
 import nl.giantit.minecraft.GiantShop.core.Logger.*;
 
 import org.bukkit.Bukkit;
@@ -13,6 +13,8 @@ import org.bukkit.Bukkit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
+import nl.giantit.minecraft.giantcore.Database.QueryResult;
+import nl.giantit.minecraft.giantcore.Database.QueryResult.QueryRow;
 
 /**
  *
@@ -29,7 +31,7 @@ public class itemStock {
 	private double sellFor;
 	
 	private void loadStock() throws ItemNotFoundException {
-		iDriver DB = Database.Obtain().getEngine();
+		iDriver DB = GiantShop.getPlugin().getDB().getEngine();
 		
 		ArrayList<String> fields = new ArrayList<String>();
 		fields.add("stock");
@@ -41,13 +43,13 @@ public class itemStock {
 		where.put("itemID", String.valueOf(id));
 		where.put("type", (type == null || type.intValue() == 0 || type.intValue() == -1) ? "-1" : String.valueOf(type.intValue()));
 		
-		ArrayList<HashMap<String, String>> resSet = DB.select(fields).from("#__items").where(where).execQuery();
-		if(resSet.size() >= 1) {
-			HashMap<String, String> res = resSet.get(0);
-			stock = Integer.parseInt(res.get("stock"));
-			maxStock = Integer.parseInt(res.get("maxstock"));
-			perStack = Integer.parseInt(res.get("perstack"));
-			sellFor = Double.parseDouble(res.get("sellfor"));
+		QueryResult QRes = DB.select(fields).from("#__items").where(where).execQuery();
+		if(QRes.size() >= 1) {
+			QueryRow QR = QRes.getRow();
+			stock = QR.getInt("stock");
+			maxStock = QR.getInt("maxstock");
+			perStack = QR.getInt("perstack");
+			sellFor = QR.getDouble("sellfor");
 		}else{
 			throw new ItemNotFoundException();
 		}
@@ -109,7 +111,7 @@ public class itemStock {
 		where.put("itemID", String.valueOf(id));
 		where.put("type", (type == null || type.intValue() == 0 || type.intValue() == -1) ? "-1" : String.valueOf(type.intValue()));
 		
-		iDriver DB = Database.Obtain().getEngine();
+		iDriver DB = GiantShop.getPlugin().getDB().getEngine();
 		DB.update("#__items").set(fields).where(where).updateQuery();
 		
 		HashMap<String, String> d = new HashMap<String, String>();
@@ -143,7 +145,7 @@ public class itemStock {
 		where.put("itemID", String.valueOf(id));
 		where.put("type", (type == null || type.intValue() == 0 || type.intValue() == -1) ? "-1" : String.valueOf(type.intValue()));
 		
-		iDriver DB = Database.Obtain().getEngine();
+		iDriver DB = GiantShop.getPlugin().getDB().getEngine();
 		DB.update("#__items").set(fields).where(where).updateQuery();
 		
 		HashMap<String, String> d = new HashMap<String, String>();
