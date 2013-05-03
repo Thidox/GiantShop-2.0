@@ -43,6 +43,11 @@ public class add {
 			loc1 = points.get("min");
 			loc2 = points.get("max");
 			
+			if("".equals(name)) {
+				Heraut.say(player, "Failed to add shop. Name can not be empty!");
+				return;
+			}
+			
 			if(!loc1.getWorld().getName().equals(loc2.getWorld().getName())) {
 				Heraut.say(player, "Failed to add shop. Points not in same world!");
 				return;
