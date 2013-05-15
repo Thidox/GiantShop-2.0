@@ -99,7 +99,8 @@ public class search {
 			HashMap<String, String> order = new HashMap<String, String>();
 			order.put("itemID", "ASC");
 			order.put("type", "ASC");
-			QueryResult QRes = DB.select(fields).from("#__items").where(where, true).execQuery();
+			//QueryResult QRes = DB.select(fields).from("#__items").where(where, true).execQuery();
+			QueryResult QRes = DB.execQuery();
 			
 			int pages = ((int)Math.ceil((double)QRes.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)QRes.size() / (double)perPage);
 			int start = (curPag * perPage) - perPage;
