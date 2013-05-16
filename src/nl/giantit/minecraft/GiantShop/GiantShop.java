@@ -57,7 +57,7 @@ public class GiantShop extends JavaPlugin {
 	private Discounter discounter;
 	private MetricsHandler metrics;
 	private String name, dir, pubName;
-	private String bName = "Forniphilia";
+	private String bName = "Cacti Powered";
 	
 	private boolean useLoc = false;
 	public List<String> cmds;
