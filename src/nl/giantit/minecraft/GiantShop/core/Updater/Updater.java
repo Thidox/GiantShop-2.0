@@ -82,8 +82,8 @@ public class Updater {
 	}
 	
 	public boolean isNewer(String newVersion, String version) {
-		String[] nv = newVersion.replace("\\.[a-zA-Z]+", "").split("\\.");
-		String[] v = version.split("-")[0].replace("\\.[a-zA-Z]+", "").split("\\.");
+		String[] nv = newVersion.split("-")[1].replace("\\.[a-zA-Z]+", "").split("\\.");
+		String[] v = version.split("-")[1].replace("\\.[a-zA-Z]+", "").split("\\.");
 		Boolean isNew = false;
 		Boolean prevIsEqual = false; 
 		
