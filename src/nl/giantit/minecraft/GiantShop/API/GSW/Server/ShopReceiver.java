@@ -1,5 +1,12 @@
 package nl.giantit.minecraft.GiantShop.API.GSW.Server;
 
+import nl.giantit.minecraft.giantcore.lib.gson.Gson;
+
+import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.GiantShop.API.GSW.Crypt.Crypt;
+import nl.giantit.minecraft.GiantShop.API.GSW.GSWAPI;
+import nl.giantit.minecraft.GiantShop.API.GSW.Server.lib.AESEncJSON;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,14 +15,11 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import nl.giantit.minecraft.GiantShop.API.GSW.Crypt.Crypt;
-import nl.giantit.minecraft.GiantShop.API.GSW.GSWAPI;
-import nl.giantit.minecraft.GiantShop.API.GSW.Server.lib.AESEncJSON;
-import nl.giantit.minecraft.GiantShop.GiantShop;
+
 import org.apache.commons.codec.binary.Base64;
+
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import com.google.gson.Gson;
 
 /**
  *
