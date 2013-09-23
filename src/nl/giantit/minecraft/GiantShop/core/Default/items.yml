@@ -735,13 +735,14 @@ types:
         - Stone Brick Slabs
     item98:
         type0:
-        - Normal
+        - Stone Brick 
+        - Normal Stone Brick 
         type1:
-        - Mossy
+        - Mossy Stone Brick 
         type2:
-        - Cracked
+        - Cracked Stone Brick 
         type3:
-        - Circle
+        - Chiseled Stone Brick 
     item125:
         type0:
         - Wood Double Slabs
