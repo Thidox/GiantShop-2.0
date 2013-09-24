@@ -20,13 +20,13 @@ import java.util.regex.Pattern;
  */
 public class Items {
 	
-	private GiantShop plugin;
+	private final GiantShop plugin;
 	private YamlConfiguration config;
-	private double itemVersion = 0.7;
-	private HashMap<ItemID, String> itemsByID = new HashMap<ItemID, String>();
-	private HashMap<String, ItemID> itemsByName = new HashMap<String, ItemID>();
-	private HashMap<ItemID, List<String>> itemTypes = new HashMap<ItemID, List<String>>();
-	private HashMap<String, ItemID> itemsAliases = new HashMap<String, ItemID>();
+	private final double itemVersion = 0.8;
+	private final HashMap<ItemID, String> itemsByID = new HashMap<ItemID, String>();
+	private final HashMap<String, ItemID> itemsByName = new HashMap<String, ItemID>();
+	private final HashMap<ItemID, List<String>> itemTypes = new HashMap<ItemID, List<String>>();
+	private final HashMap<String, ItemID> itemsAliases = new HashMap<String, ItemID>();
 	
 	private List<Integer> getTypeList(int id) {
 		List<Integer> types = new ArrayList<Integer>();
