@@ -74,8 +74,12 @@ names:
     item38: 
     - Rose
     - Red Plant
-    item39: Mushroom
-    item40: Toadstool
+    item39: 
+    - Mushroom
+    - Brown Mushroom
+    item40: 
+    - Toadstool
+    - Red Mushroom
     item41: 
     - Gold Block
     - Block of Gold
@@ -224,8 +228,12 @@ names:
     item96: Trapdoor
     item97: Monster Egg
     item98: Stone Bricks
-    item99: Huge Mushroom
-    item100: Huge Toadstool
+    item99: 
+    - Huge Mushroom
+    - Huge Brown Mushroom
+    item100: 
+    - Huge Toadstool
+    - Huge Red Mushroom
     item101: Iron Bars
     item102: Glass Pane
     item103: Melon
@@ -286,6 +294,15 @@ names:
     item156: Quartz Stairs
     item157: Activator Rail
     item158: Dropper
+    item159: Stained Clay
+    item170: Hay Block
+    item171: Carpet
+    item172: Hardened Clay
+    item173:
+    - Block of Coal
+    - Coal Block
+    item174: Packed Ice
+    item175: Large Flowers
     item256: Iron Shovel
     item257: 
     - Iron Pickaxe
@@ -586,6 +603,21 @@ names:
     item408:
     - Minecart with Hopper
     - Hopper Cart
+    item417: 
+    - Iron Horse Armor
+    - Iron Horse Armour
+    item418: 
+    - Gold Horse Armor
+    - Gold Horse Armour
+    item419: 
+    - Diamond Horse Armor
+    - Diamond Horse Armour
+    item420:
+    - Lead
+    - Leash
+    item421:
+    - Nametag
+    - Nameplate
     item2256: 13 Disc
     item2257: Cat Disc
     item2258: blocks Disc
@@ -703,6 +735,25 @@ types:
         - Rose Wool
         type15:
         - Black Wool
+    item38:
+        type0:
+        - Poppy
+        type1:
+        - Blue Orchid
+        type2:
+        - Allium
+        type3:
+        - Azure Bluet
+        type4:
+        - Red Tulip
+        type5:
+        - Orange Tulip
+        type6:
+        - White Tulip
+        type7:
+        - Pink Tulip
+        type8:
+        -  	Oxeye Daisy
     item43:
         type0:
         - Stone Double Slabs
@@ -773,6 +824,123 @@ types:
         type3:
         - Jungle Wood Slabs
         - Jungle Wooden Slabs
+    item175:
+        type0:
+        - Sunflower
+        type1:
+        - Lilac
+        type4:
+        - Rose Bush
+        type5:
+        - Peony
+    item159:
+        type0:
+        - White Stained Clay
+        type1:
+        - Orange Stained Clay
+        type2:
+        - Magenta Stained Clay
+        - Light Purple Stained Clay
+        type3:
+        - Light Blue Stained Clay
+        - Blue Stained Clay
+        type4:
+        - Yellow Stained Clay
+        - Dandelion Stained Clay
+        type5:
+        - Lime Stained Clay
+        - Light Green Stained Clay
+        type6:
+        - Pink Stained Clay
+        - Lightred Stained Clay
+        type7:
+        - Gray Stained Clay
+        - Grey Stained Clay
+        - Dark Grey Stained Clay
+        - Dark Gray Stained Clay
+        type8:
+        - Silver Stained Clay
+        - Light Gray Stained Clay
+        - Light Grey Stained Clay
+        type9:
+        - Cyan Stained Clay
+        type10:
+        - Purple Stained Clay
+        - Dark Purple Stained Clay
+        type11:
+        - Navy Stained Clay
+        - Dark Blue Stained Clay
+        - Lapis Stained Clay
+        - Lazuli Stained Clay
+        - Lapis Lazuli Stained Clay
+        type12:
+        - Brown Stained Clay
+        - Cocoa Stained Clay
+        - Chocolate Stained Clay
+        type13:
+        - Green Stained Clay
+        - Dark Green Stained Clay
+        - Cactus Stained Clay
+        type14:
+        - Red Stained Clay
+        - Dark Red Stained Clay
+        - Rose Stained Clay
+        type15:
+        - Black Stained Clay
+    item171:
+        type0:
+        - White Carpet
+        type1:
+        - Orange Carpet
+        type2:
+        - Magenta Carpet
+        - Light Purple Carpet
+        type3:
+        - Light Blue Carpet
+        - Blue Carpet
+        type4:
+        - Yellow Carpet
+        - Dandelion Carpet
+        type5:
+        - Lime Carpet
+        - Light Green Carpet
+        type6:
+        - Pink Carpet
+        - Lightred Carpet
+        type7:
+        - Gray Carpet
+        - Grey Carpet
+        - Dark Grey Carpet
+        - Dark Gray Carpet
+        type8:
+        - Silver Carpet
+        - Light Gray Carpet
+        - Light Grey Carpet
+        type9:
+        - Cyan Carpet
+        type10:
+        - Purple Carpet
+        - Dark Purple Carpet
+        type11:
+        - Navy Carpet
+        - Dark Blue Carpet
+        - Lapis Carpet
+        - Lazuli Carpet
+        - Lapis Lazuli Carpet
+        type12:
+        - Brown Carpet
+        - Cocoa Carpet
+        - Chocolate Carpet
+        type13:
+        - Green Carpet
+        - Dark Green Carpet
+        - Cactus Carpet
+        type14:
+        - Red Carpet
+        - Dark Red Carpet
+        - Rose Carpet
+        type15:
+        - Black Carpet
     item322:
         type0:
         - Golden Apple
@@ -789,6 +957,28 @@ types:
         - Coal
         type1:
         - Charcoal
+    item349:
+        type0:
+        - Fish
+        - Raw Fish
+        type1:
+        - Salmon
+        - Raw Salmon
+        type2:
+        - Clownfish
+        - Raw Clownfish
+        type3:
+        - Pufferfish
+        - Raw Pufferfish
+    item350:
+        type0:
+        - Cooked Fish
+        type1:
+        - Cooked Salmon
+        type2:
+        - Cooked Clownfish
+        type3:
+        - Cooked Pufferfish
     item351:
         type0:
         - Ink Sac
@@ -998,5 +1188,7 @@ types:
         - Mooshroom Egg
         type98:
         - Ocelot Egg
+        type100:
+        - Horse Egg
         type120:
         - Villager Egg
