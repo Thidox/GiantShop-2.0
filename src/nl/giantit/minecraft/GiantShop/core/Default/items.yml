@@ -675,12 +675,12 @@ types:
         - Jungle Leaves
     item24:
         type0:
-        - Normal
+        - Normal Sandstone
         type1:
-        - Hieroglyphic
-        - Creeper
+        - Hieroglyphic Sandstone
+        - Creeper Sandstone
         type2:
-        - Smooth
+        - Smooth Sandstone
     item35:
         type0:
         - White Wool
@@ -753,7 +753,7 @@ types:
         type7:
         - Pink Tulip
         type8:
-        -  	Oxeye Daisy
+        - Oxeye Daisy
     item43:
         type0:
         - Stone Double Slabs
