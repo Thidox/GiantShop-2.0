@@ -58,7 +58,7 @@ public class ItemID {
 	}
 	
 	public boolean equals(ItemID key) {
-		Integer type = (key.getType() == null) ? 0 : key.getType();
-		return (key.getId() == this.id && type == this.type);
+		Integer t = (key.getType() == null) ? 0 : key.getType();
+		return (key.getId() == this.id && t == this.type);
 	}
 }
