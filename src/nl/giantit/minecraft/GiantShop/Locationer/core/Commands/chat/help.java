@@ -2,9 +2,10 @@ package nl.giantit.minecraft.GiantShop.Locationer.core.Commands.chat;
 
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
+import nl.giantit.minecraft.giantcore.perms.Permission;
+
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import org.bukkit.entity.Player;
 

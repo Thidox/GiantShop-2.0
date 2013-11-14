@@ -2,15 +2,16 @@ package nl.giantit.minecraft.GiantShop.API.GSW.Commands.Chat;
 
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
-import java.util.ArrayList;
-import java.util.HashMap;
+import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *

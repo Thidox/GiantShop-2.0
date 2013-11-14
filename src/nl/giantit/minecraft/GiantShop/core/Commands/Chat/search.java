@@ -1,20 +1,23 @@
 package nl.giantit.minecraft.GiantShop.core.Commands.Chat;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import nl.giantit.minecraft.giantcore.Database.QueryResult;
+import nl.giantit.minecraft.giantcore.Database.QueryResult.QueryRow;
+import nl.giantit.minecraft.giantcore.Database.iDriver;
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
+import nl.giantit.minecraft.giantcore.perms.Permission;
+
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
 import nl.giantit.minecraft.GiantShop.core.Items.Items;
 import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discounter;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.giantcore.Database.QueryResult;
-import nl.giantit.minecraft.giantcore.Database.QueryResult.QueryRow;
-import nl.giantit.minecraft.giantcore.Database.iDriver;
-import nl.giantit.minecraft.giantcore.perms.Permission;
+
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *

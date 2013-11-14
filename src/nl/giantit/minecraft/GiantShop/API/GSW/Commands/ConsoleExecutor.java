@@ -1,10 +1,15 @@
 package nl.giantit.minecraft.GiantShop.API.GSW.Commands;
 
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
-import java.util.Arrays;
-import nl.giantit.minecraft.GiantShop.API.GSW.Commands.Console.*;
+
+import nl.giantit.minecraft.GiantShop.API.GSW.Commands.Console.Help;
+import nl.giantit.minecraft.GiantShop.API.GSW.Commands.Console.List;
+import nl.giantit.minecraft.GiantShop.API.GSW.Commands.Console.Reload;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
+
 import org.bukkit.command.CommandSender;
+
+import java.util.Arrays;
 
 /**
  *

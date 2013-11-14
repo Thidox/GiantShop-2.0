@@ -1,15 +1,16 @@
 package nl.giantit.minecraft.GiantShop.API.GSW.Commands.Chat.Pickup;
 
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
-import java.util.HashMap;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
+import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import nl.giantit.minecraft.GiantShop.API.GSW.GSWAPI;
 import nl.giantit.minecraft.GiantShop.API.GSW.PickupQueue;
 import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  *
