@@ -151,18 +151,18 @@ public class GiantShop extends JavaPlugin {
 			
 			discounter = new Discounter(this);
 			
+			if(conf.getBoolean(this.name + ".metrics.useMetrics")) {
+				this.metrics = new MetricsHandler(this);
+			}
+			
+			GiantShopAPI.Obtain();
+			
 			if(econHandler.isLoaded()) {
 				log.log(Level.INFO, "[" + this.name + "](" + this.bName + ") Was successfully enabled!");
 			}else{
 				log.log(Level.WARNING, "[" + this.name + "] Could not load economy engine yet!");
 				log.log(Level.WARNING, "[" + this.name + "] Errors might occur if you do not see '[GiantShop]Successfully hooked into (whichever) Engine!' after this message!");
 			}
-			
-			if(conf.getBoolean(this.name + ".metrics.useMetrics")) {
-				this.metrics = new MetricsHandler(this);
-			}
-			
-			GiantShopAPI.Obtain();
 		}catch(Exception e) {
 			log.log(Level.SEVERE, "[" + this.name + "](" + this.bName + ") Failed to load!");
 			if(conf.getBoolean(this.name + ".global.debug")) {
