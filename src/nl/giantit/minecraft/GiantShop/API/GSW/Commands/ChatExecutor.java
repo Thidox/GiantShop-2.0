@@ -1,10 +1,10 @@
 package nl.giantit.minecraft.GiantShop.API.GSW.Commands;
 
+import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import java.util.Arrays;
 import nl.giantit.minecraft.GiantShop.API.GSL.GSLAPI;
 import nl.giantit.minecraft.GiantShop.API.GSW.Commands.Chat.*;
 import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
-import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

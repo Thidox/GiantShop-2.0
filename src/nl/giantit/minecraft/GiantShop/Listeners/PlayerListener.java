@@ -1,8 +1,9 @@
 package nl.giantit.minecraft.GiantShop.Listeners;
 
+import nl.giantit.minecraft.giantcore.Misc.Heraut;
+
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

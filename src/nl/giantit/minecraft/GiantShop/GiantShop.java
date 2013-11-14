@@ -2,11 +2,11 @@ package nl.giantit.minecraft.GiantShop;
 
 import nl.giantit.minecraft.giantcore.GiantCore;
 import nl.giantit.minecraft.giantcore.Database.Database;
+import nl.giantit.minecraft.giantcore.Misc.Messages;
 import nl.giantit.minecraft.giantcore.core.Eco.Eco;
 import nl.giantit.minecraft.giantcore.perms.PermHandler;
 
 import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
-import nl.giantit.minecraft.GiantShop.Misc.Messages;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.core.Commands.ChatExecutor;
@@ -147,7 +147,7 @@ public class GiantShop extends JavaPlugin {
 			console = new ConsoleExecutor(this);
 			itemHandler = new Items(this);
 			econHandler = this.gc.getEcoHandler(Eco.findEngine(conf.getString("GiantShop.Economy.Engine")));
-			msgHandler = new Messages(this);
+			msgHandler = new Messages(this, 1.4);
 			
 			discounter = new Discounter(this);
 			

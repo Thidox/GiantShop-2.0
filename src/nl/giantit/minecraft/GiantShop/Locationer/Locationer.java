@@ -1,9 +1,10 @@
 package nl.giantit.minecraft.GiantShop.Locationer;
 
+import nl.giantit.minecraft.giantcore.Misc.Heraut;
+
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.core.config;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Locationer.AreaReaders.*;
 import nl.giantit.minecraft.GiantShop.Locationer.Executors.*;
 

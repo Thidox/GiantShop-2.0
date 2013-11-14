@@ -1,8 +1,9 @@
 package nl.giantit.minecraft.GiantShop.Locationer.Executors;
 
+import nl.giantit.minecraft.giantcore.Misc.Heraut;
+
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Locationer.core.Commands.chat.*;
-import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
 
 import org.bukkit.command.Command;

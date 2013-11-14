@@ -1,8 +1,9 @@
 package nl.giantit.minecraft.GiantShop.Locationer.Listeners;
 
+import nl.giantit.minecraft.giantcore.Misc.Heraut;
+
 import nl.giantit.minecraft.GiantShop.GiantShop;
 import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
-import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.core.config;
 
 import org.bukkit.Location;

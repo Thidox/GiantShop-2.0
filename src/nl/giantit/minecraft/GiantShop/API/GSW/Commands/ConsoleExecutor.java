@@ -1,8 +1,8 @@
 package nl.giantit.minecraft.GiantShop.API.GSW.Commands;
 
+import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import java.util.Arrays;
 import nl.giantit.minecraft.GiantShop.API.GSW.Commands.Console.*;
-import nl.giantit.minecraft.GiantShop.Misc.Heraut;
 import nl.giantit.minecraft.GiantShop.Misc.Misc;
 import org.bukkit.command.CommandSender;
 
