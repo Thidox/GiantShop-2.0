@@ -114,7 +114,7 @@ public class GiantShop extends JavaPlugin {
 				return;
 			}
 			
-			HashMap<String, String> db = (HashMap<String, String>) conf.getMap(this.name + ".db");
+			HashMap<String, String> db = conf.getMap(this.name + ".db");
 			db.put("debug", conf.getString(this.name + ".global.debug"));
 			
 			this.db = this.gc.getDB(this, null, db);
