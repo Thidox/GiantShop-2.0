@@ -79,7 +79,7 @@ public class GiantShop extends GiantPlugin {
 			return;
 		}
 		
-		if(this.gc.getProtocolVersion() >= 0.2) {
+		if(this.gc.getProtocolVersion() < 0.3) {
 			getLogger().severe("The GiantCore version you are using it not made for this plugin!");
 			this.getPluginLoader().disablePlugin(this);
 			return;
