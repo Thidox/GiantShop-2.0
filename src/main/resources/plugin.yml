@@ -1,6 +1,6 @@
-name: $name
-main: nl.giantit.minecraft.$name.$name
-version: $version-$build
+name: ${name}
+main: nl.giantit.minecraft.${package}.${name}
+version: ${version}-${build}
 authors: [Giant]
 depend: [GiantCore]
 commands:
