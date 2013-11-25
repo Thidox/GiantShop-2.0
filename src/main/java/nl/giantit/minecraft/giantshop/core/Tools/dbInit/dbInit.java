@@ -9,7 +9,6 @@ import nl.giantit.minecraft.giantcore.database.query.CreateQuery;
 import nl.giantit.minecraft.giantcore.database.query.InsertQuery;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.logging.Level;
 
 public class dbInit {
@@ -19,19 +18,6 @@ public class dbInit {
 
 	private void init() {
 		if(!this.dbDriver.tableExists("#__versions")) {
-			HashMap<String, HashMap<String, String>> fields = new HashMap<String, HashMap<String, String>>();
-			HashMap<String, String> data = new HashMap<String, String>();
-			data.put("TYPE", "VARCHAR");
-			data.put("LENGTH", "100");
-			data.put("NULL", "false");
-			fields.put("tableName", data);
-			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
-			data.put("LENGTH", null);
-			data.put("NULL", "false");
-			data.put("DEFAULT", "1.0");
-			fields.put("version", data);
-			
 			CreateQuery cQ = this.dbDriver.create("#__versions");
 			Column tN = cQ.addColumn("tableName");
 			tN.setDataType(Column.DataType.VARCHAR);
