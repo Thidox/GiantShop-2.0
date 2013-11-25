@@ -1,7 +1,7 @@
-package nl.giantit.minecraft.GiantShop.core.Tools.Discount;
+package nl.giantit.minecraft.giantshop.core.Tools.Discount;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.config;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.core.config;
 
 public class Discount {
 

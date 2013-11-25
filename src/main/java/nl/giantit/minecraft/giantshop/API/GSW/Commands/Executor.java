@@ -1,4 +1,4 @@
-package nl.giantit.minecraft.GiantShop.API.GSW.Commands;
+package nl.giantit.minecraft.giantshop.API.GSW.Commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

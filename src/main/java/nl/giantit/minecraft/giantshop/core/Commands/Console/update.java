@@ -1,21 +1,24 @@
-package nl.giantit.minecraft.GiantShop.core.Commands.Console;
+package nl.giantit.minecraft.giantshop.core.Commands.Console;
 
-import nl.giantit.minecraft.giantcore.Database.QueryResult;
-import nl.giantit.minecraft.giantcore.Database.QueryResult.QueryRow;
-import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.database.QueryResult;
+import nl.giantit.minecraft.giantcore.database.QueryResult.QueryRow;
+import nl.giantit.minecraft.giantcore.database.Driver;
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
+import nl.giantit.minecraft.giantcore.database.query.Group;
+import nl.giantit.minecraft.giantcore.database.query.SelectQuery;
+import nl.giantit.minecraft.giantcore.database.query.UpdateQuery;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
-import nl.giantit.minecraft.GiantShop.API.stock.ItemNotFoundException;
-import nl.giantit.minecraft.GiantShop.API.stock.Events.MaxStockUpdateEvent;
-import nl.giantit.minecraft.GiantShop.API.stock.Events.StockUpdateEvent;
-import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
-import nl.giantit.minecraft.GiantShop.core.Items.Items;
-import nl.giantit.minecraft.GiantShop.core.Logger.Logger;
-import nl.giantit.minecraft.GiantShop.core.Logger.LoggerType;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.API.GiantShopAPI;
+import nl.giantit.minecraft.giantshop.API.stock.ItemNotFoundException;
+import nl.giantit.minecraft.giantshop.API.stock.Events.MaxStockUpdateEvent;
+import nl.giantit.minecraft.giantshop.API.stock.Events.StockUpdateEvent;
+import nl.giantit.minecraft.giantshop.core.config;
+import nl.giantit.minecraft.giantshop.core.Items.ItemID;
+import nl.giantit.minecraft.giantshop.core.Items.Items;
+import nl.giantit.minecraft.giantshop.core.Logger.Logger;
+import nl.giantit.minecraft.giantshop.core.Logger.LoggerType;
 
 import org.bukkit.command.CommandSender;
 
@@ -30,7 +33,7 @@ import java.util.logging.Level;
 public class update {
 	
 	private static config conf = config.Obtain();
-	private static iDriver DB = GiantShop.getPlugin().getDB().getEngine();
+	private static Driver DB = GiantShop.getPlugin().getDB().getEngine();
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	private static Items iH = GiantShop.getPlugin().getItemHandler();
 	private static HashMap<CommandSender, HashMap<String, String>> storedC = new HashMap<CommandSender, HashMap<String, String>>();
@@ -97,10 +100,14 @@ public class update {
 			data.put("itemID", "" + itemID);
 			data.put("type", "" + ((itemType == null) ? -1 : itemType));
 
-			DB.select(fields).from("#__items").where(data);
-			QueryResult resSet = DB.execQuery();
-			if(resSet.size() == 1) {
-				QueryRow res = resSet.getRow();
+			SelectQuery sQ = DB.select(fields);
+			sQ.from("#__items");
+			sQ.where("itemID", String.valueOf(itemID), Group.ValueType.EQUALSRAW);
+			sQ.where("type", String.valueOf(((itemType == null) ? -1 : itemType)), Group.ValueType.EQUALSRAW);
+
+			QueryResult QRes = sQ.exec();
+			if(QRes.size() == 1) {
+				QueryRow res = QRes.getRow();
 				HashMap<String, String> tmp = new HashMap<String, String>();
 				tmp.put("itemID", String.valueOf(itemID));
 				tmp.put("itemType", String.valueOf(itemType));
@@ -118,7 +125,7 @@ public class update {
 			}else{
 				HashMap<String, String> params = new HashMap<String, String>();
 				params.put("item", name);
-				if(resSet.size() == 0) {
+				if(QRes.size() == 0) {
 					Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "itemNotInShop", params));
 				}else{
 					Heraut.say(sender, mH.getConsoleMsg(Messages.msgType.ERROR, "itemNotUnique", params));
@@ -279,11 +286,17 @@ public class update {
 			tmp.remove("itemID");
 			tmp.remove("itemType");
 			
-			HashMap<String, String> data = new HashMap<String, String>();
-			data.put("itemID", "" + itemID);
-			data.put("type", "" + ((itemType == null) ? -1 : itemType));
+			UpdateQuery uQ = DB.update("#__items");
+			uQ.set("sellFor", tmp.get("sellFor"), UpdateQuery.ValueType.SETRAW);
+			uQ.set("buyFor", tmp.get("buyFor"), UpdateQuery.ValueType.SETRAW);
+			uQ.set("perStack", tmp.get("perStack"), UpdateQuery.ValueType.SETRAW);
+			uQ.set("stock", tmp.get("stock"), UpdateQuery.ValueType.SETRAW);
+			uQ.set("maxStock", tmp.get("maxStock"), UpdateQuery.ValueType.SETRAW);
+
+			uQ.where("itemID", String.valueOf(itemID), Group.ValueType.EQUALSRAW);
+			uQ.where("type", String.valueOf(((itemType == null) ? -1 : itemType)), Group.ValueType.EQUALSRAW);
+			uQ.exec();
 			
-			DB.update("#__items").set(tmp).where(data).updateQuery();
 			Heraut.say(sender, "You have successfully updated " + name + "!");
 			HashMap<String, String> d = new HashMap<String, String>();
 			d.put("id", String.valueOf(itemID));

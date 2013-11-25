@@ -1,17 +1,19 @@
-package nl.giantit.minecraft.GiantShop.core.Commands.Chat;
+package nl.giantit.minecraft.giantshop.core.Commands.Chat;
 
-import nl.giantit.minecraft.giantcore.Database.QueryResult;
-import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.database.QueryResult;
+import nl.giantit.minecraft.giantcore.database.Driver;
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
+import nl.giantit.minecraft.giantcore.database.query.Group;
+import nl.giantit.minecraft.giantcore.database.query.SelectQuery;
 import nl.giantit.minecraft.giantcore.perms.Permission;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
-import nl.giantit.minecraft.GiantShop.core.Items.Items;
-import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discounter;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.Misc.Misc;
+import nl.giantit.minecraft.giantshop.core.config;
+import nl.giantit.minecraft.giantshop.core.Items.ItemID;
+import nl.giantit.minecraft.giantshop.core.Items.Items;
+import nl.giantit.minecraft.giantshop.core.Tools.Discount.Discounter;
 
 import org.bukkit.entity.Player;
 
@@ -33,7 +35,7 @@ public class check {
 		Discounter disc = GiantShop.getPlugin().getDiscounter();
 		if(perms.has(player, "giantshop.shop.check")) {
 			if(args.length >= 2) {
-				iDriver DB = GiantShop.getPlugin().getDB().getEngine();
+				Driver DB = GiantShop.getPlugin().getDB().getEngine();
 				int itemID;
 				Integer itemType = -1;
 				
@@ -90,11 +92,12 @@ public class check {
 				fields.add("maxStock");
 				fields.add("shops");
 				
-				HashMap<String, String> where = new HashMap<String, String>();
-				where.put("itemID", String.valueOf(itemID));
-				where.put("type", String.valueOf(itemType));
-				
-				QueryResult QRes = DB.select(fields).from("#__items").where(where).execQuery();
+				SelectQuery sQ = DB.select(fields);
+				sQ.from("#__items");
+				sQ.where("itemID", String.valueOf(itemID), Group.ValueType.EQUALSRAW);
+				sQ.where("type", String.valueOf(itemType), Group.ValueType.EQUALSRAW);
+					
+				QueryResult QRes = sQ.exec();
 				if(QRes.size() == 1) {
 					//Wait didn't we just do this the other way round?!
 					//Yea we did! Why? Because we can!

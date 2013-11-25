@@ -1,11 +1,11 @@
-package nl.giantit.minecraft.GiantShop.API.GSW.Commands.Chat;
+package nl.giantit.minecraft.giantshop.API.GSW.Commands.Chat;
 
 import java.util.Arrays;
-import nl.giantit.minecraft.GiantShop.API.GSL.GSLAPI;
-import nl.giantit.minecraft.GiantShop.API.GSW.Commands.Chat.Pickup.Pickup;
-import nl.giantit.minecraft.GiantShop.API.GSW.Commands.Chat.Pickup.List;
-import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
-import nl.giantit.minecraft.GiantShop.Misc.Misc;
+import nl.giantit.minecraft.giantshop.API.GSL.GSLAPI;
+import nl.giantit.minecraft.giantshop.API.GSW.Commands.Chat.Pickup.Pickup;
+import nl.giantit.minecraft.giantshop.API.GSW.Commands.Chat.Pickup.List;
+import nl.giantit.minecraft.giantshop.API.GiantShopAPI;
+import nl.giantit.minecraft.giantshop.Misc.Misc;
 import org.bukkit.entity.Player;
 
 /**

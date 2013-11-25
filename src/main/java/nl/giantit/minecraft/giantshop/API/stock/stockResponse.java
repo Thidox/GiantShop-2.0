@@ -1,4 +1,4 @@
-package nl.giantit.minecraft.GiantShop.API.stock;
+package nl.giantit.minecraft.giantshop.API.stock;
 
 /**
  *

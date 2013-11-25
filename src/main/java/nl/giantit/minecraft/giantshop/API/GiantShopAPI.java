@@ -1,11 +1,11 @@
-package nl.giantit.minecraft.GiantShop.API;
+package nl.giantit.minecraft.giantshop.API;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.API.stock.stockAPI;
-import nl.giantit.minecraft.GiantShop.API.GSL.GSLAPI;
-import nl.giantit.minecraft.GiantShop.API.GSW.GSWAPI;
-import nl.giantit.minecraft.GiantShop.core.Items.Items;
-import nl.giantit.minecraft.GiantShop.core.config;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.API.stock.stockAPI;
+import nl.giantit.minecraft.giantshop.API.GSL.GSLAPI;
+import nl.giantit.minecraft.giantshop.API.GSW.GSWAPI;
+import nl.giantit.minecraft.giantshop.core.Items.Items;
+import nl.giantit.minecraft.giantshop.core.config;
 
 /**
  *

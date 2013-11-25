@@ -1,6 +1,6 @@
-package nl.giantit.minecraft.GiantShop.core.Tools;
+package nl.giantit.minecraft.giantshop.core.Tools;
 
-import nl.giantit.minecraft.GiantShop.core.config;
+import nl.giantit.minecraft.giantshop.core.config;
 
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;

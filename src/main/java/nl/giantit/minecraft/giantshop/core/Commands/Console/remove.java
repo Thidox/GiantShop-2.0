@@ -1,16 +1,19 @@
-package nl.giantit.minecraft.GiantShop.core.Commands.Console;
+package nl.giantit.minecraft.giantshop.core.Commands.Console;
 
-import nl.giantit.minecraft.giantcore.Database.QueryResult;
-import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.database.QueryResult;
+import nl.giantit.minecraft.giantcore.database.Driver;
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
+import nl.giantit.minecraft.giantcore.database.query.DeleteQuery;
+import nl.giantit.minecraft.giantcore.database.query.Group;
+import nl.giantit.minecraft.giantcore.database.query.SelectQuery;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
-import nl.giantit.minecraft.GiantShop.core.Items.Items;
-import nl.giantit.minecraft.GiantShop.core.Logger.Logger;
-import nl.giantit.minecraft.GiantShop.core.Logger.LoggerType;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.core.config;
+import nl.giantit.minecraft.giantshop.core.Items.ItemID;
+import nl.giantit.minecraft.giantshop.core.Items.Items;
+import nl.giantit.minecraft.giantshop.core.Logger.Logger;
+import nl.giantit.minecraft.giantshop.core.Logger.LoggerType;
 
 import org.bukkit.command.CommandSender;
 
@@ -25,7 +28,7 @@ import java.util.logging.Level;
 public class remove {
 	
 	private static config conf = config.Obtain();
-	private static iDriver DB = GiantShop.getPlugin().getDB().getEngine();
+	private static Driver DB = GiantShop.getPlugin().getDB().getEngine();
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	private static Items iH = GiantShop.getPlugin().getItemHandler();
 	
@@ -83,14 +86,19 @@ public class remove {
 				name = iH.getItemNameByID(itemID, itemType);
 				ArrayList<String> fields = new ArrayList<String>();
 				fields.add("id");
-				HashMap<String, String> data = new HashMap<String, String>();
-				data.put("itemID", "" + itemID);
-				data.put("type", "" + ((itemType == null) ? -1 : itemType));
+				
+				SelectQuery sQ = DB.select(fields);
+				sQ.from("#__items");
+				sQ.where("itemID", String.valueOf(itemID), Group.ValueType.EQUALSRAW);
+				sQ.where("type", String.valueOf(((itemType == null) ? -1 : itemType)), Group.ValueType.EQUALSRAW);
 
-				DB.select(fields).from("#__items").where(data);
-				QueryResult resSet = DB.execQuery();
-				if(resSet.size() == 1) { 
-					DB.delete("#__items").where(data).updateQuery();
+				QueryResult Qres = sQ.exec();
+				if(Qres.size() == 1) { 
+					DeleteQuery dQ = DB.delete("#__items");
+					dQ.where("itemID", String.valueOf(itemID), Group.ValueType.EQUALSRAW);
+					dQ.where("type", String.valueOf(((itemType == null) ? -1 : itemType)), Group.ValueType.EQUALSRAW);
+
+					dQ.exec();
 					Heraut.say(sender, "Item " + name + " has been successfully removed from the store!");
 					HashMap<String, String> d = new HashMap<String, String>();
 					d.put("id", String.valueOf(itemID));

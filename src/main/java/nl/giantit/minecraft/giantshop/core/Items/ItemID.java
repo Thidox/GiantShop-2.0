@@ -1,4 +1,4 @@
-package nl.giantit.minecraft.GiantShop.core.Items;
+package nl.giantit.minecraft.giantshop.core.Items;
 
 /**
  *

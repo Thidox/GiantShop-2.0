@@ -1,8 +1,9 @@
-package nl.giantit.minecraft.GiantShop.Locationer;
+package nl.giantit.minecraft.giantshop.Locationer;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.giantcore.Database.QueryResult;
-import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.database.Driver;
+import nl.giantit.minecraft.giantcore.database.QueryResult;
+
+import nl.giantit.minecraft.giantshop.GiantShop;
 
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -14,12 +15,12 @@ import java.util.ArrayList;
  * @author Giant
  */
 public class shopLoader {
-	
+
 	private GiantShop plugin;
 	private Locationer lH;
-	
+
 	private void loadShops() {
-		iDriver DB = plugin.getDB().getEngine();
+		Driver DB = plugin.getDB().getEngine();
 		ArrayList<String> fields = new ArrayList<String>();
 		fields.add("name");
 		fields.add("world");
@@ -29,8 +30,8 @@ public class shopLoader {
 		fields.add("locMaxX");
 		fields.add("locMaxY");
 		fields.add("locMaxZ");
-		
-		QueryResult QRes = DB.select(fields).from("#__shops").execQuery();
+
+		QueryResult QRes = DB.select(fields).from("#__shops").exec();
 		QueryResult.QueryRow QR;
 		while(null != (QR = QRes.getRow())) {
 			String name = QR.getString("name");
@@ -51,11 +52,11 @@ public class shopLoader {
 			lH.addShop(locs, name);
 		}
 	}
-	
+
 	public shopLoader(GiantShop plugin, Locationer lH) {
 		this.plugin = plugin;
 		this.lH = lH;
-		
+
 		this.loadShops();
 	}
 }

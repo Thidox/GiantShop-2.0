@@ -1,4 +1,4 @@
-package nl.giantit.minecraft.GiantShop.API.GSW.Server.lib;
+package nl.giantit.minecraft.giantshop.API.GSW.Server.lib;
 
 import org.apache.commons.codec.binary.Base64;
 

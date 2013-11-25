@@ -1,4 +1,4 @@
-package nl.giantit.minecraft.GiantShop.Locationer.AreaReaders;
+package nl.giantit.minecraft.giantshop.Locationer.AreaReaders;
 
 import org.bukkit.Location;
 

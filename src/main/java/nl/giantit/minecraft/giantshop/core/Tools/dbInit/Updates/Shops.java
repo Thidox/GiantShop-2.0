@@ -1,4 +1,4 @@
-package nl.giantit.minecraft.GiantShop.core.Tools.dbInit.Updates;
+package nl.giantit.minecraft.giantshop.core.Tools.dbInit.Updates;
 
 public class Shops {
 	

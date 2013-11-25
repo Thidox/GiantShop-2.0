@@ -1,16 +1,18 @@
-package nl.giantit.minecraft.GiantShop.Locationer.core.Commands.chat;
+package nl.giantit.minecraft.giantshop.Locationer.core.Commands.chat;
 
-import nl.giantit.minecraft.giantcore.Database.QueryResult;
-import nl.giantit.minecraft.giantcore.Database.QueryResult.QueryRow;
-import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.database.QueryResult;
+import nl.giantit.minecraft.giantcore.database.QueryResult.QueryRow;
+import nl.giantit.minecraft.giantcore.database.Driver;
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
+import nl.giantit.minecraft.giantcore.database.query.SelectQuery;
+import nl.giantit.minecraft.giantcore.database.query.UpdateQuery;
 import nl.giantit.minecraft.giantcore.perms.Permission;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
-import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.core.config;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.Locationer.Locationer;
+import nl.giantit.minecraft.giantshop.Misc.Misc;
+import nl.giantit.minecraft.giantshop.core.config;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -25,7 +27,7 @@ import java.util.HashMap;
 public class update {
 	
 	private static config conf = config.Obtain();
-	private static iDriver DB = GiantShop.getPlugin().getDB().getEngine();
+	private static Driver DB = GiantShop.getPlugin().getDB().getEngine();
 	private static Permission perms = GiantShop.getPlugin().getPermHandler().getEngine();
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	private static Locationer lH = GiantShop.getPlugin().getLocHandler();
@@ -57,11 +59,10 @@ public class update {
 			fields.add("locMaxY");
 			fields.add("locMaxZ");
 
-			HashMap<String, String> data = new HashMap<String, String>();
-			data.put("name", name);
-			data.put("world", world);
-
-			QueryResult QRes = DB.select(fields).from("#__shops").where(data).execQuery();
+			SelectQuery sQ = DB.select(fields).from("#__shops");
+			sQ.where("name", name);
+			sQ.where("world", world);
+			QueryResult QRes = sQ.exec();
 			if(QRes.size() > 0) {
 				QueryRow QR = QRes.getRow();
 				HashMap<String, String> res = new HashMap<String, String>();
@@ -78,13 +79,13 @@ public class update {
 				
 				stored.put(player, res);
 				
-				data = new HashMap<String, String>();
+				HashMap<String, String>data = new HashMap<String, String>();
 				data.put("shop", name);
 				data.put("world", world);
 
 				Heraut.say(player, mH.getMsg(Messages.msgType.ADMIN, "shopSelected", data));
 			}else{
-				data = new HashMap<String, String>();
+				HashMap<String, String>data = new HashMap<String, String>();
 				data.put("shop", name);
 				data.put("world", world);
 
@@ -120,8 +121,10 @@ public class update {
 				data.put("name", name);
 				data.put("world", stored.get(player).get("world"));
 
-				DB.select(fields).from("#__shops").where(data);
-				if(DB.execQuery().size() == 0) {
+				SelectQuery sQ = DB.select("id").from("#__shops");
+				sQ.where("name", name);
+				sQ.where("world", stored.get(player).get("world"));
+				if(sQ.exec().size() == 0) {
 					HashMap<String, String> p = stored.get(player);
 				
 					p.put("name", name);
@@ -308,7 +311,17 @@ public class update {
 		data.put("name", oname);
 		data.put("world", oworld);
 
-		DB.update("#__shops").set(tmp).where(data).updateQuery();
+		UpdateQuery uQ = DB.update("#__shops");
+		uQ.set("locMinX", tmp.get("locminx"), UpdateQuery.ValueType.SETRAW);
+		uQ.set("locMinY", tmp.get("locminy"), UpdateQuery.ValueType.SETRAW);
+		uQ.set("locMinZ", tmp.get("locminz"), UpdateQuery.ValueType.SETRAW);
+		uQ.set("locMinX", tmp.get("locmaxx"), UpdateQuery.ValueType.SETRAW);
+		uQ.set("locMinY", tmp.get("locmaxy"), UpdateQuery.ValueType.SETRAW);
+		uQ.set("locMinZ", tmp.get("locmaxz"), UpdateQuery.ValueType.SETRAW);
+		
+		uQ.where("name", oname);
+		uQ.where("world", oworld);
+		uQ.exec();
 		
 		lH.removeShop(oname, oworld);
 		

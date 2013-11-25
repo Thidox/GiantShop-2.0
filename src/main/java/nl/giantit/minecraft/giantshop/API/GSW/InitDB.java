@@ -1,10 +1,13 @@
-package nl.giantit.minecraft.GiantShop.API.GSW;
+package nl.giantit.minecraft.giantshop.API.GSW;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantcore.database.Driver;
+import nl.giantit.minecraft.giantcore.database.query.Column;
+import nl.giantit.minecraft.giantcore.database.query.CreateQuery;
+import nl.giantit.minecraft.giantcore.database.query.InsertQuery;
 
 /**
  *
@@ -13,65 +16,49 @@ import nl.giantit.minecraft.giantcore.Database.iDriver;
 public class InitDB {
 	
 	public static void init() {
-		iDriver db = GiantShop.getPlugin().getDB().getEngine();
+		Driver db = GiantShop.getPlugin().getDB().getEngine();
 		if(!db.tableExists("#__api_gsw_pickups")){
 			ArrayList<String> field = new ArrayList<String>();
 			field.add("tablename");
 			field.add("version");
 			
-			HashMap<Integer, HashMap<String, String>> d = new HashMap<Integer, HashMap<String, String>>();
-			HashMap<String, String> data = new HashMap<String, String>();
-			data.put("data", "log");
-			d.put(0, data);
+			InsertQuery iQ = db.insert("#__versions");
+			iQ.addFields(field);
+			iQ.addRow();
+			iQ.assignValue("tablename", "api_gsw_pickups");
+			iQ.assignValue("version", "1.0", InsertQuery.ValueType.RAW);
 			
-			data = new HashMap<String, String>();
-			data.put("data", "1.0");
-			d.put(1, data);
+			iQ.exec();
 			
-			db.insert("#__versions", field, d).Finalize();
-			db.updateQuery();
+			CreateQuery cQ = db.create("#__api_gsw_pickups");
+			Column id = cQ.addColumn("id");
+			id.setDataType(Column.DataType.INT);
+			id.setLength(3);
+			id.setAutoIncr();
+			id.setPrimaryKey();
 			
-			HashMap<String, HashMap<String, String>> fields = new HashMap<String, HashMap<String, String>>();
-			data = new HashMap<String, String>();
-			data.put("TYPE", "INT");
-			data.put("LENGTH", "3");
-			data.put("NULL", "false");
-			data.put("A_INCR", "true");
-			data.put("P_KEY", "true");
-			fields.put("id", data);
+			Column tID = cQ.addColumn("transactionID");
+			tID.setDataType(Column.DataType.VARCHAR);
+			tID.setLength(100);
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "VARCHAR");
-			data.put("LENGTH", "100");
-			data.put("NULL", "false");
-			fields.put("transactionID", data);
+			Column p = cQ.addColumn("player");
+			p.setDataType(Column.DataType.VARCHAR);
+			p.setLength(100);
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "VARCHAR");
-			data.put("LENGTH", "100");
-			data.put("NULL", "false");
-			fields.put("player", data);
+			Column a = cQ.addColumn("amount");
+			a.setDataType(Column.DataType.INT);
+			a.setLength(10);
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "INT");
-			data.put("LENGTH", "10");
-			data.put("NULL", "false");
-			fields.put("amount", data);
+			Column iID = cQ.addColumn("ItemID");
+			iID.setDataType(Column.DataType.INT);
+			iID.setLength(10);
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "INT");
-			data.put("LENGTH", "10");
-			data.put("NULL", "false");
-			fields.put("itemID", data);
+			Column iT = cQ.addColumn("itemType");
+			iT.setDataType(Column.DataType.INT);
+			iT.setLength(10);
+			iT.setNull();
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "INT");
-			data.put("LENGTH", "10");
-			data.put("NULL", "true");
-			fields.put("itemType", data);
-			
-			db.create("#__api_gsw_pickups").fields(fields).Finalize();
-			db.updateQuery();
+			cQ.exec();
 			
 			GiantShop.log.log(Level.INFO, "[GSWAPI] Store pickup table successfully created!");
 		}

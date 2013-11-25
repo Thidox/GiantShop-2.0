@@ -1,4 +1,4 @@
-package nl.giantit.minecraft.GiantShop.API.GSW.Crypt;
+package nl.giantit.minecraft.giantshop.API.GSW.Crypt;
 
 import java.security.PrivateKey;
 import java.security.PublicKey;

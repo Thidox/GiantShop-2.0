@@ -1,6 +1,6 @@
-package nl.giantit.minecraft.GiantShop.API.GSW.Server.resultHandlers;
+package nl.giantit.minecraft.giantshop.API.GSW.Server.resultHandlers;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.giantshop.GiantShop;
 
 /**
  *

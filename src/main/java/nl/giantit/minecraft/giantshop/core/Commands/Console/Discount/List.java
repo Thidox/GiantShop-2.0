@@ -1,13 +1,13 @@
-package nl.giantit.minecraft.GiantShop.core.Commands.Console.Discount;
+package nl.giantit.minecraft.giantshop.core.Commands.Console.Discount;
 
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Items.Items;
-import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discount;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.Misc.Misc;
+import nl.giantit.minecraft.giantshop.core.config;
+import nl.giantit.minecraft.giantshop.core.Items.Items;
+import nl.giantit.minecraft.giantshop.core.Tools.Discount.Discount;
 
 import org.bukkit.command.CommandSender;
 

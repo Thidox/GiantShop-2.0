@@ -1,12 +1,12 @@
-package nl.giantit.minecraft.GiantShop.core.Commands.Chat.Discount;
+package nl.giantit.minecraft.giantshop.core.Commands.Chat.Discount;
 
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
-import nl.giantit.minecraft.GiantShop.core.Items.Items;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.Misc.Misc;
+import nl.giantit.minecraft.giantshop.core.Items.ItemID;
+import nl.giantit.minecraft.giantshop.core.Items.Items;
 import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import org.bukkit.entity.Player;

@@ -1,4 +1,4 @@
-package nl.giantit.minecraft.GiantShop.core.Metrics;
+package nl.giantit.minecraft.giantshop.core.Metrics;
 
 /*
  * Copyright 2011 Tyler Blair. All rights reserved.

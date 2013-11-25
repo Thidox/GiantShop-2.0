@@ -1,8 +1,8 @@
-package nl.giantit.minecraft.GiantShop.core.Commands;
+package nl.giantit.minecraft.giantshop.core.Commands;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.core.Commands.Console.*;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.Misc.Misc;
+import nl.giantit.minecraft.giantshop.core.Commands.Console.*;
 
 import org.bukkit.command.CommandSender;
 

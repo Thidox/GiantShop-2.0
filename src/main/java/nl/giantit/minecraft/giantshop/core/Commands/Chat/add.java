@@ -1,16 +1,19 @@
-package nl.giantit.minecraft.GiantShop.core.Commands.Chat;
+package nl.giantit.minecraft.giantshop.core.Commands.Chat;
 
-import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.database.Driver;
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
+import nl.giantit.minecraft.giantcore.database.query.Group;
+import nl.giantit.minecraft.giantcore.database.query.InsertQuery;
+import nl.giantit.minecraft.giantcore.database.query.SelectQuery;
 import nl.giantit.minecraft.giantcore.perms.Permission;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
-import nl.giantit.minecraft.GiantShop.core.Items.Items;
-import nl.giantit.minecraft.GiantShop.core.Logger.Logger;
-import nl.giantit.minecraft.GiantShop.core.Logger.LoggerType;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.core.config;
+import nl.giantit.minecraft.giantshop.core.Items.ItemID;
+import nl.giantit.minecraft.giantshop.core.Items.Items;
+import nl.giantit.minecraft.giantshop.core.Logger.Logger;
+import nl.giantit.minecraft.giantshop.core.Logger.LoggerType;
 
 import org.bukkit.entity.Player;
 
@@ -88,7 +91,7 @@ public class add {
 				
 				if(GiantShop.getPlugin().getItemHandler().isValidItem(itemID, itemType)) {
 					String name = iH.getItemNameByID(itemID, itemType);
-					iDriver DB = GiantShop.getPlugin().getDB().getEngine();
+					Driver DB = GiantShop.getPlugin().getDB().getEngine();
 					
 					ArrayList<String> fields = new ArrayList<String>();
 					fields.add("id");
@@ -96,8 +99,12 @@ public class add {
 					data.put("itemID", "" + itemID);
 					data.put("type", "" + ((itemType == null) ? -1 : itemType));
 					
-					DB.select(fields).from("#__items").where(data);
-					if(DB.execQuery().size() == 0) { 
+					SelectQuery sQ = DB.select(fields);
+					sQ.from("#__items");
+					sQ.where("itemID", String.valueOf(itemID), Group.ValueType.EQUALSRAW);
+					sQ.where("type", String.valueOf(((itemType == null) ? -1 : itemType)), Group.ValueType.EQUALSRAW);
+					
+					if(sQ.exec().size() == 0) { 
 						try {
 							perStack = Integer.parseInt(args[2]);
 							sellFor = Double.parseDouble(args[3]);
@@ -129,47 +136,19 @@ public class add {
 						fields.add("maxStock");
 						fields.add("perStack");
 						fields.add("shops");
-
-						ArrayList<HashMap<Integer, HashMap<String, String>>> values = new ArrayList<HashMap<Integer, HashMap<String, String>>>();
-						HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
-						int i = 0;
-						for(String field : fields) {
-							HashMap<String, String> temp = new HashMap<String, String>();
-							if(field.equalsIgnoreCase("itemID")) {
-								temp.put("kind", "INT");
-								temp.put("data", "" + itemID);
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("type")) {
-								temp.put("kind", "INT");
-								temp.put("data", "" + ((itemType == null) ? -1 : itemType));
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("sellFor")) {
-								temp.put("data", "" + sellFor);
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("buyFor")) {
-								temp.put("data", "" + buyFor);
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("stock")) {
-								temp.put("kind", "INT");
-								temp.put("data", "" + stock);
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("maxStock")) {
-								temp.put("kind", "INT");
-								temp.put("data", "" + maxStock);
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("perStack")) {
-								temp.put("kind", "INT");
-								temp.put("data", "" + perStack);
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("shops")) {
-								temp.put("data", shops);
-								tmp.put(i, temp);
-							}
-							i++;
-						}
-						values.add(tmp);
 						
-						DB.insert("#__items", fields, values).updateQuery();
+						InsertQuery iQ = DB.insert("#__items");
+						iQ.addFields(fields);
+						iQ.addRow();
+						iQ.assignValue("itemID", String.valueOf(itemID), InsertQuery.ValueType.RAW);
+						iQ.assignValue("type", String.valueOf((itemType == null) ? -1 : itemType), InsertQuery.ValueType.RAW);
+						iQ.assignValue("sellFor", String.valueOf(sellFor), InsertQuery.ValueType.RAW);
+						iQ.assignValue("buyFor", String.valueOf(buyFor), InsertQuery.ValueType.RAW);
+						iQ.assignValue("stock", String.valueOf(stock), InsertQuery.ValueType.RAW);
+						iQ.assignValue("maxStock", String.valueOf(maxStock), InsertQuery.ValueType.RAW);
+						iQ.assignValue("perStack", String.valueOf(perStack), InsertQuery.ValueType.RAW);
+						
+						iQ.exec();
 
 						HashMap<String, String> d = new HashMap<String, String>();
 						d.put("id", String.valueOf(itemID));

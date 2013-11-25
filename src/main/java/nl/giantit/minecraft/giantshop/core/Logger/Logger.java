@@ -1,8 +1,9 @@
-package nl.giantit.minecraft.GiantShop.core.Logger;
+package nl.giantit.minecraft.giantshop.core.Logger;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.core.config;
+import nl.giantit.minecraft.giantcore.database.Driver;
+import nl.giantit.minecraft.giantcore.database.query.InsertQuery;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class Logger {
 				}
 				json += "}";
 				
-				iDriver DB = GiantShop.getPlugin().getDB().getEngine();
+				Driver DB = GiantShop.getPlugin().getDB().getEngine();
 				int t = type.getID();
 				
 				ArrayList<String> fields = new ArrayList<String>();
@@ -36,29 +37,14 @@ public class Logger {
 				fields.add("data");
 				fields.add("date");
 				
-				HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
-				i = 0;
-				for(String field : fields) {
-					HashMap<String, String> temp = new HashMap<String, String>();
-					if(field.equalsIgnoreCase("type")) {
-						temp.put("kind", "INT");
-						temp.put("data", "" + t);
-						tmp.put(i, temp);
-					}else if(field.equalsIgnoreCase("user")) {
-						temp.put("data", "" + playerName);
-						tmp.put(i, temp);
-					}else if(field.equalsIgnoreCase("data")) {
-						temp.put("data", "" + json);
-						tmp.put(i, temp);
-					}else if(field.equalsIgnoreCase("date")) {
-						temp.put("data", "" + Logger.getTimestamp());
-						tmp.put(i, temp);
-					}
-					i++;
-				}
-				values.add(tmp);
-				
-				DB.insert("#__log", fields, values).updateQuery();
+				InsertQuery iQ = DB.insert("#__log");
+				iQ.addFields(fields);
+				iQ.addRow();
+				iQ.assignValue("type", json, InsertQuery.ValueType.RAW);
+				iQ.assignValue("user", playerName);
+				iQ.assignValue("data", json);
+				iQ.assignValue("date", String.valueOf(Logger.getTimestamp()));
+				iQ.exec();
 			}
 		}
 	}

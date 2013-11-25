@@ -1,11 +1,16 @@
-package nl.giantit.minecraft.GiantShop.core.Tools.Discount;
+package nl.giantit.minecraft.giantshop.core.Tools.Discount;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.giantcore.Database.iDriver;
-import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
-import nl.giantit.minecraft.giantcore.Database.QueryResult;
-import nl.giantit.minecraft.giantcore.Database.QueryResult.QueryRow;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.core.config;
+import nl.giantit.minecraft.giantcore.database.Driver;
+import nl.giantit.minecraft.giantshop.core.Items.ItemID;
+import nl.giantit.minecraft.giantcore.database.QueryResult;
+import nl.giantit.minecraft.giantcore.database.QueryResult.QueryRow;
+import nl.giantit.minecraft.giantcore.database.query.DeleteQuery;
+import nl.giantit.minecraft.giantcore.database.query.Group;
+import nl.giantit.minecraft.giantcore.database.query.InsertQuery;
+import nl.giantit.minecraft.giantcore.database.query.SelectQuery;
+import nl.giantit.minecraft.giantcore.database.query.UpdateQuery;
 import nl.giantit.minecraft.giantcore.perms.Permission;
 
 import org.bukkit.entity.Player;
@@ -23,13 +28,18 @@ public class Discounter {
 	private Set<Discount> discounts = new HashSet<Discount>();
 	
 	private void loadDiscounts() {
-		iDriver db = plugin.getDB().getEngine();
+		Driver db = plugin.getDB().getEngine();
 		HashMap<String, String> order = new HashMap<String, String>();
 		order.put("itemID", "ASC");
 		order.put("type", "ASC");
 		order.put("id", "ASC");
 		
-		QueryResult QRes = db.select("*").from("#__discounts").orderBy(order).execQuery();
+		SelectQuery sQ = db.select("*");
+		sQ.from("#__discounts");
+		sQ.orderBy("ItemID", SelectQuery.Order.ASC);
+		sQ.orderBy("type", SelectQuery.Order.ASC);
+		sQ.orderBy("id", SelectQuery.Order.ASC);
+		QueryResult QRes = sQ.exec();
 		QueryResult.QueryRow QR;
 		while(null != (QR = QRes.getRow())) {
 			int id = QR.getInt("id");
@@ -80,7 +90,7 @@ public class Discounter {
 		if(exists) {
 			return 1;
 		}else{
-			iDriver db = plugin.getDB().getEngine();
+			Driver db = plugin.getDB().getEngine();
 			ArrayList<String> fields = new ArrayList<String>();
 			fields.add("itemID");
 			fields.add("type");
@@ -92,40 +102,30 @@ public class Discounter {
 				fields.add("grp");
 			}
 			
-			HashMap<Integer, HashMap<String, String>> values = new HashMap<Integer, HashMap<String, String>>();
-			for(int i = 0; i < fields.size(); i++) {
-				String field = fields.get(i);
-				HashMap<String, String> value = new HashMap<String, String>();
-				
-				if(field.equalsIgnoreCase("itemID")) {
-					value.put("kind", "INT");
-					value.put("data", "" + iID.getId());
-				}else if(field.equalsIgnoreCase("type")) {
-					value.put("kind", "INT");
-					value.put("data", "" + ((iID.getType() == null) ? -1 : iID.getType()));
-				}else if(field.equalsIgnoreCase("discount")) {
-					value.put("kind", "INT");
-					value.put("data", "" + disc);
-				}else if(field.equalsIgnoreCase("user")) {
-					value.put("data", "" + data);
-				}else if(field.equalsIgnoreCase("grp")) {
-					value.put("data", "" + data);
-				}
-				
-				values.put(i, value);
-			}
-			
-			db.insert("#__discounts", fields, values).updateQuery();
-			HashMap<String, String> where = new HashMap<String, String>();
-			if(group) {
-				where.put("grp", data);
+			InsertQuery iQ = db.insert("#__discounts");
+			iQ.addFields(fields);
+			iQ.addRow();
+			iQ.assignValue("itemID", String.valueOf(iID.getId()), InsertQuery.ValueType.RAW);
+			iQ.assignValue("type", String.valueOf(((iID.getType() == null) ? -1 : iID.getType())), InsertQuery.ValueType.RAW);
+			iQ.assignValue("discount", String.valueOf(disc), InsertQuery.ValueType.RAW);
+			if(!group) {
+				iQ.assignValue("user", data);
 			}else{
-				where.put("user", data);
+				iQ.assignValue("grp", data);
 			}
-			where.put("itemID", "" + iID.getId());
-			where.put("type", "" + ((iID.getType() == null) ? -1 : iID.getType()));
+			iQ.exec();
 			
-			QueryResult QRes = db.select("id").from("#__discounts").where(where).execQuery();
+			SelectQuery sQ = db.select("id");
+			sQ.from("#__discounts");
+			sQ.where("itemID", String.valueOf(iID.getId()), Group.ValueType.EQUALSRAW);
+			sQ.where("type", String.valueOf(((iID.getType() == null) ? -1 : iID.getType())), Group.ValueType.EQUALSRAW);
+			if(group) {
+				sQ.where("grp", data);
+			}else{
+				sQ.where("user", data);
+			}
+			
+			QueryResult QRes = sQ.exec();
 			QueryRow QR = QRes.getRow();
 			int id = QR.getInt("id");
 			if(group) {
@@ -151,21 +151,11 @@ public class Discounter {
 		if(d == null) {
 			return 1;
 		}else{
-			iDriver db = plugin.getDB().getEngine();
-			
-			HashMap<String, HashMap<String, String>> where = new HashMap<String, HashMap<String, String>>();
-			HashMap<String, String> data = new HashMap<String, String>();
-			data.put("kind", "INT");
-			data.put("data", "" + discountID);
-			where.put("id", data);
-			
-			HashMap<String, HashMap<String, String>> set = new HashMap<String, HashMap<String, String>>();
-			data = new HashMap<String, String>();
-			data.put("kind", "INT");
-			data.put("data", "" + newDiscount);
-			set.put("discount", data);
-			
-			db.update("#__discounts").set(set, true).where(where, true).updateQuery();
+			Driver db = plugin.getDB().getEngine();
+			UpdateQuery uQ = db.update("#__discounts");
+			uQ.set("discount", String.valueOf(newDiscount), UpdateQuery.ValueType.SETRAW);
+			uQ.where("id", String.valueOf(discountID), Group.ValueType.EQUALSRAW);
+			uQ.exec();
 			d.setDiscount(newDiscount);
 			return 0;
 		}
@@ -184,16 +174,11 @@ public class Discounter {
 		if(d == null) {
 			return 1;
 		}else{
-			iDriver db = plugin.getDB().getEngine();
-			
-			HashMap<String, HashMap<String, String>> where = new HashMap<String, HashMap<String, String>>();
-			HashMap<String, String> data = new HashMap<String, String>();
-			data.put("kind", "INT");
-			data.put("data", "" + discountID);
-			where.put("id", data);
-			
+			Driver db = plugin.getDB().getEngine();
 			this.discounts.remove(d);
-			db.delete("#__discounts").where(where, true).updateQuery();
+			DeleteQuery dQ = db.delete("#__discounts");
+			dQ.where("id", String.valueOf(discountID), Group.ValueType.EQUALSRAW);
+			dQ.exec();
 			return 0;
 		}
 	}

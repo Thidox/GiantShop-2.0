@@ -1,7 +1,7 @@
-package nl.giantit.minecraft.GiantShop.core.Updater.Config;
+package nl.giantit.minecraft.giantshop.core.Updater.Config;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.Updater.iUpdater;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.core.Updater.iUpdater;
 
 import org.bukkit.configuration.file.FileConfiguration;
 

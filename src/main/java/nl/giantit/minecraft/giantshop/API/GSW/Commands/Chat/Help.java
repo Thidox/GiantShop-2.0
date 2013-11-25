@@ -1,12 +1,12 @@
-package nl.giantit.minecraft.GiantShop.API.GSW.Commands.Chat;
+package nl.giantit.minecraft.giantshop.API.GSW.Commands.Chat;
 
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
 import nl.giantit.minecraft.giantcore.perms.Permission;
 
-import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.config;
+import nl.giantit.minecraft.giantshop.API.GiantShopAPI;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.core.config;
 
 import org.bukkit.entity.Player;
 

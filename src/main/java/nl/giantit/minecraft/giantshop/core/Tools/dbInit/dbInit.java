@@ -1,9 +1,12 @@
-package nl.giantit.minecraft.GiantShop.core.Tools.dbInit;
+package nl.giantit.minecraft.giantshop.core.Tools.dbInit;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.giantcore.Database.iDriver;
-import nl.giantit.minecraft.GiantShop.core.Tools.dbInit.Updates.*;
-import nl.giantit.minecraft.giantcore.Database.QueryResult;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantcore.database.Driver;
+import nl.giantit.minecraft.giantshop.core.Tools.dbInit.Updates.*;
+import nl.giantit.minecraft.giantcore.database.QueryResult;
+import nl.giantit.minecraft.giantcore.database.query.Column;
+import nl.giantit.minecraft.giantcore.database.query.CreateQuery;
+import nl.giantit.minecraft.giantcore.database.query.InsertQuery;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +14,7 @@ import java.util.logging.Level;
 
 public class dbInit {
 	
-	private iDriver dbDriver;
+	private Driver dbDriver;
 	private double curS = 1.0, curI = 1.1, curD = 1.2, curL = 1.1;
 
 	private void init() {
@@ -29,8 +32,16 @@ public class dbInit {
 			data.put("DEFAULT", "1.0");
 			fields.put("version", data);
 			
-			this.dbDriver.create("#__versions").fields(fields).Finalize();
-			this.dbDriver.updateQuery();
+			CreateQuery cQ = this.dbDriver.create("#__versions");
+			Column tN = cQ.addColumn("tableName");
+			tN.setDataType(Column.DataType.VARCHAR);
+			tN.setLength(100);
+			
+			Column v = cQ.addColumn("version");
+			v.setDataType(Column.DataType.DOUBLE);
+			v.setRawDefault("1.0");
+			
+			cQ.exec();
 			
 			GiantShop.log.log(Level.INFO, "Revisions table successfully created!");
 		}
@@ -40,54 +51,40 @@ public class dbInit {
 			field.add("tablename");
 			field.add("version");
 			
-			HashMap<Integer, HashMap<String, String>> d = new HashMap<Integer, HashMap<String, String>>();
-			HashMap<String, String> data = new HashMap<String, String>();
-			data.put("data", "log");
-			d.put(0, data);
+			InsertQuery iQ = this.dbDriver.insert("#__versions");
+			iQ.addFields(field);
+			iQ.addRow();
+			iQ.assignValue("tablename", "log");
+			iQ.assignValue("version", "1.1", InsertQuery.ValueType.RAW);
+			iQ.exec();
 			
-			data = new HashMap<String, String>();
-			data.put("data", "1.1");
-			d.put(1, data);
+			CreateQuery cQ = this.dbDriver.create("#__log");
+			Column id = cQ.addColumn("id");
+			id.setDataType(Column.DataType.INT);
+			id.setLength(3);
+			id.setAutoIncr();
+			id.setPrimaryKey();
 			
-			this.dbDriver.insert("#__versions", field, d).Finalize();
-			this.dbDriver.updateQuery();
+			Column t = cQ.addColumn("type");
+			t.setDataType(Column.DataType.INT);
+			t.setLength(3);
+			t.setNull();
 			
-			HashMap<String, HashMap<String, String>> fields = new HashMap<String, HashMap<String, String>>();
-			data = new HashMap<String, String>();
-			data.put("TYPE", "INT");
-			data.put("LENGTH", "3");
-			data.put("NULL", "false");
-			data.put("A_INCR", "true");
-			data.put("P_KEY", "true");
-			fields.put("id", data);
+			Column u = cQ.addColumn("user");
+			u.setDataType(Column.DataType.VARCHAR);
+			u.setLength(100);
+			u.setNull();
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "INT");
-			data.put("LENGTH", "3");
-			data.put("NULL", "true");
-			fields.put("type", data);
+			Column da = cQ.addColumn("data");
+			da.setDataType(Column.DataType.TEXT);
+			da.setNull();
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "VARCHAR");
-			data.put("LENGTH", "100");
-			data.put("NULL", "true");
-			fields.put("user", data);
+			Column de = cQ.addColumn("date");
+			de.setDataType(Column.DataType.BIGINT);
+			de.setLength(50);
+			de.setRawDefault("0");
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "TEXT");
-			data.put("LENGTH", null);
-			data.put("NULL", "true");
-			fields.put("data", data);
-			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "BIGINT");
-			data.put("LENGTH", "50");
-			data.put("NULL", "false");
-			data.put("DEFAULT", "0");
-			fields.put("date", data);
-			
-			this.dbDriver.create("#__log").fields(fields).Finalize();
-			this.dbDriver.updateQuery();
+			cQ.exec();
 			
 			GiantShop.log.log(Level.INFO, "Logging table successfully created!");
 		}
@@ -97,77 +94,53 @@ public class dbInit {
 			field.add("tablename");
 			field.add("version");
 			
-			HashMap<Integer, HashMap<String, String>> d = new HashMap<Integer, HashMap<String, String>>();
-			HashMap<String, String> data = new HashMap<String, String>();
-			data.put("data", "shops");
-			d.put(0, data);
+			InsertQuery iQ = this.dbDriver.insert("#__versions");
+			iQ.addFields(field);
+			iQ.addRow();
+			iQ.assignValue("tablename", "shops");
+			iQ.assignValue("version", "1.0", InsertQuery.ValueType.RAW);
+			iQ.exec();
 			
-			data = new HashMap<String, String>();
-			data.put("data", "1.0");
-			d.put(1, data);
+			CreateQuery cQ = this.dbDriver.create("#__shops");
+			Column id = cQ.addColumn("id");
+			id.setDataType(Column.DataType.INT);
+			id.setLength(3);
+			id.setAutoIncr();
+			id.setPrimaryKey();
 			
-			this.dbDriver.insert("#__versions", field, d).Finalize();
-			this.dbDriver.updateQuery();
+			Column t = cQ.addColumn("type");
+			t.setDataType(Column.DataType.INT);
+			t.setLength(3);
+			t.setNull();
 			
-			HashMap<String, HashMap<String, String>> fields = new HashMap<String, HashMap<String, String>>();
-			data = new HashMap<String, String>();
-			data.put("TYPE", "INT");
-			data.put("LENGTH", "3");
-			data.put("NULL", "false");
-			data.put("A_INCR", "true");
-			data.put("P_KEY", "true");
-			fields.put("id", data);
+			Column u = cQ.addColumn("name");
+			u.setDataType(Column.DataType.VARCHAR);
+			u.setLength(100);
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "VARCHAR");
-			data.put("LENGTH", "100");
-			data.put("NULL", "false");
-			fields.put("name", data);
+			Column w = cQ.addColumn("world");
+			w.setDataType(Column.DataType.VARCHAR);
+			w.setLength(100);
+			w.setNull();
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "VARCHAR");
-			data.put("LENGTH", "100");
-			data.put("NULL", "true");
-			fields.put("world", data);
+			Column lmX = cQ.addColumn("LocMinX");
+			lmX.setDataType(Column.DataType.DOUBLE);
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
-			data.put("LENGTH", null);
-			data.put("NULL", "false");
-			fields.put("locMinX", data);
+			Column lmY = cQ.addColumn("LocMinY");
+			lmY.setDataType(Column.DataType.DOUBLE);
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
-			data.put("LENGTH", null);
-			data.put("NULL", "false");
-			fields.put("locMinY", data);
+			Column lmZ = cQ.addColumn("LocMinZ");
+			lmZ.setDataType(Column.DataType.DOUBLE);
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
-			data.put("LENGTH", null);
-			data.put("NULL", "false");
-			fields.put("locMinZ", data);
+			Column lMX = cQ.addColumn("LocMaxX");
+			lMX.setDataType(Column.DataType.DOUBLE);
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
-			data.put("LENGTH", null);
-			data.put("NULL", "false");
-			fields.put("locMaxX", data);
+			Column lMY = cQ.addColumn("LocMaxY");
+			lMY.setDataType(Column.DataType.DOUBLE);
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
-			data.put("LENGTH", null);
-			data.put("NULL", "false");
-			fields.put("locMaxY", data);
+			Column lMZ = cQ.addColumn("LocMaxZ");
+			lMZ.setDataType(Column.DataType.DOUBLE);
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
-			data.put("LENGTH", null);
-			data.put("NULL", "false");
-			fields.put("locMaxZ", data);
-			
-			this.dbDriver.create("#__shops").fields(fields).Finalize();
-			this.dbDriver.updateQuery();
+			cQ.exec();
 			
 			GiantShop.log.log(Level.INFO, "Shops table successfully created!");
 		}
@@ -177,71 +150,54 @@ public class dbInit {
 			field.add("tablename");
 			field.add("version");
 			
-			HashMap<Integer, HashMap<String, String>> d = new HashMap<Integer, HashMap<String, String>>();
-			HashMap<String, String> data = new HashMap<String, String>();
-			data.put("data", "items");
-			d.put(0, data);
+			InsertQuery iQ = this.dbDriver.insert("#__versions");
+			iQ.addFields(field);
+			iQ.addRow();
+			iQ.assignValue("tablename", "items");
+			iQ.assignValue("version", "1.0", InsertQuery.ValueType.RAW);
+			iQ.exec();
 			
-			data = new HashMap<String, String>();
-			data.put("data", "1.0");
-			d.put(1, data);
+			CreateQuery cQ = this.dbDriver.create("#__items");
+			Column id = cQ.addColumn("id");
+			id.setDataType(Column.DataType.INT);
+			id.setLength(3);
+			id.setAutoIncr();
+			id.setPrimaryKey();
 			
-			this.dbDriver.insert("#__versions", field, d).Finalize();
-			this.dbDriver.updateQuery();
+			Column iID = cQ.addColumn("itemID");
+			iID.setDataType(Column.DataType.INT);
+			iID.setLength(3);
 			
-			HashMap<String, HashMap<String, String>> fields = new HashMap<String, HashMap<String, String>>();
-			data = new HashMap<String, String>();
-			data.put("TYPE", "INT");
-			data.put("LENGTH", "3");
-			data.put("NULL", "false");
-			data.put("A_INCR", "true");
-			data.put("P_KEY", "true");
-			fields.put("id", data);
+			Column t = cQ.addColumn("type");
+			t.setDataType(Column.DataType.INT);
+			t.setLength(3);
+			t.setRawDefault("-1");
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "INT");
-			data.put("LENGTH", "3");
-			data.put("NULL", "false");
-			fields.put("itemID", data);
+			Column sF = cQ.addColumn("sellFor");
+			sF.setDataType(Column.DataType.DOUBLE);
+			sF.setRawDefault("-1");
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "INT");
-			data.put("LENGTH", "3");
-			data.put("DEFAULT", "-1");
-			fields.put("type", data);
+			Column bF = cQ.addColumn("buyFor");
+			bF.setDataType(Column.DataType.DOUBLE);
+			bF.setRawDefault("-1");
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
-			data.put("LENGTH", null);
-			data.put("DEFAULT", "-1");
-			fields.put("sellFor", data);
+			Column s = cQ.addColumn("stock");
+			s.setDataType(Column.DataType.INT);
+			s.setLength(3);
+			s.setRawDefault("-1");
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "DOUBLE");
-			data.put("LENGTH", null);
-			data.put("DEFAULT", "-1");
-			fields.put("buyFor", data);
+			Column pS = cQ.addColumn("perStack");
+			pS.setDataType(Column.DataType.INT);
+			pS.setLength(3);
+			pS.setRawDefault("1");
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "INT");
-			data.put("LENGTH", null);
-			data.put("DEFAULT", "-1");
-			fields.put("stock", data);
+			Column sh = cQ.addColumn("shops");
+			sh.setDataType(Column.DataType.VARCHAR);
+			sh.setLength(100);
+			sh.setNull();
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "INT");
-			data.put("LENGTH", "3");
-			data.put("DEFAULT", "1");
-			fields.put("perStack", data);
+			cQ.exec();
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "VARCHAR");
-			data.put("LENGTH", "100");
-			data.put("NULL", "true");
-			fields.put("shops", data);
-			
-			this.dbDriver.create("#__items").fields(fields).Finalize();
-			this.dbDriver.updateQuery();
 			
 			GiantShop.log.log(Level.INFO, "Items table successfully created!");
 		}
@@ -251,60 +207,52 @@ public class dbInit {
 			field.add("tablename");
 			field.add("version");
 			
-			HashMap<Integer, HashMap<String, String>> d = new HashMap<Integer, HashMap<String, String>>();
-			HashMap<String, String> data = new HashMap<String, String>();
-			data.put("data", "discounts");
-			d.put(0, data);
+			InsertQuery iQ = this.dbDriver.insert("#__versions");
+			iQ.addFields(field);
+			iQ.addRow();
+			iQ.assignValue("tablename", "discounts");
+			iQ.assignValue("version", "1.2", InsertQuery.ValueType.RAW);
+			iQ.exec();
 			
-			data = new HashMap<String, String>();
-			data.put("data", "1.0");
-			d.put(1, data);
+			CreateQuery cQ = this.dbDriver.create("#__discounts");
+			Column id = cQ.addColumn("id");
+			id.setDataType(Column.DataType.INT);
+			id.setLength(3);
+			id.setAutoIncr();
+			id.setPrimaryKey();
 			
-			this.dbDriver.insert("#__versions", field, d).Finalize();
-			this.dbDriver.updateQuery();
+			Column iID = cQ.addColumn("itemID");
+			iID.setDataType(Column.DataType.INT);
+			iID.setLength(3);
 			
-			HashMap<String, HashMap<String, String>> fields = new HashMap<String, HashMap<String, String>>();
-			data = new HashMap<String, String>();
-			data.put("TYPE", "INT");
-			data.put("LENGTH", "3");
-			data.put("NULL", "false");
-			data.put("A_INCR", "true");
-			data.put("P_KEY", "true");
-			fields.put("id", data);
+			Column t = cQ.addColumn("type");
+			t.setDataType(Column.DataType.INT);
+			t.setLength(3);
+			t.setRawDefault("-1");
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "INT");
-			data.put("LENGTH", "3");
-			data.put("NULL", "false");
-			fields.put("itemID", data);
+			Column d = cQ.addColumn("discount");
+			d.setDataType(Column.DataType.INT);
+			d.setLength(3);
+			d.setRawDefault("10");
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "INT");
-			data.put("LENGTH", "3");
-			data.put("DEFAULT", "10");
-			fields.put("discount", data);
+			Column u = cQ.addColumn("user");
+			u.setDataType(Column.DataType.VARCHAR);
+			u.setLength(100);
+			u.setNull();
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "VARCHAR");
-			data.put("LENGTH", "100");
-			data.put("NULL", "true");
-			fields.put("user", data);
+			Column grp = cQ.addColumn("itemID");
+			grp.setDataType(Column.DataType.VARCHAR);
+			grp.setLength(100);
+			grp.setNull();
 			
-			data = new HashMap<String, String>();
-			data.put("TYPE", "VARCHAR");
-			data.put("LENGTH", "100");
-			data.put("NULL", "true");
-			fields.put("`group`", data);
-			
-			this.dbDriver.create("#__discounts").fields(fields).Finalize();
-			this.dbDriver.updateQuery();
+			cQ.exec();
 			
 			GiantShop.log.log(Level.INFO, "Discounts type table successfully created!");
 		}
 	}
 	
 	private void checkUpdate() {
-		QueryResult QRes = this.dbDriver.select("tablename", "version").from("#__versions").execQuery();
+		QueryResult QRes = this.dbDriver.select("tablename", "version").from("#__versions").exec();
 		
 		QueryResult.QueryRow QR;
 		while(null != (QR = QRes.getRow())) {

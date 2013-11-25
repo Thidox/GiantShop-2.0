@@ -1,19 +1,22 @@
-package nl.giantit.minecraft.GiantShop.Locationer.core.Commands.chat;
+package nl.giantit.minecraft.giantshop.Locationer.core.Commands.chat;
 
-import nl.giantit.minecraft.giantcore.Database.iDriver;
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
+import nl.giantit.minecraft.giantcore.database.Driver;
+import nl.giantit.minecraft.giantcore.database.query.InsertQuery;
+import nl.giantit.minecraft.giantcore.database.query.SelectQuery;
 import nl.giantit.minecraft.giantcore.perms.Permission;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
-import nl.giantit.minecraft.GiantShop.core.config;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.Locationer.Locationer;
+import nl.giantit.minecraft.giantshop.core.config;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -69,17 +72,13 @@ public class add {
 			Location l2 = new Location(loc1.getWorld(), maxX, maxY, maxZ);
 			
 			if(!lH.inShop(l) && !lH.inShop(l2)) {
-				iDriver DB = GiantShop.getPlugin().getDB().getEngine();
+				Driver DB = GiantShop.getPlugin().getDB().getEngine();
 
-				ArrayList<String> fields = new ArrayList<String>();
-				fields.add("id");
-				HashMap<String, String> data = new HashMap<String, String>();
-				data.put("name", name);
-				data.put("world", loc1.getWorld().getName());
-
-				DB.select(fields).from("#__shops").where(data);
-				if(DB.execQuery().size() == 0) {
-					fields = new ArrayList<String>();
+				SelectQuery sQ = DB.select("id").from("#__shops");
+				sQ.where("name", name);
+				sQ.where("world", loc1.getWorld().getName());
+				if(sQ.exec().size() == 0) {
+					List<String> fields = new ArrayList<String>();
 					fields.add("name");
 					fields.add("world");
 					fields.add("locMinX");
@@ -88,45 +87,22 @@ public class add {
 					fields.add("locMaxX");
 					fields.add("locMaxY");
 					fields.add("locMaxZ");
+					
+					InsertQuery iQ = DB.insert("#__shops");
+					iQ.addFields(fields);
+					iQ.addRow();
+					iQ.assignValue("name", name);
+					iQ.assignValue("world", loc1.getWorld().getName());
+					iQ.assignValue("locMinX", String.valueOf(minX), InsertQuery.ValueType.RAW);
+					iQ.assignValue("locMinY", String.valueOf(minY), InsertQuery.ValueType.RAW);
+					iQ.assignValue("locMinZ", String.valueOf(minZ), InsertQuery.ValueType.RAW);
+					iQ.assignValue("locMaxX", String.valueOf(maxX), InsertQuery.ValueType.RAW);
+					iQ.assignValue("locMaxY", String.valueOf(maxY), InsertQuery.ValueType.RAW);
+					iQ.assignValue("locMaxZ", String.valueOf(maxZ), InsertQuery.ValueType.RAW);
+					
+					iQ.exec();
 
-					ArrayList<HashMap<Integer, HashMap<String, String>>> values = new ArrayList<HashMap<Integer, HashMap<String, String>>>();
-					HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
-					HashMap<String, String> temp = new HashMap<String, String>();
-					temp.put("data", name);
-					tmp.put(0, temp);
-
-					temp = new HashMap<String, String>();
-					temp.put("data", loc1.getWorld().getName());
-					tmp.put(1, temp);
-
-					temp = new HashMap<String, String>();
-					temp.put("data", String.valueOf(minX));
-					tmp.put(2, temp);
-
-					temp = new HashMap<String, String>();
-					temp.put("data", String.valueOf(minY));
-					tmp.put(3, temp);
-
-					temp = new HashMap<String, String>();
-					temp.put("data", String.valueOf(minZ));
-					tmp.put(4, temp);
-
-					temp = new HashMap<String, String>();
-					temp.put("data", String.valueOf(maxX));
-					tmp.put(5, temp);
-
-					temp = new HashMap<String, String>();
-					temp.put("data", String.valueOf(maxY));
-					tmp.put(6, temp);
-
-					temp = new HashMap<String, String>();
-					temp.put("data", String.valueOf(maxZ));
-					tmp.put(7, temp);
-
-					values.add(tmp);
-					DB.insert("#__shops", fields, values).updateQuery();
-
-					data = new HashMap<String, String>();
+					HashMap<String, String> data = new HashMap<String, String>();
 					data.put("shop", name);
 					data.put("world", loc1.getWorld().getName());
 					data.put("minX", String.valueOf(minX));
@@ -144,7 +120,7 @@ public class add {
 					lH.remPlayerPoint(player);
 					Heraut.say(player, mH.getMsg(Messages.msgType.ADMIN, "shopAdded", data));
 				}else{
-					data = new HashMap<String, String>();
+					HashMap<String, String> data = new HashMap<String, String>();
 					data.put("shop", name);
 					data.put("world", loc1.getWorld().getName());
 

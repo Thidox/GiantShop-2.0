@@ -1,22 +1,25 @@
-package nl.giantit.minecraft.GiantShop.core.Commands.Chat;
+package nl.giantit.minecraft.giantshop.core.Commands.Chat;
 
-import nl.giantit.minecraft.giantcore.Database.QueryResult;
-import nl.giantit.minecraft.giantcore.Database.QueryResult.QueryRow;
-import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.database.QueryResult;
+import nl.giantit.minecraft.giantcore.database.QueryResult.QueryRow;
+import nl.giantit.minecraft.giantcore.database.Driver;
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
+import nl.giantit.minecraft.giantcore.database.query.Group;
+import nl.giantit.minecraft.giantcore.database.query.SelectQuery;
+import nl.giantit.minecraft.giantcore.database.query.UpdateQuery;
 import nl.giantit.minecraft.giantcore.perms.Permission;
 
-import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
-import nl.giantit.minecraft.GiantShop.API.stock.Events.MaxStockUpdateEvent;
-import nl.giantit.minecraft.GiantShop.API.stock.Events.StockUpdateEvent;
-import nl.giantit.minecraft.GiantShop.API.stock.ItemNotFoundException;
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.Items.ItemID;
-import nl.giantit.minecraft.GiantShop.core.Items.Items;
-import nl.giantit.minecraft.GiantShop.core.Logger.Logger;
-import nl.giantit.minecraft.GiantShop.core.Logger.LoggerType;
-import nl.giantit.minecraft.GiantShop.core.config;
+import nl.giantit.minecraft.giantshop.API.GiantShopAPI;
+import nl.giantit.minecraft.giantshop.API.stock.Events.MaxStockUpdateEvent;
+import nl.giantit.minecraft.giantshop.API.stock.Events.StockUpdateEvent;
+import nl.giantit.minecraft.giantshop.API.stock.ItemNotFoundException;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.core.Items.ItemID;
+import nl.giantit.minecraft.giantshop.core.Items.Items;
+import nl.giantit.minecraft.giantshop.core.Logger.Logger;
+import nl.giantit.minecraft.giantshop.core.Logger.LoggerType;
+import nl.giantit.minecraft.giantshop.core.config;
 
 import org.bukkit.entity.Player;
 
@@ -31,7 +34,7 @@ import java.util.logging.Level;
 public class update {
 	
 	private static config conf = config.Obtain();
-	private static iDriver DB = GiantShop.getPlugin().getDB().getEngine();
+	private static Driver DB = GiantShop.getPlugin().getDB().getEngine();
 	private static Permission perms = GiantShop.getPlugin().getPermHandler().getEngine();
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	private static Items iH = GiantShop.getPlugin().getItemHandler();
@@ -94,13 +97,13 @@ public class update {
 			fields.add("maxStock");
 			fields.add("perStack");
 			fields.add("shops");
-			
-			HashMap<String, String> data = new HashMap<String, String>();
-			data.put("itemID", "" + itemID);
-			data.put("type", "" + ((itemType == null) ? -1 : itemType));
 
-			DB.select(fields).from("#__items").where(data);
-			QueryResult QRes = DB.execQuery();
+			SelectQuery sQ = DB.select(fields);
+			sQ.from("#__items");
+			sQ.where("itemID", String.valueOf(itemID), Group.ValueType.EQUALSRAW);
+			sQ.where("type", String.valueOf(((itemType == null) ? -1 : itemType)), Group.ValueType.EQUALSRAW);
+
+			QueryResult QRes = sQ.exec();
 			if(QRes.size() == 1) {
 				QueryRow QR = QRes.getRow();
 				HashMap<String, String> tmp = new HashMap<String, String>();
@@ -285,7 +288,17 @@ public class update {
 			data.put("itemID", "" + itemID);
 			data.put("type", "" + ((itemType == null) ? -1 : itemType));
 			
-			DB.update("#__items").set(tmp).where(data).updateQuery();
+			UpdateQuery uQ = DB.update("#__items");
+			uQ.set("sellFor", tmp.get("sellFor"), UpdateQuery.ValueType.SETRAW);
+			uQ.set("buyFor", tmp.get("buyFor"), UpdateQuery.ValueType.SETRAW);
+			uQ.set("perStack", tmp.get("perStack"), UpdateQuery.ValueType.SETRAW);
+			uQ.set("stock", tmp.get("stock"), UpdateQuery.ValueType.SETRAW);
+			uQ.set("maxStock", tmp.get("maxStock"), UpdateQuery.ValueType.SETRAW);
+
+			uQ.where("itemID", String.valueOf(itemID), Group.ValueType.EQUALSRAW);
+			uQ.where("type", String.valueOf(((itemType == null) ? -1 : itemType)), Group.ValueType.EQUALSRAW);
+			uQ.exec();
+			
 			Heraut.say(player, "You have successfully updated " + name + "!");
 			HashMap<String, String> d = new HashMap<String, String>();
 			d.put("id", String.valueOf(itemID));

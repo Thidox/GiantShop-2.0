@@ -1,4 +1,4 @@
-package nl.giantit.minecraft.GiantShop.Locationer.core.Commands.console;
+package nl.giantit.minecraft.giantshop.Locationer.core.Commands.console;
 
 import org.bukkit.command.CommandSender;
 

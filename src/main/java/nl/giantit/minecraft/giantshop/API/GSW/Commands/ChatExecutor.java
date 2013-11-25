@@ -1,14 +1,14 @@
-package nl.giantit.minecraft.GiantShop.API.GSW.Commands;
+package nl.giantit.minecraft.giantshop.API.GSW.Commands;
 
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 
-import nl.giantit.minecraft.GiantShop.API.GSL.GSLAPI;
-import nl.giantit.minecraft.GiantShop.API.GSW.Commands.Chat.Help;
-import nl.giantit.minecraft.GiantShop.API.GSW.Commands.Chat.Pick;
-import nl.giantit.minecraft.GiantShop.API.GSW.Commands.Chat.Register;
-import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
-import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.core.Commands.Chat.Discount.List;
+import nl.giantit.minecraft.giantshop.API.GSL.GSLAPI;
+import nl.giantit.minecraft.giantshop.API.GSW.Commands.Chat.Help;
+import nl.giantit.minecraft.giantshop.API.GSW.Commands.Chat.Pick;
+import nl.giantit.minecraft.giantshop.API.GSW.Commands.Chat.Register;
+import nl.giantit.minecraft.giantshop.API.GiantShopAPI;
+import nl.giantit.minecraft.giantshop.Misc.Misc;
+import nl.giantit.minecraft.giantshop.core.Commands.Chat.Discount.List;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

@@ -1,7 +1,7 @@
-package nl.giantit.minecraft.GiantShop.API.GSW.Listeners;
+package nl.giantit.minecraft.giantshop.API.GSW.Listeners;
 
-import nl.giantit.minecraft.GiantShop.API.GSW.GSWAPI;
-import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.giantshop.API.GSW.GSWAPI;
+import nl.giantit.minecraft.giantshop.GiantShop;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

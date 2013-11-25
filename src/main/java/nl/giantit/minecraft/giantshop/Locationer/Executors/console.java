@@ -1,6 +1,6 @@
-package nl.giantit.minecraft.GiantShop.Locationer.Executors;
+package nl.giantit.minecraft.giantshop.Locationer.Executors;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.giantshop.GiantShop;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

@@ -1,12 +1,12 @@
-package nl.giantit.minecraft.GiantShop.API.GSW.Commands.Chat.Pickup;
+package nl.giantit.minecraft.giantshop.API.GSW.Commands.Chat.Pickup;
 
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
 import nl.giantit.minecraft.giantcore.perms.Permission;
 
-import nl.giantit.minecraft.GiantShop.API.GSW.GSWAPI;
-import nl.giantit.minecraft.GiantShop.API.GSW.PickupQueue;
-import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.giantshop.API.GSW.GSWAPI;
+import nl.giantit.minecraft.giantshop.API.GSW.PickupQueue;
+import nl.giantit.minecraft.giantshop.GiantShop;
 
 import org.bukkit.entity.Player;
 

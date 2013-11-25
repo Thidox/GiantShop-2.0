@@ -1,12 +1,12 @@
-package nl.giantit.minecraft.GiantShop.API.GSW.Commands.Console;
+package nl.giantit.minecraft.giantshop.API.GSW.Commands.Console;
 
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
 
-import nl.giantit.minecraft.GiantShop.API.GSW.GSWAPI;
-import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
-import nl.giantit.minecraft.GiantShop.API.conf;
-import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.giantshop.API.GSW.GSWAPI;
+import nl.giantit.minecraft.giantshop.API.GiantShopAPI;
+import nl.giantit.minecraft.giantshop.API.conf;
+import nl.giantit.minecraft.giantshop.GiantShop;
 import org.bukkit.command.CommandSender;
 
 /**

@@ -1,13 +1,14 @@
-package nl.giantit.minecraft.GiantShop.core.Commands.Console;
+package nl.giantit.minecraft.giantshop.core.Commands.Console;
 
-import nl.giantit.minecraft.giantcore.Database.QueryResult;
-import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.database.QueryResult;
+import nl.giantit.minecraft.giantcore.database.Driver;
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
+import nl.giantit.minecraft.giantcore.database.query.InsertQuery;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.core.Items.Items;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.Misc.Misc;
+import nl.giantit.minecraft.giantshop.core.Items.Items;
 
 import org.bukkit.command.CommandSender;
 
@@ -22,7 +23,7 @@ import java.util.logging.Level;
  */
 public class impexp {
 	
-	private static iDriver DB = GiantShop.getPlugin().getDB().getEngine();
+	private static Driver DB = GiantShop.getPlugin().getDB().getEngine();
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	private static Items iH = GiantShop.getPlugin().getItemHandler();
 	
@@ -105,7 +106,8 @@ public class impexp {
 					fields.add("perStack");
 					fields.add("shops");
 					
-					values = new ArrayList<HashMap<Integer, HashMap<String, String>>>();
+					InsertQuery iQ = DB.insert("#__items");
+					iQ.addFields(fields);
 					int lineNumber = 0;
 					for(String[] item : items) {
 						lineNumber++;
@@ -132,43 +134,19 @@ public class impexp {
 						}
 						
 						if(iH.isValidItem(itemID, itemType)) {
-							HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
-							int i = 0;
-							for(String field : fields) {
-								HashMap<String, String> temp = new HashMap<String, String>();
-								if(field.equalsIgnoreCase("itemID")) {
-									temp.put("kind", "INT");
-									temp.put("data", "" + itemID);
-									tmp.put(i, temp);
-								}else if(field.equalsIgnoreCase("type")) {
-									temp.put("kind", "INT");
-									temp.put("data", "" + ((itemType == null) ? -1 : itemType));
-									tmp.put(i, temp);
-								}else if(field.equalsIgnoreCase("sellFor")) {
-									temp.put("data", "" + sellFor);
-									tmp.put(i, temp);
-								}else if(field.equalsIgnoreCase("buyFor")) {
-									temp.put("data", "" + buyFor);
-									tmp.put(i, temp);
-								}else if(field.equalsIgnoreCase("stock")) {
-									temp.put("kind", "INT");
-									temp.put("data", "" + stock);
-									tmp.put(i, temp);
-								}else if(field.equalsIgnoreCase("perStack")) {
-									temp.put("kind", "INT");
-									temp.put("data", "" + perStack);
-									tmp.put(i, temp);
-								}else if(field.equalsIgnoreCase("shops")) {
-									if(item.length == 7)
-										temp.put("data", (item[6].equals("null") ? "" : item[6]));
-									else
-										temp.put("data", "");
-									
-									tmp.put(i, temp);
-								}
-								i++;
+							iQ.addRow();
+							iQ.assignValue("itemID", String.valueOf(itemID), InsertQuery.ValueType.RAW);
+							iQ.assignValue("type", String.valueOf(((itemType == null) ? -1 : itemType)), InsertQuery.ValueType.RAW);
+							iQ.assignValue("sellFor", String.valueOf(sellFor), InsertQuery.ValueType.RAW);
+							iQ.assignValue("buyFor", String.valueOf(buyFor), InsertQuery.ValueType.RAW);
+							iQ.assignValue("stock", String.valueOf(stock), InsertQuery.ValueType.RAW);
+							iQ.assignValue("perStack", String.valueOf(perStack), InsertQuery.ValueType.RAW);
+							
+							if(item.length == 7) {
+								iQ.assignValue("shops", String.valueOf((item[6].equals("null") ? "" : item[6])));
+							}else{
+								iQ.assignValue("shops", "");
 							}
-							values.add(tmp);
 						}else{
 							err = true;
 							Heraut.say(sender, "Invalid entry detected! (line " + lineNumber + ": " + Misc.join(", ", item) + ")");
@@ -177,13 +155,13 @@ public class impexp {
 					}
 					
 					if(!commence) {
-						Heraut.say(sender, "Found " + values.size() + " items to import!");
+						Heraut.say(sender, "Found " + lineNumber + " items to import!");
 					}else{
 						Heraut.say(sender, "Truncating items table!");
-						DB.Truncate("#__items").updateQuery();
+						DB.Truncate("#__items").exec();
 						
-						Heraut.say(sender, "Importing " + values.size() + " items...");
-						DB.insert("#__items", fields, values).updateQuery();
+						Heraut.say(sender, "Importing " + lineNumber + " items...");
+						iQ.exec();
 					}
 					
 					if(err) {
@@ -249,53 +227,30 @@ public class impexp {
 					fields.add("locMaxY");
 					fields.add("locMaxZ");
 					
-					values = new ArrayList<HashMap<Integer, HashMap<String, String>>>();
+					InsertQuery iQ = DB.insert("#__shops");
+					iQ.addFields(fields);
+					int i = 0;
 					for(String[] item : items) {
-						HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
-						int i = 0;
-						for(String field : fields) {
-							HashMap<String, String> temp = new HashMap<String, String>();
-							if(field.equalsIgnoreCase("name")) {
-								temp.put("data", "" + item[0]);
-								tmp.put(i, temp);
-							/*}else if(field.equalsIgnoreCase("perms")) {
-								temp.put("data", "" + item[1]);
-								tmp.put(i, temp);*/
-							}else if(field.equalsIgnoreCase("world")) {
-								temp.put("data", "" + item[2]);
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("locMinX")) {
-								temp.put("data", item[3]);
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("locMinY")) {
-								temp.put("data", item[4]);
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("locMinZ")) {
-								temp.put("data", item[5]);
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("locMaxX")) {
-								temp.put("data", item[6]);
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("locMaxY")) {
-								temp.put("data", item[7]);
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("locMaxZ")) {
-								temp.put("data", item[8]);
-								tmp.put(i, temp);
-							}
-							i++;
-						}
-						values.add(tmp);
+						++i;
+						iQ.addRow();
+						iQ.assignValue("name", item[0]);
+						iQ.assignValue("world", item[2]);
+						iQ.assignValue("locMinX", item[3], InsertQuery.ValueType.RAW);
+						iQ.assignValue("locMinY", item[4], InsertQuery.ValueType.RAW);
+						iQ.assignValue("locMinZ", item[5], InsertQuery.ValueType.RAW);
+						iQ.assignValue("locMaxX", item[6], InsertQuery.ValueType.RAW);
+						iQ.assignValue("locMaxY", item[7], InsertQuery.ValueType.RAW);
+						iQ.assignValue("locMaxZ", item[8], InsertQuery.ValueType.RAW);
 					}
 					
 					if(!commence) {
-						Heraut.say(sender, "Found " + values.size() + " shops to import!");
+						Heraut.say(sender, "Found " + i + " shops to import!");
 					}else{
 						Heraut.say(sender, "Truncating shops table!");
-						DB.Truncate("#__shops").updateQuery();
+						DB.Truncate("#__shops").exec();
 						
-						Heraut.say(sender, "Importing " + values.size() + " shops...");
-						DB.insert("#__shops", fields, values).updateQuery();
+						Heraut.say(sender, "Importing " + i + " shops...");
+						iQ.exec();
 					}
 					
 					GiantShop.getPlugin().getLocHandler().reload();
@@ -359,43 +314,28 @@ public class impexp {
 					fields.add("user");
 					fields.add("grp");
 					
+					InsertQuery iQ = DB.insert("#__discounts");
+					iQ.addFields(fields);
 					values = new ArrayList<HashMap<Integer, HashMap<String, String>>>();
-					for(int lineNumber = 0; lineNumber < items.size(); lineNumber++) {
+					int lineNumber;
+					for(lineNumber = 0; lineNumber < items.size(); lineNumber++) {
 						String[] item = items.get(lineNumber);
-						
-						HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
-						int i = 0;
-						for(String field : fields) {
-							HashMap<String, String> temp = new HashMap<String, String>();
-							if(field.equalsIgnoreCase("itemID")) {
-								temp.put("data", "" + item[0]);
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("type")) {
-								temp.put("data", "" + item[1]);
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("discount")) {
-								temp.put("data", "" + item[2]);
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("user")) {
-								temp.put("data", "" + item[3]);
-								tmp.put(i, temp);
-							}else if(field.equalsIgnoreCase("grp")) {
-								temp.put("data", item[4]);
-								tmp.put(i, temp);
-							}
-							i++;
-						}
-						values.add(tmp);
+						iQ.addRow();
+						iQ.assignValue("itemID", item[0], InsertQuery.ValueType.RAW);
+						iQ.assignValue("type", item[1], InsertQuery.ValueType.RAW);
+						iQ.assignValue("discount", item[2], InsertQuery.ValueType.RAW);
+						iQ.assignValue("user", item[3], InsertQuery.ValueType.RAW);
+						iQ.assignValue("grp", item[4], InsertQuery.ValueType.RAW);
 					}
 					
 					if(!commence) {
-						Heraut.say(sender, "Found " + values.size() + " discounts to import!");
+						Heraut.say(sender, "Found " + lineNumber + " discounts to import!");
 					}else{
 						Heraut.say(sender, "Truncating discounts table!");
-						DB.Truncate("#__discounts").updateQuery();
+						DB.Truncate("#__discounts").exec();
 						
-						Heraut.say(sender, "Importing " + values.size() + " discounts...");
-						DB.insert("#__discounts", fields, values).updateQuery();
+						Heraut.say(sender, "Importing " + lineNumber + " discounts...");
+						iQ.exec();
 					}
 					
 					if(err) {
@@ -489,7 +429,9 @@ public class impexp {
 			fields.add("buyFor");
 			fields.add("perStack");
 
-			values = new ArrayList<HashMap<Integer, HashMap<String, String>>>();
+			
+			InsertQuery iQ = DB.insert("#__items");
+			iQ.addFields(fields);
 			int lineNumber = 0;
 			for(String[] item : items) {
 				lineNumber++;
@@ -515,30 +457,12 @@ public class impexp {
 				}
 
 				if(iH.isValidItem(itemID, itemType)) {
-					HashMap<Integer, HashMap<String, String>> tmp = new HashMap<Integer, HashMap<String, String>>();
-					for(String field : fields) {
-						HashMap<String, String> temp = new HashMap<String, String>();
-						if(field.equalsIgnoreCase("itemID")) {
-							temp.put("kind", "INT");
-							temp.put("data", "" + itemID);
-							tmp.put(0, temp);
-						}else if(field.equalsIgnoreCase("type")) {
-							temp.put("kind", "INT");
-							temp.put("data", "" + ((itemType == null) ? -1 : itemType));
-							tmp.put(1, temp);
-						}else if(field.equalsIgnoreCase("sellFor")) {
-							temp.put("data", "" + sellFor);
-							tmp.put(2, temp);
-						}else if(field.equalsIgnoreCase("buyFor")) {
-							temp.put("data", "" + buyFor);
-							tmp.put(3, temp);
-						}else if(field.equalsIgnoreCase("perStack")) {
-							temp.put("kind", "INT");
-							temp.put("data", "" + perStack);
-							tmp.put(5, temp);
-						}
-					}
-					values.add(tmp);
+					iQ.addRow();
+					iQ.assignValue("itemID", String.valueOf(itemID), InsertQuery.ValueType.RAW);
+					iQ.assignValue("type", String.valueOf(((itemType == null) ? -1 : itemType)), InsertQuery.ValueType.RAW);
+					iQ.assignValue("sellFor", String.valueOf(sellFor), InsertQuery.ValueType.RAW);
+					iQ.assignValue("buyFor", String.valueOf(buyFor), InsertQuery.ValueType.RAW);
+					iQ.assignValue("perStack", String.valueOf(perStack), InsertQuery.ValueType.RAW);
 				}else{
 					err = true;
 					Heraut.say(sender, "Invalid entry detected! (" + lineNumber + ":" + item.toString() + ")");
@@ -547,13 +471,13 @@ public class impexp {
 			}
 
 			if(!commence) {
-				Heraut.say(sender, "Found " + values.size() + " items to import!");
+				Heraut.say(sender, "Found " + lineNumber + " items to import!");
 			}else{
 				Heraut.say(sender, "Truncating items table!");
-				DB.Truncate("#__items").updateQuery();
+				DB.Truncate("#__items").exec();
 
-				Heraut.say(sender, "Importing " + values.size() + " items...");
-				DB.insert("#__items", fields, values).updateQuery();
+				Heraut.say(sender, "Importing " + lineNumber + " items...");
+				iQ.exec();
 			}
 
 			if(err) {
@@ -580,8 +504,7 @@ public class impexp {
 			ArrayList<String> fields = new ArrayList<String>();
 			fields.add("*");
 			if(Misc.isEitherIgnoreCase(args[1], "items", "i")) {
-				DB.select(fields).from("#__items");
-				QueryResult QRes = DB.execQuery();
+				QueryResult QRes = DB.select(fields).from("#__items").exec();
 				ArrayList<HashMap<String, String>> iResSet = QRes.getRawData();
 				Heraut.say(sender, "Found " + iResSet.size() + " items to export!");
 				
@@ -594,8 +517,7 @@ public class impexp {
 					}
 				}
 			}else if(Misc.isEitherIgnoreCase(args[1], "shops", "s") || args[1].equalsIgnoreCase("x")) {
-				DB.select(fields).from("#__shops");
-				QueryResult QRes = DB.execQuery();
+				QueryResult QRes = DB.select(fields).from("#__shops").exec();
 				ArrayList<HashMap<String, String>> sResSet = QRes.getRawData();
 				Heraut.say(sender, "Found " + sResSet.size() + " shops to export!");
 
@@ -608,8 +530,7 @@ public class impexp {
 					}
 				}
 			}else if(Misc.isEitherIgnoreCase(args[1], "discounts", "d")) {
-				DB.select(fields).from("#__discounts");
-				QueryResult QRes = DB.execQuery();
+				QueryResult QRes = DB.select(fields).from("#__discounts").exec();
 				ArrayList<HashMap<String, String>> dResSet = QRes.getRawData();
 				Heraut.say(sender, "Found " + dResSet.size() + " discounts to export!");
 
@@ -632,16 +553,13 @@ public class impexp {
 			ArrayList<String> fields = new ArrayList<String>();
 			fields.add("*");
 
-			DB.select(fields).from("#__items");
-			QueryResult iResSet = DB.execQuery();
+			QueryResult iResSet = DB.select(fields).from("#__items").exec();
 			Heraut.say(sender, "Found " + iResSet.size() + " items to export!");
 
-			DB.select(fields).from("#__shops");
-			QueryResult sResSet = DB.execQuery();
+			QueryResult sResSet = DB.select(fields).from("#__shops").exec();
 			Heraut.say(sender, "Found " + sResSet.size() + " shops to export!");
 
-			DB.select(fields).from("#__discounts");
-			QueryResult dResSet = DB.execQuery();
+			QueryResult dResSet = DB.select(fields).from("#__discounts").exec();
 			Heraut.say(sender, "Found " + dResSet.size() + " discounts to export!");
 			
 			ArrayList<HashMap<String, String>> iRS = iResSet.getRawData();

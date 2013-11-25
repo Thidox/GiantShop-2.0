@@ -1,20 +1,26 @@
-package nl.giantit.minecraft.GiantShop.API.stock.core;
+package nl.giantit.minecraft.giantshop.API.stock.core;
 
-import nl.giantit.minecraft.GiantShop.API.stock.Events.*;
-import nl.giantit.minecraft.GiantShop.API.stock.stockResponse;
-import nl.giantit.minecraft.GiantShop.API.stock.ItemNotFoundException;
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.giantcore.Database.iDriver;
-import nl.giantit.minecraft.GiantShop.core.Logger.*;
+import nl.giantit.minecraft.giantcore.database.Driver;
+import nl.giantit.minecraft.giantcore.database.QueryResult;
+import nl.giantit.minecraft.giantcore.database.QueryResult.QueryRow;
+import nl.giantit.minecraft.giantcore.database.query.Group;
+import nl.giantit.minecraft.giantcore.database.query.SelectQuery;
+import nl.giantit.minecraft.giantcore.database.query.UpdateQuery;
+
+import nl.giantit.minecraft.giantshop.API.stock.Events.MaxStockUpdateEvent;
+import nl.giantit.minecraft.giantshop.API.stock.Events.StockUpdateEvent;
+import nl.giantit.minecraft.giantshop.API.stock.ItemNotFoundException;
+import nl.giantit.minecraft.giantshop.API.stock.stockResponse;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.Misc.Misc;
+import nl.giantit.minecraft.giantshop.core.Logger.Logger;
+import nl.giantit.minecraft.giantshop.core.Logger.LoggerType;
+import nl.giantit.minecraft.giantshop.core.config;
 
 import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.giantcore.Database.QueryResult;
-import nl.giantit.minecraft.giantcore.Database.QueryResult.QueryRow;
 
 /**
  *
@@ -31,7 +37,7 @@ public class itemStock {
 	private double sellFor;
 	
 	private void loadStock() throws ItemNotFoundException {
-		iDriver DB = GiantShop.getPlugin().getDB().getEngine();
+		Driver DB = GiantShop.getPlugin().getDB().getEngine();
 		
 		ArrayList<String> fields = new ArrayList<String>();
 		fields.add("stock");
@@ -39,11 +45,12 @@ public class itemStock {
 		fields.add("perStack");
 		fields.add("sellFor");
 		
-		HashMap<String, String> where = new HashMap<String, String>();
-		where.put("itemID", String.valueOf(id));
-		where.put("type", (type == null || type.intValue() == 0 || type.intValue() == -1) ? "-1" : String.valueOf(type.intValue()));
+		SelectQuery sQ = DB.select(fields);
+		sQ.from("#__items");
+		sQ.where("itemID", String.valueOf(id), Group.ValueType.EQUALSRAW);
+		sQ.where("type", (type == null || type.intValue() == 0 || type.intValue() == -1) ? "-1" : String.valueOf(type.intValue()), Group.ValueType.EQUALSRAW);
 		
-		QueryResult QRes = DB.select(fields).from("#__items").where(where).execQuery();
+		QueryResult QRes = sQ.exec();
 		if(QRes.size() >= 1) {
 			QueryRow QR = QRes.getRow();
 			stock = QR.getInt("stock");
@@ -104,15 +111,14 @@ public class itemStock {
 		StockUpdateEvent event = new StockUpdateEvent(null, this, t);
 		Bukkit.getServer().getPluginManager().callEvent(event);
 		
-		HashMap<String, String> fields = new HashMap<String, String>();
-		fields.put("stock", String.valueOf(value));
+		Driver DB = GiantShop.getPlugin().getDB().getEngine();
+		UpdateQuery uQ = DB.update("#__items");
+		uQ.set("stock", String.valueOf(value), UpdateQuery.ValueType.SETRAW);
 		
-		HashMap<String, String> where = new HashMap<String, String>();
-		where.put("itemID", String.valueOf(id));
-		where.put("type", (type == null || type.intValue() == 0 || type.intValue() == -1) ? "-1" : String.valueOf(type.intValue()));
+		uQ.where("itemID", String.valueOf(id), Group.ValueType.EQUALSRAW);
+		uQ.where("type", (type == null || type.intValue() == 0 || type.intValue() == -1) ? "-1" : String.valueOf(type.intValue()), Group.ValueType.EQUALSRAW);
 		
-		iDriver DB = GiantShop.getPlugin().getDB().getEngine();
-		DB.update("#__items").set(fields).where(where).updateQuery();
+		uQ.exec();
 		
 		HashMap<String, String> d = new HashMap<String, String>();
 		d.put("id", String.valueOf(this.id));
@@ -138,15 +144,14 @@ public class itemStock {
 		MaxStockUpdateEvent event = new MaxStockUpdateEvent(null, this, t);
 		Bukkit.getServer().getPluginManager().callEvent(event);
 		
-		HashMap<String, String> fields = new HashMap<String, String>();
-		fields.put("maxStock", String.valueOf(value));
+		Driver DB = GiantShop.getPlugin().getDB().getEngine();
+		UpdateQuery uQ = DB.update("#__items");
+		uQ.set("maxStock", String.valueOf(value), UpdateQuery.ValueType.SETRAW);
 		
-		HashMap<String, String> where = new HashMap<String, String>();
-		where.put("itemID", String.valueOf(id));
-		where.put("type", (type == null || type.intValue() == 0 || type.intValue() == -1) ? "-1" : String.valueOf(type.intValue()));
+		uQ.where("itemID", String.valueOf(id), Group.ValueType.EQUALSRAW);
+		uQ.where("type", (type == null || type.intValue() == 0 || type.intValue() == -1) ? "-1" : String.valueOf(type.intValue()), Group.ValueType.EQUALSRAW);
 		
-		iDriver DB = GiantShop.getPlugin().getDB().getEngine();
-		DB.update("#__items").set(fields).where(where).updateQuery();
+		uQ.exec();
 		
 		HashMap<String, String> d = new HashMap<String, String>();
 		d.put("id", String.valueOf(this.id));

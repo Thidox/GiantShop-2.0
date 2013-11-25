@@ -1,17 +1,19 @@
-package nl.giantit.minecraft.GiantShop.core.Commands.Chat;
+package nl.giantit.minecraft.giantshop.core.Commands.Chat;
 
-import nl.giantit.minecraft.giantcore.Database.QueryResult;
-import nl.giantit.minecraft.giantcore.Database.QueryResult.QueryRow;
-import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.database.QueryResult;
+import nl.giantit.minecraft.giantcore.database.QueryResult.QueryRow;
+import nl.giantit.minecraft.giantcore.database.Driver;
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
+import nl.giantit.minecraft.giantcore.database.query.Group;
+import nl.giantit.minecraft.giantcore.database.query.SelectQuery;
 import nl.giantit.minecraft.giantcore.perms.Permission;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Items.Items;
-import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discounter;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.Misc.Misc;
+import nl.giantit.minecraft.giantshop.core.config;
+import nl.giantit.minecraft.giantshop.core.Items.Items;
+import nl.giantit.minecraft.giantshop.core.Tools.Discount.Discounter;
 
 import org.bukkit.entity.Player;
 
@@ -46,7 +48,7 @@ public class list {
 
 			curPag = (curPag > 0) ? curPag : 1;
 		
-			iDriver DB = GiantShop.getPlugin().getDB().getEngine();
+			Driver DB = GiantShop.getPlugin().getDB().getEngine();
 			ArrayList<String> fields = new ArrayList<String>();
 			fields.add("itemID");
 			fields.add("type");
@@ -57,19 +59,17 @@ public class list {
 			fields.add("maxStock");
 			fields.add("shops");
 			
-			HashMap<String, HashMap<String, String>> where = new HashMap<String, HashMap<String, String>>();
-			HashMap<String, String> t = new HashMap<String, String>();
+			SelectQuery sQ = DB.select(fields);
+			sQ.from("#__items");
 			if(conf.getBoolean("GiantShop.stock.hideEmptyStock")) {
-				t.put("kind", "NOT");
-				t.put("data", "0");
-				where.put("stock", t);
+				sQ.where("stock", "0", Group.ValueType.NOTEQUALSRAW);
 			}
 			
-			HashMap<String, String> order = new HashMap<String, String>();
-			order.put("itemID", "ASC");
-			order.put("type", "ASC");
-			QueryResult QRes = DB.select(fields).from("#__items").where(where, true).orderBy(order).execQuery();
+			sQ.orderBy("itemID", SelectQuery.Order.ASC);
+			sQ.orderBy("type", SelectQuery.Order.ASC);
+			sQ.exec();
 			
+			QueryResult QRes = sQ.exec();
 			int pages = ((int)Math.ceil((double)QRes.size() / (double)perPage) < 1) ? 1 : (int)Math.ceil((double)QRes.size() / (double)perPage);
 			int start = (curPag * perPage) - perPage;
 			if(QRes.size() <= 0) {

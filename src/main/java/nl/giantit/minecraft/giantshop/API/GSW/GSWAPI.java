@@ -1,4 +1,4 @@
-package nl.giantit.minecraft.GiantShop.API.GSW;
+package nl.giantit.minecraft.giantshop.API.GSW;
 
 import java.io.File;
 import java.security.KeyPair;
@@ -8,19 +8,19 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import nl.giantit.minecraft.GiantShop.API.GSW.Commands.Executor;
-import nl.giantit.minecraft.GiantShop.API.GSW.Crypt.RSAMan;
+import nl.giantit.minecraft.giantshop.API.GSW.Commands.Executor;
+import nl.giantit.minecraft.giantshop.API.GSW.Crypt.RSAMan;
 
-import nl.giantit.minecraft.GiantShop.API.GSW.Exceptions.RSAKeyGenException;
-import nl.giantit.minecraft.GiantShop.API.GSW.Exceptions.RSAKeyLoadException;
-import nl.giantit.minecraft.GiantShop.API.GSW.Exceptions.RSAKeySaveException;
-import nl.giantit.minecraft.GiantShop.API.GSW.Listeners.PlayerListener;
-import nl.giantit.minecraft.GiantShop.API.GSW.Server.ShopReceiver;
-import nl.giantit.minecraft.GiantShop.API.GSW.Server.ShopSender;
-import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
-import nl.giantit.minecraft.GiantShop.API.conf;
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.Misc.Misc;
+import nl.giantit.minecraft.giantshop.API.GSW.Exceptions.RSAKeyGenException;
+import nl.giantit.minecraft.giantshop.API.GSW.Exceptions.RSAKeyLoadException;
+import nl.giantit.minecraft.giantshop.API.GSW.Exceptions.RSAKeySaveException;
+import nl.giantit.minecraft.giantshop.API.GSW.Listeners.PlayerListener;
+import nl.giantit.minecraft.giantshop.API.GSW.Server.ShopReceiver;
+import nl.giantit.minecraft.giantshop.API.GSW.Server.ShopSender;
+import nl.giantit.minecraft.giantshop.API.GiantShopAPI;
+import nl.giantit.minecraft.giantshop.API.conf;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.Misc.Misc;
 import org.bukkit.configuration.ConfigurationSection;
 
 /**

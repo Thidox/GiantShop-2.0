@@ -1,6 +1,6 @@
-package nl.giantit.minecraft.GiantShop.API.stock.Events;
+package nl.giantit.minecraft.giantshop.API.stock.Events;
 
-import nl.giantit.minecraft.GiantShop.API.stock.core.itemStock;
+import nl.giantit.minecraft.giantshop.API.stock.core.itemStock;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;

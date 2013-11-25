@@ -1,10 +1,10 @@
-package nl.giantit.minecraft.GiantShop.core.Updater;
+package nl.giantit.minecraft.giantshop.core.Updater;
 
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Updater.Config.confUpdate;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.core.config;
+import nl.giantit.minecraft.giantshop.core.Updater.Config.confUpdate;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

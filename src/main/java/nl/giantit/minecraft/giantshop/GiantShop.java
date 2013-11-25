@@ -1,22 +1,22 @@
-package nl.giantit.minecraft.GiantShop;
+package nl.giantit.minecraft.giantshop;
 
 import nl.giantit.minecraft.giantcore.GiantCore;
-import nl.giantit.minecraft.giantcore.Database.Database;
 import nl.giantit.minecraft.giantcore.GiantPlugin;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
 import nl.giantit.minecraft.giantcore.core.Eco.Eco;
+import nl.giantit.minecraft.giantcore.database.Database;
 import nl.giantit.minecraft.giantcore.perms.PermHandler;
 
-import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
-import nl.giantit.minecraft.GiantShop.Misc.Misc;
-import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.GiantShop.core.Commands.ChatExecutor;
-import nl.giantit.minecraft.GiantShop.core.Commands.ConsoleExecutor;
-import nl.giantit.minecraft.GiantShop.core.Items.Items;
-import nl.giantit.minecraft.GiantShop.core.Metrics.MetricsHandler;
-import nl.giantit.minecraft.GiantShop.core.Tools.Discount.Discounter;
-import nl.giantit.minecraft.GiantShop.core.Tools.dbInit.dbInit;
-import nl.giantit.minecraft.GiantShop.core.Updater.Updater;
+import nl.giantit.minecraft.giantshop.Locationer.Locationer;
+import nl.giantit.minecraft.giantshop.Misc.Misc;
+import nl.giantit.minecraft.giantshop.core.config;
+import nl.giantit.minecraft.giantshop.core.Commands.ChatExecutor;
+import nl.giantit.minecraft.giantshop.core.Commands.ConsoleExecutor;
+import nl.giantit.minecraft.giantshop.core.Items.Items;
+import nl.giantit.minecraft.giantshop.core.Metrics.MetricsHandler;
+import nl.giantit.minecraft.giantshop.core.Tools.Discount.Discounter;
+import nl.giantit.minecraft.giantshop.core.Tools.dbInit.dbInit;
+import nl.giantit.minecraft.giantshop.core.Updater.Updater;
 
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
+import nl.giantit.minecraft.giantshop.API.GiantShopAPI;
 
 /**
  *
@@ -129,12 +129,12 @@ public class GiantShop extends GiantPlugin {
 				cmds = conf.getStringList(this.name + ".Location.protect.Commands");
 				
 				if(conf.getBoolean(this.name + ".Location.showPlayerEnteredShop"))
-					getServer().getPluginManager().registerEvents(new nl.giantit.minecraft.GiantShop.Locationer.Listeners.PlayerListener(this), this);
+					getServer().getPluginManager().registerEvents(new nl.giantit.minecraft.giantshop.Locationer.Listeners.PlayerListener(this), this);
 				
 			}
 			
 			if(conf.getBoolean(this.name + ".Updater.checkForUpdates")) {
-				getServer().getPluginManager().registerEvents(new nl.giantit.minecraft.GiantShop.Listeners.PlayerListener(this), this);
+				getServer().getPluginManager().registerEvents(new nl.giantit.minecraft.giantshop.Listeners.PlayerListener(this), this);
 			}
 			
 			this.updater = new Updater(this);

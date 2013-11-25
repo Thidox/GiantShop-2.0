@@ -1,8 +1,8 @@
-package nl.giantit.minecraft.GiantShop.core;
+package nl.giantit.minecraft.giantshop.core;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.Updater.UpdateType;
-import nl.giantit.minecraft.GiantShop.core.Updater.Config.confUpdate;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.core.Updater.UpdateType;
+import nl.giantit.minecraft.giantshop.core.Updater.Config.confUpdate;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 

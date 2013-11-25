@@ -1,6 +1,6 @@
-package nl.giantit.minecraft.GiantShop.Misc;
+package nl.giantit.minecraft.giantshop.Misc;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.giantshop.GiantShop;
 
 import org.bukkit.OfflinePlayer;
 
@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import nl.giantit.minecraft.GiantShop.core.config;
+import nl.giantit.minecraft.giantshop.core.config;
 /**
  *
  * @author Giant

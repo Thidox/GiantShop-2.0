@@ -1,4 +1,4 @@
-package nl.giantit.minecraft.GiantShop.API.GSW.Exceptions;
+package nl.giantit.minecraft.giantshop.API.GSW.Exceptions;
 
 /**
  *

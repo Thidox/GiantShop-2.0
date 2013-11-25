@@ -1,10 +1,10 @@
-package nl.giantit.minecraft.GiantShop.core.Commands.Console;
+package nl.giantit.minecraft.giantshop.core.Commands.Console;
 
-import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantcore.database.Driver;
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.giantshop.GiantShop;
 
 import org.bukkit.command.CommandSender;
 
@@ -16,7 +16,7 @@ import java.util.HashMap;
  */
 public class truncate {
 	
-	private static iDriver DB = GiantShop.getPlugin().getDB().getEngine();
+	private static Driver DB = GiantShop.getPlugin().getDB().getEngine();
 	private static Messages mH = GiantShop.getPlugin().getMsgHandler();
 	
 	public static void truncate(CommandSender sender, String[] args) {
@@ -26,13 +26,13 @@ public class truncate {
 			type = args[1];
 		
 		if(type.equalsIgnoreCase("items")) {
-			DB.Truncate("#__items").updateQuery();
+			DB.Truncate("#__items").exec();
 			Heraut.say(sender, "Truncating items table!");
 		}else if(type.equalsIgnoreCase("shops")) {
-			DB.Truncate("#__shops").updateQuery();
+			DB.Truncate("#__shops").exec();
 			Heraut.say(sender, "Truncating shops table!");
 		}else if(type.equalsIgnoreCase("discounts")) {
-			DB.Truncate("#__discounts").updateQuery();
+			DB.Truncate("#__discounts").exec();
 			Heraut.say(sender, "Truncating discounts table!");
 		}else{
 			HashMap<String, String> data = new HashMap<String, String>();

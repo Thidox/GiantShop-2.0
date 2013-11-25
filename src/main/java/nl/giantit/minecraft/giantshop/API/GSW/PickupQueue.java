@@ -1,15 +1,18 @@
-package nl.giantit.minecraft.GiantShop.API.GSW;
+package nl.giantit.minecraft.giantshop.API.GSW;
 
-import nl.giantit.minecraft.giantcore.Database.QueryResult;
-import nl.giantit.minecraft.giantcore.Database.QueryResult.QueryRow;
-import nl.giantit.minecraft.giantcore.Database.iDriver;
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
+import nl.giantit.minecraft.giantcore.database.Driver;
+import nl.giantit.minecraft.giantcore.database.QueryResult;
+import nl.giantit.minecraft.giantcore.database.QueryResult.QueryRow;
+import nl.giantit.minecraft.giantcore.database.query.DeleteQuery;
+import nl.giantit.minecraft.giantcore.database.query.InsertQuery;
+import nl.giantit.minecraft.giantcore.database.query.SelectQuery;
 
-import nl.giantit.minecraft.GiantShop.API.conf;
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.core.Logger.Logger;
-import nl.giantit.minecraft.GiantShop.core.Logger.LoggerType;
+import nl.giantit.minecraft.giantshop.API.conf;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.core.Logger.Logger;
+import nl.giantit.minecraft.giantshop.core.Logger.LoggerType;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -33,15 +36,14 @@ public class PickupQueue {
 	private HashMap<String, ArrayList<Queued>> queue;
 	
 	private void loadQueue() {
-		iDriver db = p.getDB().getEngine();
+		Driver db = p.getDB().getEngine();
 		this.queue = new HashMap<String, ArrayList<Queued>>();
 		
-		HashMap<String, String> order = new HashMap<String, String>();
-		order.put("player", "ASC");
-		order.put("transactionID", "ASC");
-		
-		db.select("player", "transactionID", "itemID", "itemType", "amount").from("#__api_gsw_pickups").orderBy(order);
-		QueryResult QRes = db.execQuery();
+		SelectQuery sQ = db.select("player", "transactionID", "itemID", "itemType", "amount");
+		sQ.from("#__api_gsw_pickups");
+		sQ.orderBy("player", SelectQuery.Order.ASC);
+		sQ.orderBy("transactionID", SelectQuery.Order.ASC);
+		QueryResult QRes = sQ.exec();
 		//ArrayList<HashMap<String, String>> resSet = db.execQuery();
 		String lP = "";
 		ArrayList<Queued> qList = new ArrayList<Queued>();
@@ -86,47 +88,25 @@ public class PickupQueue {
 	
 	public void addToQueue(String transactionID, String player, int amount, int id, int type) {
 		// Add purchase to database and take money
-		iDriver db = p.getDB().getEngine();
-		ArrayList<String> fields = new ArrayList<String>() {
-			{
-				add("transactionID");
-				add("player");
-				add("amount");
-				add("itemID");
-				add("itemType");
-			}
-		};
-		
-		HashMap<Integer, HashMap<String, String>> values = new HashMap<Integer, HashMap<String, String>>();
-		int i = 0;
-		
-		for(String field : fields) {
-			HashMap<String, String> temp = new HashMap<String, String>();
-			if(field.equals("transactionID")) {
-				temp.put("data", transactionID);
-				values.put(i, temp);
-			}else if(field.equals("player")) {
-				temp.put("data", player);
-				values.put(i, temp);
-			}else if(field.equals("amount")) {
-				temp.put("kind", "INT");
-				temp.put("data", "" + amount);
-				values.put(i, temp);
-			}else if(field.equals("itemID")) {
-				temp.put("kind", "INT");
-				temp.put("data", "" + id);
-				values.put(i, temp);
-			}else if(field.equals("itemType")) {
-				temp.put("kind", "INT");
-				temp.put("data", "" + type);
-				values.put(i, temp);
-			}
-			
-			i++;
-		}
+		Driver db = p.getDB().getEngine();
+		ArrayList<String> fields = new ArrayList<String>();
+		fields.add("transactionID");
+		fields.add("player");
+		fields.add("amount");
+		fields.add("itemID");
+		fields.add("itemType");
 		
 		// Insert transaction into database as ready pickup!
-		db.insert("#__api_gsw_pickups", fields, values).updateQuery();
+		InsertQuery iQ = db.insert("#__api_gsw_pickups");
+		iQ.addFields(fields);
+		iQ.addRow();
+		iQ.assignValue("transactionID", transactionID);
+		iQ.assignValue("player", player);
+		iQ.assignValue("amount", String.valueOf(amount), InsertQuery.ValueType.RAW);
+		iQ.assignValue("itemID", String.valueOf(id), InsertQuery.ValueType.RAW);
+		iQ.assignValue("itemType", String.valueOf(type), InsertQuery.ValueType.RAW);
+		
+		iQ.exec();
 		
 		ArrayList<Queued> q;
 		if(this.queue.containsKey(player)) {
@@ -144,11 +124,12 @@ public class PickupQueue {
 	
 	// Seperate method because delivery should not call remove from Queue.
 	public void removeFromDB(String player, String transactionID) {
-		iDriver db = p.getDB().getEngine();
-		HashMap<String, String> where = new HashMap<String, String>();
-		where.put("player", player);
-		where.put("transactionID", transactionID);
-		db.delete("#__api_gsw_pickups").where(where).updateQuery();
+		Driver db = p.getDB().getEngine();
+		
+		DeleteQuery dQ = db.delete("#__api_gsw_pickups");
+		dQ.where("player", player);
+		dQ.where("transactionID", transactionID);
+		dQ.exec();
 	}
 	
 	public void removeFromQueue(String player, String transactionID) {

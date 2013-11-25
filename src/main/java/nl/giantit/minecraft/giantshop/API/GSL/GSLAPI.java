@@ -1,8 +1,8 @@
-package nl.giantit.minecraft.GiantShop.API.GSL;
+package nl.giantit.minecraft.giantshop.API.GSL;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.Locationer.AreaReaders.Indaface;
-import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.Locationer.AreaReaders.Indaface;
+import nl.giantit.minecraft.giantshop.Locationer.Locationer;
 
 import org.bukkit.Location;
 

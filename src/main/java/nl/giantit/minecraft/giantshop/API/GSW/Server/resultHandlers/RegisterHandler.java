@@ -1,12 +1,12 @@
-package nl.giantit.minecraft.GiantShop.API.GSW.Server.resultHandlers;
+package nl.giantit.minecraft.giantshop.API.GSW.Server.resultHandlers;
 
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
 
 import java.util.HashMap;
-import nl.giantit.minecraft.GiantShop.API.GSW.GSWAPI;
-import nl.giantit.minecraft.GiantShop.API.GSW.Server.ShopSender;
-import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.giantshop.API.GSW.GSWAPI;
+import nl.giantit.minecraft.giantshop.API.GSW.Server.ShopSender;
+import nl.giantit.minecraft.giantshop.GiantShop;
 import org.bukkit.entity.Player;
 
 /**

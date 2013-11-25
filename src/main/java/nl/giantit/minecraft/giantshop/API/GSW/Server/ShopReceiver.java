@@ -1,11 +1,11 @@
-package nl.giantit.minecraft.GiantShop.API.GSW.Server;
+package nl.giantit.minecraft.giantshop.API.GSW.Server;
 
 import nl.giantit.minecraft.giantcore.lib.gson.Gson;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.API.GSW.Crypt.Crypt;
-import nl.giantit.minecraft.GiantShop.API.GSW.GSWAPI;
-import nl.giantit.minecraft.GiantShop.API.GSW.Server.lib.AESEncJSON;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.API.GSW.Crypt.Crypt;
+import nl.giantit.minecraft.giantshop.API.GSW.GSWAPI;
+import nl.giantit.minecraft.giantshop.API.GSW.Server.lib.AESEncJSON;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

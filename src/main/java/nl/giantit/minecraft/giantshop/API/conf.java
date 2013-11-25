@@ -1,4 +1,4 @@
-package nl.giantit.minecraft.GiantShop.API;
+package nl.giantit.minecraft.giantshop.API;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.logging.Level;
-import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.giantshop.GiantShop;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 

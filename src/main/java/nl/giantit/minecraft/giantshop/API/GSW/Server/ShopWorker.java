@@ -1,14 +1,14 @@
-package nl.giantit.minecraft.GiantShop.API.GSW.Server;
+package nl.giantit.minecraft.giantshop.API.GSW.Server;
 
 import nl.giantit.minecraft.giantcore.core.Eco.iEco;
 
-import nl.giantit.minecraft.GiantShop.API.GSW.GSWAPI;
-import nl.giantit.minecraft.GiantShop.API.GSW.PickupQueue;
-import nl.giantit.minecraft.GiantShop.API.GiantShopAPI;
-import nl.giantit.minecraft.GiantShop.API.stock.ItemNotFoundException;
-import nl.giantit.minecraft.GiantShop.API.stock.core.itemStock;
-import nl.giantit.minecraft.GiantShop.API.stock.stockAPI;
-import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.giantshop.API.GSW.GSWAPI;
+import nl.giantit.minecraft.giantshop.API.GSW.PickupQueue;
+import nl.giantit.minecraft.giantshop.API.GiantShopAPI;
+import nl.giantit.minecraft.giantshop.API.stock.ItemNotFoundException;
+import nl.giantit.minecraft.giantshop.API.stock.core.itemStock;
+import nl.giantit.minecraft.giantshop.API.stock.stockAPI;
+import nl.giantit.minecraft.giantshop.GiantShop;
 import org.bukkit.scheduler.BukkitRunnable;
 //import com.google.gson.Gson;
 

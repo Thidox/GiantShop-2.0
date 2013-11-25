@@ -1,4 +1,4 @@
-package nl.giantit.minecraft.GiantShop.core.Logger;
+package nl.giantit.minecraft.giantshop.core.Logger;
 
 public enum LoggerType {
 	BUY(1, "buy"),

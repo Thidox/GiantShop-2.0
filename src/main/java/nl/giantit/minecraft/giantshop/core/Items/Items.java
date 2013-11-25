@@ -1,6 +1,6 @@
-package nl.giantit.minecraft.GiantShop.core.Items;
+package nl.giantit.minecraft.giantshop.core.Items;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
+import nl.giantit.minecraft.giantshop.GiantShop;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.Material;

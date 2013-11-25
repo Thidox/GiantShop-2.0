@@ -1,13 +1,15 @@
-package nl.giantit.minecraft.GiantShop.Locationer.core.Commands.chat;
+package nl.giantit.minecraft.giantshop.Locationer.core.Commands.chat;
 
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
 import nl.giantit.minecraft.giantcore.perms.Permission;
 
-import nl.giantit.minecraft.GiantShop.GiantShop;
-import nl.giantit.minecraft.GiantShop.Locationer.Locationer;
-import nl.giantit.minecraft.GiantShop.core.config;
-import nl.giantit.minecraft.giantcore.Database.iDriver;
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.Locationer.Locationer;
+import nl.giantit.minecraft.giantshop.core.config;
+import nl.giantit.minecraft.giantcore.database.Driver;
+import nl.giantit.minecraft.giantcore.database.query.DeleteQuery;
+import nl.giantit.minecraft.giantcore.database.query.SelectQuery;
 
 import org.bukkit.entity.Player;
 
@@ -44,7 +46,7 @@ public class remove {
 				if(world == null)
 					world = player.getWorld().getName();
 				
-				iDriver DB = GiantShop.getPlugin().getDB().getEngine();
+				Driver DB = GiantShop.getPlugin().getDB().getEngine();
 
 				ArrayList<String> fields = new ArrayList<String>();
 				fields.add("id");
@@ -52,9 +54,16 @@ public class remove {
 				data.put("name", name);
 				data.put("world", world);
 
-				DB.select(fields).from("#__shops").where(data);
-				if(DB.execQuery().size() != 0) {
-					DB.delete("#__shops").where(data).updateQuery();
+				SelectQuery sQ = DB.select(fields);
+				sQ.from("#__shops");
+				sQ.where("name", name);
+				sQ.where("world", world);
+				
+				if(sQ.exec().size() != 0) {
+					DeleteQuery dQ = DB.delete("#__shops");
+					dQ.where("name", name);
+					dQ.where("world", world);
+					dQ.exec();
 					
 					lH.removeShop(name, world);
 					

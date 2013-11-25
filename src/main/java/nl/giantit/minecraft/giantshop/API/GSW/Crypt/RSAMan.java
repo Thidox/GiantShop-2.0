@@ -1,4 +1,4 @@
-package nl.giantit.minecraft.GiantShop.API.GSW.Crypt;
+package nl.giantit.minecraft.giantshop.API.GSW.Crypt;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,9 +18,9 @@ import java.security.spec.RSAKeyGenParameterSpec;
 import java.security.spec.X509EncodedKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
-import nl.giantit.minecraft.GiantShop.API.GSW.Exceptions.RSAKeyGenException;
-import nl.giantit.minecraft.GiantShop.API.GSW.Exceptions.RSAKeyLoadException;
-import nl.giantit.minecraft.GiantShop.API.GSW.Exceptions.RSAKeySaveException;
+import nl.giantit.minecraft.giantshop.API.GSW.Exceptions.RSAKeyGenException;
+import nl.giantit.minecraft.giantshop.API.GSW.Exceptions.RSAKeyLoadException;
+import nl.giantit.minecraft.giantshop.API.GSW.Exceptions.RSAKeySaveException;
 
 /**
  *
