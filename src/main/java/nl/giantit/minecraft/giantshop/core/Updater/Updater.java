@@ -6,6 +6,7 @@ import nl.giantit.minecraft.giantshop.GiantShop;
 import nl.giantit.minecraft.giantshop.core.config;
 import nl.giantit.minecraft.giantshop.core.Updater.Config.confUpdate;
 
+import org.bukkit.scheduler.BukkitRunnable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -26,7 +27,7 @@ public class Updater {
 	private String newVersion = "";
 	
 	private void start() {
-		tID = this.plugin.scheduleAsyncRepeatingTask(new Runnable() {
+		tID = (new BukkitRunnable() {
 			@Override
 			public void run() {
 				newVersion = updateCheck(plugin.getDescription().getVersion());
@@ -37,7 +38,7 @@ public class Updater {
 						Heraut.broadcast("&cA new version of GiantShop has just ben released! You are currently running: " + plugin.getDescription().getVersion() + " while the latest version is: " + newVersion, true);
 				}
 			}
-		}, 0L, 432000L);
+		}).runTaskTimerAsynchronously(plugin, 0L, 432000L).getTaskId();
 	}
 	
 	public Updater(GiantShop plugin) {
