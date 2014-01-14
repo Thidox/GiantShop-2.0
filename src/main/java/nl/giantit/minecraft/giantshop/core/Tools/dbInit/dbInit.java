@@ -226,7 +226,7 @@ public class dbInit {
 			u.setLength(100);
 			u.setNull();
 			
-			Column grp = cQ.addColumn("itemID");
+			Column grp = cQ.addColumn("grp");
 			grp.setDataType(Column.DataType.VARCHAR);
 			grp.setLength(100);
 			grp.setNull();
