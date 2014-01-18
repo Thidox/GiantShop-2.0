@@ -30,7 +30,6 @@ public class Logger {
 				int t = type.getID();
 				
 				ArrayList<String> fields = new ArrayList<String>();
-				ArrayList<HashMap<Integer, HashMap<String, String>>> values = new ArrayList<HashMap<Integer, HashMap<String, String>>>();
 		
 				fields.add("type");
 				fields.add("user");
@@ -40,7 +39,7 @@ public class Logger {
 				InsertQuery iQ = DB.insert("#__log");
 				iQ.addFields(fields);
 				iQ.addRow();
-				iQ.assignValue("type", json, InsertQuery.ValueType.RAW);
+				iQ.assignValue("type", String.valueOf(t), InsertQuery.ValueType.RAW);
 				iQ.assignValue("user", playerName);
 				iQ.assignValue("data", json);
 				iQ.assignValue("date", String.valueOf(Logger.getTimestamp()));
