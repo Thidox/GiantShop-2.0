@@ -36,19 +36,15 @@ public class impexp {
 			String file = null;
 			Boolean commence = true;
 			Boolean err = false;
-			for(int i = 0; i < args.length; i++) {
-				if(args[i].startsWith("-t:")) {
-					type = args[i].replaceFirst("-t:", "");
-					continue;
-				}else if(args[i].startsWith("-p:")) {
-					path = args[i].replaceFirst("-p:", "");
-					continue;
-				}else if(args[i].startsWith("-c:")) {
-					commence = Boolean.parseBoolean(args[i].replaceFirst("-c:", ""));
-					continue;
-				}else if(args[i].startsWith("-f:")) {
-					file = args[i].replaceFirst("-f:", "");
-					continue;
+			for(String arg : args) {
+				if(arg.startsWith("-t:")) {
+					type = arg.replaceFirst("-t:", "");
+				}else if(arg.startsWith("-p:")) {
+					path = arg.replaceFirst("-p:", "");
+				}else if(arg.startsWith("-c:")) {
+					commence = Boolean.parseBoolean(arg.replaceFirst("-c:", ""));
+				}else if(arg.startsWith("-f:")) {
+					file = arg.replaceFirst("-f:", "");
 				}
 			}
 			
