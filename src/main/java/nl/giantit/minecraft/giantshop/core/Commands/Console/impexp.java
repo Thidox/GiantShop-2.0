@@ -600,7 +600,7 @@ public class impexp {
 	private static boolean expItem(ArrayList<HashMap<String, String>> iResSet, String dir, String file) {
 		try{
 			BufferedWriter f = new BufferedWriter(new FileWriter(dir + File.separator + file));
-			f.write("itemID,itemType,sellFor,buyFor,perStack,stock,shops");
+			f.write("itemID,itemType,sellFor,buyFor,perStack,stock,maxStock,shops");
 			f.newLine();
 			for(int i = 0; i < iResSet.size(); i++) {
 				HashMap<String, String> data = iResSet.get(i);
@@ -611,9 +611,10 @@ public class impexp {
 				String buyFor = data.get("buyfor");
 				String amount = data.get("perstack");
 				String stock = data.get("stock");
+				String maxStock = data.get("maxstock");
 				String shops = (!data.get("shops").isEmpty()) ? data.get("shops") : "null";
 
-				f.write(itemId + "," + dataType + "," + sellFor + "," + buyFor + "," + amount + "," + stock + "," + shops);
+				f.write(itemId + "," + dataType + "," + sellFor + "," + buyFor + "," + amount + "," + stock + "," + maxStock + "," + shops);
 				f.newLine();
 			}
 			f.flush();
