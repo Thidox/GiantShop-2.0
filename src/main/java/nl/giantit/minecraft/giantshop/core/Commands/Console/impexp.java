@@ -66,6 +66,128 @@ public class impexp {
 								lineNumber++;
 								
 								if(lineNumber <= 1) {
+									if(!line.equals("itemID,itemType,sellFor,buyFor,perStack,stock,maxStock,shops") 
+											&& !line.equals("itemID, itemType, sellFor, buyFor, perStack, stock, maxStock, shops")) {
+										Heraut.say(sender, "The given file is not a proper items file!");
+										br.close();
+										return;
+									}
+									continue;	
+								}
+
+								//break comma separated line using ", "
+								String[] st = line.replaceAll(" ", "").split(",");
+								if(st.length >= 7) {
+									items.add(st);
+								}else{
+									err = true;
+									Heraut.say(sender, "Invalid entry detected! (" + lineNumber + ":" + line + ")");
+								}
+							}
+						}
+						br.close();
+					}catch(IOException e) {
+						Heraut.say(sender, "Failed items import!");
+						GiantShop.getPlugin().getLogger().log(Level.SEVERE, "" + e);
+						return;
+					}
+					
+					fields = new ArrayList<String>();
+					fields.add("itemID");
+					fields.add("type");
+					fields.add("sellFor");
+					fields.add("buyFor");
+					fields.add("stock");
+					fields.add("maxStock");
+					fields.add("perStack");
+					fields.add("shops");
+					
+					InsertQuery iQ = DB.insert("#__items");
+					iQ.addFields(fields);
+					int lineNumber = 0;
+					for(String[] item : items) {
+						lineNumber++;
+						
+						int itemID, stock, maxStock, perStack;
+						Integer itemType;
+						Double sellFor, buyFor;
+						try {
+							itemID = Integer.parseInt(item[0]);
+							if(!item[1].equals("null")) {
+								itemType = Integer.parseInt(item[1]);
+							}else{
+								itemType = null;
+							}
+							
+							sellFor = Double.parseDouble(item[2]);
+							buyFor = Double.parseDouble(item[3]);
+							perStack = Integer.parseInt(item[4]);
+							stock = Integer.parseInt(item[5]);
+							maxStock = Integer.parseInt(item[6]);
+						}catch(NumberFormatException e) {
+							err = true;
+							Heraut.say(sender, "Invalid entry detected! (line " + lineNumber + ": " + Misc.join(", ", item) + ")");
+							continue;
+						}
+						
+						if(iH.isValidItem(itemID, itemType)) {
+							iQ.addRow();
+							iQ.assignValue("itemID", String.valueOf(itemID), InsertQuery.ValueType.RAW);
+							iQ.assignValue("type", String.valueOf(((itemType == null) ? -1 : itemType)), InsertQuery.ValueType.RAW);
+							iQ.assignValue("sellFor", String.valueOf(sellFor), InsertQuery.ValueType.RAW);
+							iQ.assignValue("buyFor", String.valueOf(buyFor), InsertQuery.ValueType.RAW);
+							iQ.assignValue("stock", String.valueOf(stock), InsertQuery.ValueType.RAW);
+							iQ.assignValue("maxStock", String.valueOf(maxStock), InsertQuery.ValueType.RAW);
+							iQ.assignValue("perStack", String.valueOf(perStack), InsertQuery.ValueType.RAW);
+							
+							if(item.length == 7) {
+								iQ.assignValue("shops", String.valueOf((item[6].equals("null") ? "" : item[6])));
+							}else{
+								iQ.assignValue("shops", "");
+							}
+						}else{
+							err = true;
+							Heraut.say(sender, "Invalid entry detected! (line " + lineNumber + ": " + Misc.join(", ", item) + ")");
+							continue;
+						}
+					}
+					
+					if(!commence) {
+						Heraut.say(sender, "Found " + lineNumber + " items to import!");
+					}else{
+						Heraut.say(sender, "Truncating items table!");
+						DB.Truncate("#__items").exec();
+						
+						Heraut.say(sender, "Importing " + lineNumber + " items...");
+						iQ.exec();
+					}
+					
+					if(err) {
+						Heraut.say(sender, "Finished importing items, though some errors occured!");
+					}else{
+						Heraut.say(sender, "Finished importing items!");
+					}
+				}else{
+					Heraut.say(sender, "Requested file does not exist!");
+				}
+			}else if(Misc.isEitherIgnoreCase(type, "itemsPre0.10", "ip1")) {
+				file = (file == null) ? "items.csv" : file;
+				
+				File f = new File(path + File.separator + file);
+				if(f.exists()) {
+					Heraut.say(sender, "Starting importing items...");
+					
+					ArrayList<String[]> items = new ArrayList<String[]>();
+					String line;
+					try {
+						BufferedReader br = new BufferedReader(new FileReader(path + File.separator + file));
+						if(br.ready()) {
+							int	lineNumber = 0;
+
+							while((line = br.readLine()) != null) {
+								lineNumber++;
+								
+								if(lineNumber <= 1) {
 									if(!line.equals("itemID,itemType,sellFor,buyFor,perStack,stock,shops") 
 											&& !line.equals("itemID, itemType, sellFor, buyFor, perStack, stock, shops")) {
 										Heraut.say(sender, "The given file is not a proper items file!");
