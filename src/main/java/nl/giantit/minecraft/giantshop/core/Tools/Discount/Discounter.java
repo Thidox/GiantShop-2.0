@@ -1,8 +1,6 @@
 package nl.giantit.minecraft.giantshop.core.Tools.Discount;
 
 import nl.giantit.minecraft.giantcore.core.Items.ItemID;
-import nl.giantit.minecraft.giantshop.GiantShop;
-import nl.giantit.minecraft.giantshop.core.config;
 import nl.giantit.minecraft.giantcore.database.Driver;
 import nl.giantit.minecraft.giantcore.database.QueryResult;
 import nl.giantit.minecraft.giantcore.database.QueryResult.QueryRow;
@@ -12,6 +10,9 @@ import nl.giantit.minecraft.giantcore.database.query.InsertQuery;
 import nl.giantit.minecraft.giantcore.database.query.SelectQuery;
 import nl.giantit.minecraft.giantcore.database.query.UpdateQuery;
 import nl.giantit.minecraft.giantcore.perms.Permission;
+
+import nl.giantit.minecraft.giantshop.GiantShop;
+import nl.giantit.minecraft.giantshop.core.config;
 
 import org.bukkit.entity.Player;
 

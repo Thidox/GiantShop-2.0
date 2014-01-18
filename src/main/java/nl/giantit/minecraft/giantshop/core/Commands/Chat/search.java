@@ -75,8 +75,6 @@ public class search {
 			SelectQuery sQ = DB.select(fields).from("#__items");
 			
 			boolean hide = false;
-			HashMap<String, HashMap<String, String>> where = new HashMap<String, HashMap<String, String>>();
-			HashMap<String, String> t = new HashMap<String, String>();
 			if(conf.getBoolean("GiantShop.stock.hideEmptyStock")) {
 				hide = true;
 				sQ.where("stock", "0", Group.ValueType.NOTEQUALSRAW);
