@@ -1,10 +1,11 @@
 package nl.giantit.minecraft.giantshop.API;
 
+import nl.giantit.minecraft.giantcore.core.Items.Items;
+
 import nl.giantit.minecraft.giantshop.GiantShop;
 import nl.giantit.minecraft.giantshop.API.stock.stockAPI;
 import nl.giantit.minecraft.giantshop.API.GSL.GSLAPI;
 import nl.giantit.minecraft.giantshop.API.GSW.GSWAPI;
-import nl.giantit.minecraft.giantshop.core.Items.Items;
 import nl.giantit.minecraft.giantshop.core.config;
 
 /**

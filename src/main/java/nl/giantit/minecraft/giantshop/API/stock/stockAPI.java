@@ -1,8 +1,10 @@
 package nl.giantit.minecraft.giantshop.API.stock;
 
+import nl.giantit.minecraft.giantcore.core.Items.ItemID;
+import nl.giantit.minecraft.giantcore.core.Items.Items;
+
 import nl.giantit.minecraft.giantshop.API.stock.core.itemStock;
 import nl.giantit.minecraft.giantshop.GiantShop;
-import nl.giantit.minecraft.giantshop.core.Items.*;
 import nl.giantit.minecraft.giantcore.database.Driver;
 import nl.giantit.minecraft.giantcore.database.QueryResult;
 

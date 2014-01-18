@@ -4,6 +4,7 @@ import nl.giantit.minecraft.giantcore.GiantCore;
 import nl.giantit.minecraft.giantcore.GiantPlugin;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
 import nl.giantit.minecraft.giantcore.core.Eco.Eco;
+import nl.giantit.minecraft.giantcore.core.Items.Items;
 import nl.giantit.minecraft.giantcore.database.Database;
 import nl.giantit.minecraft.giantcore.perms.PermHandler;
 
@@ -12,7 +13,6 @@ import nl.giantit.minecraft.giantshop.Misc.Misc;
 import nl.giantit.minecraft.giantshop.core.config;
 import nl.giantit.minecraft.giantshop.core.Commands.ChatExecutor;
 import nl.giantit.minecraft.giantshop.core.Commands.ConsoleExecutor;
-import nl.giantit.minecraft.giantshop.core.Items.Items;
 import nl.giantit.minecraft.giantshop.core.Metrics.MetricsHandler;
 import nl.giantit.minecraft.giantshop.core.Tools.Discount.Discounter;
 import nl.giantit.minecraft.giantshop.core.Tools.dbInit.dbInit;
@@ -142,7 +142,7 @@ public class GiantShop extends GiantPlugin {
 			pubName = conf.getString(this.name + ".global.name");
 			chat = new ChatExecutor(this);
 			console = new ConsoleExecutor(this);
-			itemHandler = new Items(this);
+			itemHandler = this.gc.getItemHandler();
 			econHandler = this.gc.getEcoHandler(Eco.findEngine(conf.getString("GiantShop.Economy.Engine")));
 			msgHandler = new Messages(this, 1.4);
 			

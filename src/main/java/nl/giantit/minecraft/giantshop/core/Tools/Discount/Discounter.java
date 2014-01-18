@@ -1,9 +1,9 @@
 package nl.giantit.minecraft.giantshop.core.Tools.Discount;
 
+import nl.giantit.minecraft.giantcore.core.Items.ItemID;
 import nl.giantit.minecraft.giantshop.GiantShop;
 import nl.giantit.minecraft.giantshop.core.config;
 import nl.giantit.minecraft.giantcore.database.Driver;
-import nl.giantit.minecraft.giantshop.core.Items.ItemID;
 import nl.giantit.minecraft.giantcore.database.QueryResult;
 import nl.giantit.minecraft.giantcore.database.QueryResult.QueryRow;
 import nl.giantit.minecraft.giantcore.database.query.DeleteQuery;

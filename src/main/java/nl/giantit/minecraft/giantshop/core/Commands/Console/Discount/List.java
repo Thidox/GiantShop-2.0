@@ -2,11 +2,11 @@ package nl.giantit.minecraft.giantshop.core.Commands.Console.Discount;
 
 import nl.giantit.minecraft.giantcore.Misc.Heraut;
 import nl.giantit.minecraft.giantcore.Misc.Messages;
+import nl.giantit.minecraft.giantcore.core.Items.Items;
 
 import nl.giantit.minecraft.giantshop.GiantShop;
 import nl.giantit.minecraft.giantshop.Misc.Misc;
 import nl.giantit.minecraft.giantshop.core.config;
-import nl.giantit.minecraft.giantshop.core.Items.Items;
 import nl.giantit.minecraft.giantshop.core.Tools.Discount.Discount;
 
 import org.bukkit.command.CommandSender;

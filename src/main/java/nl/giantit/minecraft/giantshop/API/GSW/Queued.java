@@ -1,8 +1,9 @@
 package nl.giantit.minecraft.giantshop.API.GSW;
 
+import nl.giantit.minecraft.giantcore.core.Items.ItemID;
+
 import nl.giantit.minecraft.giantshop.API.GiantShopAPI;
 import nl.giantit.minecraft.giantshop.GiantShop;
-import nl.giantit.minecraft.giantshop.core.Items.ItemID;
 import nl.giantit.minecraft.giantshop.API.stock.ItemNotFoundException;
 import nl.giantit.minecraft.giantshop.API.stock.stockAPI;
 
