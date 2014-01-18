@@ -107,7 +107,9 @@ public class search {
 			int start = (curPag * perPage) - perPage;
 			
 			if(QRes.size() <= 0) {
-				Heraut.say(player, "&e[&3" + name + "&e] " + mH.getMsg(Messages.msgType.ERROR, "itemNotInShop"));
+				HashMap<String, String> d = new HashMap<String, String>();
+				d.put("item", name);
+				Heraut.say(player, "&e[&3" + name + "&e] " + mH.getMsg(Messages.msgType.ERROR, "itemNotInShop", d));
 			}else if(curPag > pages) {
 				HashMap<String, String> d = new HashMap<String, String>();
 				d.put("list", "search");
